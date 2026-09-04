@@ -1,0 +1,15 @@
+{
+  "app.name": "Sakura Market",
+  "action.switchLocale": "Chuyển ngôn ngữ",
+  "locale.vi": "Tiếng Việt",
+  "locale.ja": "Tiếng Nhật",
+  "home.title": "Trang chủ",
+  "home.welcome": "Chào mừng đến với Sakura Market",
+  "home.glossaryTitle": "Thuật ngữ pháp lý gốc",
+  "term.aitai": "相対取引",
+  "term.seri": "せり",
+  "term.mekiki": "目利き",
+  "term.incentive": "完納奨励金",
+  "term.kyoka": "許可",
+  "term.shounin": "承認"
+}

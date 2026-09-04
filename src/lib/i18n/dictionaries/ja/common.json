@@ -1,0 +1,15 @@
+{
+  "app.name": "Sakura Market",
+  "action.switchLocale": "言語切替",
+  "locale.vi": "ベトナム語",
+  "locale.ja": "日本語",
+  "home.title": "ホーム",
+  "home.welcome": "Sakura Marketへようこそ",
+  "home.glossaryTitle": "原語の法律用語",
+  "term.aitai": "相対取引",
+  "term.seri": "せり",
+  "term.mekiki": "目利き",
+  "term.incentive": "完納奨励金",
+  "term.kyoka": "許可",
+  "term.shounin": "承認"
+}
