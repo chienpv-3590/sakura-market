@@ -11,5 +11,22 @@
   "term.mekiki": "目利き",
   "term.incentive": "完納奨励金",
   "term.kyoka": "許可",
-  "term.shounin": "承認"
+  "term.shounin": "承認",
+  "auth.login.title": "Đăng nhập",
+  "auth.login.emailLabel": "Email",
+  "auth.login.passwordLabel": "Mật khẩu",
+  "auth.login.submit": "Đăng nhập",
+  "auth.login.submitting": "Đang đăng nhập...",
+  "auth.login.error.invalidCredentials": "Email hoặc mật khẩu không đúng, hoặc tài khoản đang tạm khoá.",
+  "auth.login.error.invalidRequest": "Vui lòng nhập email và mật khẩu hợp lệ.",
+  "auth.login.error.network": "Có lỗi xảy ra, vui lòng thử lại.",
+  "auth.login.reason.inactive": "Tài khoản của bạn đã bị vô hiệu hoá, vui lòng liên hệ quản trị viên.",
+  "auth.signOut": "Đăng xuất",
+  "role.ROLE-INTAKE": "Nhân viên tiếp nhận",
+  "role.ROLE-JUDGE": "Người đánh giá",
+  "role.ROLE-TRADE": "Nhân viên vận hành giao dịch",
+  "role.ROLE-DELIVERY": "Nhân viên giao nhận",
+  "role.ROLE-SETTLEMENT": "Bộ phận đối chiếu",
+  "role.ROLE-RULE-ADMIN": "Quản lý quy tắc",
+  "role.ROLE-SYS-ADMIN": "Quản trị hệ thống"
 }

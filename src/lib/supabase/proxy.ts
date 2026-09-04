@@ -2,11 +2,11 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * Refreshes the Supabase auth session cookie on every matched request.
- *
- * Phase 02 scope: cookie refresh only — no redirect. The
- * unauthenticated-user redirect belongs to Phase 04, which will read the
- * claims below and add a redirect right after the guarded comment block.
+ * Refreshes the Supabase auth session cookie on every matched request, then
+ * gates unauthenticated access to every business route (Tầng 1 — see
+ * phase-04 § Architecture). This layer only checks "does a session exist";
+ * `is_active` and role checks live in `lib/auth/require-role.ts` (Tầng 2),
+ * so this never pays a DB round trip for every asset/route it sees.
  */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -32,9 +32,26 @@ export async function updateSession(request: NextRequest) {
 
   // WARNING — do not insert any code between createServerClient(...) above
   // and this call. Anything placed here can desync the refreshed cookie
-  // from the returned response and randomly log users out. (Phase 04: add
-  // the auth redirect AFTER this call, still before `return`.)
-  await supabase.auth.getClaims();
+  // from the returned response and randomly log users out.
+  const { data } = await supabase.auth.getClaims();
+
+  const path = request.nextUrl.pathname;
+  const isPublicPath = path === "/login" || path.startsWith("/api/auth/");
+
+  if (!data?.claims && !isPublicPath) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("reason", "unauthenticated");
+
+    const redirectResponse = NextResponse.redirect(loginUrl);
+    // Carry the refreshed cookies from supabaseResponse onto the redirect —
+    // a bare NextResponse.redirect() here would drop the session cookie and
+    // loop forever between "/login" and a refreshed-but-discarded session.
+    supabaseResponse.cookies.getAll().forEach((cookie) => {
+      redirectResponse.cookies.set(cookie);
+    });
+    return redirectResponse;
+  }
 
   // Must return this exact object — it carries the refreshed session
   // cookie. Building a fresh NextResponse elsewhere drops the session.

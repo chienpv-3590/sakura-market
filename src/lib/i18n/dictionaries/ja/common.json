@@ -11,5 +11,22 @@
   "term.mekiki": "目利き",
   "term.incentive": "完納奨励金",
   "term.kyoka": "許可",
-  "term.shounin": "承認"
+  "term.shounin": "承認",
+  "auth.login.title": "ログイン",
+  "auth.login.emailLabel": "メールアドレス",
+  "auth.login.passwordLabel": "パスワード",
+  "auth.login.submit": "ログイン",
+  "auth.login.submitting": "ログイン中...",
+  "auth.login.error.invalidCredentials": "メールアドレスまたはパスワードが正しくないか、アカウントが一時的にロックされています。",
+  "auth.login.error.invalidRequest": "メールアドレスとパスワードを正しく入力してください。",
+  "auth.login.error.network": "エラーが発生しました。もう一度お試しください。",
+  "auth.login.reason.inactive": "アカウントが無効化されています。管理者にお問い合わせください。",
+  "auth.signOut": "ログアウト",
+  "role.ROLE-INTAKE": "入荷担当者",
+  "role.ROLE-JUDGE": "目利き担当者",
+  "role.ROLE-TRADE": "取引担当者",
+  "role.ROLE-DELIVERY": "配送担当者",
+  "role.ROLE-SETTLEMENT": "精算担当者",
+  "role.ROLE-RULE-ADMIN": "奨励金ルール管理者",
+  "role.ROLE-SYS-ADMIN": "システム管理者"
 }
