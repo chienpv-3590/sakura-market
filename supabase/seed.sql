@@ -1,18 +1,15 @@
 -- Idempotent mock/demo seed data (LAB-3, F011 A2 seedLoader / phase-03 step 10).
--- Run this AFTER `node scripts/seed-demo-users.mjs` (app_user rows referenced
--- below must already exist). Paste directly into the Supabase Studio SQL
--- Editor -- `supabase db push --include-seed` silently no-ops once there are
--- no pending migrations (research §4 / phase-03 §Key Insights), so this file
--- is applied by hand, not by the CLI.
+-- Run AFTER `node scripts/seed-demo-users.mjs` (app_user rows referenced below
+-- must already exist). Paste into the Supabase Studio SQL Editor -- `supabase
+-- db push --include-seed` silently no-ops with no pending migrations (research
+-- §4 / phase-03 §Key Insights), so this file is applied by hand, not the CLI.
 --
 -- Safe to re-run any number of times: the repo (and its demo credentials) are
--- public, so anyone can mutate this data -- re-running restores a clean state
--- instead of requiring a project rebuild. app_user and audit_log are left
--- untouched (app_user is owned by seed-demo-users.mjs; audit_log is an
--- append-only trail, not demo fixture data). business_day_lock is included in
--- the truncate below so a locked day from a previous demo session does not
--- leak into the next one -- lock state is meant to be created live, by hand,
--- during the demo itself.
+-- public, so re-running restores a clean state instead of requiring a project
+-- rebuild. app_user/audit_log stay untouched (owned by seed-demo-users.mjs /
+-- append-only trail). business_day_lock is truncated too, so a lock from a
+-- prior demo session never leaks into the next one -- locking is meant to
+-- happen live, by hand, during the demo itself.
 
 do $$
 begin
@@ -36,7 +33,6 @@ truncate table
 -- ---------------------------------------------------------------------------
 -- Participants -- 4 categories x mixed FIG-010 status (10 rows, >= 8 required,
 -- distinct category count = 4).
--- ---------------------------------------------------------------------------
 insert into public.participant (category, name, license_type, status, valid_from, valid_to) values
   ('卸売業者', 'Sakura Wholesale Co.',   'đăng ký',    'có hiệu lực', '2020-01-01', null),
   ('卸売業者', 'Minato Wholesale K.K.',  'đăng ký',    'tạm ngừng',   '2019-01-01', null),
@@ -68,7 +64,6 @@ insert into public.participant_status_history (participant_id, from_status, to_s
 -- business_date denormalized per QĐ-2. available_qty is hand-computed below
 -- from the confirmed transactions/seri results that consume each lot, so the
 -- numbers stay internally consistent and satisfy the available_qty >= 0 CHECK.
--- ---------------------------------------------------------------------------
 insert into public.lot (lot_code, item, package_count, initial_qty, available_qty, status, business_date) values
   ('LOT-20260902-01', 'Cá ngừ vây xanh', 20, 500, 150, 'published', '2026-09-02'),
   ('LOT-20260902-02', 'Cá hồi Na Uy',    15, 300, 0,   'traded',    '2026-09-02'),
@@ -103,7 +98,6 @@ join public.lot l on l.lot_code = m.lot_code;
 -- >= 12 required. type stays 'aitai' (QĐ-1). TXN-20260904-02 is deliberately
 -- left 'draft' against an already mất-hiệu-lực buyer (Sato Kaiten Co.) to
 -- demo BR-PERM-01 rejecting confirm at Phase 07, not at draft-create time.
--- ---------------------------------------------------------------------------
 insert into public.transaction (
   txn_code, lot_id, buyer_participant_id, qty, unit_price, business_date, status,
   confirmed_by, confirmed_at, cancel_reason, cancelled_by, cancelled_at
@@ -136,7 +130,6 @@ from (values
 -- ---------------------------------------------------------------------------
 -- せり results -- draw down lots not touched by any aitai transaction above,
 -- so the seeded available_qty arithmetic above stays simple to verify by hand.
--- ---------------------------------------------------------------------------
 insert into public.seri_result (lot_id, winner_participant_id, qty, unit_price, decided_at, confirmed_by, business_date)
 values
   ((select id from public.lot where lot_code = 'LOT-20260903-03'),
@@ -148,13 +141,11 @@ values
    60, 6000, timestamptz '2026-09-04 05:00+09',
    (select id from public.app_user where email = 'trade@sakura-market.local'), '2026-09-04');
 
--- ---------------------------------------------------------------------------
 -- Deliveries -- covers both "đủ" (fully delivered) and "thiếu" (partial, still
--- in progress) cases. QĐ-2: delivery_shipment.business_date is the day the
--- shipment itself happened, independent of the parent transaction's
--- business_date -- TXN-20260902-01 (bdate 09-02) ships on 09-03 on purpose, to
--- demonstrate that a locked 09-02 will NOT block a 09-03-dated shipment row.
--- ---------------------------------------------------------------------------
+-- in progress). QĐ-2: delivery_shipment.business_date is its OWN shipment day,
+-- independent of the parent transaction's business_date -- TXN-20260902-01
+-- (bdate 09-02) ships on 09-03 on purpose, to show a locked 09-02 does not
+-- block a 09-03-dated shipment row.
 insert into public.delivery (transaction_id, status, delivered_qty)
 select (select id from public.transaction where txn_code = d.txn_code), d.status, d.delivered_qty
 from (values
@@ -186,7 +177,6 @@ from (values
 -- ---------------------------------------------------------------------------
 -- Incentive rule versions -- exactly 2 (1 active, 1 pending_approval with a
 -- future effective_from), as required.
--- ---------------------------------------------------------------------------
 insert into public.incentive_rule_version (version_no, effective_from, status, rate_table, created_by, approved_by) values
   (1, '2026-01-01', 'active',
     '{"rate_numerator": 110, "rate_denominator": 100}'::jsonb,
@@ -201,7 +191,6 @@ insert into public.incentive_rule_version (version_no, effective_from, status, r
 -- Payment records (MOCK, see 20260904090700_incentive.sql) -- both on-time and
 -- overdue cases so F009's ALG-002 has real inputs to compute against. One row
 -- is left unpaid (paid_on = null) to also cover the "not yet settled" case.
--- ---------------------------------------------------------------------------
 insert into public.payment_record (participant_id, business_date, due_date, paid_on, eligible_amount_jpy) values
   ((select id from public.participant where name = 'Yamada Trading'),  '2026-09-02', '2026-09-09', '2026-09-05', 987654),
   ((select id from public.participant where name = 'Suzuki Kaidashi'), '2026-09-02', '2026-09-09', null,        620000),
