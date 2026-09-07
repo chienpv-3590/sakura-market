@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Tables } from "@/lib/db/types";
 import { EligibilityStatusBadge } from "./eligibility-status-badge";
+import { EmptyState } from "@/components/ui/empty-state";
 
 type ParticipantRow = Tables<"participant">;
 
@@ -15,12 +16,12 @@ export function ParticipantTable({
   dict: Record<string, string>;
 }) {
   if (participants.length === 0) {
-    return <p className="sm-empty">{dict["participants.list.empty"]}</p>;
+    return <EmptyState description={dict["participants.list.empty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th>{dict["participants.list.tableHeaderName"]}</th>
@@ -44,8 +45,8 @@ export function ParticipantTable({
               <td>
                 <EligibilityStatusBadge status={p.status} label={dict[`status.${p.status}`] ?? p.status} />
               </td>
-              <td className="sm-mono">{p.valid_from}</td>
-              <td className="sm-mono">{p.valid_to ?? dict["participants.detail.validToNone"]}</td>
+              <td className="cds-table__mono">{p.valid_from}</td>
+              <td className="cds-table__mono">{p.valid_to ?? dict["participants.detail.validToNone"]}</td>
             </tr>
           ))}
         </tbody>

@@ -2,6 +2,7 @@
 
 import { Fragment, useState } from "react";
 import type { Tables } from "@/lib/db/types";
+import { EmptyState } from "@/components/ui/empty-state";
 
 type Line = Tables<"reconciliation_line">;
 type Shipment = Tables<"delivery_shipment">;
@@ -30,12 +31,12 @@ export function ReconcileTable({ lines, dict }: { lines: Line[]; dict: Record<st
   }
 
   if (lines.length === 0) {
-    return <p className="sm-empty">{dict["reconciliation.table.empty"]}</p>;
+    return <EmptyState description={dict["reconciliation.table.empty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th>{dict["reconciliation.table.columns.sourceType"]}</th>
@@ -55,15 +56,15 @@ export function ReconcileTable({ lines, dict }: { lines: Line[]; dict: Record<st
                   <td>
                     {dict[`reconciliation.sourceType.${line.source_type}`] ?? line.source_type}
                   </td>
-                  <td className="sm-num">{line.qty}</td>
-                  <td className="sm-num">{line.amount_jpy?.toLocaleString() ?? "—"}</td>
-                  <td className="sm-num">{line.variance ?? "—"}</td>
+                  <td className="cds-table__num cds-table__mono">{line.qty}</td>
+                  <td className="cds-table__num cds-table__mono">{line.amount_jpy?.toLocaleString() ?? "—"}</td>
+                  <td className="cds-table__num cds-table__mono">{line.variance ?? "—"}</td>
                   <td>
                     {line.source_type === "aitai" && line.source_id && (
                       <button
                         type="button"
                         onClick={() => toggleTrace(line.source_id!)}
-                        className="sm-link"
+                        className="cds-link cds-link--underline"
                       >
                         {dict["reconciliation.table.traceToggle"]}
                       </button>
@@ -71,7 +72,7 @@ export function ReconcileTable({ lines, dict }: { lines: Line[]; dict: Record<st
                   </td>
                 </tr>
                 {trace && (
-                  <tr className="bg-neutral-50">
+                  <tr className="bg-page">
                     <td colSpan={5}>
                       {trace === "loading" ? (
                         dict["reconciliation.table.traceLoading"]
@@ -80,7 +81,7 @@ export function ReconcileTable({ lines, dict }: { lines: Line[]; dict: Record<st
                       ) : (
                         <ul className="space-y-1">
                           {trace.map((s) => (
-                            <li key={s.id} className="sm-mono">
+                            <li key={s.id} className="cds-table__mono">
                               #{s.seq} — {s.qty} — {new Date(s.shipped_at).toLocaleString()}
                             </li>
                           ))}

@@ -1,4 +1,5 @@
 import type { IncentiveResultRow } from "@/lib/incentive/incentive-result-queries";
+import { EmptyState } from "@/components/ui/empty-state";
 
 // SCR016_IncentiveResult (FR-303). The rule-version + effective-date columns
 // are ALWAYS visible -- FR-AUDIT-03 requires that opening any result shows
@@ -12,12 +13,12 @@ export function IncentiveResultTable({
   dict: Record<string, string>;
 }) {
   if (rows.length === 0) {
-    return <p className="sm-empty">{dict["incentive.result.empty"]}</p>;
+    return <EmptyState description={dict["incentive.result.empty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th>{dict["incentive.result.columnPeriod"]}</th>
@@ -31,18 +32,18 @@ export function IncentiveResultTable({
         <tbody>
           {rows.map((row) => (
             <tr key={row.id}>
-              <td className="sm-mono text-strong">{row.period}</td>
+              <td className="cds-table__mono text-strong">{row.period}</td>
               <td className="text-strong">{row.participantName}</td>
-              <td className="sm-num text-strong">{row.amountJpy.toLocaleString()}</td>
+              <td className="cds-table__num cds-table__mono text-strong">{row.amountJpy.toLocaleString()}</td>
               <td>
-                <span className={`sm-badge ${row.kind === "delta" ? "sm-tone-move" : "sm-tone-money"}`}>
+                <span className={`cds-statusbadge ${row.kind === "delta" ? "cds-statusbadge--contract" : "cds-statusbadge--info"}`}>
                   {row.kind === "delta" ? dict["incentive.result.kindDelta"] : dict["incentive.result.kindNormal"]}
                 </span>
               </td>
-              <td className="sm-mono text-secondary">
+              <td className="cds-table__mono text-secondary">
                 v{row.ruleVersionNo} ({row.ruleEffectiveFrom})
               </td>
-              <td className="sm-mono text-muted">{row.originPeriod ?? "—"}</td>
+              <td className="cds-table__mono text-muted">{row.originPeriod ?? "—"}</td>
             </tr>
           ))}
         </tbody>

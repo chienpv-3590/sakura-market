@@ -64,23 +64,23 @@ export function LotIntakeForm() {
 
   if (created) {
     return (
-      <div className="sm-card max-w-md space-y-4 p-6">
-        <h2 className="text-lg font-semibold text-ok">{t("lots.intake.successTitle")}</h2>
+      <div className="cds-card max-w-md space-y-4 p-6">
+        <h2 className="cds-card__title !text-ok">{t("lots.intake.successTitle")}</h2>
         <div>
-          <span className="sm-label">{t("lots.intake.lotCodeLabel")}</span>
+          <span className="cds-field__label">{t("lots.intake.lotCodeLabel")}</span>
           <input
             readOnly
             autoFocus
             value={created.lotCode}
             tabIndex={1}
-            className="sm-field sm-num mt-1 w-full text-2xl font-bold tracking-wide"
+            className="cds-input--native cds-input--auto cds-table__mono mt-1 w-full text-[24px] font-bold tracking-wide"
           />
         </div>
         <div className="flex gap-3">
           <Link
             href={`/lots/${created.id}/mekiki`}
             tabIndex={2}
-            className="sm-btn sm-btn-approve"
+            className="cds-btn cds-btn--md"
           >
             {t("lots.intake.continueToMekiki")}
           </Link>
@@ -88,7 +88,7 @@ export function LotIntakeForm() {
             type="button"
             tabIndex={3}
             onClick={resetForm}
-            className="sm-btn sm-btn-secondary"
+            className="cds-btn cds-btn--secondary cds-btn--md"
           >
             {t("lots.intake.createAnother")}
           </button>
@@ -100,7 +100,7 @@ export function LotIntakeForm() {
   return (
     <KeyboardOperableForm onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="item" className="sm-label">
+        <label htmlFor="item" className="cds-field__label">
           {t("lots.intake.itemLabel")}
         </label>
         <input
@@ -112,11 +112,11 @@ export function LotIntakeForm() {
           value={item}
           onChange={(e) => setItem(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="packageCount" className="sm-label">
+        <label htmlFor="packageCount" className="cds-field__label">
           {t("lots.intake.packageCountLabel")}
         </label>
         <input
@@ -130,11 +130,11 @@ export function LotIntakeForm() {
           value={packageCount}
           onChange={(e) => setPackageCount(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="initialQty" className="sm-label">
+        <label htmlFor="initialQty" className="cds-field__label">
           {t("lots.intake.initialQtyLabel")}
         </label>
         <input
@@ -148,11 +148,11 @@ export function LotIntakeForm() {
           value={initialQty}
           onChange={(e) => setInitialQty(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="intakeDocs" className="sm-label">
+        <label htmlFor="intakeDocs" className="cds-field__label">
           {t("lots.intake.intakeDocsLabel")}
         </label>
         <input
@@ -163,11 +163,11 @@ export function LotIntakeForm() {
           value={intakeDocs}
           onChange={(e) => setIntakeDocs(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}
@@ -176,7 +176,7 @@ export function LotIntakeForm() {
         tabIndex={5}
         disabled={submitting}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary w-full"
+        className="cds-btn cds-btn--md w-full"
       >
         {submitting ? t("lots.intake.submitting") : t("lots.intake.submit")}
       </button>

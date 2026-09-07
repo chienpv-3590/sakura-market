@@ -7,6 +7,7 @@ import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { listDeliveries } from "@/lib/deliveries/delivery-queries";
 import { DeliveryTable } from "@/components/deliveries/delivery-table";
+import { PageFrame } from "@/components/layout/page-frame";
 
 const STATUSES = ["chờ", "đang giao", "hoàn tất", "ngoại lệ"] as const;
 
@@ -26,24 +27,26 @@ export default async function DeliveriesPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <h1 className="text-2xl font-semibold text-strong">{dict["deliveries.list.title"]}</h1>
+      <PageFrame
+        title={dict["deliveries.list.title"]}
+      >
+        <section className="space-y-6">
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["deliveries.list.filterBusinessDateLabel"]}
             <input
               type="date"
               name="businessDate"
               defaultValue={businessDate ?? ""}
-              className="sm-field mt-1"
+              className="cds-input--native mt-1"
             />
           </label>
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["deliveries.list.filterStatusLabel"]}
             <select
               name="status"
               defaultValue={validStatus ?? ""}
-              className="sm-field mt-1"
+              className="cds-select--native mt-1"
             >
               <option value="">{dict["deliveries.list.filterAllStatuses"]}</option>
               {STATUSES.map((s) => (
@@ -55,13 +58,14 @@ export default async function DeliveriesPage({
           </label>
           <button
             type="submit"
-            className="sm-btn sm-btn-secondary"
+            className="cds-btn cds-btn--secondary cds-btn--md"
           >
             {dict["deliveries.list.filterSubmit"]}
           </button>
         </form>
         <DeliveryTable deliveries={deliveries} dict={dict} />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

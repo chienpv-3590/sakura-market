@@ -20,20 +20,20 @@ export function ReportFilterForm({
   return (
     <form method="GET" className="flex flex-wrap items-end gap-4">
       {fields.map((field) => (
-        <label key={field.key} className="flex flex-col text-sm font-medium text-secondary">
+        <label key={field.key} className="cds-field">
           {dict[field.labelKey]}
           {field.type === "date" ? (
             <input
               type="date"
               name={field.key}
               defaultValue={values[field.key] ?? ""}
-              className="sm-field mt-1"
+              className="cds-input--native mt-1"
             />
           ) : (
             <select
               name={field.key}
               defaultValue={values[field.key] ?? ""}
-              className="sm-field mt-1"
+              className="cds-select--native mt-1"
             >
               <option value="">{dict["reports.filter.participantAll"]}</option>
               {participantOptions.map((p) => (
@@ -47,7 +47,7 @@ export function ReportFilterForm({
       ))}
       <button
         type="submit"
-        className="sm-btn sm-btn-secondary"
+        className="cds-btn cds-btn--secondary cds-btn--md"
       >
         {dict["reports.viewer.filterSubmit"]}
       </button>

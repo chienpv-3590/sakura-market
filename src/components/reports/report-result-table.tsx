@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReportColumn } from "@/lib/reports/registry";
 import type { ReportRow } from "@/lib/reports/report-row";
+import { EmptyState } from "@/components/ui/empty-state";
 
 function buildPageHref(baseHref: string, filterValues: Record<string, string>, page: number): string {
   const params = new URLSearchParams(filterValues);
@@ -30,7 +31,7 @@ export function ReportResultTable({
   dict: Record<string, string>;
 }) {
   if (rows.length === 0) {
-    return <p className="sm-empty">{dict["reports.viewer.empty"]}</p>;
+    return <EmptyState description={dict["reports.viewer.empty"]} />;
   }
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -42,8 +43,8 @@ export function ReportResultTable({
 
   return (
     <div className="space-y-3">
-      <div className="sm-table-wrap sm-table-scroll">
-        <table className="sm-table">
+      <div className="cds-table__wrap">
+        <table className="cds-table cds-table--default cds-table--hover">
           <thead>
             <tr>
               {columns.map((col) => (
@@ -68,7 +69,7 @@ export function ReportResultTable({
                       : undefined;
                   if (enumLabel === undefined && typeof value === "number") {
                     return (
-                      <td key={col.key} className="sm-num text-strong">
+                      <td key={col.key} className="cds-table__num cds-table__mono text-strong">
                         {value.toLocaleString()}
                       </td>
                     );
@@ -96,7 +97,7 @@ export function ReportResultTable({
           {page > 1 && (
             <Link
               href={buildPageHref(baseHref, filterValues, page - 1)}
-              className="sm-btn sm-btn-secondary"
+              className="cds-btn cds-btn--secondary cds-btn--md"
             >
               {dict["reports.viewer.paginationPrev"]}
             </Link>
@@ -104,7 +105,7 @@ export function ReportResultTable({
           {page < totalPages && (
             <Link
               href={buildPageHref(baseHref, filterValues, page + 1)}
-              className="sm-btn sm-btn-secondary"
+              className="cds-btn cds-btn--secondary cds-btn--md"
             >
               {dict["reports.viewer.paginationNext"]}
             </Link>

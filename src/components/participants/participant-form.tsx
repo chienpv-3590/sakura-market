@@ -8,7 +8,7 @@ import {
   requiredLicenseType,
   type ParticipantCategory,
 } from "@/lib/participants/category-rules";
-import { TextField, INPUT_CLASS } from "./text-field";
+import { TextField } from "./text-field";
 
 type Mode = "create" | "edit";
 
@@ -81,12 +81,12 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
   return (
     <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
       <div>
-        <label className="sm-label">{t("participants.form.categoryLabel")}</label>
+        <label className="cds-field__label">{t("participants.form.categoryLabel")}</label>
         {mode === "create" ? (
           <select
             value={category}
             onChange={(event) => setCategory(event.target.value as ParticipantCategory)}
-            className={INPUT_CLASS}
+            className="cds-select--native mt-1 w-full"
           >
             {PARTICIPANT_CATEGORIES.map((c) => (
               <option key={c} value={c}>
@@ -95,19 +95,19 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
             ))}
           </select>
         ) : (
-          <p className="sm-field mt-1 bg-neutral-50 text-muted">
+          <p className="cds-input--native cds-input--readonly mt-1">
             {t(`category.${category}`)} — {t("participants.form.categoryLockedHint")}
           </p>
         )}
       </div>
       <div>
-        <label className="sm-label">
+        <label className="cds-field__label">
           {t("participants.form.licenseTypeLabel")}
         </label>
-        <p className="sm-field mt-1 bg-neutral-50 text-muted">
+        <p className="cds-input--native cds-input--readonly mt-1">
           {t(`licenseType.${licenseType}`)}
         </p>
-        <p className="sm-hint mt-1">{t("participants.form.licenseTypeAutoHint")}</p>
+        <p className="cds-field__msg cds-field__msg--hint mt-1">{t("participants.form.licenseTypeAutoHint")}</p>
       </div>
       <TextField
         id="participant-name"
@@ -138,7 +138,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
             onChange={(event) => setValidTo(event.target.value)}
             disabled={submitting}
           />
-          <p className="sm-hint mt-1">{t("participants.form.validToOptional")}</p>
+          <p className="cds-field__msg cds-field__msg--hint mt-1">{t("participants.form.validToOptional")}</p>
         </div>
       </div>
       {mode === "edit" && (
@@ -153,7 +153,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
         />
       )}
       {error && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {error}
         </p>
       )}
@@ -161,7 +161,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary"
+        className="cds-btn cds-btn--md"
       >
         {submitting
           ? t("participants.form.submitting")

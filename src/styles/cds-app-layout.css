@@ -1,0 +1,55 @@
+/* App-side layout additions to the cds-* system.
+ *
+ * Three jobs, all of them filling gaps the extracted CSS leaves because the
+ * source system solved them in JSX rather than in CSS:
+ *
+ *  1. `--nav-w` has no token: AppShell.jsx sets it inline from its React state.
+ *     Declared here with the system's own --sidebar-w as the default so
+ *     `.cds-shell` resolves even before hydration; NavShell then overrides it
+ *     inline exactly as the source does.
+ *  2. Responsive collapse. `.cds-shell` is a fixed 2-column grid. Below the
+ *     system's own --bp-tablet the rail is pinned to --sidebar-w-collapsed and
+ *     the DS's OWN `--collapsed` declarations are re-applied by width instead
+ *     of by the toggle. No new collapse behaviour was invented.
+ *  3. Page padding. `.cds-pageheader` uses 24px/32px; the body region has no
+ *     rule of its own in the extract, so it gets the same rhythm from
+ *     --page-pad / --gutter.
+ */
+
+@layer components {
+  .cds-shell {
+    --nav-w: var(--nav-w-pref, var(--sidebar-w));
+  }
+
+  /* Every box between the grid cell and the content must be allowed to shrink
+   * below its content's min-content width, or one wide table/select stretches
+   * the whole page instead of scrolling inside its own container. */
+  .cds-shell__body,
+  .cds-shell__main {
+    min-width: 0;
+  }
+
+  /* Body region: matches .cds-pageheader's 32px inline padding at desktop. */
+  .cds-shell__page {
+    padding: var(--space-7) var(--page-pad) var(--space-9);
+    min-width: 0;
+  }
+
+  /* A page header with a long action label (or a handoff caption in place of
+   * one) wraps instead of forcing the page wider. The DS has __actions at
+   * `flex: none`, which is right beside a short button and wrong beside a
+   * two-line caption on a 320px screen. */
+  .cds-pageheader__row {
+    flex-wrap: wrap;
+  }
+
+  .cds-pageheader__titlewrap {
+    min-width: 0;
+  }
+
+  .cds-pageheader__actions {
+    flex: 0 1 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+}

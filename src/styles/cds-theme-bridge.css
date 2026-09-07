@@ -1,0 +1,49 @@
+/* Tailwind v4 theme bridge.
+ *
+ * `@theme inline` aliases the canonical tokens in cds-tokens.css into
+ * Tailwind's `--color-*` namespace so they are reachable as utilities
+ * (`bg-page`, `text-muted`, `border-line`, ...). `inline` means Tailwind
+ * substitutes the referenced value rather than re-declaring it, so
+ * cds-tokens.css stays the only place a value is written.
+ *
+ * Alias names deliberately differ from the canonical names (`--color-brand`
+ * aliases `--color-primary`) -- an alias identical to its source would be a
+ * self-referencing custom property and resolve to nothing.
+ *
+ * Only aliases actually used as utilities live here. Every compound pattern
+ * (shell, sidebar, header, table, badge, button, field, stepper, empty state)
+ * is a `cds-*` class from the design system, NOT a stack of utilities.
+ */
+
+@theme inline {
+  --color-page: var(--surface-page);
+  --color-card: var(--surface-card);
+  --color-sunken: var(--surface-sunken);
+  --color-hover: var(--surface-hover);
+  --color-selected: var(--surface-selected);
+
+  --color-strong: var(--text-strong);
+  --color-body: var(--text-body);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-on-dark: var(--text-on-dark);
+  --color-on-dark-muted: var(--text-on-dark-muted);
+
+  --color-line: var(--border-subtle);
+  --color-line-strong: var(--border-default);
+
+  --color-brand: var(--color-primary);
+  --color-brand-subtle: var(--color-primary-subtle);
+
+  /* Status foregrounds, by the design system's own tone names. Used for the
+   * few places a figure or heading takes a status colour without being a
+   * badge (see src/components/ui/status-tone.ts for the domain mapping). */
+  --color-ok: var(--status-occupied-fg);
+  --color-warn: var(--status-vacant-fg);
+  --color-error: var(--status-overdue-fg);
+  --color-contract: var(--status-contract-fg);
+  --color-idle: var(--status-inactive-fg);
+  --color-forecast: var(--accent-valuation-fg);
+  --color-info: var(--status-info-fg);
+}

@@ -8,6 +8,7 @@ import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { listCorrections } from "@/lib/corrections/correction-queries";
 import { CorrectionListTable, type CorrectionRowView } from "@/components/corrections/correction-list-table";
+import { PageFrame } from "@/components/layout/page-frame";
 
 const EVIDENCE_URL_TTL_SECONDS = 300; // short-lived signed URL (Security Considerations)
 
@@ -51,15 +52,18 @@ export default async function CorrectionsPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-strong">{dict["corrections.list.title"]}</h1>
-          <Link href="/corrections/new" className="sm-btn sm-btn-primary">
-            {dict["corrections.list.newLink"]}
+      <PageFrame
+        title={dict["corrections.list.title"]}
+        actions={
+          <Link href="/corrections/new" className="cds-btn cds-btn--md">
+          {dict["corrections.list.newLink"]}
           </Link>
-        </div>
+        }
+      >
+        <section className="space-y-6">
         <CorrectionListTable rows={rows} dict={dict} />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

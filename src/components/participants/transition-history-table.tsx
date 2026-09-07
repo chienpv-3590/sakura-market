@@ -1,5 +1,6 @@
 import type { Tables } from "@/lib/db/types";
 import { EligibilityStatusBadge } from "./eligibility-status-badge";
+import { EmptyState } from "@/components/ui/empty-state";
 
 type HistoryRow = Tables<"participant_status_history">;
 
@@ -17,12 +18,12 @@ export function TransitionHistoryTable({
   dict: Record<string, string>;
 }) {
   if (history.length === 0) {
-    return <p className="sm-empty">{dict["participants.detail.historyEmpty"]}</p>;
+    return <EmptyState description={dict["participants.detail.historyEmpty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th>{dict["participants.detail.historyHeaderFrom"]}</th>

@@ -1,0 +1,197 @@
+/* The dashboard process drawing.
+ *
+ * The design system ships no process-flow component -- its `cds-stepper` is a
+ * numeric +/- input, not a step indicator -- so the graphic is hand-authored
+ * inline SVG (flow-glyphs.tsx) behind `.cds-statcard` nodes. Every value here
+ * reads a token; no colour, radius, stroke weight or type size is hardcoded.
+ *
+ * The visual grammar, and every part of it carries information:
+ *   tapered cacao ribbon between lanes    a record travels this way, and the
+ *                                         ribbon's width is the channel volume
+ *   18-unit ribbon vs 2-unit merge curve  相対取引 ~90% vs せり ~10%, drawn 9:1
+ *   dashed --status-overdue curve, down   a fork that ENDS there
+ *   hatched barrier plate                 the irreversible lock: a plate the
+ *                                         flow strikes, not a card it enters
+ *   thin dashed ribbon after the barrier  only reverse/delta gets past a lock
+ *
+ * No animation anywhere: this dashboard sits open on a market floor all shift.
+ */
+
+@layer components {
+  /* Screen-reader-only prose, for the flow's description. */
+  .cds-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .cds-flow__scroll {
+    position: relative;
+    /* A graphic wider than the viewport scrolls HERE, never the page. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: var(--space-3);
+  }
+
+  .cds-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cds-flow__lane {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    max-width: 460px;
+  }
+
+  .cds-flow__lanelabel {
+    margin: 0;
+  }
+
+  .cds-flow__row {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  /* The spine is a column: a lane may hold more than one node when a record
+   * changes state WITHIN the stage (draft -> confirmed), which is a different
+   * thing from moving on to the next stage. */
+  .cds-flow__spine {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  /* In-stage transition marker between two stacked spine nodes. */
+  .cds-flow__spine > .cds-flow__node:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    bottom: calc(-1 * var(--space-5));
+    left: 32px;
+    height: var(--space-5);
+    /* --cacao-500, not --cacao-300: a 2px connector carries direction, so it
+     * owes 3:1 as non-text UI. Measured 4.31:1 on --surface-card against
+     * --cacao-300's 2.39:1. */
+    border-left: 2px solid var(--cacao-500);
+  }
+
+  /* --- nodes ------------------------------------------------------------- */
+  .cds-flow__node {
+    position: relative;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    min-width: 0;
+  }
+
+  /* Glyph left, figure right, label above them at full node width. */
+  .cds-flow__figrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  /* The glyph chip: the design system's own cacao-50 / cacao-600 pairing,
+   * which is how it tints a quiet icon container elsewhere. */
+  .cds-flow__chip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    background: var(--cacao-50);
+    color: var(--cacao-600);
+  }
+
+  .cds-flow__chip svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+  }
+
+  .cds-flow__node .cds-statcard__val {
+    font-size: 30px;
+  }
+
+  .cds-flow__node .cds-statcard__label {
+    line-height: var(--lh-sm);
+    /* Keeps a short CJK run whole (せり, 相対取引) instead of breaking it
+     * between glyphs, which is legal in CJK but unreadable at this size. */
+    word-break: keep-all;
+  }
+
+  /* --text-muted, not --text-subtle: this label says what KIND of node this
+   * is, so it is informative 11px text and owes 4.5:1. Measured 5.09:1 on
+   * --surface-sunken; --text-subtle would be 3.22:1. */
+  .cds-flow__rolelabel {
+    font-size: var(--fs-overline);
+    line-height: var(--lh-overline);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    font-weight: var(--fw-bold);
+    color: var(--text-muted);
+  }
+
+  .cds-flow__note {
+    font-size: var(--fs-caption);
+    line-height: var(--lh-caption);
+    color: var(--text-muted);
+  }
+
+  /* A minor inlet and a terminal fork are both quieter than the spine:
+   * dashed border, sunken fill, smaller figure, flatter shadow. せり must
+   * never read as 相対取引's equal. */
+  .cds-flow__node--inlet,
+  .cds-flow__node--outlet {
+    background: var(--surface-sunken);
+    border-style: dashed;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .cds-flow__node--inlet .cds-statcard__val,
+  .cds-flow__node--outlet .cds-statcard__val {
+    font-size: var(--fs-h1);
+  }
+
+  .cds-flow__node--inlet .cds-flow__chip,
+  .cds-flow__node--outlet .cds-flow__chip {
+    width: 26px;
+    height: 26px;
+    background: var(--neutral-200);
+    color: var(--text-muted);
+  }
+
+  .cds-flow__node--outlet {
+    border-color: var(--status-overdue-bg);
+  }
+
+  .cds-flow__node--outlet .cds-flow__rolelabel,
+  .cds-flow__node--outlet .cds-flow__chip {
+    color: var(--status-overdue-fg);
+  }
+}

@@ -84,7 +84,7 @@ export function ConfirmCancelButtonGroup({
   }
 
   if (status === "cancelled") {
-    return <span className="text-sm text-subtle">{t("transactions.status.cancelled")}</span>;
+    return <span className="text-[13px] text-muted">{t("transactions.status.cancelled")}</span>;
   }
 
   return (
@@ -96,7 +96,7 @@ export function ConfirmCancelButtonGroup({
             onClick={handleConfirm}
             disabled={pending}
             aria-busy={pending}
-            className="sm-btn sm-btn-primary"
+            className="cds-btn cds-btn--md"
           >
             {t("transactions.actions.confirm")}
           </button>
@@ -105,7 +105,7 @@ export function ConfirmCancelButtonGroup({
           type="button"
           onClick={() => setShowCancelForm((v) => !v)}
           disabled={pending}
-          className="sm-btn sm-btn-secondary"
+          className="cds-btn cds-btn--secondary cds-btn--md"
         >
           {t("transactions.actions.cancel")}
         </button>
@@ -118,21 +118,21 @@ export function ConfirmCancelButtonGroup({
             onChange={(e) => setReason(e.target.value)}
             placeholder={t("transactions.actions.cancelReasonPlaceholder")}
             disabled={pending}
-            className="sm-field"
+            className="cds-input--native"
           />
           <button
             type="button"
             onClick={handleCancel}
             disabled={pending || reason.trim().length === 0}
             aria-busy={pending}
-            className="sm-btn sm-btn-danger"
+            className="cds-btn cds-btn--danger cds-btn--md"
           >
             {t("transactions.actions.cancelConfirm")}
           </button>
         </div>
       )}
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

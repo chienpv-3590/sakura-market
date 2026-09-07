@@ -34,14 +34,31 @@ export function LocaleSwitcher() {
   }
 
   return (
-    // .sm-seg is the design system's segmented control (.rd-seg): the pressed
-    // segment is fill + brand colour + bold weight, so the selection survives a
-    // monochrome or colour-blind read. aria-pressed carries it for AT.
-    <div className="sm-seg" role="group" aria-label={t("action.switchLocale")}>
-      <button type="button" onClick={() => switchTo("vi")} disabled={pending} aria-pressed={locale === "vi"}>
+    // .cds-btngroup is the design system's segmented control. The pressed
+    // segment is fill + --color-primary + bold weight, plus a 1px cacao
+    // hairline drawn by ::after, so the selection survives a monochrome or
+    // colour-blind read. aria-pressed carries it for AT.
+    <div
+      className={`cds-btngroup cds-btngroup--sm ${pending ? "cds-btngroup--disabled" : ""}`}
+      role="group"
+      aria-label={t("action.switchLocale")}
+    >
+      <button
+        type="button"
+        className="cds-btngroup__item"
+        onClick={() => switchTo("vi")}
+        disabled={pending}
+        aria-pressed={locale === "vi"}
+      >
         VI
       </button>
-      <button type="button" onClick={() => switchTo("ja")} disabled={pending} aria-pressed={locale === "ja"}>
+      <button
+        type="button"
+        className="cds-btngroup__item"
+        onClick={() => switchTo("ja")}
+        disabled={pending}
+        aria-pressed={locale === "ja"}
+      >
         JA
       </button>
     </div>

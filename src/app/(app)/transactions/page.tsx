@@ -8,6 +8,7 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import type { Database, Tables } from "@/lib/db/types";
 import { TransactionTable } from "@/components/transactions/transaction-table";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 const STATUSES = ["draft", "confirmed", "cancelled"] as const;
 
@@ -53,36 +54,38 @@ export default async function TransactionsPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-strong">{dict["transactions.list.title"]}</h1>
-          {canAct ? (
-            <Link
-              href="/transactions/new"
-              className="sm-btn sm-btn-primary"
-            >
-              {dict["transactions.list.newLink"]}
-            </Link>
+      <PageFrame
+        title={dict["transactions.list.title"]}
+        actions={
+          canAct ? (
+          <Link
+          href="/transactions/new"
+          className="cds-btn cds-btn--md"
+          >
+          {dict["transactions.list.newLink"]}
+          </Link>
           ) : (
-            <HandoffCaption actionLabel={dict["transactions.list.newLink"]} roles={["ROLE-TRADE"]} />
-          )}
-        </div>
+          <HandoffCaption actionLabel={dict["transactions.list.newLink"]} roles={["ROLE-TRADE"]} />
+          )
+        }
+      >
+        <section className="space-y-6">
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["transactions.list.filterBusinessDateLabel"]}
             <input
               type="date"
               name="businessDate"
               defaultValue={businessDate ?? ""}
-              className="sm-field mt-1"
+              className="cds-input--native mt-1"
             />
           </label>
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["transactions.list.filterStatusLabel"]}
             <select
               name="status"
               defaultValue={validStatus ?? ""}
-              className="sm-field mt-1"
+              className="cds-select--native mt-1"
             >
               <option value="">{dict["transactions.list.filterAllStatuses"]}</option>
               {STATUSES.map((s) => (
@@ -94,7 +97,7 @@ export default async function TransactionsPage({
           </label>
           <button
             type="submit"
-            className="sm-btn sm-btn-secondary"
+            className="cds-btn cds-btn--secondary cds-btn--md"
           >
             {dict["transactions.list.filterSubmit"]}
           </button>
@@ -106,7 +109,8 @@ export default async function TransactionsPage({
           dict={dict}
           canAct={canAct}
         />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

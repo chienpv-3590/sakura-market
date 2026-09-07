@@ -5,7 +5,10 @@ export type PipelineStageId =
   | "lots-published"
   | "transactions-draft"
   | "transactions-confirmed"
+  | "transactions-cancelled"
+  | "seri-results"
   | "deliveries-in-progress"
+  | "deliveries-exception"
   | "business-day-lock"
   | "corrections-pending";
 
@@ -53,9 +56,27 @@ export const PIPELINE_STAGES: readonly PipelineStageDef[] = [
     allowedRoles: ROLES,
   },
   {
+    id: "transactions-cancelled",
+    titleKey: "home.stage.transactionsCancelled.title",
+    href: "/transactions?status=cancelled",
+    allowedRoles: ROLES,
+  },
+  {
+    id: "seri-results",
+    titleKey: "home.stage.seriResults.title",
+    href: "/seri",
+    allowedRoles: ROLES,
+  },
+  {
     id: "deliveries-in-progress",
     titleKey: "home.stage.deliveriesInProgress.title",
     href: `/deliveries?status=${encodeURIComponent("đang giao")}`,
+    allowedRoles: ROLES,
+  },
+  {
+    id: "deliveries-exception",
+    titleKey: "home.stage.deliveriesException.title",
+    href: `/deliveries?status=${encodeURIComponent("ngoại lệ")}`,
     allowedRoles: ROLES,
   },
   {

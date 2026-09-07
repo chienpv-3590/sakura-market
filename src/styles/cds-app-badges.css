@@ -1,0 +1,65 @@
+/* Status-badge tones: the design system's StatusBadge.jsx MAP, as CSS.
+ *
+ * Part of the app-side cds-* extension layer. See cds-app-controls.css for the
+ * shared rationale: nothing here re-declares a design value, every
+ * declaration reads a token from cds-tokens.css.
+ */
+
+@layer components {
+  /* --- status-badge tones (port of StatusBadge.jsx MAP) ------------------ */
+  .cds-statusbadge--ok {
+    color: var(--status-occupied-fg);
+    background: var(--status-occupied-bg);
+  }
+  .cds-statusbadge--ok .cds-statusbadge__dot {
+    background: var(--status-occupied-solid);
+  }
+  .cds-statusbadge--warn {
+    color: var(--status-vacant-fg);
+    background: var(--status-vacant-bg);
+  }
+  .cds-statusbadge--warn .cds-statusbadge__dot {
+    background: var(--status-vacant-solid);
+  }
+  .cds-statusbadge--error {
+    color: var(--status-overdue-fg);
+    background: var(--status-overdue-bg);
+  }
+  .cds-statusbadge--error .cds-statusbadge__dot {
+    background: var(--status-overdue-solid);
+  }
+  .cds-statusbadge--contract {
+    color: var(--status-contract-fg);
+    background: var(--status-contract-bg);
+  }
+  .cds-statusbadge--contract .cds-statusbadge__dot {
+    background: var(--status-contract-solid);
+  }
+  .cds-statusbadge--idle {
+    color: var(--status-inactive-fg);
+    background: var(--status-inactive-bg);
+  }
+  .cds-statusbadge--idle .cds-statusbadge__dot {
+    background: var(--status-inactive-solid);
+  }
+  .cds-statusbadge--forecast {
+    color: var(--accent-valuation-fg);
+    background: var(--accent-valuation-bg);
+  }
+  .cds-statusbadge--forecast .cds-statusbadge__dot {
+    background: var(--accent-valuation-solid);
+  }
+  .cds-statusbadge--info {
+    color: var(--status-info-fg);
+    background: var(--status-info-bg);
+  }
+  .cds-statusbadge--info .cds-statusbadge__dot {
+    background: var(--status-info-solid);
+  }
+
+  /* A badge that carries the current step of a record is additionally bold --
+   * position + weight, so the step reads without relying on hue. */
+  .cds-statusbadge--current {
+    font-weight: var(--fw-bold);
+  }
+}

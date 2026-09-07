@@ -14,6 +14,7 @@ import { loadParticipantOptions } from "@/lib/reports/participant-options";
 import { MockDataBadge } from "@/components/reports/mock-data-badge";
 import { ReportFilterForm } from "@/components/reports/report-filter-form";
 import { ReportResultTable } from "@/components/reports/report-result-table";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR020_ReportViewer (A2/A3, FR-RPT-01, FR-RPT-02, FR-RPT-03, US002, US003).
 // Mock reports (9/12) show the badge + notice and no export link -- the
@@ -58,25 +59,29 @@ export default async function ReportViewerPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-strong">
+      <PageFrame
+        title={
+          <>
             {definition.code} — {dict[definition.titleKey]}
-          </h1>
+          </>
+        }
+        actions={
           <Link href="/reports" className="text-sm text-secondary hover:underline">
-            {dict["reports.viewer.backLink"]}
+          {dict["reports.viewer.backLink"]}
           </Link>
-        </div>
+        }
+      >
+        <section className="space-y-6">
 
         {definition.isMock ? (
           <div className="space-y-3">
             <MockDataBadge label={dict["reports.catalog.badgeMock"]} />
-            <p className="text-sm text-wait">{dict["reports.viewer.mockNotice"]}</p>
+            <p className="text-sm text-warn">{dict["reports.viewer.mockNotice"]}</p>
             <button
               type="button"
               disabled
               title={dict["reports.viewer.exportDisabledMock"]}
-              className="sm-btn sm-btn-secondary"
+              className="cds-btn cds-btn--secondary cds-btn--md"
             >
               {dict["reports.viewer.exportButton"]}
             </button>
@@ -84,7 +89,7 @@ export default async function ReportViewerPage({
         ) : (
           <a
             href={exportHref}
-            className="sm-btn sm-btn-primary"
+            className="cds-btn cds-btn--md"
           >
             {dict["reports.viewer.exportButton"]}
           </a>
@@ -107,7 +112,8 @@ export default async function ReportViewerPage({
           filterValues={filterValues}
           dict={dict}
         />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

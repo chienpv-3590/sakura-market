@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useT } from "@/lib/i18n/i18n-provider";
 import { KeyboardOperableForm } from "./keyboard-operable-form";
+import { EmptyState } from "@/components/ui/empty-state";
 
 type LotOption = { id: string; lotCode: string; item: string; availableQty: number };
 type ParticipantOption = { id: string; name: string };
@@ -58,13 +59,13 @@ export function AitaiCreateForm({
   }
 
   if (lots.length === 0 || participants.length === 0) {
-    return <p className="sm-empty">{t("transactions.create.noLots")}</p>;
+    return <EmptyState description={t("transactions.create.noLots")} />;
   }
 
   return (
     <KeyboardOperableForm onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="txn-lot" className="sm-label">
+        <label htmlFor="txn-lot" className="cds-field__label">
           {t("transactions.create.lotLabel")}
         </label>
         <select
@@ -72,7 +73,7 @@ export function AitaiCreateForm({
           value={lotId}
           onChange={(e) => setLotId(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-select--native mt-1 w-full"
         >
           {lots.map((lot) => (
             <option key={lot.id} value={lot.id}>
@@ -82,7 +83,7 @@ export function AitaiCreateForm({
         </select>
       </div>
       <div>
-        <label htmlFor="txn-buyer" className="sm-label">
+        <label htmlFor="txn-buyer" className="cds-field__label">
           {t("transactions.create.buyerLabel")}
         </label>
         <select
@@ -90,7 +91,7 @@ export function AitaiCreateForm({
           value={buyerParticipantId}
           onChange={(e) => setBuyerParticipantId(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-select--native mt-1 w-full"
         >
           {participants.map((p) => (
             <option key={p.id} value={p.id}>
@@ -100,7 +101,7 @@ export function AitaiCreateForm({
         </select>
       </div>
       <div>
-        <label htmlFor="txn-qty" className="sm-label">
+        <label htmlFor="txn-qty" className="cds-field__label">
           {t("transactions.create.qtyLabel")}
         </label>
         <input
@@ -112,11 +113,11 @@ export function AitaiCreateForm({
           value={qty}
           onChange={(e) => setQty(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="txn-unit-price" className="sm-label">
+        <label htmlFor="txn-unit-price" className="cds-field__label">
           {t("transactions.create.unitPriceLabel")}
         </label>
         <input
@@ -128,11 +129,11 @@ export function AitaiCreateForm({
           value={unitPrice}
           onChange={(e) => setUnitPrice(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}
@@ -140,7 +141,7 @@ export function AitaiCreateForm({
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary w-full"
+        className="cds-btn cds-btn--md w-full"
       >
         {submitting ? t("transactions.create.submitting") : t("transactions.create.submit")}
       </button>

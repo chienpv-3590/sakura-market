@@ -9,6 +9,7 @@ import { todayJst } from "@/lib/db/business-date";
 import { isValidPeriod } from "@/lib/incentive/is-valid-period";
 import { listIncentiveResults } from "@/lib/incentive/incentive-result-queries";
 import { IncentiveResultTable } from "@/components/incentive/incentive-result-table";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR016_IncentiveResult (A6, FR-303, US003) -- ROLE-SETTLEMENT's own view
 // of 完納奨励金 results per functional-spec's Actors table.
@@ -27,32 +28,37 @@ export default async function IncentivePage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <h1 className="text-2xl font-semibold text-strong">
-          {dict["incentive.result.title"]} — {dict["term.incentive"]}
-        </h1>
+      <PageFrame
+        title={
+          <>
+            {dict["incentive.result.title"]} — {dict["term.incentive"]}
+          </>
+        }
+      >
+        <section className="space-y-6">
 
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["incentive.result.periodLabel"]}
             <input
               type="date"
               name="period"
               defaultValue={resolvedPeriod}
               max={todayJst()}
-              className="sm-field mt-1"
+              className="cds-input--native mt-1"
             />
           </label>
           <button
             type="submit"
-            className="sm-btn sm-btn-secondary"
+            className="cds-btn cds-btn--secondary cds-btn--md"
           >
             {dict["incentive.result.periodSubmit"]}
           </button>
         </form>
 
         <IncentiveResultTable rows={rows} dict={dict} />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

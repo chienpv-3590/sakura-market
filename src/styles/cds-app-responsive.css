@@ -1,0 +1,145 @@
+/* Narrow-viewport behaviour: the collapsed rail, the page-level grids.
+ *
+ * Part of the app-side cds-* extension layer. Nothing here re-declares a
+ * design value: every declaration reads a token from cds-tokens.css.
+ */
+
+@layer components {
+  /* --- below --bp-tablet (768px): the system's own collapsed rail --------- */
+  /* !important is deliberate and load-bearing: .cds-rolenav--expanded is a
+   * class the toggle controls, and at this width the rail has no room to be
+   * expanded whatever the stored preference says. */
+  @media (max-width: 767px) {
+    .cds-shell {
+      --nav-w: var(--sidebar-w-collapsed) !important;
+    }
+
+    /* Verbatim from .cds-rolenav--collapsed, keyed on width instead. */
+    .cds-shell__nav .cds-rolenav__head {
+      justify-content: center;
+      padding: 0;
+      gap: 0;
+    }
+    .cds-shell__nav .cds-rolenav__brand {
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .cds-shell__nav .cds-rolenav__group {
+      text-align: center;
+      padding: 12px 0 6px;
+      font-size: 9px;
+    }
+    .cds-shell__nav .cds-rolenav__item {
+      justify-content: center;
+      padding: 10px 0;
+    }
+    .cds-shell__nav .cds-rolenav__label,
+    .cds-shell__nav .cds-rolenav__badge {
+      display: none;
+    }
+    /* The rail is icon-only here, so it must not also be scroll-jailed: the
+     * scroller keeps its own overflow but loses the 12px side padding that
+     * would push 20px icons off-centre in a 72px column. */
+    .cds-shell__nav .cds-rolenav__scroll {
+      padding: 0 8px;
+    }
+
+    .cds-shell__page {
+      padding: var(--space-5) var(--space-5) var(--space-8);
+    }
+
+    .cds-pageheader {
+      padding: var(--space-5);
+    }
+  }
+
+  /* --- section heading inside a page ------------------------------------- */
+  /* The design system's overline treatment (--fs-overline / --tracking-overline
+   * / --fw-bold) exists only as .cds-rolenav__group, which is coloured for the
+   * dark rail. Same type, page colours -- for the <h2> that opens a block
+   * inside a screen ("LUONG NGHIEP VU", "TIEN TRINH"). */
+  .cds-section-title {
+    font-size: var(--fs-overline);
+    line-height: var(--lh-overline);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    font-weight: var(--fw-bold);
+    color: var(--text-muted);
+  }
+
+  /* --- table region ------------------------------------------------------ */
+  /* A wide table scrolls inside .cds-table__wrap (overflow-x:auto, from the
+   * DS). This keeps the wrap from being stretched by its own content when it
+   * sits in a flex/grid parent, which is what would leak the scroll out to the
+   * page. */
+  .cds-table__wrap {
+    min-width: 0;
+  }
+
+  /* thead is sticky in the DS; give it something to stick to when the wrap
+   * itself is the scroll container in the vertical axis too (report viewer). */
+  .cds-table__wrap--tall {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  /* --- key/value grid used on every detail page -------------------------- */
+  /* .cds-keyvalue is one row; detail screens stack many. */
+  .cds-keyvalue-list {
+    display: grid;
+    gap: 0;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .cds-keyvalue-list--2 {
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--gutter);
+    }
+  }
+
+  /* --- statcard grid ----------------------------------------------------- */
+  .cds-statcard-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .cds-statcard-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cds-statcard-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* A statcard that is a link keeps the card's own hover feedback. */
+  a.cds-statcard:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-hover);
+  }
+
+  /* The design system's ring, kept -- but WITHOUT its `outline: none`, so the
+   * 2px solid outline in cds-app-controls.css still lands on top of it. The
+   * ring alone measures about 1.35:1 and would not be a compliant indicator. */
+  a.cds-statcard:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+
+  /* A statcard the signed-in role may not read is not a link and says so. */
+  .cds-statcard--muted {
+    background: var(--surface-sunken);
+  }
+
+  /* --text-muted (5.09:1 on --surface-sunken), not --text-subtle (3.22:1):
+   * the em-dash stands in for a figure and has to be legible. */
+  .cds-statcard--muted .cds-statcard__val {
+    color: var(--text-muted);
+  }
+}

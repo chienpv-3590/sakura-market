@@ -1,0 +1,136 @@
+/* The dashboard process drawing: the wide, horizontal graphic.
+ *
+ * Part of the app-side cds-* extension layer. See cds-app-flow.css for the
+ * shared rationale: nothing here re-declares a design value, every
+ * declaration reads a token from cds-tokens.css.
+ */
+
+@layer components {
+  /* --- horizontal graphic from --bp-web-jp (1280px) --------------------- */
+  /* NOT --bp-web (1024px): six lanes plus the せり inlet need about 1000px of
+   * content width, and 1024px minus the 248px rail and the page padding
+   * leaves 712px. Going horizontal there would hide a third of the drawing
+   * behind an internal scrollbar, and this screen exists to be read at a
+   * glance -- so 1024-1279 keeps the complete, unscrolled vertical chain.
+   * --bp-web-jp is the design system's own wider breakpoint, and it exists
+   * precisely because CJK interfaces need the extra room. */
+  @media (min-width: 1280px) {
+    .cds-flow {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .cds-flow__lane {
+      flex: 1 1 0;
+      min-width: 128px;
+      max-width: none;
+      /* 44px connector + 4px of air on each side. */
+      padding-right: 52px;
+    }
+
+    /* The sale lane also carries the せり inlet beside its spine. */
+    .cds-flow__lane:has(.cds-flow__inletwrap) {
+      flex: 2 1 0;
+      min-width: 274px;
+    }
+
+    .cds-flow__lane--last {
+      padding-right: 0;
+    }
+
+    .cds-flow__row {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 34px;
+    }
+
+    /* The inlet takes only what it needs, so it can never crowd the channel
+     * it feeds. */
+    .cds-flow__inletwrap {
+      flex: 0 0 auto;
+      width: 116px;
+      align-self: flex-end;
+    }
+
+    /* The 2-unit merge curve, rising out of the せり node into the 相対取引
+     * node beside it. Against the 18-unit ribbon entering that same node from
+     * the left, the 9:1 share is the first thing the eye reads. */
+    /* 96x88 box for a 96x88 viewBox, same 1:1 rule as the connector -- the
+     * 2-unit せり stroke is 2px, against the connector's 18px ribbon. */
+    .cds-flow__merge {
+      display: block;
+      position: absolute;
+      right: -30px;
+      bottom: 24px;
+      width: 96px;
+      height: 88px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    /* Connector: upright, in the lane's right-hand gutter, anchored to the
+     * spine's top edge -- every spine starts at the same y, so all six line
+     * up along one channel. */
+    .cds-flow__connwrap {
+      position: absolute;
+      top: calc(var(--lh-overline) + var(--space-3) - 8px);
+      right: 4px;
+      height: 72px;
+      width: 44px;
+    }
+
+    /* Extends 150px into the next lane, so its arrowhead lands on that
+     * lane's spine rather than on its inlet column.
+     *
+     * 198px = 48 (this lane's gutter) + 116 (inlet width) + 34 (row gap). If
+     * any of those three change, this changes with them. */
+    .cds-flow__connwrap--long {
+      right: -150px;
+      width: 198px;
+      justify-content: flex-start;
+    }
+
+    .cds-flow__connwrap--long .cds-flow__conn:not(.cds-flow__conn--long) {
+      display: none;
+    }
+
+    .cds-flow__conn.cds-flow__conn--long {
+      display: block;
+      width: 198px;
+    }
+
+    .cds-flow__conn,
+    .cds-flow__barrier {
+      --conn-rot: 0deg;
+    }
+
+    /* The fork: a dashed curve peeling out of the spine and stopping. */
+    .cds-flow__forkwrap {
+      position: relative;
+      padding-top: 46px;
+    }
+
+    .cds-flow__fork {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 16px;
+      width: 46px;
+      height: 46px;
+      overflow: visible;
+    }
+
+    .cds-flow__outlets {
+      margin: 0;
+      max-width: 176px;
+    }
+
+    .cds-flow__outlets > li {
+      padding-left: 0;
+    }
+
+    .cds-flow__outlets > li::before {
+      display: none;
+    }
+  }
+}

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useT } from "@/lib/i18n/i18n-provider";
+import { EmptyState } from "@/components/ui/empty-state";
 import {
   allowedEvents,
   type ParticipantStatus,
@@ -67,7 +68,7 @@ export function TransitionActions({
   }
 
   if (events.length === 0) {
-    return <p className="sm-empty">{t("participants.detail.transitionNoneAvailable")}</p>;
+    return <EmptyState description={t("participants.detail.transitionNoneAvailable")} />;
   }
 
   return (
@@ -81,7 +82,7 @@ export function TransitionActions({
             className={`rounded-md border px-3 py-2 text-sm font-medium ${
               selected === event
                 ? "border-brand bg-brand text-card"
-                : "border-line-strong text-secondary hover:bg-neutral-50"
+                : "border-line-strong text-secondary hover:bg-hover"
             }`}
           >
             {t(`event.${event}`)}
@@ -89,8 +90,8 @@ export function TransitionActions({
         ))}
       </div>
       {selected && (
-        <div className="sm-card space-y-2 p-3">
-          <label className="sm-label">
+        <div className="cds-card space-y-2 p-3">
+          <label className="cds-field__label">
             {t("participants.detail.transitionReasonLabel")}
             <textarea
               value={reason}
@@ -98,11 +99,11 @@ export function TransitionActions({
               disabled={submitting}
               placeholder={t("participants.detail.transitionReasonPlaceholder")}
               rows={2}
-              className="sm-field mt-1 w-full"
+              className="cds-textarea mt-1 w-full"
             />
           </label>
           {error && (
-            <p role="alert" className="sm-error">
+            <p role="alert" className="cds-field__msg cds-field__msg--error">
               {error}
             </p>
           )}
@@ -112,7 +113,7 @@ export function TransitionActions({
               onClick={confirm}
               disabled={submitting}
               aria-busy={submitting}
-              className="sm-btn sm-btn-primary"
+              className="cds-btn cds-btn--md"
             >
               {t("participants.detail.transitionConfirm")}
             </button>
@@ -120,7 +121,7 @@ export function TransitionActions({
               type="button"
               onClick={cancelSelection}
               disabled={submitting}
-              className="sm-btn sm-btn-secondary"
+              className="cds-btn cds-btn--secondary cds-btn--md"
             >
               {t("participants.detail.transitionCancel")}
             </button>

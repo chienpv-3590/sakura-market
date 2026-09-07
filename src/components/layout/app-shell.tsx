@@ -1,11 +1,24 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ReactNode } from "react";
 import { getCurrentUser } from "@/lib/auth/require-role";
-import { AppShellHeader } from "./app-shell-header";
-import { SidebarNav } from "./sidebar-nav";
+import { createClient } from "@/lib/supabase/server";
+import type { Database } from "@/lib/db/types";
+import { todayJst } from "@/lib/db/business-date";
+import { loadLockStatus } from "@/lib/reconciliation/reconciliation-queries";
+import { NavShell } from "./nav-shell";
+import { RoleSidebar } from "./role-sidebar";
+import { TopHeader } from "./top-header";
 
 // getCurrentUser() is React.cache()-wrapped -- (app)/layout.tsx already
 // called requireUser() (which calls it) earlier in this same request, so
 // this doesn't add a second app_user query.
+//
+// Shape is the design system's AppShell: a 2-column grid whose first column
+// is the dark navy rail (--sidebar-bg) and whose second column stacks the
+// 56px topheader over a single scrolling body. The sidebar and header are
+// rendered here (server) and handed to NavShell (client) as props, so the
+// rail's collapse state can live in one client component without pulling the
+// whole tree client-side.
 export async function AppShell({ children }: { children: ReactNode }) {
   const user = await getCurrentUser();
   if (!user) {
@@ -15,16 +28,23 @@ export async function AppShell({ children }: { children: ReactNode }) {
     throw new Error("AppShell: no active user after requireUser() gate");
   }
 
-  // Stacks below lg: a 224px fixed sidebar next to content leaves nothing
-  // usable on a 390px screen, so the nav becomes a full-width band above the
-  // content instead of a column beside it.
+  const businessDate = todayJst();
+  const supabase: SupabaseClient<Database> = await createClient();
+  const lock = await loadLockStatus(supabase, businessDate);
+
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
-      <SidebarNav role={user.role} />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <AppShellHeader />
-        <main className="min-w-0 flex-1 bg-page px-4 py-6 sm:px-6 sm:py-8">{children}</main>
-      </div>
-    </div>
+    <NavShell
+      sidebar={<RoleSidebar role={user.role} />}
+      header={
+        <TopHeader
+          businessDate={businessDate}
+          locked={lock.locked}
+          displayName={user.displayName}
+          role={user.role}
+        />
+      }
+    >
+      <main className="min-w-0">{children}</main>
+    </NavShell>
   );
 }

@@ -14,6 +14,7 @@ import { TransitionHistoryTable } from "@/components/participants/transition-his
 import { TransitionActions } from "@/components/participants/transition-actions";
 import { ParticipantForm } from "@/components/participants/participant-form";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR003_ParticipantDetail. Profile + current eligibility + full transition
 // history, plus (ROLE-SYS-ADMIN only) the edit form and transition actions.
@@ -68,16 +69,18 @@ export default async function ParticipantDetailPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="max-w-3xl space-y-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-strong">{participant.name}</h1>
+      <PageFrame
+        title={participant.name}
+        actions={
           <Link href="/participants" className="text-sm text-secondary hover:underline">
-            {dict["participants.detail.backToList"]}
+          {dict["participants.detail.backToList"]}
           </Link>
-        </div>
+        }
+      >
+        <section className="max-w-3xl space-y-8">
 
-        <div className="sm-card p-4">
-          <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.detail.profileSection"]}</h2>
+        <div className="cds-card p-4">
+          <h2 className="cds-card__title mb-3">{dict["participants.detail.profileSection"]}</h2>
           <dl className="grid grid-cols-2 gap-3 text-sm">
             <div>
               <dt className="text-muted">{dict["participants.detail.categoryLabel"]}</dt>
@@ -100,18 +103,18 @@ export default async function ParticipantDetailPage({
             </div>
             <div>
               <dt className="text-muted">{dict["participants.detail.validFromLabel"]}</dt>
-              <dd className="sm-mono text-strong">{participant.valid_from}</dd>
+              <dd className="cds-table__mono text-strong">{participant.valid_from}</dd>
             </div>
             <div>
               <dt className="text-muted">{dict["participants.detail.validToLabel"]}</dt>
-              <dd className="sm-mono text-strong">{participant.valid_to ?? dict["participants.detail.validToNone"]}</dd>
+              <dd className="cds-table__mono text-strong">{participant.valid_to ?? dict["participants.detail.validToNone"]}</dd>
             </div>
           </dl>
         </div>
 
         {canWrite ? (
-          <div className="sm-card p-4">
-            <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.form.editTitle"]}</h2>
+          <div className="cds-card p-4">
+            <h2 className="cds-card__title mb-3">{dict["participants.form.editTitle"]}</h2>
             <ParticipantForm
               mode="edit"
               initial={{
@@ -128,19 +131,20 @@ export default async function ParticipantDetailPage({
         )}
 
         {canWrite ? (
-          <div className="sm-card p-4">
-            <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.detail.transitionSection"]}</h2>
+          <div className="cds-card p-4">
+            <h2 className="cds-card__title mb-3">{dict["participants.detail.transitionSection"]}</h2>
             <TransitionActions participantId={participant.id} currentStatus={participant.status} />
           </div>
         ) : (
           <HandoffCaption actionLabel={dict["participants.detail.transitionSection"]} roles={["ROLE-SYS-ADMIN"]} />
         )}
 
-        <div className="sm-card p-4">
-          <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.detail.historySection"]}</h2>
+        <div className="cds-card p-4">
+          <h2 className="cds-card__title mb-3">{dict["participants.detail.historySection"]}</h2>
           <TransitionHistoryTable history={history ?? []} changedByNames={changedByNames} dict={dict} />
         </div>
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

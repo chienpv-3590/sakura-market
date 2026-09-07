@@ -1,0 +1,184 @@
+/* App-side additions to the cds-* system. Two kinds only:
+ *
+ *  1. NATIVE-CONTROL VARIANTS (`--native`). The design system's Input / Select
+ *     controls are React components that wrap the control in a styled div (and
+ *     Select replaces <select> with a button + popup menu entirely). This app
+ *     is server-rendered with real <input>/<select> elements so forms work
+ *     without JS. These variants apply the SAME visual contract the DS defines
+ *     on `.cds-input` / `.cds-select__control` directly to the native element.
+ *     Every declaration is copied from that rule; no new values.
+ *
+ *  2. STATUS-BADGE TONES. The DS's StatusBadge.jsx carries its tone map in JS
+ *     and applies it as an inline style. Ported here as classes, one per entry
+ *     of that map, so a Server Component can render a badge. Tone names and
+ *     token pairings are the DS's own (ok / warn / error / contract / idle /
+ *     forecast / info) -- see src/components/ui/status-tone.ts.
+ *
+ * Nothing here re-declares a colour, radius, size or font: it all reads tokens.
+ */
+
+@layer components {
+  /* A <select>'s min-content width is its widest <option>, and a field
+   * wrapper in a flex row defaults to min-width:auto -- together they stop a
+   * filter bar from ever shrinking, which stretches the page. */
+  .cds-field,
+  .cds-formfield,
+  .cds-input--native,
+  .cds-select--native,
+  .cds-textarea {
+    min-width: 0;
+  }
+
+  /* --- .cds-input applied to a native input ------------------------------ */
+  .cds-input--native {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-body);
+    outline: none;
+    transition:
+      border-color var(--dur-fast),
+      box-shadow var(--dur-fast);
+  }
+
+  .cds-input--native:focus {
+    border-color: var(--border-focus);
+    box-shadow: var(--focus-ring);
+  }
+
+  .cds-input--native::placeholder {
+    color: var(--text-subtle);
+  }
+
+  .cds-input--native:disabled {
+    background: var(--neutral-100);
+    color: var(--text-disabled);
+    cursor: not-allowed;
+  }
+
+  .cds-input--native:read-only:not(select) {
+    background: var(--neutral-50);
+  }
+
+  /* A field the screen shows but nobody may edit -- a locked category, a
+   * license type the system derives. Same box so it stays legible as part of
+   * the form, the DS's own --color-readonly-fg so it never reads as editable.
+   * Applied to a <p>, not a disabled <input>, so it is not a tab stop. */
+  .cds-input--native.cds-input--readonly {
+    height: auto;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    background: var(--neutral-100);
+    color: var(--color-readonly-fg);
+    cursor: default;
+  }
+
+  .cds-input--native.cds-input--error {
+    border-color: var(--status-overdue-solid);
+  }
+
+  /* Auto-height for a control the browser lays out itself (textarea, and any
+   * input the app sizes up -- the new lot_code readout is 24px type). */
+  .cds-input--native.cds-input--auto {
+    height: auto;
+    padding: 8px 12px;
+    line-height: 1.5;
+  }
+
+  /* --- .cds-select__control applied to a native <select> ----------------- */
+  /* The chevron is a background image because a native select cannot hold a
+   * child element; the glyph is the same "m6 9 6 6 6-6" path the DS uses, at
+   * --text-subtle. */
+  .cds-select--native {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 0 34px 0 12px;
+    background-color: var(--surface-card);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237C8697' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-body);
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    transition:
+      border-color var(--dur-fast),
+      box-shadow var(--dur-fast);
+  }
+
+  .cds-select--native:focus {
+    border-color: var(--border-focus);
+    box-shadow: var(--focus-ring);
+  }
+
+  .cds-select--native:disabled {
+    background-color: var(--neutral-100);
+    color: var(--text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* --- focus indicator -------------------------------------------------- */
+  /* The design system's --focus-ring is --cacao-500 at 32% alpha: measured
+   * about 1.35:1 against --surface-card, which does not meet the 3:1 a focus
+   * indicator owes (WCAG 1.4.11 / 2.4.11). Every cds-* component that sets it
+   * also sets `outline: none`, which would take the app's own base outline
+   * away with it -- so the outline is restored here, ALONGSIDE the system's
+   * ring rather than instead of it.
+   *
+   * `:root:root *` scores 0,3,0, which clears the highest specificity any
+   * cds-* focus rule reaches (0,2,1, e.g. `a.cds-rolenav__head:focus-visible`)
+   * without resorting to !important. */
+  :root:root *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* --- 44px floor on a market floor at 02:00 ----------------------------- */
+  /* The DS sizes its md controls at 38px and its sm ones at 30px, which is
+   * right for a desk. Touch input gets the WCAG 2.5.5 target instead;
+   * --row-h is the system's own 44px token. */
+  @media (pointer: coarse) {
+    .cds-input--native,
+    .cds-select--native,
+    .cds-btn--md,
+    .cds-btn--sm,
+    .cds-btngroup--md .cds-btngroup__item,
+    .cds-btngroup--sm .cds-btngroup__item {
+      height: var(--row-h);
+    }
+
+    /* Width too, not just height: a 33x44 segment clears WCAG 2.5.8's 24x24
+     * AA minimum but not 2.5.5's 44x44, and the topheader has the room once
+     * it is allowed to wrap below 640px. */
+    .cds-topheader .cds-btn--sm,
+    .cds-topheader .cds-btngroup__item {
+      min-width: var(--row-h);
+    }
+
+    /* The rail is icon-only below --bp-tablet, so its rows are the only
+     * target for a whole screen of navigation. */
+    .cds-rolenav__item,
+    .cds-rolenav__head {
+      min-height: var(--row-h);
+    }
+
+    .cds-iconbtn--sm,
+    .cds-topheader__toggle {
+      width: var(--row-h);
+      height: var(--row-h);
+    }
+  }
+}

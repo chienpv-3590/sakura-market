@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { RuleVersionListRow } from "@/lib/incentive/rule-version-queries";
 import type { RuleVersionDisplayStatus } from "@/lib/incentive/rule-version-display-status";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { EmptyState } from "@/components/ui/empty-state";
 
 // SCR017_RuleVersionList. `displayStatus` is computed server-side (SM-001 §
 // 4.3 -- superseded/scheduled are read-time labels, never a stored column).
@@ -15,12 +16,12 @@ export function RuleVersionTable({
   dict: Record<string, string>;
 }) {
   if (rows.length === 0) {
-    return <p className="sm-empty">{dict["incentive.rules.list.empty"]}</p>;
+    return <EmptyState description={dict["incentive.rules.list.empty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th className="text-right">{dict["incentive.rules.list.columnVersionNo"]}</th>
@@ -33,12 +34,12 @@ export function RuleVersionTable({
         <tbody>
           {rows.map((row) => (
             <tr key={row.id}>
-              <td className="sm-num">
+              <td className="cds-table__num cds-table__mono">
                 <Link href={`/incentive/rules/${row.id}`} className="font-medium text-strong hover:underline">
                   v{row.version_no}
                 </Link>
               </td>
-              <td className="sm-mono text-strong">{row.effective_from}</td>
+              <td className="cds-table__mono text-strong">{row.effective_from}</td>
               <td>
                 <StatusBadge
                   status={displayStatus.get(row.id) ?? row.status}

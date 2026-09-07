@@ -11,6 +11,7 @@ import { LotEditForm } from "@/components/lots/lot-edit-form";
 import { loadLot, loadLotAuditHistory } from "@/lib/lots/lot-queries";
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR006_LotDetail -- REG-AVAILABILITY (everyone) + REG-EDIT (ROLE-SETTLEMENT
 // only, matching the PATCH /api/lots/[id] role gate).
@@ -27,15 +28,19 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-8">
+      <PageFrame
+        title={
+          <>
+            {dict["lots.detail.title"]}: <span className="cds-table__mono">{lot.lot_code}</span>
+          </>
+        }
+        description={lot.item}
+        backHref="/lots"
+        backLabel={dict["nav.lots"]}
+      >
+        <section className="space-y-8">
         <div>
-          <h1 className="text-2xl font-semibold text-strong">
-            {dict["lots.detail.title"]}: <span className="sm-mono">{lot.lot_code}</span>
-          </h1>
-          <p className="sm-hint mt-1">{lot.item}</p>
-        </div>
-        <div>
-          <h2 className="text-sm font-medium uppercase tracking-wide text-muted">
+          <h2 className="cds-section-title">
             {dict["pipeline.title"]}
           </h2>
           <div className="mt-2">
@@ -50,7 +55,7 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
         />
         {user.role === "ROLE-SETTLEMENT" ? (
           <div>
-            <h2 className="text-lg font-semibold text-strong">{dict["lots.detail.editTitle"]}</h2>
+            <h2 className="cds-card__title">{dict["lots.detail.editTitle"]}</h2>
             <div className="mt-2">
               <LotEditForm lotId={lot.id} currentItem={lot.item} currentPackageCount={lot.package_count} />
             </div>
@@ -58,7 +63,8 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
         ) : (
           <HandoffCaption actionLabel={dict["lots.detail.editTitle"]} roles={["ROLE-SETTLEMENT"]} />
         )}
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

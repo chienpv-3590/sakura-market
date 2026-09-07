@@ -24,17 +24,17 @@ function findSection(pathname: string): NavItem | null {
   return best;
 }
 
-// Lightweight wayfinding, not a full crumb trail: section name (from the nav
-// item it matches) plus, at most, one generic suffix ("Tạo mới" / "Chi
-// tiết") for whatever comes after it in the URL. Each page's own <h1>
-// already carries the specific title -- this only orients at the header
-// level ("which top-level area am I in").
+// Lightweight wayfinding rendered as the design system's .cds-breadcrumb:
+// section name (from the nav item it matches) plus, at most, one generic
+// suffix ("Tạo mới" / "Chi tiết") for whatever comes after it in the URL.
+// Each page's own <h1> already carries the specific title -- this only
+// orients at the header level ("which top-level area am I in").
 export function PageBreadcrumb() {
   const t = useT();
   const pathname = usePathname();
 
   if (pathname === "/") {
-    return <p className="text-sm font-semibold text-strong">{t("app.name")}</p>;
+    return <span className="cds-topheader__title">{t("app.name")}</span>;
   }
 
   const section = findSection(pathname);
@@ -42,22 +42,51 @@ export function PageBreadcrumb() {
   const suffixKey = rest.length === 0 ? null : rest[0] === "new" ? "breadcrumb.new" : "breadcrumb.detail";
 
   return (
-    <p className="text-sm">
-      <Link href="/" className="text-subtle hover:text-secondary">
+    <nav className="cds-breadcrumb" aria-label={t("nav.sidebarLabel")}>
+      <Link href="/" className="cds-breadcrumb__item">
         {t("app.name")}
       </Link>
       {section && (
         <>
-          <span className="mx-1.5 text-subtle">/</span>
-          <span className="font-semibold text-strong">{t(section.labelKey)}</span>
+          <Separator />
+          <span
+            className={
+              suffixKey
+                ? "cds-breadcrumb__item"
+                : "cds-breadcrumb__item cds-breadcrumb__item--current"
+            }
+          >
+            {t(section.labelKey)}
+          </span>
         </>
       )}
       {suffixKey && (
         <>
-          <span className="mx-1.5 text-subtle">/</span>
-          <span className="text-secondary">{t(suffixKey)}</span>
+          <Separator />
+          <span className="cds-breadcrumb__item cds-breadcrumb__item--current">
+            {t(suffixKey)}
+          </span>
         </>
       )}
-    </p>
+    </nav>
+  );
+}
+
+// The design system's chevron separator -- aria-hidden, so a screen reader
+// reads the trail as a plain list of names.
+function Separator() {
+  return (
+    <span className="cds-breadcrumb__sep" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </span>
   );
 }

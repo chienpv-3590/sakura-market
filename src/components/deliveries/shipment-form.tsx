@@ -46,7 +46,7 @@ export function ShipmentForm({ deliveryId }: { deliveryId: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-2">
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("deliveries.detail.newShipmentQtyLabel")}
         <input
           type="number"
@@ -55,19 +55,19 @@ export function ShipmentForm({ deliveryId }: { deliveryId: string }) {
           value={qty}
           onChange={(e) => setQty(e.target.value)}
           disabled={pending}
-          className="sm-field mt-1 w-40"
+          className="cds-input--native mt-1 w-40"
         />
       </label>
       <button
         type="submit"
         disabled={pending || qty.trim().length === 0}
         aria-busy={pending}
-        className="sm-btn sm-btn-primary"
+        className="cds-btn cds-btn--md"
       >
         {t("deliveries.detail.newShipmentSubmit")}
       </button>
       {errorKey && (
-        <p role="alert" className="sm-error w-full">
+        <p role="alert" className="cds-field__msg cds-field__msg--error w-full">
           {t(errorKey)}
         </p>
       )}

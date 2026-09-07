@@ -7,6 +7,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { MekikiForm } from "@/components/lots/mekiki-form";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR005_MekikiEntry. Page-level view is open to any active user (matches
 // the shared read_all_active_users RLS policy); the actual write stays
@@ -30,15 +31,18 @@ export default async function MekikiEntryPage({ params }: { params: Promise<{ id
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-semibold text-strong">{dict["lots.mekiki.title"]}</h1>
-          <p className="sm-hint mt-1">
-            {dict["lots.mekiki.lotCodeLabel"]}: <span className="sm-mono">{lot.lot_code}</span>
-            {" — "}
+      <PageFrame
+        title={dict["lots.mekiki.title"]}
+        description={
+          <>
+            {dict["lots.mekiki.lotCodeLabel"]}: <span className="cds-table__mono">{lot.lot_code}</span>
+            {" \u2014 "}
             {dict["lots.mekiki.itemLabel"]}: {lot.item}
-          </p>
-        </div>
+          </>
+        }
+        backHref={"/lots/" + lot.id}
+        backLabel={dict["lots.list.detailLink"]}
+      >
         {user.role === "ROLE-JUDGE" && lot.status === "received" ? (
           <MekikiForm lotId={lot.id} />
         ) : user.role !== "ROLE-JUDGE" ? (
@@ -46,7 +50,7 @@ export default async function MekikiEntryPage({ params }: { params: Promise<{ id
         ) : (
           <p className="text-sm text-muted">{dict["lots.mekiki.alreadyDone"]}</p>
         )}
-      </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

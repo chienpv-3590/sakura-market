@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { RuleVersionForm } from "@/components/incentive/rule-version-form";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR018_RuleVersionEditor create (A1, FR-201, US001).
 export default async function NewRuleVersionPage() {
@@ -11,10 +12,13 @@ export default async function NewRuleVersionPage() {
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="max-w-md space-y-6">
-        <h1 className="text-2xl font-semibold text-strong">{dict["incentive.rules.new.title"]}</h1>
+      <PageFrame
+        title={dict["incentive.rules.new.title"]}
+      >
+        <section className="max-w-md space-y-6">
         <RuleVersionForm />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

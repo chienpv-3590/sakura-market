@@ -31,12 +31,12 @@ export function ParticipantFilters({
 
   return (
     <div className="flex flex-wrap gap-4">
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("participants.list.filterCategoryLabel")}
         <select
           value={category ?? ""}
           onChange={(event) => updateFilter("category", event.target.value)}
-          className="sm-field mt-1"
+          className="cds-select--native mt-1"
         >
           <option value="">{t("participants.list.filterAllCategories")}</option>
           {PARTICIPANT_CATEGORIES.map((c) => (
@@ -46,12 +46,12 @@ export function ParticipantFilters({
           ))}
         </select>
       </label>
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("participants.list.filterStatusLabel")}
         <select
           value={status ?? ""}
           onChange={(event) => updateFilter("status", event.target.value)}
-          className="sm-field mt-1"
+          className="cds-select--native mt-1"
         >
           <option value="">{t("participants.list.filterAllStatuses")}</option>
           {PARTICIPANT_STATUSES.map((s) => (

@@ -13,5 +13,9 @@
   "nav.corrections": "Điều chỉnh",
   "nav.incentive": "Thưởng hoàn thành",
   "nav.incentiveRules": "Biểu suất thưởng",
-  "nav.reports": "Báo cáo"
+  "nav.reports": "Báo cáo",
+  "nav.sidebarLabel": "Điều hướng chính",
+  "nav.brandLabel": "Sakura Market — về bảng điều khiển",
+  "nav.collapse": "Thu gọn thanh điều hướng",
+  "nav.expand": "Mở rộng thanh điều hướng"
 }

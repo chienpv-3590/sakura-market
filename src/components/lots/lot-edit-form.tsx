@@ -74,9 +74,9 @@ export function LotEditForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="sm-card max-w-md space-y-3 p-4">
+    <form onSubmit={handleSubmit} className="cds-card max-w-md space-y-3 p-4">
       <div>
-        <label htmlFor="edit-field" className="sm-label">
+        <label htmlFor="edit-field" className="cds-field__label">
           {t("lots.edit.fieldLabel")}
         </label>
         <select
@@ -84,14 +84,14 @@ export function LotEditForm({
           value={field}
           onChange={(e) => handleFieldChange(e.target.value as EditableField)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-select--native mt-1 w-full"
         >
           <option value="item">{t("lots.edit.fieldOption.item")}</option>
           <option value="package_count">{t("lots.edit.fieldOption.packageCount")}</option>
         </select>
       </div>
       <div>
-        <label htmlFor="edit-new-value" className="sm-label">
+        <label htmlFor="edit-new-value" className="cds-field__label">
           {t("lots.edit.newValueLabel")}
         </label>
         <input
@@ -102,11 +102,11 @@ export function LotEditForm({
           value={newValue}
           onChange={(e) => setNewValue(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="edit-reason" className="sm-label">
+        <label htmlFor="edit-reason" className="cds-field__label">
           {t("lots.edit.reasonLabel")}
         </label>
         <input
@@ -116,20 +116,20 @@ export function LotEditForm({
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}
-      {success && <p className="sm-hint text-ok">{t("lots.edit.success")}</p>}
+      {success && <p className="cds-field__msg cds-field__msg--hint text-ok">{t("lots.edit.success")}</p>}
       <button
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary"
+        className="cds-btn cds-btn--md"
       >
         {submitting ? t("lots.edit.submitting") : t("lots.edit.submit")}
       </button>

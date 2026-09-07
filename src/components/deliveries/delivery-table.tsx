@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { DeliveryListRow } from "@/lib/deliveries/delivery-queries";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { EmptyState } from "@/components/ui/empty-state";
 
 // SCR011 table. Server Component, same composition as transactions'
 // TransactionTable -- dict/rows already loaded by the page.
@@ -12,12 +13,12 @@ export function DeliveryTable({
   dict: Record<string, string>;
 }) {
   if (deliveries.length === 0) {
-    return <p className="sm-empty">{dict["deliveries.list.empty"]}</p>;
+    return <EmptyState description={dict["deliveries.list.empty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th>{dict["deliveries.list.columns.txnCode"]}</th>
@@ -30,14 +31,14 @@ export function DeliveryTable({
         <tbody>
           {deliveries.map((d) => (
             <tr key={d.id}>
-              <td className="sm-mono">
+              <td className="cds-table__mono">
                 <Link href={`/deliveries/${d.id}`} className="hover:underline">
                   {d.txn_code}
                 </Link>
               </td>
-              <td className="sm-mono">{d.business_date}</td>
-              <td className="sm-num">{d.delivered_qty}</td>
-              <td className="sm-num">{d.transaction_qty}</td>
+              <td className="cds-table__mono">{d.business_date}</td>
+              <td className="cds-table__num cds-table__mono">{d.delivered_qty}</td>
+              <td className="cds-table__num cds-table__mono">{d.transaction_qty}</td>
               <td>
                 <StatusBadge status={d.status} label={dict[`deliveries.status.${d.status}`] ?? d.status} />
               </td>

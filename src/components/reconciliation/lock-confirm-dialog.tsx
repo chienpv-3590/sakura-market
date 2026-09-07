@@ -43,7 +43,7 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="sm-btn sm-btn-danger"
+        className="cds-btn cds-btn--danger cds-btn--md"
       >
         {t("reconciliation.lock.openButton")}
       </button>
@@ -51,17 +51,17 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
   }
 
   return (
-    <div className="sm-card max-w-md space-y-3 border-stop bg-stop-bg p-4">
-      <p className="sm-error font-semibold">{t("reconciliation.lock.warningTitle")}</p>
-      <p className="sm-error">{t("reconciliation.lock.warningBody")}</p>
-      <label className="flex flex-col text-sm font-medium text-secondary">
+    <div className="cds-card max-w-md space-y-3 border-stop bg-stop-bg p-4">
+      <p className="cds-field__msg cds-field__msg--error font-semibold">{t("reconciliation.lock.warningTitle")}</p>
+      <p className="cds-field__msg cds-field__msg--error">{t("reconciliation.lock.warningBody")}</p>
+      <label className="cds-field">
         {t("reconciliation.lock.typeToConfirmLabel").replace("{date}", businessDate)}
         <input
           type="text"
           value={typed}
           onChange={(e) => setTyped(e.target.value)}
           disabled={pending}
-          className="sm-field mt-1"
+          className="cds-input--native mt-1"
         />
       </label>
       <div className="flex gap-2">
@@ -70,7 +70,7 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
           onClick={handleLock}
           disabled={pending || !canConfirm}
           aria-busy={pending}
-          className="sm-btn sm-btn-danger"
+          className="cds-btn cds-btn--danger cds-btn--md"
         >
           {t("reconciliation.lock.confirmButton")}
         </button>
@@ -78,13 +78,13 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
           type="button"
           onClick={() => setOpen(false)}
           disabled={pending}
-          className="sm-btn sm-btn-secondary"
+          className="cds-btn cds-btn--secondary cds-btn--md"
         >
           {t("reconciliation.lock.cancelButton")}
         </button>
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

@@ -58,9 +58,13 @@ export function LoginForm({ reason }: { reason?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-4">
-      <div>
-        <label htmlFor="email" className="sm-label">
+    // method="post" matters even though submission is handled in JS: if the
+    // button is pressed before this component hydrates, the browser falls
+    // back to a native submit, and a GET would put the password in the URL
+    // (history, Referer, server logs). POST keeps it in the body.
+    <form onSubmit={handleSubmit} method="post" className="w-full space-y-4">
+      <div className="cds-field">
+        <label htmlFor="email" className="cds-field__label">
           {t("auth.login.emailLabel")}
         </label>
         <input
@@ -72,11 +76,12 @@ export function LoginForm({ reason }: { reason?: string }) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          aria-invalid={errorKey ? true : undefined}
+          className={`cds-input--native ${errorKey ? "cds-input--error" : ""}`}
         />
       </div>
-      <div>
-        <label htmlFor="password" className="sm-label">
+      <div className="cds-field">
+        <label htmlFor="password" className="cds-field__label">
           {t("auth.login.passwordLabel")}
         </label>
         <input
@@ -88,20 +93,37 @@ export function LoginForm({ reason }: { reason?: string }) {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          aria-invalid={errorKey ? true : undefined}
+          className={`cds-input--native ${errorKey ? "cds-input--error" : ""}`}
         />
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
-          {t(errorKey)}
-        </p>
+        <div role="alert" className="cds-alert cds-alert--error">
+          <span className="cds-alert__ico" aria-hidden>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v5M12 16h.01" />
+            </svg>
+          </span>
+          <div className="cds-alert__body">
+            <div className="cds-alert__title">{t(errorKey)}</div>
+          </div>
+        </div>
       )}
       <button
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary w-full"
+        className="cds-btn cds-btn--lg cds-btn--full"
       >
+        {submitting && <span className="cds-btn__spin" aria-hidden />}
         {submitting ? t("auth.login.submitting") : t("auth.login.submit")}
       </button>
     </form>

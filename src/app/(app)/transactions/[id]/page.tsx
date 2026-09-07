@@ -13,6 +13,8 @@ import { ConfirmCancelButtonGroup } from "@/components/transactions/confirm-canc
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { EmptyState } from "@/components/ui/empty-state";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR008_TransactionList detail view -- REG-CONFIRM + REG-CANCEL live here
 // too (not just the list row), plus the audit trail, same pattern lots'
@@ -37,15 +39,17 @@ export default async function TransactionDetailPage({ params }: { params: Promis
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="max-w-3xl space-y-8">
-        <div>
-          <h1 className="text-2xl font-semibold text-strong">
-            {dict["transactions.detail.title"]}: <span className="sm-mono">{txn.txn_code}</span>
-          </h1>
-        </div>
+      <PageFrame
+        title={
+          <>
+            {dict["transactions.detail.title"]}: <span className="cds-table__mono">{txn.txn_code}</span>
+          </>
+        }
+      >
+        <section className="max-w-3xl space-y-8">
 
         <div>
-          <h2 className="text-sm font-medium uppercase tracking-wide text-muted">
+          <h2 className="cds-section-title">
             {dict["pipeline.title"]}
           </h2>
           <div className="mt-2">
@@ -66,15 +70,15 @@ export default async function TransactionDetailPage({ params }: { params: Promis
           </div>
           <div>
             <dt className="text-muted">{dict["transactions.detail.qtyLabel"]}</dt>
-            <dd className="sm-num text-left text-strong">{txn.qty}</dd>
+            <dd className="cds-table__mono text-strong">{txn.qty}</dd>
           </div>
           <div>
             <dt className="text-muted">{dict["transactions.detail.unitPriceLabel"]}</dt>
-            <dd className="sm-num text-left text-strong">{txn.unit_price.toLocaleString()}</dd>
+            <dd className="cds-table__mono text-strong">{txn.unit_price.toLocaleString()}</dd>
           </div>
           <div>
             <dt className="text-muted">{dict["transactions.detail.businessDateLabel"]}</dt>
-            <dd className="sm-mono text-strong">{txn.business_date}</dd>
+            <dd className="cds-table__mono text-strong">{txn.business_date}</dd>
           </div>
           <div>
             <dt className="text-muted">{dict["transactions.detail.statusLabel"]}</dt>
@@ -89,7 +93,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
 
         {canAct && (
           <div>
-            <h2 className="text-lg font-semibold text-strong">{dict["transactions.detail.actionsTitle"]}</h2>
+            <h2 className="cds-card__title">{dict["transactions.detail.actionsTitle"]}</h2>
             <div className="mt-2">
               <ConfirmCancelButtonGroup transactionId={txn.id} status={txn.status} />
             </div>
@@ -101,12 +105,12 @@ export default async function TransactionDetailPage({ params }: { params: Promis
         )}
 
         <div>
-          <h2 className="text-lg font-semibold text-strong">{dict["transactions.detail.historyTitle"]}</h2>
+          <h2 className="cds-card__title">{dict["transactions.detail.historyTitle"]}</h2>
           {history.length === 0 ? (
-            <p className="sm-empty">{dict["transactions.detail.historyEmpty"]}</p>
+            <EmptyState description={dict["transactions.detail.historyEmpty"]} />
           ) : (
-            <div className="sm-table-wrap sm-table-scroll">
-              <table className="sm-table">
+            <div className="cds-table__wrap">
+              <table className="cds-table cds-table--default cds-table--hover">
                 <thead>
                   <tr>
                     <th>{dict["transactions.detail.historyColumns.action"]}</th>
@@ -118,7 +122,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
                 <tbody>
                   {history.map((row) => (
                     <tr key={row.id} className="align-top">
-                      <td className="sm-mono">
+                      <td className="cds-table__mono">
               {dict[`transactions.action.${row.action}`] ?? row.action}
             </td>
                       <td>
@@ -139,7 +143,8 @@ export default async function TransactionDetailPage({ params }: { params: Promis
             </div>
           )}
         </div>
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

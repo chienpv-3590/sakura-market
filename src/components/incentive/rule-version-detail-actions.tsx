@@ -50,8 +50,8 @@ export function RuleVersionDetailActions({
   const [targetVersionId, setTargetVersionId] = useState(rollbackCandidates[0]?.id ?? "");
 
   if (!canApprove && !canRollback) {
-    if (isOwnPending) return <p className="sm-hint">{t("incentive.error.SELF_APPROVAL")}</p>;
-    if (isOwnActive) return <p className="sm-hint">{t("incentive.error.SELF_ROLLBACK")}</p>;
+    if (isOwnPending) return <p className="cds-field__msg cds-field__msg--hint">{t("incentive.error.SELF_APPROVAL")}</p>;
+    if (isOwnActive) return <p className="cds-field__msg cds-field__msg--hint">{t("incentive.error.SELF_ROLLBACK")}</p>;
     return null;
   }
 
@@ -100,27 +100,27 @@ export function RuleVersionDetailActions({
   }
 
   return (
-    <div className="sm-card space-y-3 p-4">
+    <div className="cds-card space-y-3 p-4">
       {canApprove && (
         <button
           type="button"
           onClick={handleApprove}
           disabled={pending}
           aria-busy={pending}
-          className="sm-btn sm-btn-approve"
+          className="cds-btn cds-btn--md"
         >
           {t("incentive.rules.detail.approveButton")}
         </button>
       )}
       {canRollback && rollbackCandidates.length > 0 && (
         <div className="flex items-end gap-2">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {t("incentive.rules.detail.rollbackTargetLabel")}
             <select
               value={targetVersionId}
               onChange={(e) => setTargetVersionId(e.target.value)}
               disabled={pending}
-              className="sm-field mt-1"
+              className="cds-select--native mt-1"
             >
               {rollbackCandidates.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -134,14 +134,14 @@ export function RuleVersionDetailActions({
             onClick={handleRollback}
             disabled={pending}
             aria-busy={pending}
-            className="sm-btn sm-btn-danger"
+            className="cds-btn cds-btn--danger cds-btn--md"
           >
             {t("incentive.rules.detail.rollbackButton")}
           </button>
         </div>
       )}
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

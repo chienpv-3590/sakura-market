@@ -7,7 +7,8 @@ import { getLocale } from "@/lib/i18n/get-locale";
 import { todayJst } from "@/lib/db/business-date";
 import { PIPELINE_STAGES } from "@/components/pipeline/pipeline-stage-config";
 import { resolvePipelineStageValue } from "@/components/pipeline/resolve-stage-value";
-import { StageCard } from "@/components/pipeline/stage-card";
+import { ProcessFlow } from "@/components/pipeline/process-flow";
+import { PageFrame } from "@/components/layout/page-frame";
 
 const GLOSSARY_KEYS = [
   "term.aitai",
@@ -18,65 +19,55 @@ const GLOSSARY_KEYS = [
   "term.shounin",
 ] as const;
 
-// Pipeline dashboard: one tile per business stage, left-to-right in flow
-// order, each linking to its screen with a live count (or a lock/pending
-// state) queried straight from the database for the signed-in role.
+// Pipeline dashboard. The point of this screen is that a lot TRAVELS: it is
+// drawn as a connected flow (ProcessFlow), not a grid of loose cards, so the
+// order, the forks and the irreversible lock gate are visible before anything
+// is read. Every node keeps a live count queried straight from the database
+// for the signed-in role, and stays a link to its own screen.
 export default async function HomePage() {
   const [user, locale] = await Promise.all([requireUser(), getLocale()]);
   const dict = await getDictionary(locale, ["common"]);
   const supabase: SupabaseClient<Database> = await createClient();
   const today = todayJst();
 
-  const values = await Promise.all(
+  const resolved = await Promise.all(
     PIPELINE_STAGES.map((stage) => resolvePipelineStageValue(supabase, stage, user.role, today)),
+  );
+  const values = Object.fromEntries(
+    PIPELINE_STAGES.map((stage, index) => [stage.id, resolved[index]]),
   );
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-2xl font-semibold text-strong">
-          {dict["home.title"] ?? "home.title"}
-        </h1>
-        <p className="sm-hint mt-1">
-          {dict["home.welcome"] ?? "home.welcome"}
-        </p>
-      </div>
+    <PageFrame
+      title={dict["home.title"] ?? "home.title"}
+      description={dict["home.welcome"] ?? "home.welcome"}
+    >
+      <div className="space-y-10">
+        <div>
+          <h2 className="cds-section-title">
+            {dict["home.pipelineTitle"] ?? "home.pipelineTitle"}
+          </h2>
+          <p className="cds-field__msg cds-field__msg--hint mt-1">
+            {dict["home.pipelineSubtitle"] ?? "home.pipelineSubtitle"}
+          </p>
+          <div className="mt-5">
+            <ProcessFlow values={values} />
+          </div>
+        </div>
 
-      <div>
-        <h2 className="text-sm font-bold uppercase tracking-wider text-muted">
-          {dict["home.pipelineTitle"] ?? "home.pipelineTitle"}
-        </h2>
-        <p className="sm-hint mt-1">
-          {dict["home.pipelineSubtitle"] ?? "home.pipelineSubtitle"}
-        </p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PIPELINE_STAGES.map((stage, index) => (
-            <StageCard
-              key={stage.id}
-              titleKey={stage.titleKey}
-              href={stage.href}
-              value={values[index]}
-              allowedRoles={stage.allowedRoles}
-            />
-          ))}
+        <div>
+          <h2 className="cds-section-title">
+            {dict["home.glossaryTitle"] ?? "home.glossaryTitle"}
+          </h2>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {GLOSSARY_KEYS.map((key) => (
+              <li key={key} className="cds-tag">
+                {dict[key] ?? key}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-
-      <div>
-        <h2 className="text-sm font-bold uppercase tracking-wider text-muted">
-          {dict["home.glossaryTitle"] ?? "home.glossaryTitle"}
-        </h2>
-        <ul className="mt-2 flex flex-wrap gap-2">
-          {GLOSSARY_KEYS.map((key) => (
-            <li
-              key={key}
-              className="sm-chip border border-line bg-card px-3 py-1.5 text-sm font-medium text-body"
-            >
-              {dict[key] ?? key}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </PageFrame>
   );
 }

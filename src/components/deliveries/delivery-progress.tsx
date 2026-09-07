@@ -60,22 +60,22 @@ export function DeliveryProgress({
       <dl className="grid grid-cols-3 gap-4 text-sm">
         <div>
           <dt className="text-muted">{t("deliveries.detail.orderedQtyLabel")}</dt>
-          <dd className="sm-num mt-1 text-left text-lg font-bold text-strong">{orderedQty}</dd>
+          <dd className="cds-statcard__val !text-[22px]">{orderedQty}</dd>
         </div>
         <div>
           <dt className="text-muted">{t("deliveries.detail.deliveredQtyLabel")}</dt>
-          <dd className="sm-num mt-1 text-left text-lg font-bold text-strong">{deliveredQty}</dd>
+          <dd className="cds-statcard__val !text-[22px]">{deliveredQty}</dd>
         </div>
         <div>
           <dt className="text-muted">{t("deliveries.detail.remainingQtyLabel")}</dt>
-          <dd className="sm-num mt-1 text-left text-lg font-bold text-strong">{remaining}</dd>
+          <dd className="cds-statcard__val !text-[22px]">{remaining}</dd>
         </div>
       </dl>
       {/* Progress track (.rd-cat-track/.rd-cat-fill). The figures above carry
           the same information in words, so the bar is reinforcement only --
           it is aria-hidden rather than a redundant progressbar to announce. */}
-      <div aria-hidden className="sm-track">
-        <span className="sm-fill" style={{ width: `${pct}%` }} />
+      <div aria-hidden className="cds-progress__track">
+        <span className="cds-progress__fill" style={{ width: `${pct}%` }} />
       </div>
       {canComplete && status !== "hoàn tất" && (
         <div>
@@ -84,12 +84,12 @@ export function DeliveryProgress({
             onClick={handleComplete}
             disabled={pending || !readyToComplete}
             aria-busy={pending}
-            className="sm-btn sm-btn-approve"
+            className="cds-btn cds-btn--md"
           >
             {t("deliveries.detail.completeButton")}
           </button>
           {!readyToComplete && (
-            <p className="sm-hint mt-1">{t("deliveries.detail.completeDisabledHint")}</p>
+            <p className="cds-field__msg cds-field__msg--hint mt-1">{t("deliveries.detail.completeDisabledHint")}</p>
           )}
         </div>
       )}
@@ -97,7 +97,7 @@ export function DeliveryProgress({
         <HandoffCaption actionLabel={t("deliveries.detail.completeButton")} roles={["ROLE-SETTLEMENT"]} />
       )}
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

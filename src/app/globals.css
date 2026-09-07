@@ -1,39 +1,97 @@
 @import "tailwindcss";
 
-/* Token layer first: its plain `:root` block is unlayered, so it overrides
- * Tailwind's own `@layer theme` defaults for any same-named variable
- * (--font-sans, --radius-md, --radius-lg, --shadow-xs). */
-@import "../styles/design-tokens.css";
-@import "../styles/theme.css";
-@import "../styles/components.css";
-@import "../styles/controls.css";
+/* 1. Tokens. A plain, unlayered `:root` block, so it beats Tailwind's own
+ *    `@layer theme` defaults for any same-named variable (--font-sans,
+ *    --radius-md, --radius-lg, --shadow-xs, --text-*). */
+@import "../styles/cds-tokens.css";
+
+/* 2. The design system's component CSS, vendored verbatim. Imported INTO
+ *    `@layer components` so a Tailwind utility on the same element still wins:
+ *    the cds-* class sets the pattern, a utility tunes the one instance. */
+@import "../styles/cds-components.css" layer(components);
+
+/* 3. App-side additions, same layer, loaded after so a `--native` variant can
+ *    reference the base rule it extends. */
+@import "../styles/cds-app-controls.css";
+@import "../styles/cds-app-badges.css";
+@import "../styles/cds-app-layout.css";
+@import "../styles/cds-app-topheader.css";
+@import "../styles/cds-app-responsive.css";
+@import "../styles/cds-app-login.css";
+@import "../styles/cds-app-flow.css";
+@import "../styles/cds-app-flow-gate.css";
+@import "../styles/cds-app-flow-wide.css";
+
+/* 4. Tailwind theme bridge: aliases tokens into the --color-* namespace so
+ *    they are reachable as utilities (text-muted, border-line, bg-page). */
+@import "../styles/cds-theme-bridge.css";
+
+/* Font reconciliation. cds-tokens.css names the families the design system
+ * specifies; next/font is what actually downloads them (see app/layout.tsx),
+ * and it exposes each one as a CSS variable holding a hashed local family
+ * name. Prepending those variables keeps the DS's declared stack intact while
+ * guaranteeing the app uses the font it shipped rather than hoping "Noto Sans
+ * JP" and "Roboto Mono" happen to be installed on a market-floor PC.
+ * These are the only two token values overridden anywhere. */
+:root {
+  --font-sans:
+    var(--font-noto-sans-jp), "Noto Sans JP", system-ui, -apple-system,
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --font-mono:
+    var(--font-roboto-mono), "Roboto Mono", ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+}
 
 @layer base {
+  html,
+  body {
+    height: 100%;
+  }
+
   body {
     background: var(--surface-page);
     color: var(--text-body);
     font-family: var(--font-sans);
-    line-height: 1.6;
+    font-size: var(--fs-body);
+    /* 22px on 14px text = 1.57, inside the 1.5-1.6 band for long shifts.
+     * Both numbers are the system's own --fs-body / --lh-body. */
+    line-height: var(--lh-body);
   }
 
-  /* Headings tighten up; body copy stays at 1.6 for long-shift legibility. */
+  h1 {
+    font-size: var(--fs-h1);
+    line-height: var(--lh-h1);
+  }
+
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: var(--lh-h2);
+  }
+
+  h3 {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+  }
+
   h1,
   h2,
   h3 {
-    line-height: 1.35;
     color: var(--text-strong);
+    font-weight: var(--fw-bold);
   }
 
-  /* One visible focus treatment for everything reachable by keyboard. */
+  /* One visible focus treatment for everything reachable by keyboard. The
+   * cds-* components override this with the system's own --focus-ring where
+   * they define it; this is the floor for everything else. */
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
   }
 }
 
-/* No animation ships in this app; the guard is here so anything added later
- * inherits the correct behaviour rather than having to remember it. */
+/* The cds-* layer animates (nav width, toggle glyph, caret rotation, button
+ * spinner). Every one of those is decoration, so all of it stops here. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

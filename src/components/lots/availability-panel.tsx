@@ -5,6 +5,7 @@ import type { LotAuditRow } from "@/lib/lots/lot-queries";
 import { AuditDiff } from "@/components/audit/audit-diff";
 import { LOT_FIELD_LABELS, LOT_CREATE_FIELDS } from "@/components/audit/audit-field-maps";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { EmptyState } from "@/components/ui/empty-state";
 
 // SCR006_LotDetail / REG-AVAILABILITY: read-only. Renders available_qty +
 // initial_qty + status, then the lot's audit_log trail as its history --
@@ -24,15 +25,15 @@ export function AvailabilityPanel({
 
   return (
     <section className="space-y-4">
-      <h2 className="text-lg font-semibold text-strong">{t("lots.detail.availabilityTitle")}</h2>
+      <h2 className="cds-card__title">{t("lots.detail.availabilityTitle")}</h2>
       <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-3">
         <div>
           <dt className="text-muted">{t("lots.detail.availableQtyLabel")}</dt>
-          <dd className="sm-num mt-1 text-left text-xl font-bold text-strong">{availableQty}</dd>
+          <dd className="cds-statcard__val !text-[26px]">{availableQty}</dd>
         </div>
         <div>
           <dt className="text-muted">{t("lots.detail.initialQtyLabel")}</dt>
-          <dd className="sm-num mt-1 text-left text-xl font-bold text-strong">{initialQty}</dd>
+          <dd className="cds-statcard__val !text-[26px]">{initialQty}</dd>
         </div>
         <div>
           <dt className="text-muted">{t("lots.detail.statusLabel")}</dt>
@@ -42,14 +43,14 @@ export function AvailabilityPanel({
         </div>
       </dl>
       <div>
-        <h3 className="text-sm font-medium uppercase tracking-wide text-muted">
+        <h3 className="cds-section-title">
           {t("lots.detail.historyTitle")}
         </h3>
         {history.length === 0 ? (
-          <p className="sm-empty">{t("lots.detail.historyEmpty")}</p>
+          <EmptyState description={t("lots.detail.historyEmpty")} />
         ) : (
-          <div className="sm-table-wrap sm-table-scroll">
-            <table className="sm-table">
+          <div className="cds-table__wrap">
+            <table className="cds-table cds-table--default cds-table--hover">
               <thead>
                 <tr>
                   <th>{t("lots.detail.historyColumns.action")}</th>
@@ -61,7 +62,7 @@ export function AvailabilityPanel({
               <tbody>
                 {history.map((row) => (
                   <tr key={row.id} className="align-top">
-                    <td className="sm-mono">
+                    <td className="cds-table__mono">
                       {t(`lots.action.${row.action}`, row.action)}
                     </td>
                     <td>
@@ -74,7 +75,7 @@ export function AvailabilityPanel({
                       />
                     </td>
                     <td>{row.reason ?? "—"}</td>
-                    <td className="sm-mono">
+                    <td className="cds-table__mono">
                       {new Date(row.created_at).toLocaleString()}
                     </td>
                   </tr>

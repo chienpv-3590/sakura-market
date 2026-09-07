@@ -5,7 +5,8 @@ import { useT } from "@/lib/i18n/i18n-provider";
 type ParticipantOption = { id: string; name: string };
 type OperatorOption = { id: string; label: string };
 
-const INPUT_CLASS = "sm-field mt-1 w-full";
+const INPUT_CLASS = "cds-input--native mt-1 w-full";
+const SELECT_CLASS = "cds-select--native mt-1 w-full";
 
 // Fields shared by SCR009 (create) and SCR010's edit form -- everything
 // except the lot picker (create-only) and the mandatory edit reason
@@ -45,7 +46,7 @@ export function SeriFormFields({
   return (
     <>
       <div>
-        <label htmlFor="seri-winner" className="sm-label">
+        <label htmlFor="seri-winner" className="cds-field__label">
           {t("seri.form.winnerLabel")}
         </label>
         <select
@@ -53,7 +54,7 @@ export function SeriFormFields({
           value={winnerParticipantId}
           onChange={(e) => onWinnerChange(e.target.value)}
           disabled={disabled}
-          className={INPUT_CLASS}
+          className={SELECT_CLASS}
         >
           {participants.map((p) => (
             <option key={p.id} value={p.id}>
@@ -63,7 +64,7 @@ export function SeriFormFields({
         </select>
       </div>
       <div>
-        <label htmlFor="seri-qty" className="sm-label">
+        <label htmlFor="seri-qty" className="cds-field__label">
           {t("seri.form.qtyLabel")}
         </label>
         <input
@@ -79,7 +80,7 @@ export function SeriFormFields({
         />
       </div>
       <div>
-        <label htmlFor="seri-unit-price" className="sm-label">
+        <label htmlFor="seri-unit-price" className="cds-field__label">
           {t("seri.form.unitPriceLabel")}
         </label>
         <input
@@ -95,7 +96,7 @@ export function SeriFormFields({
         />
       </div>
       <div>
-        <label htmlFor="seri-decided-at" className="sm-label">
+        <label htmlFor="seri-decided-at" className="cds-field__label">
           {t("seri.form.decidedAtLabel")}
         </label>
         <input
@@ -109,7 +110,7 @@ export function SeriFormFields({
         />
       </div>
       <div>
-        <label htmlFor="seri-confirmed-by" className="sm-label">
+        <label htmlFor="seri-confirmed-by" className="cds-field__label">
           {t("seri.form.confirmedByLabel")}
         </label>
         <select
@@ -117,7 +118,7 @@ export function SeriFormFields({
           value={confirmedBy}
           onChange={(e) => onConfirmedByChange(e.target.value)}
           disabled={disabled}
-          className={INPUT_CLASS}
+          className={SELECT_CLASS}
         >
           {operators.map((o) => (
             <option key={o.id} value={o.id}>

@@ -74,7 +74,7 @@ export function AuditDiff({
       <ul className="space-y-0.5">
         {fields.map((f) => (
           <Row key={f} field={f}>
-            <span className="sm-mono text-strong">{display(f, a[f])}</span>
+            <span className="cds-table__mono text-strong">{display(f, a[f])}</span>
           </Row>
         ))}
       </ul>
@@ -94,9 +94,9 @@ export function AuditDiff({
     <ul className="space-y-0.5">
       {changed.map((f) => (
         <Row key={f} field={f}>
-          <span className="sm-mono text-muted line-through">{display(f, b?.[f])}</span>
+          <span className="cds-table__mono text-muted line-through">{display(f, b?.[f])}</span>
           <span aria-hidden className="mx-1 text-subtle">→</span>
-          <span className="sm-mono font-semibold text-strong">{display(f, a[f])}</span>
+          <span className="cds-table__mono font-semibold text-strong">{display(f, a[f])}</span>
         </Row>
       ))}
     </ul>

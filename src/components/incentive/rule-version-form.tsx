@@ -51,37 +51,37 @@ export function RuleVersionForm() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md space-y-4">
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("incentive.rules.new.effectiveFromLabel")}
         <input
           type="date"
           value={effectiveFrom}
           onChange={(e) => setEffectiveFrom(e.target.value)}
           disabled={pending}
-          className="sm-field mt-1"
+          className="cds-input--native mt-1"
         />
-        <span className="sm-hint mt-1">{t("incentive.rules.new.effectiveFromHint")}</span>
+        <span className="cds-field__msg cds-field__msg--hint mt-1">{t("incentive.rules.new.effectiveFromHint")}</span>
       </label>
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("incentive.rules.new.noteLabel")}
         <input
           type="text"
           value={note}
           onChange={(e) => setNote(e.target.value)}
           disabled={pending}
-          className="sm-field mt-1"
+          className="cds-input--native mt-1"
         />
       </label>
       <button
         type="submit"
         disabled={pending || !canSubmit}
         aria-busy={pending}
-        className="sm-btn sm-btn-primary"
+        className="cds-btn cds-btn--md"
       >
         {t("incentive.rules.new.submitButton")}
       </button>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

@@ -10,6 +10,7 @@ import { loadSeriResult, loadSeriAuditHistory } from "@/lib/seri/seri-queries";
 import { SeriEntryForm } from "@/components/seri/seri-entry-form";
 import { SeriEditHistory } from "@/components/seri/seri-edit-history";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR010_SeriLookup detail + edit. Edit is allowed for ROLE-TRADE OR
 // ROLE-SETTLEMENT (functional-spec.md §3 Open Decision -- role-only, not
@@ -36,13 +37,15 @@ export default async function SeriDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="max-w-3xl space-y-8">
-        <div>
-          <h1 className="text-2xl font-semibold text-strong">
-            {dict["seri.detail.title"]}: <span className="sm-mono">{lot?.lot_code ?? seriResult.lot_id}</span>
-          </h1>
-          <p className="sm-hint mt-1">{lot?.item}</p>
-        </div>
+      <PageFrame
+        title={
+          <>
+            {dict["seri.detail.title"]}: <span className="cds-table__mono">{lot?.lot_code ?? seriResult.lot_id}</span>
+          </>
+        }
+        description={lot?.item}
+      >
+        <section className="max-w-3xl space-y-8">
 
         {canEdit ? (
           <SeriEntryForm
@@ -66,10 +69,11 @@ export default async function SeriDetailPage({ params }: { params: Promise<{ id:
         )}
 
         <div>
-          <h2 className="text-lg font-semibold text-strong">{dict["seri.detail.historyTitle"]}</h2>
+          <h2 className="cds-card__title">{dict["seri.detail.historyTitle"]}</h2>
           <SeriEditHistory history={history} dict={dict} />
         </div>
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

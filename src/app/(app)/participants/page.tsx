@@ -11,6 +11,7 @@ import { isParticipantStatus } from "@/lib/participants/state-machine";
 import { ParticipantFilters } from "@/components/participants/participant-filters";
 import { ParticipantTable } from "@/components/participants/participant-table";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 type ParticipantRow = Tables<"participant">;
 
@@ -49,23 +50,26 @@ export default async function ParticipantsPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-strong">{dict["participants.list.title"]}</h1>
-          {canWrite ? (
-            <Link
-              href="/participants/new"
-              className="sm-btn sm-btn-primary"
-            >
-              {dict["participants.list.createButton"]}
-            </Link>
+      <PageFrame
+        title={dict["participants.list.title"]}
+        actions={
+          canWrite ? (
+          <Link
+          href="/participants/new"
+          className="cds-btn cds-btn--md"
+          >
+          {dict["participants.list.createButton"]}
+          </Link>
           ) : (
-            <HandoffCaption actionLabel={dict["participants.list.createButton"]} roles={["ROLE-SYS-ADMIN"]} />
-          )}
-        </div>
+          <HandoffCaption actionLabel={dict["participants.list.createButton"]} roles={["ROLE-SYS-ADMIN"]} />
+          )
+        }
+      >
+        <section className="space-y-6">
         <ParticipantFilters category={validCategory} status={validStatus} />
         <ParticipantTable participants={participants} dict={dict} />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

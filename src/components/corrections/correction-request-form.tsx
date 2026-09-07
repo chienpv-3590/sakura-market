@@ -55,22 +55,22 @@ export function CorrectionRequestForm({ targetTxnId }: { targetTxnId: string }) 
   }
 
   if (done) {
-    return <p className="sm-hint text-ok">{t("corrections.request.success")}</p>;
+    return <p className="cds-field__msg cds-field__msg--hint text-ok">{t("corrections.request.success")}</p>;
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md space-y-4">
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("corrections.request.reasonLabel")}
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           disabled={pending}
           rows={4}
-          className="sm-field mt-1"
+          className="cds-textarea mt-1"
         />
       </label>
-      <label className="flex flex-col text-sm font-medium text-secondary">
+      <label className="cds-field">
         {t("corrections.request.evidenceLabel")}
         <input
           type="file"
@@ -84,12 +84,12 @@ export function CorrectionRequestForm({ targetTxnId }: { targetTxnId: string }) 
         type="submit"
         disabled={pending || !canSubmit}
         aria-busy={pending}
-        className="sm-btn sm-btn-primary"
+        className="cds-btn cds-btn--md"
       >
         {t("corrections.request.submit")}
       </button>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

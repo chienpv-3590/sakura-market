@@ -14,6 +14,7 @@ import { ShipmentHistoryTable } from "@/components/deliveries/shipment-history-t
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR012_DeliveryDetail (A2/A3/A4, FR-DEL-02/04/05, US001-003).
 export default async function DeliveryDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -39,29 +40,40 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="max-w-3xl space-y-8">
-        <div>
-          <h1 className="text-2xl font-semibold text-strong">
-            {dict["deliveries.detail.title"]}: <span className="sm-mono">{transaction.txn_code}</span>
-          </h1>
-          <p className="sm-hint mt-1">
-            {dict["deliveries.detail.businessDateLabel"]}: {transaction.business_date} —{" "}
-            <StatusBadge
-              status={delivery.status}
-              label={dict[`deliveries.status.${delivery.status}`] ?? delivery.status}
-            />
-          </p>
-          {lock && (
-            <p className="mt-1 text-sm">
-              <Link href={`/reconciliation?date=${transaction.business_date}`} className="sm-link">
+      <PageFrame
+        title={
+          <>
+            {dict["deliveries.detail.title"]}: <span className="cds-table__mono">{transaction.txn_code}</span>
+          </>
+        }
+        status={
+          <StatusBadge
+            status={delivery.status}
+            label={dict[`deliveries.status.${delivery.status}`] ?? delivery.status}
+          />
+        }
+        backHref="/deliveries"
+        backLabel={dict["nav.deliveries"]}
+        meta={
+          <>
+            <span>
+              {dict["deliveries.detail.businessDateLabel"]}:{" "}
+              <span className="cds-table__mono">{transaction.business_date}</span>
+            </span>
+            {lock && (
+              <Link
+                href={`/reconciliation?date=${transaction.business_date}`}
+                className="cds-link cds-link--underline"
+              >
                 {dict["deliveries.detail.reconciliationLink"]}
               </Link>
-            </p>
-          )}
-        </div>
-
+            )}
+          </>
+        }
+      >
+        <section className="max-w-3xl space-y-8">
         <div>
-          <h2 className="text-sm font-medium uppercase tracking-wide text-muted">
+          <h2 className="cds-section-title">
             {dict["pipeline.title"]}
           </h2>
           <div className="mt-2">
@@ -79,7 +91,7 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
 
         {canRecordShipment && (
           <div>
-            <h2 className="text-lg font-semibold text-strong">{dict["deliveries.detail.newShipmentTitle"]}</h2>
+            <h2 className="cds-card__title">{dict["deliveries.detail.newShipmentTitle"]}</h2>
             <div className="mt-2">
               <ShipmentForm deliveryId={delivery.id} />
             </div>
@@ -91,12 +103,13 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
         )}
 
         <div>
-          <h2 className="text-lg font-semibold text-strong">{dict["deliveries.detail.shipmentsTitle"]}</h2>
+          <h2 className="cds-card__title">{dict["deliveries.detail.shipmentsTitle"]}</h2>
           <div className="mt-2">
             <ShipmentHistoryTable shipments={shipments} dict={dict} />
           </div>
         </div>
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

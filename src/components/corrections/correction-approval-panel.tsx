@@ -57,7 +57,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
   }
 
   return (
-    <div className="sm-card space-y-3 p-4">
+    <div className="cds-card space-y-3 p-4">
       <div className="flex gap-4 text-sm">
         <label className="flex items-center gap-1">
           <input type="radio" checked={kind === "reverse"} onChange={() => setKind("reverse")} disabled={pending} />
@@ -70,7 +70,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
       </div>
       {kind === "delta" && (
         <div className="flex gap-4">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {t("corrections.approval.qtyDeltaLabel")}
             <input
               type="number"
@@ -78,10 +78,10 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
               value={qtyDelta}
               onChange={(e) => setQtyDelta(e.target.value)}
               disabled={pending}
-              className="sm-field sm-num mt-1 w-32"
+              className="cds-input--native cds-table__mono mt-1 w-32"
             />
           </label>
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {t("corrections.approval.unitPriceDeltaLabel")}
             <input
               type="number"
@@ -89,7 +89,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
               value={unitPriceDelta}
               onChange={(e) => setUnitPriceDelta(e.target.value)}
               disabled={pending}
-              className="sm-field sm-num mt-1 w-32"
+              className="cds-input--native cds-table__mono mt-1 w-32"
             />
           </label>
         </div>
@@ -100,7 +100,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
           onClick={() => decide("approve")}
           disabled={pending}
           aria-busy={pending}
-          className="sm-btn sm-btn-approve"
+          className="cds-btn cds-btn--md"
         >
           {t("corrections.approval.approveButton")}
         </button>
@@ -109,13 +109,13 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
           onClick={() => decide("reject")}
           disabled={pending}
           aria-busy={pending}
-          className="sm-btn sm-btn-danger"
+          className="cds-btn cds-btn--danger cds-btn--md"
         >
           {t("corrections.approval.rejectButton")}
         </button>
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}

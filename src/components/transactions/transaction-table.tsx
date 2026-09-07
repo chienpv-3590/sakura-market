@@ -3,6 +3,7 @@ import type { Tables } from "@/lib/db/types";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ConfirmCancelButtonGroup } from "./confirm-cancel-button-group";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { EmptyState } from "@/components/ui/empty-state";
 
 type TransactionRow = Tables<"transaction">;
 
@@ -29,12 +30,12 @@ export function TransactionTable({
   // nothing about WHO may act: `canAct` is still decided server-side and the
   // real gate is still requireRole() on /api/transactions/[id]/confirm.
   if (transactions.length === 0) {
-    return <p className="sm-empty">{dict["transactions.list.empty"]}</p>;
+    return <EmptyState description={dict["transactions.list.empty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th>{dict["transactions.list.columns.code"]}</th>
@@ -50,16 +51,16 @@ export function TransactionTable({
         <tbody>
           {transactions.map((txn) => (
             <tr key={txn.id}>
-              <td className="sm-mono">
+              <td className="cds-table__mono">
                 <Link href={`/transactions/${txn.id}`} className="hover:underline">
                   {txn.txn_code}
                 </Link>
               </td>
               <td>{lotCodes[txn.lot_id] ?? txn.lot_id}</td>
               <td>{buyerNames[txn.buyer_participant_id] ?? txn.buyer_participant_id}</td>
-              <td className="sm-num">{txn.qty}</td>
-              <td className="sm-num">{txn.unit_price.toLocaleString()}</td>
-              <td className="sm-mono">{txn.business_date}</td>
+              <td className="cds-table__num cds-table__mono">{txn.qty}</td>
+              <td className="cds-table__num cds-table__mono">{txn.unit_price.toLocaleString()}</td>
+              <td className="cds-table__mono">{txn.business_date}</td>
               <td>
                 <StatusBadge
                   status={txn.status}

@@ -5,6 +5,7 @@ import { countLotsByStatus } from "@/lib/lots/lot-queries";
 import { countTransactionsByStatus } from "@/lib/transactions/txn-queries";
 import { countDeliveriesByStatus } from "@/lib/deliveries/delivery-queries";
 import { countCorrectionsByStatus } from "@/lib/corrections/correction-queries";
+import { countSeriResults } from "@/lib/seri/seri-queries";
 import { loadLockStatus } from "@/lib/reconciliation/reconciliation-queries";
 import type { PipelineStageDef } from "./pipeline-stage-config";
 
@@ -44,8 +45,14 @@ export async function resolvePipelineStageValue(
       return { kind: "count", value: await countTransactionsByStatus(client, "draft") };
     case "transactions-confirmed":
       return { kind: "count", value: await countTransactionsByStatus(client, "confirmed") };
+    case "transactions-cancelled":
+      return { kind: "count", value: await countTransactionsByStatus(client, "cancelled") };
+    case "seri-results":
+      return { kind: "count", value: await countSeriResults(client) };
     case "deliveries-in-progress":
       return { kind: "count", value: await countDeliveriesByStatus(client, "đang giao") };
+    case "deliveries-exception":
+      return { kind: "count", value: await countDeliveriesByStatus(client, "ngoại lệ") };
     case "business-day-lock": {
       const status = await loadLockStatus(client, todayBusinessDate);
       return { kind: "lock", locked: status.locked };

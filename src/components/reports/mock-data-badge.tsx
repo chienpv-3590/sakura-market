@@ -5,5 +5,5 @@
 // `wait` tone (status-vacant): the report exists but is not yet backed by
 // real data -- pending, not broken. The label is always rendered.
 export function MockDataBadge({ label }: { label: string }) {
-  return <span className="sm-badge sm-tone-wait">{label}</span>;
+  return <span className="cds-statusbadge cds-statusbadge--warn">{label}</span>;
 }

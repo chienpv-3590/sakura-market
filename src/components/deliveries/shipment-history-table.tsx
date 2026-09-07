@@ -1,4 +1,5 @@
 import type { Tables } from "@/lib/db/types";
+import { EmptyState } from "@/components/ui/empty-state";
 
 // SCR012 "danh sách từng lần giao" (FR-DEL-05). Server Component -- rows are
 // already loaded by the page.
@@ -10,12 +11,12 @@ export function ShipmentHistoryTable({
   dict: Record<string, string>;
 }) {
   if (shipments.length === 0) {
-    return <p className="sm-empty">{dict["deliveries.detail.shipmentsEmpty"]}</p>;
+    return <EmptyState description={dict["deliveries.detail.shipmentsEmpty"]} />;
   }
 
   return (
-    <div className="sm-table-wrap sm-table-scroll">
-      <table className="sm-table">
+    <div className="cds-table__wrap">
+      <table className="cds-table cds-table--default cds-table--hover">
         <thead>
           <tr>
             <th className="text-right">{dict["deliveries.detail.shipmentColumns.seq"]}</th>
@@ -27,10 +28,10 @@ export function ShipmentHistoryTable({
         <tbody>
           {shipments.map((s) => (
             <tr key={s.id}>
-              <td className="sm-num">{s.seq}</td>
-              <td className="sm-num">{s.qty}</td>
-              <td className="sm-mono">{new Date(s.shipped_at).toLocaleString()}</td>
-              <td className="sm-mono">{s.business_date}</td>
+              <td className="cds-table__num cds-table__mono">{s.seq}</td>
+              <td className="cds-table__num cds-table__mono">{s.qty}</td>
+              <td className="cds-table__mono">{new Date(s.shipped_at).toLocaleString()}</td>
+              <td className="cds-table__mono">{s.business_date}</td>
             </tr>
           ))}
         </tbody>

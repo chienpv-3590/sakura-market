@@ -97,3 +97,14 @@ export async function searchSeriResults(
   if (error) throw new Error(`searchSeriResults failed: ${error.message}`);
   return data ?? [];
 }
+
+/** Read-only row count of recorded せり results -- feeds the home pipeline flow. */
+export async function countSeriResults(client: SupabaseClient<Database>): Promise<number> {
+  const { count, error } = await client
+    .from("seri_result")
+    .select("id", { count: "exact", head: true });
+  if (error) {
+    throw new Error(`countSeriResults failed: ${error.message}`);
+  }
+  return count ?? 0;
+}

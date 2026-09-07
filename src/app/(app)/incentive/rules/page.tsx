@@ -10,6 +10,7 @@ import { todayJst } from "@/lib/db/business-date";
 import { listRuleVersions } from "@/lib/incentive/rule-version-queries";
 import { computeDisplayStatuses } from "@/lib/incentive/rule-version-display-status";
 import { RuleVersionTable } from "@/components/incentive/rule-version-table";
+import { PageFrame } from "@/components/layout/page-frame";
 
 const STATUSES = ["pending_approval", "active", "rolled_back"] as const;
 
@@ -31,26 +32,30 @@ export default async function RuleVersionListPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-strong">
+      <PageFrame
+        title={
+          <>
             {dict["incentive.rules.list.title"]} — {dict["term.incentive"]}
-          </h1>
+          </>
+        }
+        actions={
           <Link
-            href="/incentive/rules/new"
-            className="sm-btn sm-btn-primary"
+          href="/incentive/rules/new"
+          className="cds-btn cds-btn--md"
           >
-            {dict["incentive.rules.list.newLink"]}
+          {dict["incentive.rules.list.newLink"]}
           </Link>
-        </div>
+        }
+      >
+        <section className="space-y-6">
 
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["incentive.rules.list.filterStatusLabel"]}
             <select
               name="status"
               defaultValue={validStatus ?? ""}
-              className="sm-field mt-1"
+              className="cds-select--native mt-1"
             >
               <option value="">{dict["incentive.rules.list.filterAll"]}</option>
               {STATUSES.map((s) => (
@@ -62,14 +67,15 @@ export default async function RuleVersionListPage({
           </label>
           <button
             type="submit"
-            className="sm-btn sm-btn-secondary"
+            className="cds-btn cds-btn--secondary cds-btn--md"
           >
             {dict["incentive.rules.list.filterSubmit"]}
           </button>
         </form>
 
         <RuleVersionTable rows={rows} displayStatus={displayStatus} dict={dict} />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

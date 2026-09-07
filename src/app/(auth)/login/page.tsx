@@ -5,6 +5,7 @@ import { roleLanding } from "@/lib/auth/role-landing";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
+import { NavIcon } from "@/components/layout/nav-icons";
 
 export default async function LoginPage({
   searchParams,
@@ -25,17 +26,37 @@ export default async function LoginPage({
 
   const dict = await getDictionary(locale, ["common"]);
 
+  // Port of the design system's LoginScreen: a 52/48 split, the brand on a
+  // --navy-900 panel with a cacao radial glow, the form on --surface-card at
+  // 360px. Below --bp-tablet the navy panel collapses to a band above the
+  // form -- the form is what the user came for, so it gets the height.
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <main className="flex min-h-screen items-center justify-center bg-page px-4">
-        <div className="sm-card w-full max-w-sm space-y-6 p-8">
-          <div className="text-center">
-            <h1 className="text-xl font-semibold text-strong">{dict["app.name"]}</h1>
-            <p className="sm-hint mt-1">{dict["auth.login.title"]}</p>
+      <div className="cds-login">
+        <div className="cds-login__brandpanel">
+          <div className="cds-login__glow" aria-hidden />
+          <div className="cds-login__brand">
+            <span className="cds-rolenav__mark">
+              <NavIcon name="dashboard" />
+            </span>
+            <span className="flex flex-col leading-[1.15]">
+              <span className="text-[20px] font-bold text-white">{dict["app.name"]}</span>
+              <span className="text-[11px] text-on-dark-muted">
+                {dict["home.pipelineTitle"]}
+              </span>
+            </span>
           </div>
-          <LoginForm reason={reason} />
+          <p className="cds-login__pitch">{dict["home.welcome"]}</p>
+          <p className="cds-login__legal">{dict["home.glossaryTitle"]}</p>
         </div>
-      </main>
+        <div className="cds-login__formpanel">
+          <div className="w-full max-w-[360px]">
+            <h1 className="cds-pageheader__title">{dict["auth.login.title"]}</h1>
+            <p className="cds-pageheader__desc mb-6">{dict["home.welcome"]}</p>
+            <LoginForm reason={reason} />
+          </div>
+        </div>
+      </div>
     </I18nProvider>
   );
 }

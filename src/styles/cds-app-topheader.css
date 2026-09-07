@@ -1,0 +1,100 @@
+/* The 56px topheader: what gives way when the row runs out of room.
+ *
+ * Part of the app-side cds-* extension layer. See cds-app-layout.css for the
+ * shared rationale: nothing here re-declares a design value, every
+ * declaration reads a token from cds-tokens.css.
+ */
+
+@layer components {
+  /* --- topheader: what gives way when the row runs out of room ----------- */
+  /* Everything in the right group is fixed-size except the identity block,
+   * which truncates. Without min-width:0 down the chain a long display name
+   * ("Bo phan doi chieu (Demo)") stretches the whole page instead. */
+  .cds-topheader {
+    gap: var(--space-3);
+  }
+
+  /* Exactly ONE thing in the right group gives way: the display name. The
+   * chain from __right down to that span all needs min-width:0 (one flex box
+   * left at min-width:auto and nothing shrinks) -- but the button and the
+   * VI/JA group must NOT be in that chain, or they squash below their own
+   * text and push the page wider instead. */
+  .cds-topheader__left,
+  .cds-topheader__right,
+  .cds-topheader__identity,
+  .cds-topheader__user,
+  .cds-topheader__user > * {
+    min-width: 0;
+  }
+
+  .cds-topheader__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: 0 1 auto;
+  }
+
+  .cds-topheader__identity > .cds-btn,
+  .cds-topheader__right > .cds-btngroup {
+    flex: none;
+  }
+
+  .cds-topheader__user {
+    flex: 0 1 auto;
+  }
+
+  .cds-topheader__uname,
+  .cds-topheader__role {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* The crumb trail is the other thing that gives way: one line, truncated,
+   * never wrapped -- the header is --topbar-h tall and a wrapped trail would
+   * either clip or push the row. */
+  .cds-topheader__left {
+    flex: 1 1 auto;
+  }
+
+  .cds-topheader .cds-breadcrumb {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .cds-topheader .cds-breadcrumb__item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cds-topheader .cds-breadcrumb__sep {
+    flex: none;
+  }
+
+  /* Below 640px the 72px rail leaves the header 248px at 320px wide, and the
+   * four things in it (nav toggle, lock badge, VI/JA, sign out) do not fit on
+   * one line in either locale. Sign-out drops to its glyph (the label stays
+   * as its aria-label) and the row is allowed to WRAP: the DS fixes the
+   * header at --topbar-h, which is right for a desk and wrong for a phone.
+   * Nothing is dropped -- the lock badge in particular stays, because it is
+   * the one thing here that changes what the app will accept. --topbar-h
+   * stays the minimum, so the desktop header is untouched. */
+  @media (max-width: 639px) {
+    .cds-topheader {
+      height: auto;
+      min-height: var(--topbar-h);
+      flex-wrap: wrap;
+      padding: var(--space-2) var(--space-4);
+      gap: var(--space-2);
+    }
+
+    .cds-topheader__right {
+      gap: var(--space-2);
+    }
+
+    .cds-topheader .cds-btn--sm {
+      padding: 0 var(--space-3);
+    }
+  }
+}

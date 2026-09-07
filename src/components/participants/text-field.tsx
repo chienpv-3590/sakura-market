@@ -1,7 +1,6 @@
 import type { ChangeEvent } from "react";
 
-export const INPUT_CLASS =
-  "sm-field mt-1 w-full";
+const INPUT_CLASS = "cds-input--native mt-1 w-full";
 
 /** Shared label+input row used by participant-form.tsx's plain text/date fields. */
 export function TextField({
@@ -25,7 +24,7 @@ export function TextField({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="sm-label">
+      <label htmlFor={id} className="cds-field__label">
         {label}
       </label>
       <input

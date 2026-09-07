@@ -1,0 +1,118 @@
+/* The dashboard process drawing: the lock gate and the connector glyphs.
+ *
+ * Part of the app-side cds-* extension layer. Nothing here re-declares a
+ * design value: every declaration reads a token from cds-tokens.css.
+ */
+
+@layer components {
+  /* --- the lock gate: a different silhouette, not just a different colour -- */
+  /* Notched leading and trailing corners, so the eye separates "a step the
+   * work passes through" from "a checkpoint that can refuse the work".
+   * clip-path only cuts the 14px corners of the padding box, never the text. */
+  .cds-flow__node--gate {
+    border: 2px dashed var(--border-strong);
+    background: var(--surface-sunken);
+    box-shadow: var(--shadow-md);
+    clip-path: polygon(
+      0 0,
+      calc(100% - 14px) 0,
+      100% 14px,
+      100% 100%,
+      14px 100%,
+      0 calc(100% - 14px)
+    );
+  }
+
+  .cds-flow__node--gate .cds-flow__chip {
+    background: var(--neutral-200);
+    color: var(--text-secondary);
+  }
+
+  .cds-flow__node--gate-closed {
+    border-color: var(--status-overdue-solid);
+    background: var(--status-overdue-bg);
+  }
+
+  .cds-flow__node--gate-closed .cds-statcard__label,
+  .cds-flow__node--gate-closed .cds-flow__note,
+  .cds-flow__node--gate-closed .cds-flow__rolelabel,
+  .cds-flow__node--gate-closed .cds-flow__chip {
+    color: var(--status-overdue-fg);
+  }
+
+  .cds-flow__gatebadge {
+    display: flex;
+    padding: var(--space-1) 0;
+  }
+
+  /* The long channel belongs to the horizontal graphic only; the vertical
+   * chain uses the short one (see the pair rendered in process-flow.tsx).
+   * Doubled class because the base .cds-flow__conn block below sets
+   * display:block at the same specificity and would otherwise win on order. */
+  .cds-flow__conn.cds-flow__conn--long {
+    display: none;
+  }
+
+  /* --- glyph placement --------------------------------------------------- */
+  .cds-flow__connwrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+  }
+
+  /* 44x72 box for a 44x72 viewBox: one CSS pixel per unit, which is what
+   * makes the channel widths in flow-glyphs.tsx literal. */
+  .cds-flow__conn,
+  .cds-flow__barrier {
+    display: block;
+    flex: none;
+    width: 44px;
+    height: 72px;
+    rotate: var(--conn-rot, 90deg);
+    overflow: visible;
+  }
+
+  .cds-flow__inletwrap {
+    position: relative;
+    display: block;
+  }
+
+  /* The merge curve and the fork curve are the horizontal graphic's business;
+   * the vertical chain uses the CSS elbows below, which fit a narrow column. */
+  .cds-flow__merge,
+  .cds-flow__fork {
+    display: none;
+  }
+
+  /* --- terminal forks, vertical layout ---------------------------------- */
+  .cds-flow__forkwrap {
+    display: block;
+  }
+
+  .cds-flow__outlets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cds-flow__outlets > li {
+    position: relative;
+    padding-left: var(--space-6);
+  }
+
+  .cds-flow__outlets > li::before {
+    content: "";
+    position: absolute;
+    left: var(--space-3);
+    top: calc(-1 * var(--space-4));
+    bottom: 50%;
+    width: var(--space-3);
+    border-left: 2px dashed var(--status-overdue-solid);
+    border-bottom: 2px dashed var(--status-overdue-solid);
+    border-bottom-left-radius: var(--radius-md);
+  }
+}

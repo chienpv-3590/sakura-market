@@ -11,6 +11,7 @@ import { isValidBusinessDate } from "@/lib/reconciliation/business-date-validati
 import { ReconcileTable } from "@/components/reconciliation/reconcile-table";
 import { LockConfirmDialog } from "@/components/reconciliation/lock-confirm-dialog";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR013_ReconcileAndLock (A1/A2, FR-101/201/401). ROLE-SETTLEMENT's landing
 // page -- await searchParams per Next.js App Router's async API.
@@ -34,23 +35,25 @@ export default async function ReconciliationPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <h1 className="text-2xl font-semibold text-strong">{dict["reconciliation.page.title"]}</h1>
+      <PageFrame
+        title={dict["reconciliation.page.title"]}
+      >
+        <section className="space-y-6">
 
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm font-medium text-secondary">
+          <label className="cds-field">
             {dict["reconciliation.page.dateLabel"]}
             <input
               type="date"
               name="date"
               defaultValue={businessDate}
               max={todayJst()}
-              className="sm-field mt-1"
+              className="cds-input--native mt-1"
             />
           </label>
           <button
             type="submit"
-            className="sm-btn sm-btn-secondary"
+            className="cds-btn cds-btn--secondary cds-btn--md"
           >
             {dict["reconciliation.page.dateSubmit"]}
           </button>
@@ -68,7 +71,8 @@ export default async function ReconciliationPage({
         {!canLock && !lock.locked && (
           <HandoffCaption actionLabel={dict["reconciliation.lock.openButton"]} roles={["ROLE-SETTLEMENT"]} />
         )}
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

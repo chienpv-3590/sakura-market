@@ -57,7 +57,7 @@ export function MekikiForm({ lotId }: { lotId: string }) {
   return (
     <KeyboardOperableForm onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="grade" className="sm-label">
+        <label htmlFor="grade" className="cds-field__label">
           {t("lots.mekiki.gradeLabel")}
         </label>
         <input
@@ -70,11 +70,11 @@ export function MekikiForm({ lotId }: { lotId: string }) {
           value={grade}
           onChange={(e) => setGrade(e.target.value)}
           disabled={submitting}
-          className="sm-field mt-1 w-full"
+          className="cds-input--native mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}
@@ -83,7 +83,7 @@ export function MekikiForm({ lotId }: { lotId: string }) {
         tabIndex={2}
         disabled={submitting}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary w-full"
+        className="cds-btn cds-btn--md w-full"
       >
         {submitting ? t("lots.mekiki.submitting") : t("lots.mekiki.submit")}
       </button>

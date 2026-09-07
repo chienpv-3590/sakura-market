@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { AitaiCreateForm } from "@/components/transactions/aitai-create-form";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR007_AitaiCreate. ROLE-TRADE only (matches write_trade RLS policy on
 // transaction insert). Dropdown only offers lots that are 'published' and
@@ -29,11 +30,11 @@ export default async function NewTransactionPage() {
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-semibold text-strong">{dict["transactions.create.title"]}</h1>
-          <p className="sm-hint mt-1">{dict["transactions.create.subtitle"]}</p>
-        </div>
+      <PageFrame
+        title={dict["transactions.create.title"]}
+        description={dict["transactions.create.subtitle"]}
+      >
+        <section className="space-y-6">
         <AitaiCreateForm
           lots={(lots ?? []).map((l) => ({
             id: l.id,
@@ -43,7 +44,8 @@ export default async function NewTransactionPage() {
           }))}
           participants={(participants ?? []).map((p) => ({ id: p.id, name: p.name }))}
         />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

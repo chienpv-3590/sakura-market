@@ -126,7 +126,7 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
     <form onSubmit={handleSubmit} className="max-w-md space-y-4">
       {props.mode === "create" && (
         <div>
-          <label htmlFor="seri-lot" className="sm-label">
+          <label htmlFor="seri-lot" className="cds-field__label">
             {t("seri.form.lotLabel")}
           </label>
           <select
@@ -134,7 +134,7 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
             value={lotId}
             onChange={(e) => setLotId(e.target.value)}
             disabled={submitting}
-            className="sm-field mt-1 w-full"
+            className="cds-select--native mt-1 w-full"
           >
             {props.lots.map((lot) => (
               <option key={lot.id} value={lot.id}>
@@ -161,7 +161,7 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
       />
       {props.mode === "edit" && (
         <div>
-          <label htmlFor="seri-reason" className="sm-label">
+          <label htmlFor="seri-reason" className="cds-field__label">
             {t("seri.form.reasonLabel")}
           </label>
           <input
@@ -171,21 +171,21 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             disabled={submitting}
-            className="sm-field mt-1 w-full"
+            className="cds-input--native mt-1 w-full"
           />
         </div>
       )}
       {errorKey && (
-        <p role="alert" className="sm-error">
+        <p role="alert" className="cds-field__msg cds-field__msg--error">
           {t(errorKey)}
         </p>
       )}
-      {success && <p className="sm-hint text-ok">{t("seri.edit.success")}</p>}
+      {success && <p className="cds-field__msg cds-field__msg--hint text-ok">{t("seri.edit.success")}</p>}
       <button
         type="submit"
         disabled={submitting || (props.mode === "edit" && reason.trim().length === 0)}
         aria-busy={submitting}
-        className="sm-btn sm-btn-primary w-full"
+        className="cds-btn cds-btn--md w-full"
       >
         {submitting
           ? t("seri.form.submitting")

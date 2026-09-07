@@ -13,5 +13,9 @@
   "nav.corrections": "訂正",
   "nav.incentive": "奨励金",
   "nav.incentiveRules": "奨励金ルール",
-  "nav.reports": "レポート"
+  "nav.reports": "レポート",
+  "nav.sidebarLabel": "サイドナビゲーション",
+  "nav.brandLabel": "Sakura Market — ダッシュボードへ移動",
+  "nav.collapse": "サイドバーを閉じる",
+  "nav.expand": "サイドバーを開く"
 }

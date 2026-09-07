@@ -1,0 +1,107 @@
+/* The sign-in screen, ported from the design system's LoginScreen.jsx.
+ *
+ * That file styles itself with inline React `style` objects rather than
+ * `cds-*` classes, so the values below are transcribed from it: the 52/48
+ * split, --navy-900 panel, 48px padding, and the 620px cacao radial glow
+ * (rgba(19,125,208,...) is --cacao-500 at 40%). --surface-card form side,
+ * form capped at 360px.
+ *
+ * The one departure: below --bp-tablet the source keeps the split, which
+ * leaves neither side usable on a phone. Here the navy side becomes a band
+ * above the form, because the form is what the user came for.
+ */
+
+@layer components {
+  .cds-login {
+    display: flex;
+    min-height: 100%;
+    font-family: var(--font-sans);
+    background: var(--surface-card);
+  }
+
+  .cds-login__brandpanel {
+    flex: 1 1 52%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: var(--space-10);
+    background: var(--navy-900);
+    color: var(--text-on-dark);
+  }
+
+  .cds-login__glow {
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--cacao-500) 40%, transparent),
+      transparent 68%
+    );
+    pointer-events: none;
+  }
+
+  .cds-login__brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .cds-login__pitch {
+    position: relative;
+    max-width: 26ch;
+    font-size: var(--fs-display);
+    line-height: var(--lh-display);
+    font-weight: var(--fw-bold);
+    color: var(--cacao-50);
+  }
+
+  .cds-login__legal {
+    position: relative;
+    font-size: var(--fs-overline);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--text-on-dark-muted);
+  }
+
+  .cds-login__formpanel {
+    flex: 1 1 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-6);
+    background: var(--surface-card);
+  }
+
+  @media (max-width: 767px) {
+    .cds-login {
+      flex-direction: column;
+    }
+
+    .cds-login__brandpanel {
+      flex: none;
+      gap: var(--space-5);
+      padding: var(--space-6) var(--space-5);
+    }
+
+    /* The 24px pitch and the overline are the parts a phone has no room for;
+     * the brand block stays, so the user still knows where they are. */
+    .cds-login__pitch,
+    .cds-login__legal {
+      display: none;
+    }
+
+    .cds-login__glow {
+      width: 320px;
+      height: 320px;
+      top: -60%;
+    }
+  }
+}

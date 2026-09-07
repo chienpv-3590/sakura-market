@@ -11,6 +11,7 @@ import { listRuleVersions, loadRuleVersion } from "@/lib/incentive/rule-version-
 import { computeDisplayStatuses } from "@/lib/incentive/rule-version-display-status";
 import { RuleVersionDetailActions } from "@/components/incentive/rule-version-detail-actions";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR018_RuleVersionEditor detail (A2/A3, DEC-001, US002).
 export default async function RuleVersionDetailPage({
@@ -37,19 +38,23 @@ export default async function RuleVersionDetailPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="max-w-md space-y-6">
-        <h1 className="text-2xl font-semibold text-strong">
-          {dict["incentive.rules.detail.title"]} v{version.version_no}
-        </h1>
+      <PageFrame
+        title={
+          <>
+            {dict["incentive.rules.detail.title"]} v{version.version_no}
+          </>
+        }
+      >
+        <section className="max-w-md space-y-6">
 
         <dl className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <dt className="text-muted">{dict["incentive.rules.detail.versionNoLabel"]}</dt>
-            <dd className="sm-num text-left text-strong">{version.version_no}</dd>
+            <dd className="cds-table__mono text-strong">{version.version_no}</dd>
           </div>
           <div>
             <dt className="text-muted">{dict["incentive.rules.detail.effectiveFromLabel"]}</dt>
-            <dd className="sm-mono text-strong">{version.effective_from}</dd>
+            <dd className="cds-table__mono text-strong">{version.effective_from}</dd>
           </div>
           <div>
             <dt className="text-muted">{dict["incentive.rules.detail.statusLabel"]}</dt>
@@ -78,7 +83,8 @@ export default async function RuleVersionDetailPage({
           isOwnPending={isCreator && version.status === "pending_approval"}
           isOwnActive={isCreator && version.status === "active"}
         />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

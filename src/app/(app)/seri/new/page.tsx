@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { SeriEntryForm } from "@/components/seri/seri-entry-form";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR009_SeriEntry. ROLE-TRADE only (matches write_trade RLS policy on
 // seri_result insert). Lot dropdown excludes lots that already have a
@@ -31,11 +32,11 @@ export default async function NewSeriResultPage() {
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-semibold text-strong">{dict["seri.create.title"]}</h1>
-          <p className="sm-hint mt-1">{dict["seri.create.subtitle"]}</p>
-        </div>
+      <PageFrame
+        title={dict["seri.create.title"]}
+        description={dict["seri.create.subtitle"]}
+      >
+        <section className="space-y-6">
         <SeriEntryForm
           mode="create"
           lots={availableLots}
@@ -43,7 +44,8 @@ export default async function NewSeriResultPage() {
           operators={(operators ?? []).map((o) => ({ id: o.id, label: o.display_name ?? o.email }))}
           defaultConfirmedBy={user.id}
         />
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }

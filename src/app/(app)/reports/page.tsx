@@ -5,6 +5,7 @@ import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { REPORT_REGISTRY } from "@/lib/reports/registry";
 import { MockDataBadge } from "@/components/reports/mock-data-badge";
+import { PageFrame } from "@/components/layout/page-frame";
 
 // SCR019_ReportCatalog (A1, FR-RPT-01, US001) -- all 12 RPT-01..12 always
 // listed; real vs mock badges never blurred together (Risk Assessment).
@@ -14,11 +15,13 @@ export default async function ReportCatalogPage() {
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <section className="space-y-6">
-        <h1 className="text-2xl font-semibold text-strong">{dict["reports.catalog.title"]}</h1>
+      <PageFrame
+        title={dict["reports.catalog.title"]}
+      >
+        <section className="space-y-6">
 
-        <div className="sm-table-wrap sm-table-scroll">
-          <table className="sm-table">
+        <div className="cds-table__wrap">
+          <table className="cds-table cds-table--default cds-table--hover">
             <thead>
               <tr>
                 <th>{dict["reports.catalog.columnCode"]}</th>
@@ -43,7 +46,7 @@ export default async function ReportCatalogPage() {
                     {r.isMock ? (
                       <MockDataBadge label={dict["reports.catalog.badgeMock"]} />
                     ) : (
-                      <span className="sm-badge sm-tone-ok">
+                      <span className="cds-statusbadge cds-statusbadge--ok">
                         {dict["reports.catalog.badgeReal"]}
                       </span>
                     )}
@@ -53,7 +56,8 @@ export default async function ReportCatalogPage() {
             </tbody>
           </table>
         </div>
-      </section>
+        </section>
+      </PageFrame>
     </I18nProvider>
   );
 }
