@@ -9,17 +9,15 @@ export const LOT_FIELD_LABELS: Record<string, string> = {
   available_qty: "lots.list.columns.availableQty",
   status: "lots.list.columns.status",
   grade: "lots.mekiki.gradeLabel",
-  intake_docs: "lots.intake.intakeDocsLabel",
   business_date: "lots.diff.businessDate",
 };
 
-export const LOT_CREATE_FIELDS = [
-  "lot_code",
-  "item",
-  "package_count",
-  "initial_qty",
-  "intake_docs",
-] as const;
+// `intake_docs` used to be a typed string smuggled into this same audit row
+// (phase-06 workaround for the missing column). It's a real attachment now
+// -- its own `lot_attachment` row with its own `attach_document` audit entry
+// (see attach-intake-doc.ts) -- so it's gone from both this list and
+// LOT_FIELD_LABELS above rather than left as a dead, always-absent field.
+export const LOT_CREATE_FIELDS = ["lot_code", "item", "package_count", "initial_qty"] as const;
 
 export const TXN_FIELD_LABELS: Record<string, string> = {
   txn_code: "transactions.list.columns.code",

@@ -9,7 +9,9 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { LotAvailabilityFields } from "@/components/lots/lot-availability-fields";
 import { LotAuditHistoryTable } from "@/components/lots/lot-audit-history-table";
 import { LotEditForm } from "@/components/lots/lot-edit-form";
+import { LotAttachmentsCard } from "@/components/lots/lot-attachments-card";
 import { loadLot, loadLotAuditHistory } from "@/lib/lots/lot-queries";
+import { loadLotAttachments } from "@/lib/lots/lot-attachment-queries";
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 import { PageFrame } from "@/components/layout/page-frame";
@@ -26,7 +28,10 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
   const supabase: SupabaseClient<Database> = await createClient();
   const lot = await loadLot(supabase, id);
   if (!lot) notFound();
-  const history = await loadLotAuditHistory(supabase, id);
+  const [history, attachments] = await Promise.all([
+    loadLotAuditHistory(supabase, id),
+    loadLotAttachments(supabase, id),
+  ]);
 
   return (
     <I18nProvider locale={locale} dict={dict}>
@@ -52,6 +57,10 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
               status={lot.status}
               dict={dict}
             />
+          </SectionCard>
+
+          <SectionCard title={dict["lots.detail.attachmentsTitle"]} tight>
+            <LotAttachmentsCard attachments={attachments} dict={dict} />
           </SectionCard>
 
           {/* The edit form is ROLE-SETTLEMENT's; every other role gets the

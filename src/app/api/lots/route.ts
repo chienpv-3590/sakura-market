@@ -1,106 +1,79 @@
 import { NextResponse } from "next/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
-import type { Database, TablesInsert } from "@/lib/db/types";
+import type { Database } from "@/lib/db/types";
 import { requireRole, requireUser } from "@/lib/auth/require-role";
-import { writeAuditLog } from "@/lib/audit/write-audit-log";
-import { todayJst } from "@/lib/db/business-date";
-import { formatLotCode, nextLotSeq } from "@/lib/lots/lot-code";
+import { createLot, type CreateLotFields } from "@/lib/lots/create-lot";
+import { checkIntakeDocFile } from "@/lib/lots/intake-doc-upload";
+import { attachIntakeDoc } from "@/lib/lots/attach-intake-doc";
 
-// FR-LOT-01: create a lot (A1). `intake_docs` is receipt-document *metadata*
-// only (no real upload in LAB-3 -- see technical-spec.md § 5.2 Assumptions).
-// There is no `lot.intake_docs` column (schema is Phase 03's, out of this
-// phase's file scope), so it's captured on the creation audit_log row
-// instead -- which FR-AUDIT-01 already requires for a "create" action, so
-// this reuses a write we need anyway rather than adding new DB surface.
-type CreateLotBody = {
-  item: string;
-  packageCount: number;
-  initialQty: number;
-  intakeDocs: string | null;
-};
-
-function parseCreateLotBody(body: unknown): CreateLotBody | null {
-  if (typeof body !== "object" || body === null) return null;
-  const b = body as Record<string, unknown>;
-  const item = typeof b.item === "string" ? b.item.trim() : "";
-  const packageCount = b.packageCount;
-  const initialQty = b.initialQty;
-  const intakeDocsRaw = b.intakeDocs;
-
+// FR-LOT-01: create a lot (A1), with optional intake-document attachments
+// (D-LOT "chứng từ tiếp nhận"). multipart/form-data, same convention as
+// POST /api/corrections: { item, packageCount, initialQty, intakeDocs[] }.
+// Attaching a document is optional -- FR-LOT-01's acceptance criterion is
+// that the system *can* store the required documents ("lưu được các chứng
+// từ bắt buộc"), not that every single POST must carry one; no BR-LOT rule
+// sets a minimum attachment count the way BR-003 does for F008 evidence.
+function parseCreateLotFields(form: FormData): CreateLotFields | null {
+  const itemRaw = form.get("item");
+  const item = typeof itemRaw === "string" ? itemRaw.trim() : "";
   if (item.length === 0) return null;
-  if (typeof packageCount !== "number" || !Number.isInteger(packageCount) || packageCount <= 0) {
-    return null;
-  }
-  if (typeof initialQty !== "number" || !Number.isFinite(initialQty) || initialQty <= 0) {
-    return null;
-  }
-  if (intakeDocsRaw !== undefined && intakeDocsRaw !== null && typeof intakeDocsRaw !== "string") {
-    return null;
-  }
 
-  return {
-    item,
-    packageCount,
-    initialQty,
-    intakeDocs: typeof intakeDocsRaw === "string" ? intakeDocsRaw.trim() || null : null,
-  };
+  const packageCountRaw = form.get("packageCount");
+  const packageCount = typeof packageCountRaw === "string" ? Number(packageCountRaw) : NaN;
+  if (!Number.isInteger(packageCount) || packageCount <= 0) return null;
+
+  const initialQtyRaw = form.get("initialQty");
+  const initialQty = typeof initialQtyRaw === "string" ? Number(initialQtyRaw) : NaN;
+  if (!Number.isFinite(initialQty) || initialQty <= 0) return null;
+
+  return { item, packageCount, initialQty };
 }
 
-const MAX_LOT_CODE_ATTEMPTS = 2; // 1 retry on a lot_code unique-violation race
+function collectIntakeDocFiles(form: FormData): File[] {
+  return form.getAll("intakeDocs").filter((value): value is File => value instanceof File && value.size > 0);
+}
 
 async function handleCreate(request: Request, actorId: string): Promise<NextResponse> {
-  let rawBody: unknown;
+  let form: FormData;
   try {
-    rawBody = await request.json();
+    form = await request.formData();
   } catch {
-    return NextResponse.json({ error: "invalid_json" }, { status: 400 });
+    return NextResponse.json({ error: "invalid_request" }, { status: 400 });
   }
 
-  const body = parseCreateLotBody(rawBody);
-  if (!body) {
+  const fields = parseCreateLotFields(form);
+  if (!fields) {
     return NextResponse.json({ error: "invalid_request" }, { status: 422 });
   }
 
-  const supabase: SupabaseClient<Database> = await createClient();
-  const businessDate = todayJst();
-  let lastMessage = "";
-
-  for (let attempt = 0; attempt < MAX_LOT_CODE_ATTEMPTS; attempt++) {
-    const seq = await nextLotSeq(supabase, businessDate);
-    const lotCode = formatLotCode(businessDate, seq);
-    const insertRow: TablesInsert<"lot"> = {
-      lot_code: lotCode,
-      item: body.item,
-      package_count: body.packageCount,
-      initial_qty: body.initialQty,
-      available_qty: body.initialQty,
-      business_date: businessDate,
-      status: "received",
-    };
-
-    const { data, error } = await supabase.from("lot").insert(insertRow).select().single();
-
-    if (!error && data) {
-      await writeAuditLog(supabase, {
-        actorId,
-        action: "create",
-        entity: "lot",
-        entityId: data.id,
-        before: null,
-        after: { ...data, intake_docs: body.intakeDocs },
-      });
-      return NextResponse.json({ id: data.id, lotCode: data.lot_code }, { status: 201 });
+  const files = collectIntakeDocFiles(form);
+  for (const file of files) {
+    const check = checkIntakeDocFile(file);
+    if (!check.ok) {
+      // Reject before creating anything -- a bad file must not leave an
+      // orphan lot with no attachments behind it.
+      return NextResponse.json({ reason: check.reason }, { status: 422 });
     }
-
-    if (error.code === "23505") {
-      lastMessage = error.message;
-      continue; // lot_code collision -- retry once against a fresh count
-    }
-    throw new Error(`POST /api/lots insert failed: ${error.message}`);
   }
 
-  throw new Error(`POST /api/lots: lot_code collision persisted after retry: ${lastMessage}`);
+  const supabase: SupabaseClient<Database> = await createClient();
+  const lot = await createLot(supabase, fields, actorId);
+
+  // Every file already passed checkIntakeDocFile above, so a failure here is
+  // an infra-level surprise (storage/DB), not a validation rejection -- the
+  // lot itself still exists and is still the success response; count of
+  // failures is surfaced so the UI can tell the operator to retry attaching.
+  let attachmentsFailed = 0;
+  for (const file of files) {
+    const result = await attachIntakeDoc(supabase, lot.id, actorId, file);
+    if (!result.ok) attachmentsFailed += 1;
+  }
+
+  return NextResponse.json(
+    { id: lot.id, lotCode: lot.lot_code, attachmentsFailed },
+    { status: 201 },
+  );
 }
 
 async function handleList(): Promise<NextResponse> {

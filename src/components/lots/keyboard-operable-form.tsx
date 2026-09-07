@@ -15,8 +15,11 @@ type KeyboardOperableFormProps = {
  * present, but this wrapper makes both guarantees explicit and independent
  * of field type: autofocus on the first focusable field on mount, and a
  * form-level Enter handler that calls requestSubmit() from any descendant
- * (except a <textarea>, which keeps Enter as a literal newline, and a
- * <button>, which already handles its own activation).
+ * (except a <textarea>, which keeps Enter as a literal newline; a <button>,
+ * which already handles its own activation; and a file <input>, whose own
+ * Enter/Space activation opens the OS file picker -- hijacking Enter there
+ * would submit the form instead of ever opening the picker, failing
+ * NFR-USE-01 for exactly the field that most needs a keyboard path).
  */
 export function KeyboardOperableForm({ onSubmit, children, className }: KeyboardOperableFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -30,6 +33,7 @@ export function KeyboardOperableForm({ onSubmit, children, className }: Keyboard
     if (event.key !== "Enter") return;
     const target = event.target as HTMLElement;
     if (target.tagName === "TEXTAREA" || target.tagName === "BUTTON") return;
+    if (target instanceof HTMLInputElement && target.type === "file") return;
     event.preventDefault();
     formRef.current?.requestSubmit();
   }

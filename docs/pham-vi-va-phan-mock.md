@@ -47,7 +47,7 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
 | SC-27 | Batch xuất kế toán | Cần hệ thống kế toán đối tác — không mô phỏng thật được |
 | SC-28, SC-29 | Thông báo và cấu hình | P1, cần hạ tầng email/queue ngoài phạm vi 10h |
 | SC-30 | Tra cứu audit log | Audit **có ghi** ở F011; chỉ bỏ màn tra cứu và ngưỡng p95 ≤ 2s |
-| SC-31 | Quản lý file đính kèm | F008 có upload bằng chứng tối thiểu; màn quản lý riêng theo policy 7 năm là ngoài phạm vi |
+| SC-31 | Quản lý file đính kèm | F003 (chứng từ tiếp nhận) và F008 (bằng chứng điều chỉnh) đều có upload + đọc lại qua signed URL thật (xem QĐ-6); màn **quản lý** riêng — liệt kê/xóa mọi file theo policy lưu trữ 7 năm/3 năm của `TBL-ATTACH-01` — vẫn ngoài phạm vi |
 | SC-32 | Trạng thái vận hành suy giảm | Cần offline queue — không khả thi trong prototype |
 
 (32 màn LAB-1 − 20 màn trong phạm vi = 12 màn ở trên.)
@@ -103,8 +103,16 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
   bằng "5 lần sai liên tiếp kể từ lần đăng nhập thành công hoặc lần khóa
   gần nhất". Một lần đăng nhập thành công luôn reset bộ đếm.
 - **Ngoài phạm vi hoàn toàn**: MFA, các màn quản lý tài khoản/quyền, thông
-  báo (notification), tra cứu audit log, quản lý file đính kèm, và chế độ
-  vận hành suy giảm khi mất kết nối (degraded-offline mode).
+  báo (notification), tra cứu audit log, **màn quản lý file đính kèm**
+  (SC-31 — liệt kê/xóa theo policy lưu trữ, không phải việc upload/đọc lại
+  bản thân file, đã thật từ QĐ-6), và chế độ vận hành suy giảm khi mất kết
+  nối (degraded-offline mode).
+- **`TBL-ATTACH-01`'s lưu trữ 7 năm (phiếu tiếp nhận) / 3 năm rồi cold
+  archive (ảnh/chứng từ phụ trợ) là policy vận hành, không phải thứ
+  prototype này triển khai.** Không có lifecycle rule, không có job dọn/di
+  chuyển file theo tuổi — `lot-attachment` (F003) và `correction-evidence`
+  (F008) chỉ là hai bucket riêng tư lưu vô thời hạn cho tới khi ai đó xóa
+  tay. Restore ≤2 ngày làm việc từ cold storage cũng chưa mô phỏng.
 
 ## 4. Quyết định phát sinh khi thi công (input cho ADR ở LAB-4)
 
@@ -142,6 +150,29 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
   với điều kiện `available_qty` vẫn đúng giá trị vừa đọc; thua CAS thì đọc
   lại và thử tiếp (tối đa 25 lần). Đã kiểm chứng với 20 request đồng thời
   (xem mục 5). Xem `src/lib/lots/availability-service.ts`.
+- **QĐ-6 — `chứng từ tiếp nhận` (`FR-LOT-01`, `D-LOT`) trở thành file đính
+  kèm thật, thay cho chuỗi text đã smuggle vào `audit_log.after` ở phase-06.**
+  Bảng riêng `lot_attachment` (1 lô — nhiều chứng từ, vì `TBL-ATTACH-01` liệt
+  cả "phiếu tiếp nhận" lẫn ảnh phụ trợ dưới cùng một domain) + bucket riêng
+  tư `lot-attachment`, mirror đúng pattern `correction_request`/
+  `correction-evidence` (F008): allow-list 4 MIME type, trần 5MB, kiểm tra ở
+  server (không tin `accept` phía client), đọc lại chỉ qua signed URL
+  (`createSignedUrl`, TTL 300s). RLS: `ROLE-INTAKE` insert (họ là người tiếp
+  nhận lô), mọi role active select (đồng nhất với `read_all_active_users`
+  trên 16 bảng còn lại) — không có policy update/delete, cùng kiểu
+  append-only với `audit_log`. Đính kèm là **tùy chọn**: nghiệm thu của
+  `FR-LOT-01` chỉ đòi hệ thống *lưu được* chứng từ bắt buộc
+  ("lưu được các chứng từ bắt buộc"), không có `BR-LOT` nào đặt số lượng tối
+  thiểu như `BR-003` làm với bằng chứng F008 — nên không chặn tạo lô khi
+  chưa có file. Ghi `lot_attachment` là một write riêng, có `audit_log` của
+  chính nó (`action='attach_document'`, `entity='lot_attachment'`), tách
+  khỏi audit ghi nhận `lot` (`action='create'`, `entity='lot'`) — không còn
+  gộp `intake_docs` vào `after` của audit lô nữa (dọn khỏi
+  `LOT_FIELD_LABELS`/`LOT_CREATE_FIELDS`). Không có transaction xuyên bảng
+  (QĐ-5 cùng lý do): nếu file đã upload lên storage mà insert
+  `lot_attachment` sau đó lỗi, route tự xóa lại object vừa upload
+  (`attach-intake-doc.ts`) thay vì để lại object mồ côi không có dòng DB nào
+  trỏ tới. Xem `supabase/migrations/20260907090000_lot_attachment.sql`.
 
 ## 5. Bằng chứng đã kiểm (verify trên database đang sống, không phải mock)
 
@@ -159,3 +190,23 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
   `GOV-RULE-01`).
 - File CSV xuất ra mang đúng BOM UTF-8 ở đầu file, một dòng dữ liệu chứa cả
   tiếng Việt và tiếng Nhật vẫn giữ nguyên không bị mojibake.
+- **Chứng từ tiếp nhận (QĐ-6), kiểm end-to-end trên `intake@`**: tạo lô kèm
+  1 PNG thật → `201`, có đủ dòng `lot`, `lot_attachment`, object thật trong
+  bucket `lot-attachment`, và 2 dòng `audit_log` (`create` +
+  `attach_document`). Đọc lại bằng signed URL do **`trade@`** (một role khác
+  `intake@`, chứng minh "mọi role active đọc được") ký → `200`, đúng
+  `image/png`. Cùng path đó gọi thẳng endpoint object không kèm chữ ký/không
+  kèm auth → bị từ chối (bucket private, không phải public). File
+  `text/plain` → `422 {"reason":"INVALID_TYPE"}`; file 6MB → `422
+  {"reason":"TOO_LARGE"}` — cả hai đều không tạo ra lô mồ côi. Tạo lô không
+  kèm file nào vẫn `201` (đính kèm là tùy chọn). Toàn bộ dòng/object test đã
+  được dọn sạch sau khi verify.
+- **Bàn phím trên form tiếp nhận (`NFR-USE-01`) sau khi thêm file input**:
+  kiểm bằng trình duyệt thật (Chromium, headless), không phải đọc code —
+  Tab từ ô mặt hàng đi đúng 3 lần tới `#intakeDocs`; `Enter` VÀ `Space` trên
+  đó đều bắn sự kiện mở file-picker của trình duyệt (Puppeteer
+  `filechooser`) mà không submit/điều hướng form; Tab thêm một lần nữa tới
+  đúng nút submit — không trường nào bị bỏ qua. Đây là lý do
+  `keyboard-operable-form.tsx` phải loại trừ `input[type=file]` khỏi hành vi
+  "Enter luôn submit": nếu không, `Enter` trên ô file sẽ bị `preventDefault`
+  cướp mất trước khi trình duyệt kịp mở picker.
