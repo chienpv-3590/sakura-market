@@ -1,1 +1,26 @@
-{}
+{
+  "reconciliation.page.title": "Đối chiếu và lock ngày nghiệp vụ",
+  "reconciliation.page.dateLabel": "Ngày nghiệp vụ",
+  "reconciliation.page.dateSubmit": "Xem",
+  "reconciliation.page.lockedLabel": "Đã lock",
+  "reconciliation.page.notLockedLabel": "Chưa lock",
+  "reconciliation.table.empty": "Chưa có giao dịch nào cho ngày nghiệp vụ này.",
+  "reconciliation.table.columns.sourceType": "Nguồn",
+  "reconciliation.table.columns.qty": "Số lượng",
+  "reconciliation.table.columns.amount": "Thành tiền (JPY)",
+  "reconciliation.table.columns.variance": "Chênh lệch",
+  "reconciliation.table.columns.trace": "Truy vết",
+  "reconciliation.table.traceToggle": "Xem giao hàng",
+  "reconciliation.table.traceLoading": "Đang tải...",
+  "reconciliation.table.traceEmpty": "Chưa có lần giao nào cho giao dịch này.",
+  "reconciliation.sourceType.aitai": "相対取引 (Thỏa thuận)",
+  "reconciliation.sourceType.seri": "せり (Đấu giá)",
+  "reconciliation.sourceType.delivery": "Giao hàng",
+  "reconciliation.lock.openButton": "Lock ngày nghiệp vụ",
+  "reconciliation.lock.warningTitle": "Hành động này không thể hoàn tác",
+  "reconciliation.lock.warningBody": "Sau khi lock, mọi bản ghi thuộc ngày nghiệp vụ này chỉ có thể sửa qua yêu cầu điều chỉnh. Không có cách nào để mở lock lại.",
+  "reconciliation.lock.typeToConfirmLabel": "Gõ lại \"{date}\" để xác nhận",
+  "reconciliation.lock.confirmButton": "Xác nhận lock",
+  "reconciliation.lock.cancelButton": "Hủy",
+  "reconciliation.lock.error.generic": "Có lỗi xảy ra, vui lòng thử lại."
+}

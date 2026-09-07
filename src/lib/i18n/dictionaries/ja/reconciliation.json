@@ -1,1 +1,26 @@
-{}
+{
+  "reconciliation.page.title": "業務日の照合とロック",
+  "reconciliation.page.dateLabel": "業務日",
+  "reconciliation.page.dateSubmit": "表示",
+  "reconciliation.page.lockedLabel": "ロック済み",
+  "reconciliation.page.notLockedLabel": "未ロック",
+  "reconciliation.table.empty": "この業務日の取引はまだありません。",
+  "reconciliation.table.columns.sourceType": "区分",
+  "reconciliation.table.columns.qty": "数量",
+  "reconciliation.table.columns.amount": "金額 (JPY)",
+  "reconciliation.table.columns.variance": "差異",
+  "reconciliation.table.columns.trace": "追跡",
+  "reconciliation.table.traceToggle": "配送を見る",
+  "reconciliation.table.traceLoading": "読み込み中...",
+  "reconciliation.table.traceEmpty": "この取引の配送記録はまだありません。",
+  "reconciliation.sourceType.aitai": "相対取引",
+  "reconciliation.sourceType.seri": "せり",
+  "reconciliation.sourceType.delivery": "配送",
+  "reconciliation.lock.openButton": "業務日をロック",
+  "reconciliation.lock.warningTitle": "この操作は取り消せません",
+  "reconciliation.lock.warningBody": "ロック後、この業務日の記録は修正依頼を通じてのみ変更できます。ロック解除の方法はありません。",
+  "reconciliation.lock.typeToConfirmLabel": "確認のため「{date}」を再入力してください",
+  "reconciliation.lock.confirmButton": "ロックを確定",
+  "reconciliation.lock.cancelButton": "キャンセル",
+  "reconciliation.lock.error.generic": "エラーが発生しました。もう一度お試しください。"
+}

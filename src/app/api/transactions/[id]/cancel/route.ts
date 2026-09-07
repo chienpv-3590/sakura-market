@@ -3,8 +3,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/db/types";
 import { requireRole } from "@/lib/auth/require-role";
-import { writeAuditLog } from "@/lib/audit/write-audit-log";
 import { cancelTransaction } from "@/lib/transactions/cancel-transaction";
+import { respondLockedWrite } from "@/lib/reconciliation/handle-locked-write";
 
 function parseReason(body: unknown): string | null {
   if (typeof body !== "object" || body === null) return null;
@@ -14,11 +14,12 @@ function parseReason(body: unknown): string | null {
   return trimmed.length > 0 ? trimmed : null;
 }
 
-// A3 (FR-AITAI-03). Locked-day handling matches phase-07 Implementation
-// Steps #5: attempt the write, catch the trigger's P0001, THEN write the
-// `locked_write_attempt` audit row as a fresh statement of its own (the
-// failed UPDATE was already rolled back by Postgres and cannot carry a
-// write alongside it -- see cancel-transaction.ts's own note).
+// A3 (FR-AITAI-03). Locked-day handling: attempt the write, catch the
+// trigger's P0001 (translated by cancel-transaction.ts into
+// LOCKED_BUSINESS_DATE), then hand off to F007's shared
+// respondLockedWrite() -- phase-08 consolidated this route's own ad-hoc
+// 423+audit handling (phase-07 Implementation Steps #5) into that one
+// reusable place (phase-08 Implementation Steps #8).
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -43,16 +44,7 @@ export async function POST(
       return NextResponse.json({ status: "cancelled" });
     }
     if (result.reason === "LOCKED_BUSINESS_DATE") {
-      await writeAuditLog(supabase, {
-        actorId: user.id,
-        action: "locked_write_attempt",
-        entity: "transaction",
-        entityId: id,
-        before: null,
-        after: null,
-        reason,
-      });
-      return NextResponse.json({ reason: result.reason }, { status: 423 });
+      return respondLockedWrite({ actorId: user.id, entity: "transaction", entityId: id, reason });
     }
     return NextResponse.json({ reason: result.reason }, { status: 409 });
   } catch (err) {
