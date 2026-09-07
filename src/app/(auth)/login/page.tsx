@@ -27,11 +27,11 @@ export default async function LoginPage({
 
   return (
     <I18nProvider locale={locale} dict={dict}>
-      <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
-        <div className="w-full max-w-sm space-y-6 rounded-lg border border-zinc-200 bg-white p-8 shadow-sm">
+      <main className="flex min-h-screen items-center justify-center bg-page px-4">
+        <div className="sm-card w-full max-w-sm space-y-6 p-8">
           <div className="text-center">
-            <h1 className="text-xl font-semibold text-zinc-900">{dict["app.name"]}</h1>
-            <p className="mt-1 text-sm text-zinc-600">{dict["auth.login.title"]}</p>
+            <h1 className="text-xl font-semibold text-strong">{dict["app.name"]}</h1>
+            <p className="sm-hint mt-1">{dict["auth.login.title"]}</p>
           </div>
           <LoginForm reason={reason} />
         </div>

@@ -14,7 +14,7 @@ export default async function NewParticipantPage() {
   return (
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
-        <h1 className="text-2xl font-semibold text-zinc-900">{dict["participants.form.createTitle"]}</h1>
+        <h1 className="text-2xl font-semibold text-strong">{dict["participants.form.createTitle"]}</h1>
         <ParticipantForm mode="create" />
       </section>
     </I18nProvider>

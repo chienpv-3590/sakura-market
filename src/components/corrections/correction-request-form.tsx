@@ -55,22 +55,22 @@ export function CorrectionRequestForm({ targetTxnId }: { targetTxnId: string }) 
   }
 
   if (done) {
-    return <p className="text-sm text-emerald-700">{t("corrections.request.success")}</p>;
+    return <p className="sm-hint text-ok">{t("corrections.request.success")}</p>;
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md space-y-4">
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("corrections.request.reasonLabel")}
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           disabled={pending}
           rows={4}
-          className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1"
         />
       </label>
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("corrections.request.evidenceLabel")}
         <input
           type="file"
@@ -84,12 +84,12 @@ export function CorrectionRequestForm({ targetTxnId }: { targetTxnId: string }) 
         type="submit"
         disabled={pending || !canSubmit}
         aria-busy={pending}
-        className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary"
       >
         {t("corrections.request.submit")}
       </button>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

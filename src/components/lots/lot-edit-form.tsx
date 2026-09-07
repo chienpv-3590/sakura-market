@@ -74,9 +74,9 @@ export function LotEditForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md space-y-3 rounded-md border border-zinc-200 p-4">
+    <form onSubmit={handleSubmit} className="sm-card max-w-md space-y-3 p-4">
       <div>
-        <label htmlFor="edit-field" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="edit-field" className="sm-label">
           {t("lots.edit.fieldLabel")}
         </label>
         <select
@@ -84,14 +84,14 @@ export function LotEditForm({
           value={field}
           onChange={(e) => handleFieldChange(e.target.value as EditableField)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1 w-full"
         >
           <option value="item">{t("lots.edit.fieldOption.item")}</option>
           <option value="package_count">{t("lots.edit.fieldOption.packageCount")}</option>
         </select>
       </div>
       <div>
-        <label htmlFor="edit-new-value" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="edit-new-value" className="sm-label">
           {t("lots.edit.newValueLabel")}
         </label>
         <input
@@ -102,11 +102,11 @@ export function LotEditForm({
           value={newValue}
           onChange={(e) => setNewValue(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="edit-reason" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="edit-reason" className="sm-label">
           {t("lots.edit.reasonLabel")}
         </label>
         <input
@@ -116,20 +116,20 @@ export function LotEditForm({
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}
-      {success && <p className="text-sm text-emerald-700">{t("lots.edit.success")}</p>}
+      {success && <p className="sm-hint text-ok">{t("lots.edit.success")}</p>}
       <button
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary"
       >
         {submitting ? t("lots.edit.submitting") : t("lots.edit.submit")}
       </button>

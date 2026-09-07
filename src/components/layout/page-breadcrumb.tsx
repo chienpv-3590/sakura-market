@@ -34,7 +34,7 @@ export function PageBreadcrumb() {
   const pathname = usePathname();
 
   if (pathname === "/") {
-    return <p className="text-sm font-semibold text-zinc-900">{t("app.name")}</p>;
+    return <p className="text-sm font-semibold text-strong">{t("app.name")}</p>;
   }
 
   const section = findSection(pathname);
@@ -43,19 +43,19 @@ export function PageBreadcrumb() {
 
   return (
     <p className="text-sm">
-      <Link href="/" className="text-zinc-400 hover:text-zinc-600">
+      <Link href="/" className="text-subtle hover:text-secondary">
         {t("app.name")}
       </Link>
       {section && (
         <>
-          <span className="mx-1.5 text-zinc-300">/</span>
-          <span className="font-semibold text-zinc-900">{t(section.labelKey)}</span>
+          <span className="mx-1.5 text-subtle">/</span>
+          <span className="font-semibold text-strong">{t(section.labelKey)}</span>
         </>
       )}
       {suffixKey && (
         <>
-          <span className="mx-1.5 text-zinc-300">/</span>
-          <span className="text-zinc-600">{t(suffixKey)}</span>
+          <span className="mx-1.5 text-subtle">/</span>
+          <span className="text-secondary">{t(suffixKey)}</span>
         </>
       )}
     </p>

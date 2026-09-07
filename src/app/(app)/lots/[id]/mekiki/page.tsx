@@ -32,9 +32,9 @@ export default async function MekikiEntryPage({ params }: { params: Promise<{ id
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">{dict["lots.mekiki.title"]}</h1>
-          <p className="mt-1 text-sm text-zinc-600">
-            {dict["lots.mekiki.lotCodeLabel"]}: <span className="font-mono">{lot.lot_code}</span>
+          <h1 className="text-2xl font-semibold text-strong">{dict["lots.mekiki.title"]}</h1>
+          <p className="sm-hint mt-1">
+            {dict["lots.mekiki.lotCodeLabel"]}: <span className="sm-mono">{lot.lot_code}</span>
             {" — "}
             {dict["lots.mekiki.itemLabel"]}: {lot.item}
           </p>
@@ -42,9 +42,9 @@ export default async function MekikiEntryPage({ params }: { params: Promise<{ id
         {user.role === "ROLE-JUDGE" && lot.status === "received" ? (
           <MekikiForm lotId={lot.id} />
         ) : user.role !== "ROLE-JUDGE" ? (
-          <p className="text-sm text-zinc-500">{dict["lots.mekiki.wrongRole"]}</p>
+          <p className="text-sm text-muted">{dict["lots.mekiki.wrongRole"]}</p>
         ) : (
-          <p className="text-sm text-zinc-500">{dict["lots.mekiki.alreadyDone"]}</p>
+          <p className="text-sm text-muted">{dict["lots.mekiki.alreadyDone"]}</p>
         )}
       </section>
     </I18nProvider>

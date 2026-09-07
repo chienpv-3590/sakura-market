@@ -3,10 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Locale } from "@/lib/i18n/config";
-import { useI18n } from "@/lib/i18n/i18n-provider";
+import { useI18n, useT } from "@/lib/i18n/i18n-provider";
 
 export function LocaleSwitcher() {
   const { locale } = useI18n();
+  const t = useT();
   const router = useRouter();
   const [pending, setPending] = useState(false);
 
@@ -33,27 +34,14 @@ export function LocaleSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-1 rounded-md border border-zinc-200 p-1 text-sm">
-      <button
-        type="button"
-        onClick={() => switchTo("vi")}
-        disabled={pending}
-        aria-pressed={locale === "vi"}
-        className={`rounded px-2 py-1 font-medium ${
-          locale === "vi" ? "bg-zinc-900 text-white" : "text-zinc-600 hover:bg-zinc-100"
-        }`}
-      >
+    // .sm-seg is the design system's segmented control (.rd-seg): the pressed
+    // segment is fill + brand colour + bold weight, so the selection survives a
+    // monochrome or colour-blind read. aria-pressed carries it for AT.
+    <div className="sm-seg" role="group" aria-label={t("action.switchLocale")}>
+      <button type="button" onClick={() => switchTo("vi")} disabled={pending} aria-pressed={locale === "vi"}>
         VI
       </button>
-      <button
-        type="button"
-        onClick={() => switchTo("ja")}
-        disabled={pending}
-        aria-pressed={locale === "ja"}
-        className={`rounded px-2 py-1 font-medium ${
-          locale === "ja" ? "bg-zinc-900 text-white" : "text-zinc-600 hover:bg-zinc-100"
-        }`}
-      >
+      <button type="button" onClick={() => switchTo("ja")} disabled={pending} aria-pressed={locale === "ja"}>
         JA
       </button>
     </div>

@@ -67,7 +67,7 @@ export function TransitionActions({
   }
 
   if (events.length === 0) {
-    return <p className="text-sm text-zinc-500">{t("participants.detail.transitionNoneAvailable")}</p>;
+    return <p className="sm-empty">{t("participants.detail.transitionNoneAvailable")}</p>;
   }
 
   return (
@@ -80,8 +80,8 @@ export function TransitionActions({
             onClick={() => selectEvent(event)}
             className={`rounded-md border px-3 py-2 text-sm font-medium ${
               selected === event
-                ? "border-zinc-900 bg-zinc-900 text-white"
-                : "border-zinc-300 text-zinc-700 hover:bg-zinc-100"
+                ? "border-brand bg-brand text-card"
+                : "border-line-strong text-secondary hover:bg-neutral-50"
             }`}
           >
             {t(`event.${event}`)}
@@ -89,8 +89,8 @@ export function TransitionActions({
         ))}
       </div>
       {selected && (
-        <div className="space-y-2 rounded-md border border-zinc-200 p-3">
-          <label className="block text-sm font-medium text-zinc-700">
+        <div className="sm-card space-y-2 p-3">
+          <label className="sm-label">
             {t("participants.detail.transitionReasonLabel")}
             <textarea
               value={reason}
@@ -98,11 +98,11 @@ export function TransitionActions({
               disabled={submitting}
               placeholder={t("participants.detail.transitionReasonPlaceholder")}
               rows={2}
-              className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+              className="sm-field mt-1 w-full"
             />
           </label>
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p role="alert" className="sm-error">
               {error}
             </p>
           )}
@@ -112,7 +112,7 @@ export function TransitionActions({
               onClick={confirm}
               disabled={submitting}
               aria-busy={submitting}
-              className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+              className="sm-btn sm-btn-primary"
             >
               {t("participants.detail.transitionConfirm")}
             </button>
@@ -120,7 +120,7 @@ export function TransitionActions({
               type="button"
               onClick={cancelSelection}
               disabled={submitting}
-              className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60"
+              className="sm-btn sm-btn-secondary"
             >
               {t("participants.detail.transitionCancel")}
             </button>

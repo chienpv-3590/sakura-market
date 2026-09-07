@@ -64,23 +64,23 @@ export function LotIntakeForm() {
 
   if (created) {
     return (
-      <div className="max-w-md space-y-4 rounded-md border border-emerald-200 bg-emerald-50 p-6">
-        <h2 className="text-lg font-semibold text-emerald-900">{t("lots.intake.successTitle")}</h2>
+      <div className="sm-card max-w-md space-y-4 p-6">
+        <h2 className="text-lg font-semibold text-ok">{t("lots.intake.successTitle")}</h2>
         <div>
-          <span className="block text-sm text-emerald-800">{t("lots.intake.lotCodeLabel")}</span>
+          <span className="sm-label">{t("lots.intake.lotCodeLabel")}</span>
           <input
             readOnly
             autoFocus
             value={created.lotCode}
             tabIndex={1}
-            className="mt-1 w-full rounded-md border border-emerald-300 bg-white px-3 py-2 text-2xl font-bold tracking-wide text-emerald-900"
+            className="sm-field sm-num mt-1 w-full text-2xl font-bold tracking-wide"
           />
         </div>
         <div className="flex gap-3">
           <Link
             href={`/lots/${created.id}/mekiki`}
             tabIndex={2}
-            className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+            className="sm-btn sm-btn-approve"
           >
             {t("lots.intake.continueToMekiki")}
           </Link>
@@ -88,7 +88,7 @@ export function LotIntakeForm() {
             type="button"
             tabIndex={3}
             onClick={resetForm}
-            className="rounded-md border border-emerald-300 px-3 py-2 text-sm font-medium text-emerald-800 hover:bg-emerald-100"
+            className="sm-btn sm-btn-secondary"
           >
             {t("lots.intake.createAnother")}
           </button>
@@ -100,7 +100,7 @@ export function LotIntakeForm() {
   return (
     <KeyboardOperableForm onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="item" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="item" className="sm-label">
           {t("lots.intake.itemLabel")}
         </label>
         <input
@@ -112,11 +112,11 @@ export function LotIntakeForm() {
           value={item}
           onChange={(e) => setItem(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="packageCount" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="packageCount" className="sm-label">
           {t("lots.intake.packageCountLabel")}
         </label>
         <input
@@ -130,11 +130,11 @@ export function LotIntakeForm() {
           value={packageCount}
           onChange={(e) => setPackageCount(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="initialQty" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="initialQty" className="sm-label">
           {t("lots.intake.initialQtyLabel")}
         </label>
         <input
@@ -148,11 +148,11 @@ export function LotIntakeForm() {
           value={initialQty}
           onChange={(e) => setInitialQty(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="intakeDocs" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="intakeDocs" className="sm-label">
           {t("lots.intake.intakeDocsLabel")}
         </label>
         <input
@@ -163,11 +163,11 @@ export function LotIntakeForm() {
           value={intakeDocs}
           onChange={(e) => setIntakeDocs(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}
@@ -176,7 +176,7 @@ export function LotIntakeForm() {
         tabIndex={5}
         disabled={submitting}
         aria-busy={submitting}
-        className="w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary w-full"
       >
         {submitting ? t("lots.intake.submitting") : t("lots.intake.submit")}
       </button>

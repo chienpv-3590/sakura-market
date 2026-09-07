@@ -12,6 +12,7 @@ import { DeliveryProgress } from "@/components/deliveries/delivery-progress";
 import { ShipmentForm } from "@/components/deliveries/shipment-form";
 import { ShipmentHistoryTable } from "@/components/deliveries/shipment-history-table";
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR012_DeliveryDetail (A2/A3/A4, FR-DEL-02/04/05, US001-003).
@@ -40,16 +41,19 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
     <I18nProvider locale={locale} dict={dict}>
       <section className="max-w-3xl space-y-8">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">
-            {dict["deliveries.detail.title"]}: <span className="font-mono">{transaction.txn_code}</span>
+          <h1 className="text-2xl font-semibold text-strong">
+            {dict["deliveries.detail.title"]}: <span className="sm-mono">{transaction.txn_code}</span>
           </h1>
-          <p className="mt-1 text-sm text-zinc-600">
+          <p className="sm-hint mt-1">
             {dict["deliveries.detail.businessDateLabel"]}: {transaction.business_date} —{" "}
-            {dict[`deliveries.status.${delivery.status}`] ?? delivery.status}
+            <StatusBadge
+              status={delivery.status}
+              label={dict[`deliveries.status.${delivery.status}`] ?? delivery.status}
+            />
           </p>
           {lock && (
             <p className="mt-1 text-sm">
-              <Link href={`/reconciliation?date=${transaction.business_date}`} className="text-zinc-700 underline">
+              <Link href={`/reconciliation?date=${transaction.business_date}`} className="sm-link">
                 {dict["deliveries.detail.reconciliationLink"]}
               </Link>
             </p>
@@ -57,7 +61,7 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
         </div>
 
         <div>
-          <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500">
+          <h2 className="text-sm font-medium uppercase tracking-wide text-muted">
             {dict["pipeline.title"]}
           </h2>
           <div className="mt-2">
@@ -75,7 +79,7 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
 
         {canRecordShipment && (
           <div>
-            <h2 className="text-lg font-semibold text-zinc-900">{dict["deliveries.detail.newShipmentTitle"]}</h2>
+            <h2 className="text-lg font-semibold text-strong">{dict["deliveries.detail.newShipmentTitle"]}</h2>
             <div className="mt-2">
               <ShipmentForm deliveryId={delivery.id} />
             </div>
@@ -87,7 +91,7 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
         )}
 
         <div>
-          <h2 className="text-lg font-semibold text-zinc-900">{dict["deliveries.detail.shipmentsTitle"]}</h2>
+          <h2 className="text-lg font-semibold text-strong">{dict["deliveries.detail.shipmentsTitle"]}</h2>
           <div className="mt-2">
             <ShipmentHistoryTable shipments={shipments} dict={dict} />
           </div>

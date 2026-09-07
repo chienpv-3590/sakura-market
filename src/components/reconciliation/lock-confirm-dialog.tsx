@@ -43,7 +43,7 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-md bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800"
+        className="sm-btn sm-btn-danger"
       >
         {t("reconciliation.lock.openButton")}
       </button>
@@ -51,17 +51,17 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
   }
 
   return (
-    <div className="max-w-md space-y-3 rounded-md border border-red-300 bg-red-50 p-4">
-      <p className="text-sm font-semibold text-red-800">{t("reconciliation.lock.warningTitle")}</p>
-      <p className="text-sm text-red-700">{t("reconciliation.lock.warningBody")}</p>
-      <label className="flex flex-col text-sm text-zinc-700">
+    <div className="sm-card max-w-md space-y-3 border-stop bg-stop-bg p-4">
+      <p className="sm-error font-semibold">{t("reconciliation.lock.warningTitle")}</p>
+      <p className="sm-error">{t("reconciliation.lock.warningBody")}</p>
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("reconciliation.lock.typeToConfirmLabel").replace("{date}", businessDate)}
         <input
           type="text"
           value={typed}
           onChange={(e) => setTyped(e.target.value)}
           disabled={pending}
-          className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1"
         />
       </label>
       <div className="flex gap-2">
@@ -70,7 +70,7 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
           onClick={handleLock}
           disabled={pending || !canConfirm}
           aria-busy={pending}
-          className="rounded-md bg-red-700 px-3 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="sm-btn sm-btn-danger"
         >
           {t("reconciliation.lock.confirmButton")}
         </button>
@@ -78,13 +78,13 @@ export function LockConfirmDialog({ businessDate }: { businessDate: string }) {
           type="button"
           onClick={() => setOpen(false)}
           disabled={pending}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+          className="sm-btn sm-btn-secondary"
         >
           {t("reconciliation.lock.cancelButton")}
         </button>
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

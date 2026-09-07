@@ -15,12 +15,15 @@ export async function AppShell({ children }: { children: ReactNode }) {
     throw new Error("AppShell: no active user after requireUser() gate");
   }
 
+  // Stacks below lg: a 224px fixed sidebar next to content leaves nothing
+  // usable on a 390px screen, so the nav becomes a full-width band above the
+  // content instead of a column beside it.
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col lg:flex-row">
       <SidebarNav role={user.role} />
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <AppShellHeader />
-        <main className="flex-1 px-6 py-8">{children}</main>
+        <main className="min-w-0 flex-1 bg-page px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
     </div>
   );

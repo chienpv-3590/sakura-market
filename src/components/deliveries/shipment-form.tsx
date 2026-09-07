@@ -46,7 +46,7 @@ export function ShipmentForm({ deliveryId }: { deliveryId: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-2">
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("deliveries.detail.newShipmentQtyLabel")}
         <input
           type="number"
@@ -55,19 +55,19 @@ export function ShipmentForm({ deliveryId }: { deliveryId: string }) {
           value={qty}
           onChange={(e) => setQty(e.target.value)}
           disabled={pending}
-          className="mt-1 w-40 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1 w-40"
         />
       </label>
       <button
         type="submit"
         disabled={pending || qty.trim().length === 0}
         aria-busy={pending}
-        className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary"
       >
         {t("deliveries.detail.newShipmentSubmit")}
       </button>
       {errorKey && (
-        <p role="alert" className="w-full text-sm text-red-600">
+        <p role="alert" className="sm-error w-full">
           {t(errorKey)}
         </p>
       )}

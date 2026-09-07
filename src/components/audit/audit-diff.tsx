@@ -61,7 +61,7 @@ export function AuditDiff({
 
   const Row = ({ field, children }: { field: string; children: React.ReactNode }) => (
     <li key={field}>
-      <span className="text-zinc-500">{label(field)}:</span> {children}
+      <span className="text-muted">{label(field)}:</span> {children}
     </li>
   );
 
@@ -74,29 +74,29 @@ export function AuditDiff({
       <ul className="space-y-0.5">
         {fields.map((f) => (
           <Row key={f} field={f}>
-            <span className="text-zinc-900">{display(f, a[f])}</span>
+            <span className="sm-mono text-strong">{display(f, a[f])}</span>
           </Row>
         ))}
       </ul>
     );
   }
 
-  if (a === null) return <span className="text-zinc-500">—</span>;
+  if (a === null) return <span className="text-muted">—</span>;
 
   // SỬA: chỉ liệt kê trường có giá trị khác nhau.
   const changed = Object.keys(a).filter(
     (f) => !HIDDEN_FIELDS.has(f) && JSON.stringify(b?.[f]) !== JSON.stringify(a[f]),
   );
 
-  if (changed.length === 0) return <span className="text-zinc-500">{t("audit.noChange", "—")}</span>;
+  if (changed.length === 0) return <span className="text-muted">{t("audit.noChange", "—")}</span>;
 
   return (
     <ul className="space-y-0.5">
       {changed.map((f) => (
         <Row key={f} field={f}>
-          <span className="text-zinc-500 line-through">{display(f, b?.[f])}</span>
-          <span className="mx-1 text-zinc-400">→</span>
-          <span className="font-medium text-zinc-900">{display(f, a[f])}</span>
+          <span className="sm-mono text-muted line-through">{display(f, b?.[f])}</span>
+          <span aria-hidden className="mx-1 text-subtle">→</span>
+          <span className="sm-mono font-semibold text-strong">{display(f, a[f])}</span>
         </Row>
       ))}
     </ul>

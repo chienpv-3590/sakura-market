@@ -28,42 +28,42 @@ export default async function NewCorrectionPage({
   return (
     <I18nProvider locale={locale} dict={dict}>
       <section className="max-w-md space-y-6">
-        <h1 className="text-2xl font-semibold text-zinc-900">{dict["corrections.request.title"]}</h1>
+        <h1 className="text-2xl font-semibold text-strong">{dict["corrections.request.title"]}</h1>
 
         <form method="GET" className="flex items-end gap-2">
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {dict["corrections.request.txnCodeLabel"]}
             <input
               type="text"
               name="txnCode"
               defaultValue={trimmedCode ?? ""}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field mt-1"
             />
           </label>
           <button
             type="submit"
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+            className="sm-btn sm-btn-secondary"
           >
             {dict["corrections.request.txnCodeSubmit"]}
           </button>
         </form>
 
-        {trimmedCode && !txn && <p className="text-sm text-red-600">{dict["corrections.error.txnNotFound"]}</p>}
+        {trimmedCode && !txn && <p className="sm-error">{dict["corrections.error.txnNotFound"]}</p>}
 
         {txn && (
           <>
             <dl className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <dt className="text-zinc-500">{dict["corrections.request.originalQtyLabel"]}</dt>
-                <dd className="text-zinc-900">{txn.qty}</dd>
+                <dt className="text-muted">{dict["corrections.request.originalQtyLabel"]}</dt>
+                <dd className="sm-num text-left text-strong">{txn.qty}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">{dict["corrections.request.originalUnitPriceLabel"]}</dt>
-                <dd className="text-zinc-900">{txn.unit_price.toLocaleString()}</dd>
+                <dt className="text-muted">{dict["corrections.request.originalUnitPriceLabel"]}</dt>
+                <dd className="sm-num text-left text-strong">{txn.unit_price.toLocaleString()}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">{dict["corrections.request.businessDateLabel"]}</dt>
-                <dd className="text-zinc-900">{txn.business_date}</dd>
+                <dt className="text-muted">{dict["corrections.request.businessDateLabel"]}</dt>
+                <dd className="sm-mono text-strong">{txn.business_date}</dd>
               </div>
             </dl>
             <CorrectionRequestForm targetTxnId={txn.id} />

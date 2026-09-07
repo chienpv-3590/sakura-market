@@ -58,13 +58,13 @@ export function AitaiCreateForm({
   }
 
   if (lots.length === 0 || participants.length === 0) {
-    return <p className="text-sm text-zinc-500">{t("transactions.create.noLots")}</p>;
+    return <p className="sm-empty">{t("transactions.create.noLots")}</p>;
   }
 
   return (
     <KeyboardOperableForm onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="txn-lot" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="txn-lot" className="sm-label">
           {t("transactions.create.lotLabel")}
         </label>
         <select
@@ -72,7 +72,7 @@ export function AitaiCreateForm({
           value={lotId}
           onChange={(e) => setLotId(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         >
           {lots.map((lot) => (
             <option key={lot.id} value={lot.id}>
@@ -82,7 +82,7 @@ export function AitaiCreateForm({
         </select>
       </div>
       <div>
-        <label htmlFor="txn-buyer" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="txn-buyer" className="sm-label">
           {t("transactions.create.buyerLabel")}
         </label>
         <select
@@ -90,7 +90,7 @@ export function AitaiCreateForm({
           value={buyerParticipantId}
           onChange={(e) => setBuyerParticipantId(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         >
           {participants.map((p) => (
             <option key={p.id} value={p.id}>
@@ -100,7 +100,7 @@ export function AitaiCreateForm({
         </select>
       </div>
       <div>
-        <label htmlFor="txn-qty" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="txn-qty" className="sm-label">
           {t("transactions.create.qtyLabel")}
         </label>
         <input
@@ -112,11 +112,11 @@ export function AitaiCreateForm({
           value={qty}
           onChange={(e) => setQty(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="txn-unit-price" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="txn-unit-price" className="sm-label">
           {t("transactions.create.unitPriceLabel")}
         </label>
         <input
@@ -128,11 +128,11 @@ export function AitaiCreateForm({
           value={unitPrice}
           onChange={(e) => setUnitPrice(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}
@@ -140,7 +140,7 @@ export function AitaiCreateForm({
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary w-full"
       >
         {submitting ? t("transactions.create.submitting") : t("transactions.create.submit")}
       </button>

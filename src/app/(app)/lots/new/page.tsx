@@ -14,8 +14,8 @@ export default async function NewLotPage() {
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">{dict["lots.intake.title"]}</h1>
-          <p className="mt-1 text-sm text-zinc-600">{dict["lots.intake.subtitle"]}</p>
+          <h1 className="text-2xl font-semibold text-strong">{dict["lots.intake.title"]}</h1>
+          <p className="sm-hint mt-1">{dict["lots.intake.subtitle"]}</p>
         </div>
         <LotIntakeForm />
       </section>

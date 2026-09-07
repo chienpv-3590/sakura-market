@@ -31,8 +31,8 @@ export default async function NewTransactionPage() {
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">{dict["transactions.create.title"]}</h1>
-          <p className="mt-1 text-sm text-zinc-600">{dict["transactions.create.subtitle"]}</p>
+          <h1 className="text-2xl font-semibold text-strong">{dict["transactions.create.title"]}</h1>
+          <p className="sm-hint mt-1">{dict["transactions.create.subtitle"]}</p>
         </div>
         <AitaiCreateForm
           lots={(lots ?? []).map((l) => ({

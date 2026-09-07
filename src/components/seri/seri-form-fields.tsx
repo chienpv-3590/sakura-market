@@ -5,7 +5,7 @@ import { useT } from "@/lib/i18n/i18n-provider";
 type ParticipantOption = { id: string; name: string };
 type OperatorOption = { id: string; label: string };
 
-const INPUT_CLASS = "mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none";
+const INPUT_CLASS = "sm-field mt-1 w-full";
 
 // Fields shared by SCR009 (create) and SCR010's edit form -- everything
 // except the lot picker (create-only) and the mandatory edit reason
@@ -45,7 +45,7 @@ export function SeriFormFields({
   return (
     <>
       <div>
-        <label htmlFor="seri-winner" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="seri-winner" className="sm-label">
           {t("seri.form.winnerLabel")}
         </label>
         <select
@@ -63,7 +63,7 @@ export function SeriFormFields({
         </select>
       </div>
       <div>
-        <label htmlFor="seri-qty" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="seri-qty" className="sm-label">
           {t("seri.form.qtyLabel")}
         </label>
         <input
@@ -79,7 +79,7 @@ export function SeriFormFields({
         />
       </div>
       <div>
-        <label htmlFor="seri-unit-price" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="seri-unit-price" className="sm-label">
           {t("seri.form.unitPriceLabel")}
         </label>
         <input
@@ -95,7 +95,7 @@ export function SeriFormFields({
         />
       </div>
       <div>
-        <label htmlFor="seri-decided-at" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="seri-decided-at" className="sm-label">
           {t("seri.form.decidedAtLabel")}
         </label>
         <input
@@ -109,7 +109,7 @@ export function SeriFormFields({
         />
       </div>
       <div>
-        <label htmlFor="seri-confirmed-by" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="seri-confirmed-by" className="sm-label">
           {t("seri.form.confirmedByLabel")}
         </label>
         <select

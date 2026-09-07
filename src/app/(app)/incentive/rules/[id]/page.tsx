@@ -10,6 +10,7 @@ import { todayJst } from "@/lib/db/business-date";
 import { listRuleVersions, loadRuleVersion } from "@/lib/incentive/rule-version-queries";
 import { computeDisplayStatuses } from "@/lib/incentive/rule-version-display-status";
 import { RuleVersionDetailActions } from "@/components/incentive/rule-version-detail-actions";
+import { StatusBadge } from "@/components/ui/status-badge";
 
 // SCR018_RuleVersionEditor detail (A2/A3, DEC-001, US002).
 export default async function RuleVersionDetailPage({
@@ -37,30 +38,35 @@ export default async function RuleVersionDetailPage({
   return (
     <I18nProvider locale={locale} dict={dict}>
       <section className="max-w-md space-y-6">
-        <h1 className="text-2xl font-semibold text-zinc-900">
+        <h1 className="text-2xl font-semibold text-strong">
           {dict["incentive.rules.detail.title"]} v{version.version_no}
         </h1>
 
         <dl className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <dt className="text-zinc-500">{dict["incentive.rules.detail.versionNoLabel"]}</dt>
-            <dd className="text-zinc-900">{version.version_no}</dd>
+            <dt className="text-muted">{dict["incentive.rules.detail.versionNoLabel"]}</dt>
+            <dd className="sm-num text-left text-strong">{version.version_no}</dd>
           </div>
           <div>
-            <dt className="text-zinc-500">{dict["incentive.rules.detail.effectiveFromLabel"]}</dt>
-            <dd className="text-zinc-900">{version.effective_from}</dd>
+            <dt className="text-muted">{dict["incentive.rules.detail.effectiveFromLabel"]}</dt>
+            <dd className="sm-mono text-strong">{version.effective_from}</dd>
           </div>
           <div>
-            <dt className="text-zinc-500">{dict["incentive.rules.detail.statusLabel"]}</dt>
-            <dd className="text-zinc-900">{dict[`incentive.rules.status.${displayStatus}`] ?? version.status}</dd>
+            <dt className="text-muted">{dict["incentive.rules.detail.statusLabel"]}</dt>
+            <dd>
+              <StatusBadge
+                status={displayStatus}
+                label={dict[`incentive.rules.status.${displayStatus}`] ?? version.status}
+              />
+            </dd>
           </div>
           <div>
-            <dt className="text-zinc-500">{dict["incentive.rules.detail.createdByLabel"]}</dt>
-            <dd className="text-zinc-900">{version.createdByName ?? "—"}</dd>
+            <dt className="text-muted">{dict["incentive.rules.detail.createdByLabel"]}</dt>
+            <dd className="text-strong">{version.createdByName ?? "—"}</dd>
           </div>
           <div>
-            <dt className="text-zinc-500">{dict["incentive.rules.detail.approvedByLabel"]}</dt>
-            <dd className="text-zinc-900">{version.approvedByName ?? "—"}</dd>
+            <dt className="text-muted">{dict["incentive.rules.detail.approvedByLabel"]}</dt>
+            <dd className="text-strong">{version.approvedByName ?? "—"}</dd>
           </div>
         </dl>
 

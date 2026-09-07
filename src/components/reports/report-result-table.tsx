@@ -30,48 +30,62 @@ export function ReportResultTable({
   dict: Record<string, string>;
 }) {
   if (rows.length === 0) {
-    return <p className="text-sm text-zinc-600">{dict["reports.viewer.empty"]}</p>;
+    return <p className="sm-empty">{dict["reports.viewer.empty"]}</p>;
   }
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
+  // Column alignment is decided once from the first row: a figure column is
+  // right-aligned and tabular so values line up when the sheet is scanned
+  // down a column rather than read across a row.
+  const isNumericColumn = (key: string) => typeof rows[0]?.[key] === "number";
+
   return (
     <div className="space-y-3">
-      <table className="w-full border-collapse text-sm">
-        <thead>
-          <tr className="border-b border-zinc-300 text-left text-zinc-500">
-            {columns.map((col) => (
-              <th key={col.key} className="py-2 pr-4">
-                {dict[col.labelKey] ?? col.key}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr key={i} className="border-b border-zinc-100">
-              {columns.map((col) => {
-                const value = row[col.key];
-                // A small, known set of enum-like columns (sourceType/kind/
-                // status) get a translated label -- everything else renders
-                // as-is. Falls back to the raw value if a translation is
-                // missing rather than showing a blank cell.
-                const enumLabel =
-                  (col.key === "sourceType" || col.key === "kind" || col.key === "status") && value !== null
-                    ? dict[`reports.${col.key}.${value}`]
-                    : undefined;
-                return (
-                  <td key={col.key} className="py-2 pr-4 text-zinc-900">
-                    {enumLabel ?? (typeof value === "number" ? value.toLocaleString() : (value ?? "—"))}
-                  </td>
-                );
-              })}
+      <div className="sm-table-wrap sm-table-scroll">
+        <table className="sm-table">
+          <thead>
+            <tr>
+              {columns.map((col) => (
+                <th key={col.key} className={isNumericColumn(col.key) ? "text-right" : undefined}>
+                  {dict[col.labelKey] ?? col.key}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={i}>
+                {columns.map((col) => {
+                  const value = row[col.key];
+                  // A small, known set of enum-like columns (sourceType/kind/
+                  // status) get a translated label -- everything else renders
+                  // as-is. Falls back to the raw value if a translation is
+                  // missing rather than showing a blank cell.
+                  const enumLabel =
+                    (col.key === "sourceType" || col.key === "kind" || col.key === "status") && value !== null
+                      ? dict[`reports.${col.key}.${value}`]
+                      : undefined;
+                  if (enumLabel === undefined && typeof value === "number") {
+                    return (
+                      <td key={col.key} className="sm-num text-strong">
+                        {value.toLocaleString()}
+                      </td>
+                    );
+                  }
+                  return (
+                    <td key={col.key} className="text-strong">
+                      {enumLabel ?? value ?? "—"}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="flex items-center justify-between text-sm text-zinc-600">
+      <div className="flex items-center justify-between text-sm text-secondary">
         <span>
           {dict["reports.viewer.paginationInfo"]
             .replace("{page}", String(page))
@@ -82,7 +96,7 @@ export function ReportResultTable({
           {page > 1 && (
             <Link
               href={buildPageHref(baseHref, filterValues, page - 1)}
-              className="rounded-md border border-zinc-300 px-3 py-1 hover:bg-zinc-100"
+              className="sm-btn sm-btn-secondary"
             >
               {dict["reports.viewer.paginationPrev"]}
             </Link>
@@ -90,7 +104,7 @@ export function ReportResultTable({
           {page < totalPages && (
             <Link
               href={buildPageHref(baseHref, filterValues, page + 1)}
-              className="rounded-md border border-zinc-300 px-3 py-1 hover:bg-zinc-100"
+              className="sm-btn sm-btn-secondary"
             >
               {dict["reports.viewer.paginationNext"]}
             </Link>

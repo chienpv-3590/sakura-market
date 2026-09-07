@@ -12,37 +12,41 @@ export function IncentiveResultTable({
   dict: Record<string, string>;
 }) {
   if (rows.length === 0) {
-    return <p className="text-sm text-zinc-600">{dict["incentive.result.empty"]}</p>;
+    return <p className="sm-empty">{dict["incentive.result.empty"]}</p>;
   }
 
   return (
-    <table className="w-full border-collapse text-sm">
-      <thead>
-        <tr className="border-b border-zinc-300 text-left text-zinc-500">
-          <th className="py-2 pr-4">{dict["incentive.result.columnPeriod"]}</th>
-          <th className="py-2 pr-4">{dict["incentive.result.columnParticipant"]}</th>
-          <th className="py-2 pr-4">{dict["incentive.result.columnAmount"]}</th>
-          <th className="py-2 pr-4">{dict["incentive.result.columnKind"]}</th>
-          <th className="py-2 pr-4">{dict["incentive.result.columnRuleVersion"]}</th>
-          <th className="py-2 pr-4">{dict["incentive.result.columnOriginPeriod"]}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.id} className="border-b border-zinc-100">
-            <td className="py-2 pr-4 text-zinc-900">{row.period}</td>
-            <td className="py-2 pr-4 text-zinc-900">{row.participantName}</td>
-            <td className="py-2 pr-4 text-zinc-900">{row.amountJpy.toLocaleString()}</td>
-            <td className="py-2 pr-4 text-zinc-700">
-              {row.kind === "delta" ? dict["incentive.result.kindDelta"] : dict["incentive.result.kindNormal"]}
-            </td>
-            <td className="py-2 pr-4 text-zinc-700">
-              v{row.ruleVersionNo} ({row.ruleEffectiveFrom})
-            </td>
-            <td className="py-2 pr-4 text-zinc-500">{row.originPeriod ?? "—"}</td>
+    <div className="sm-table-wrap sm-table-scroll">
+      <table className="sm-table">
+        <thead>
+          <tr>
+            <th>{dict["incentive.result.columnPeriod"]}</th>
+            <th>{dict["incentive.result.columnParticipant"]}</th>
+            <th className="text-right">{dict["incentive.result.columnAmount"]}</th>
+            <th>{dict["incentive.result.columnKind"]}</th>
+            <th>{dict["incentive.result.columnRuleVersion"]}</th>
+            <th>{dict["incentive.result.columnOriginPeriod"]}</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td className="sm-mono text-strong">{row.period}</td>
+              <td className="text-strong">{row.participantName}</td>
+              <td className="sm-num text-strong">{row.amountJpy.toLocaleString()}</td>
+              <td>
+                <span className={`sm-badge ${row.kind === "delta" ? "sm-tone-move" : "sm-tone-money"}`}>
+                  {row.kind === "delta" ? dict["incentive.result.kindDelta"] : dict["incentive.result.kindNormal"]}
+                </span>
+              </td>
+              <td className="sm-mono text-secondary">
+                v{row.ruleVersionNo} ({row.ruleEffectiveFrom})
+              </td>
+              <td className="sm-mono text-muted">{row.originPeriod ?? "—"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

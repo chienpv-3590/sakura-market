@@ -30,6 +30,7 @@ export function DeliveryProgress({
   const [errorKey, setErrorKey] = useState<string | null>(null);
 
   const remaining = Math.max(0, Math.round((orderedQty - deliveredQty) * 100) / 100);
+  const pct = orderedQty > 0 ? Math.min(100, Math.round((deliveredQty / orderedQty) * 100)) : 0;
   const readyToComplete = status !== "hoàn tất" && Math.round(deliveredQty * 100) === Math.round(orderedQty * 100);
 
   async function handleComplete() {
@@ -58,18 +59,24 @@ export function DeliveryProgress({
     <div className="space-y-3">
       <dl className="grid grid-cols-3 gap-4 text-sm">
         <div>
-          <dt className="text-zinc-500">{t("deliveries.detail.orderedQtyLabel")}</dt>
-          <dd className="text-zinc-900">{orderedQty}</dd>
+          <dt className="text-muted">{t("deliveries.detail.orderedQtyLabel")}</dt>
+          <dd className="sm-num mt-1 text-left text-lg font-bold text-strong">{orderedQty}</dd>
         </div>
         <div>
-          <dt className="text-zinc-500">{t("deliveries.detail.deliveredQtyLabel")}</dt>
-          <dd className="text-zinc-900">{deliveredQty}</dd>
+          <dt className="text-muted">{t("deliveries.detail.deliveredQtyLabel")}</dt>
+          <dd className="sm-num mt-1 text-left text-lg font-bold text-strong">{deliveredQty}</dd>
         </div>
         <div>
-          <dt className="text-zinc-500">{t("deliveries.detail.remainingQtyLabel")}</dt>
-          <dd className="text-zinc-900">{remaining}</dd>
+          <dt className="text-muted">{t("deliveries.detail.remainingQtyLabel")}</dt>
+          <dd className="sm-num mt-1 text-left text-lg font-bold text-strong">{remaining}</dd>
         </div>
       </dl>
+      {/* Progress track (.rd-cat-track/.rd-cat-fill). The figures above carry
+          the same information in words, so the bar is reinforcement only --
+          it is aria-hidden rather than a redundant progressbar to announce. */}
+      <div aria-hidden className="sm-track">
+        <span className="sm-fill" style={{ width: `${pct}%` }} />
+      </div>
       {canComplete && status !== "hoàn tất" && (
         <div>
           <button
@@ -77,12 +84,12 @@ export function DeliveryProgress({
             onClick={handleComplete}
             disabled={pending || !readyToComplete}
             aria-busy={pending}
-            className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="sm-btn sm-btn-approve"
           >
             {t("deliveries.detail.completeButton")}
           </button>
           {!readyToComplete && (
-            <p className="mt-1 text-sm text-zinc-500">{t("deliveries.detail.completeDisabledHint")}</p>
+            <p className="sm-hint mt-1">{t("deliveries.detail.completeDisabledHint")}</p>
           )}
         </div>
       )}
@@ -90,7 +97,7 @@ export function DeliveryProgress({
         <HandoffCaption actionLabel={t("deliveries.detail.completeButton")} roles={["ROLE-SETTLEMENT"]} />
       )}
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

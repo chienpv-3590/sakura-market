@@ -1,0 +1,129 @@
+/* ============================================================================
+ * Sakura Market — design token layer (single source of truth).
+ *
+ * Token NAMES come from the RoleDashboard design system (`rd-*` component
+ * CSS). That artifact shipped its components but not its `:root`, so the
+ * names are authoritative and the values are authored here. Keeping the exact
+ * names means a recovered token file would be a value-only swap: no component
+ * in this app needs touching.
+ *
+ * ---------------------------------------------------------------------------
+ * STATUS TOKEN MAPPING — read this before using a `--status-*` token.
+ *
+ * The status names are inherited from a property-management product. They are
+ * mapped here by SEMANTIC ROLE, not by their original label:
+ *
+ *   --status-occupied  -> ACTIVE / SUCCESS / VALID
+ *       lot `delivered` · transaction `confirmed` · delivery `hoàn tất`
+ *       correction `approved` · participant `có hiệu lực`
+ *       business day UNLOCKED (writes are open)
+ *
+ *   --status-vacant    -> WAITING / PENDING A DECISION
+ *       lot `received` · transaction `draft` · delivery `chờ`
+ *       correction `pending` · participant `xét lại` · mock-data notice
+ *
+ *   --status-contract  -> IN PROGRESS / COMMITTED, still moving
+ *       lot `published` and `traded` · delivery `đang giao`
+ *
+ *   --status-inactive  -> CLOSED / DISABLED / NOT APPLICABLE
+ *       transaction `cancelled` · participant `tạm ngừng`
+ *       pipeline steps not yet reached · figures a role may not see
+ *
+ *   --status-overdue   -> BLOCKED / REFUSED / ERROR
+ *       delivery `ngoại lệ` · correction `rejected`
+ *       participant `mất hiệu lực` · validation errors · destructive actions
+ *       business day LOCKED — the highest-stakes state in the app: a locked
+ *       day REFUSES writes, so it is rendered as blocked, not as "done".
+ *
+ * Reasoning: `occupied`/`vacant` in the source system are a binary of
+ * "producing" vs "idle", which maps cleanly onto valid/active vs
+ * waiting-on-someone. `contract` was the mid-flight commitment state, which is
+ * exactly a lot in trade or a part-delivered order. `inactive` was the
+ * de-listed unit — closed, still on record. `overdue` was the state that
+ * demanded intervention, which is where a locked business day belongs, because
+ * the operator's next write will be refused.
+ *
+ * Colour NEVER carries state alone. Every badge, indicator and disabled
+ * control also renders a text label (see `.sm-badge`, BusinessDayIndicator,
+ * HandoffCaption).
+ *
+ *   --accent-valuation -> 目利き (mekiki) grading and quality assessment.
+ *   --cacao-*          -> 完納奨励金 (incentive) / settlement money surfaces.
+ *
+ * ---------------------------------------------------------------------------
+ * CONTRAST — every text pair below is >= 4.5:1 (WCAG 2.1 AA). Every
+ * boundary/graphic token is >= 3:1 (WCAG 2.1 AA, 1.4.11). Ratios are recorded
+ * in docs/design-guidelines.md.
+ * ========================================================================= */
+
+:root {
+  /* Surfaces */
+  --surface-page: #f2f5f7;
+  --surface-card: #ffffff;
+
+  /* Text — 18.4 / 13.5 / 8.2 / 6.2 / 5.2 : 1 on --surface-card */
+  --text-strong: #0f1519;
+  --text-body: #253039;
+  --text-secondary: #43515c;
+  --text-muted: #556370;
+  --text-subtle: #616e7a;
+
+  /* Borders — `subtle` is a hairline divider, `default` is a control boundary
+   * and must stay >= 3:1 against every surface it sits on. */
+  --border-subtle: #dfe5ea;
+  --border-default: #7e8b98;
+
+  /* Neutral ramp */
+  --neutral-50: #f7f9fa;
+  --neutral-200: #e1e7eb;
+  --neutral-400: #828e9b;
+
+  /* Brand — deep marine blue: the one saturated colour that is not a status,
+   * so a link or a primary action can never be misread as a state. */
+  --color-primary: #0f4c81;
+  --color-primary-subtle: #e6eef6;
+
+  /* Type */
+  --font-sans: var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+  --fs-caption: 0.75rem;
+
+  /* Shape */
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 9999px;
+  --shadow-xs: 0 1px 2px 0 rgb(15 21 25 / 0.06);
+
+  /* Status — see mapping block above */
+  --status-occupied-fg: #14622f;
+  --status-occupied-bg: #e2f2e6;
+  --status-occupied-solid: #1c7a3c;
+
+  --status-vacant-fg: #7a4a06;
+  --status-vacant-bg: #fdf0d9;
+  --status-vacant-solid: #8a5806;
+
+  --status-contract-fg: #43389b;
+  --status-contract-bg: #ecebfa;
+  --status-contract-solid: #5348b5;
+
+  --status-inactive-fg: #4b5761;
+  --status-inactive-bg: #eceff1;
+  --status-inactive-solid: #5f6c78;
+
+  --status-overdue-fg: #9b1c1c;
+  --status-overdue-bg: #fceaea;
+  --status-overdue-solid: #b52222;
+
+  /* Accents */
+  --accent-valuation-fg: #0d5757;
+  --accent-valuation-bg: #ddf0ef;
+  --accent-valuation-solid: #0f7070;
+
+  --cacao-100: #f5ece3;
+  --cacao-200: #e6d5c5;
+  --cacao-400: #b98d63;
+  --cacao-500: #9d7048;
+  --cacao-600: #7d5637;
+  --cacao-700: #5b3d26;
+}

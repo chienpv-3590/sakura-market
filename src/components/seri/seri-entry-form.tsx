@@ -126,7 +126,7 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
     <form onSubmit={handleSubmit} className="max-w-md space-y-4">
       {props.mode === "create" && (
         <div>
-          <label htmlFor="seri-lot" className="block text-sm font-medium text-zinc-700">
+          <label htmlFor="seri-lot" className="sm-label">
             {t("seri.form.lotLabel")}
           </label>
           <select
@@ -134,7 +134,7 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
             value={lotId}
             onChange={(e) => setLotId(e.target.value)}
             disabled={submitting}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+            className="sm-field mt-1 w-full"
           >
             {props.lots.map((lot) => (
               <option key={lot.id} value={lot.id}>
@@ -161,7 +161,7 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
       />
       {props.mode === "edit" && (
         <div>
-          <label htmlFor="seri-reason" className="block text-sm font-medium text-zinc-700">
+          <label htmlFor="seri-reason" className="sm-label">
             {t("seri.form.reasonLabel")}
           </label>
           <input
@@ -171,21 +171,21 @@ export function SeriEntryForm(props: SeriEntryFormProps) {
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             disabled={submitting}
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+            className="sm-field mt-1 w-full"
           />
         </div>
       )}
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}
-      {success && <p className="text-sm text-emerald-700">{t("seri.edit.success")}</p>}
+      {success && <p className="sm-hint text-ok">{t("seri.edit.success")}</p>}
       <button
         type="submit"
         disabled={submitting || (props.mode === "edit" && reason.trim().length === 0)}
         aria-busy={submitting}
-        className="w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary w-full"
       >
         {submitting
           ? t("seri.form.submitting")

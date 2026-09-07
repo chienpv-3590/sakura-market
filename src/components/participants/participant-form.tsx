@@ -81,7 +81,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
   return (
     <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
       <div>
-        <label className="block text-sm font-medium text-zinc-700">{t("participants.form.categoryLabel")}</label>
+        <label className="sm-label">{t("participants.form.categoryLabel")}</label>
         {mode === "create" ? (
           <select
             value={category}
@@ -95,19 +95,19 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
             ))}
           </select>
         ) : (
-          <p className="mt-1 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-600">
+          <p className="sm-field mt-1 bg-neutral-50 text-muted">
             {t(`category.${category}`)} — {t("participants.form.categoryLockedHint")}
           </p>
         )}
       </div>
       <div>
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className="sm-label">
           {t("participants.form.licenseTypeLabel")}
         </label>
-        <p className="mt-1 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-600">
+        <p className="sm-field mt-1 bg-neutral-50 text-muted">
           {t(`licenseType.${licenseType}`)}
         </p>
-        <p className="mt-1 text-xs text-zinc-500">{t("participants.form.licenseTypeAutoHint")}</p>
+        <p className="sm-hint mt-1">{t("participants.form.licenseTypeAutoHint")}</p>
       </div>
       <TextField
         id="participant-name"
@@ -138,7 +138,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
             onChange={(event) => setValidTo(event.target.value)}
             disabled={submitting}
           />
-          <p className="mt-1 text-xs text-zinc-500">{t("participants.form.validToOptional")}</p>
+          <p className="sm-hint mt-1">{t("participants.form.validToOptional")}</p>
         </div>
       </div>
       {mode === "edit" && (
@@ -153,7 +153,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
         />
       )}
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {error}
         </p>
       )}
@@ -161,7 +161,7 @@ export function ParticipantForm({ mode, initial }: { mode: Mode; initial?: Parti
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary"
       >
         {submitting
           ? t("participants.form.submitting")

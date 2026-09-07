@@ -84,7 +84,7 @@ export function ConfirmCancelButtonGroup({
   }
 
   if (status === "cancelled") {
-    return <span className="text-sm text-zinc-400">{t("transactions.status.cancelled")}</span>;
+    return <span className="text-sm text-subtle">{t("transactions.status.cancelled")}</span>;
   }
 
   return (
@@ -96,7 +96,7 @@ export function ConfirmCancelButtonGroup({
             onClick={handleConfirm}
             disabled={pending}
             aria-busy={pending}
-            className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="sm-btn sm-btn-primary"
           >
             {t("transactions.actions.confirm")}
           </button>
@@ -105,7 +105,7 @@ export function ConfirmCancelButtonGroup({
           type="button"
           onClick={() => setShowCancelForm((v) => !v)}
           disabled={pending}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60"
+          className="sm-btn sm-btn-secondary"
         >
           {t("transactions.actions.cancel")}
         </button>
@@ -118,21 +118,21 @@ export function ConfirmCancelButtonGroup({
             onChange={(e) => setReason(e.target.value)}
             placeholder={t("transactions.actions.cancelReasonPlaceholder")}
             disabled={pending}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="sm-field"
           />
           <button
             type="button"
             onClick={handleCancel}
             disabled={pending || reason.trim().length === 0}
             aria-busy={pending}
-            className="rounded-md bg-red-700 px-3 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="sm-btn sm-btn-danger"
           >
             {t("transactions.actions.cancelConfirm")}
           </button>
         </div>
       )}
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

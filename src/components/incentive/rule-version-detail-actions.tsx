@@ -50,8 +50,8 @@ export function RuleVersionDetailActions({
   const [targetVersionId, setTargetVersionId] = useState(rollbackCandidates[0]?.id ?? "");
 
   if (!canApprove && !canRollback) {
-    if (isOwnPending) return <p className="text-xs text-zinc-500">{t("incentive.error.SELF_APPROVAL")}</p>;
-    if (isOwnActive) return <p className="text-xs text-zinc-500">{t("incentive.error.SELF_ROLLBACK")}</p>;
+    if (isOwnPending) return <p className="sm-hint">{t("incentive.error.SELF_APPROVAL")}</p>;
+    if (isOwnActive) return <p className="sm-hint">{t("incentive.error.SELF_ROLLBACK")}</p>;
     return null;
   }
 
@@ -100,27 +100,27 @@ export function RuleVersionDetailActions({
   }
 
   return (
-    <div className="space-y-3 rounded-md border border-zinc-300 p-4">
+    <div className="sm-card space-y-3 p-4">
       {canApprove && (
         <button
           type="button"
           onClick={handleApprove}
           disabled={pending}
           aria-busy={pending}
-          className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="sm-btn sm-btn-approve"
         >
           {t("incentive.rules.detail.approveButton")}
         </button>
       )}
       {canRollback && rollbackCandidates.length > 0 && (
         <div className="flex items-end gap-2">
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {t("incentive.rules.detail.rollbackTargetLabel")}
             <select
               value={targetVersionId}
               onChange={(e) => setTargetVersionId(e.target.value)}
               disabled={pending}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field mt-1"
             >
               {rollbackCandidates.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -134,14 +134,14 @@ export function RuleVersionDetailActions({
             onClick={handleRollback}
             disabled={pending}
             aria-busy={pending}
-            className="rounded-md bg-red-700 px-3 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="sm-btn sm-btn-danger"
           >
             {t("incentive.rules.detail.rollbackButton")}
           </button>
         </div>
       )}
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

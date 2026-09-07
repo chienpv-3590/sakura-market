@@ -60,7 +60,7 @@ export function LoginForm({ reason }: { reason?: string }) {
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="email" className="sm-label">
           {t("auth.login.emailLabel")}
         </label>
         <input
@@ -72,11 +72,11 @@ export function LoginForm({ reason }: { reason?: string }) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="password" className="sm-label">
           {t("auth.login.passwordLabel")}
         </label>
         <input
@@ -88,11 +88,11 @@ export function LoginForm({ reason }: { reason?: string }) {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}
@@ -100,7 +100,7 @@ export function LoginForm({ reason }: { reason?: string }) {
         type="submit"
         disabled={submitting}
         aria-busy={submitting}
-        className="w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary w-full"
       >
         {submitting ? t("auth.login.submitting") : t("auth.login.submit")}
       </button>

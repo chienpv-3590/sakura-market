@@ -60,10 +60,10 @@ export default async function ReportViewerPage({
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-zinc-900">
+          <h1 className="text-2xl font-semibold text-strong">
             {definition.code} — {dict[definition.titleKey]}
           </h1>
-          <Link href="/reports" className="text-sm text-zinc-600 hover:underline">
+          <Link href="/reports" className="text-sm text-secondary hover:underline">
             {dict["reports.viewer.backLink"]}
           </Link>
         </div>
@@ -71,12 +71,12 @@ export default async function ReportViewerPage({
         {definition.isMock ? (
           <div className="space-y-3">
             <MockDataBadge label={dict["reports.catalog.badgeMock"]} />
-            <p className="text-sm text-amber-800">{dict["reports.viewer.mockNotice"]}</p>
+            <p className="text-sm text-wait">{dict["reports.viewer.mockNotice"]}</p>
             <button
               type="button"
               disabled
               title={dict["reports.viewer.exportDisabledMock"]}
-              className="cursor-not-allowed rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-400"
+              className="sm-btn sm-btn-secondary"
             >
               {dict["reports.viewer.exportButton"]}
             </button>
@@ -84,7 +84,7 @@ export default async function ReportViewerPage({
         ) : (
           <a
             href={exportHref}
-            className="inline-block rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+            className="sm-btn sm-btn-primary"
           >
             {dict["reports.viewer.exportButton"]}
           </a>

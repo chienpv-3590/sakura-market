@@ -12,7 +12,7 @@ export function HandoffCaption({ actionLabel, roles }: { actionLabel: string; ro
   const t = useT();
   const roleNames = roles.map((role) => t(`role.${role}`)).join(", ");
   return (
-    <p className="text-xs text-zinc-500">
+    <p className="sm-hint">
       {actionLabel} — {t("action.doneByRole")}: {roleNames}
     </p>
   );

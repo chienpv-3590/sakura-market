@@ -51,37 +51,37 @@ export function RuleVersionForm() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md space-y-4">
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("incentive.rules.new.effectiveFromLabel")}
         <input
           type="date"
           value={effectiveFrom}
           onChange={(e) => setEffectiveFrom(e.target.value)}
           disabled={pending}
-          className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1"
         />
-        <span className="mt-1 text-xs text-zinc-500">{t("incentive.rules.new.effectiveFromHint")}</span>
+        <span className="sm-hint mt-1">{t("incentive.rules.new.effectiveFromHint")}</span>
       </label>
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("incentive.rules.new.noteLabel")}
         <input
           type="text"
           value={note}
           onChange={(e) => setNote(e.target.value)}
           disabled={pending}
-          className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+          className="sm-field mt-1"
         />
       </label>
       <button
         type="submit"
         disabled={pending || !canSubmit}
         aria-busy={pending}
-        className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary"
       >
         {t("incentive.rules.new.submitButton")}
       </button>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

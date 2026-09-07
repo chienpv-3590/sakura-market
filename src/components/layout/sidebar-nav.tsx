@@ -10,6 +10,10 @@ import type { Role } from "@/lib/auth/role-landing";
 // decides what to show. The real gate is still requireRole() on the
 // destination page/API; hiding a link here is a legibility improvement, not
 // a substitute for that check.
+//
+// The active item is marked three ways at once -- a 4px brand rule on the
+// leading edge, a filled background, and aria-current="page" -- so it reads
+// at a glance on a dim floor and never depends on colour alone.
 export function SidebarNav({ role }: { role: Role }) {
   const t = useT();
   const pathname = usePathname();
@@ -20,22 +24,20 @@ export function SidebarNav({ role }: { role: Role }) {
   })).filter((group) => group.items.length > 0);
 
   return (
-    <nav className="w-56 shrink-0 border-r border-zinc-200 bg-zinc-50 px-3 py-6">
+    <nav className="w-full shrink-0 border-b border-line bg-card px-3 py-4 lg:w-56 lg:border-b-0 lg:border-r lg:py-6">
       <Link href="/" className="block px-3">
-        <p className="text-base font-semibold text-zinc-900">{t("app.name")}</p>
+        <p className="text-base font-semibold text-strong">{t("app.name")}</p>
       </Link>
-      <p className="mb-6 mt-1 px-3">
-        <span className="inline-block rounded-full bg-zinc-200 px-2 py-0.5 text-xs font-medium text-zinc-700">
-          {t(`role.${role}`)}
-        </span>
+      <p className="mb-4 mt-2 px-3 lg:mb-6">
+        <span className="sm-badge sm-tone-move">{t(`role.${role}`)}</span>
       </p>
-      <ul className="space-y-6">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3 lg:grid-cols-1 lg:gap-y-6">
         {visibleGroups.map((group) => (
           <li key={group.groupKey}>
-            <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+            <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-wider text-muted">
               {t(group.groupKey)}
             </p>
-            <ul className="space-y-1">
+            <ul className="space-y-0.5">
               {group.items.map((item) => {
                 const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                 return (
@@ -43,10 +45,10 @@ export function SidebarNav({ role }: { role: Role }) {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`block border-l-4 py-2 pl-3 pr-3 text-sm font-medium ${
+                      className={`flex min-h-11 items-center border-l-4 pl-3 pr-3 text-sm ${
                         active
-                          ? "border-zinc-900 bg-zinc-100 text-zinc-900"
-                          : "border-transparent text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                          ? "border-brand bg-brand-subtle font-bold text-brand"
+                          : "border-transparent font-medium text-secondary hover:bg-neutral-50 hover:text-strong"
                       }`}
                     >
                       {t(item.labelKey)}

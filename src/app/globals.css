@@ -1,17 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Token layer first: its plain `:root` block is unlayered, so it overrides
+ * Tailwind's own `@layer theme` defaults for any same-named variable
+ * (--font-sans, --radius-md, --radius-lg, --shadow-xs). */
+@import "../styles/design-tokens.css";
+@import "../styles/theme.css";
+@import "../styles/components.css";
+@import "../styles/controls.css";
+
+@layer base {
+  body {
+    background: var(--surface-page);
+    color: var(--text-body);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  /* Headings tighten up; body copy stays at 1.6 for long-shift legibility. */
+  h1,
+  h2,
+  h3 {
+    line-height: 1.35;
+    color: var(--text-strong);
+  }
+
+  /* One visible focus treatment for everything reachable by keyboard. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-md);
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-noto-sans-jp);
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
+/* No animation ships in this app; the guard is here so anything added later
+ * inherits the correct behaviour rather than having to remember it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -33,24 +33,24 @@ export default async function RuleVersionListPage({
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-zinc-900">
+          <h1 className="text-2xl font-semibold text-strong">
             {dict["incentive.rules.list.title"]} — {dict["term.incentive"]}
           </h1>
           <Link
             href="/incentive/rules/new"
-            className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+            className="sm-btn sm-btn-primary"
           >
             {dict["incentive.rules.list.newLink"]}
           </Link>
         </div>
 
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {dict["incentive.rules.list.filterStatusLabel"]}
             <select
               name="status"
               defaultValue={validStatus ?? ""}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field mt-1"
             >
               <option value="">{dict["incentive.rules.list.filterAll"]}</option>
               {STATUSES.map((s) => (
@@ -62,7 +62,7 @@ export default async function RuleVersionListPage({
           </label>
           <button
             type="submit"
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+            className="sm-btn sm-btn-secondary"
           >
             {dict["incentive.rules.list.filterSubmit"]}
           </button>

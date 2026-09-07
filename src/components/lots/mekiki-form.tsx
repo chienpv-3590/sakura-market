@@ -51,13 +51,13 @@ export function MekikiForm({ lotId }: { lotId: string }) {
   }
 
   if (done) {
-    return <p className="text-sm font-medium text-emerald-700">{t("lots.mekiki.success")}</p>;
+    return <p className="text-sm font-medium text-ok">{t("lots.mekiki.success")}</p>;
   }
 
   return (
     <KeyboardOperableForm onSubmit={handleSubmit} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="grade" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="grade" className="sm-label">
           {t("lots.mekiki.gradeLabel")}
         </label>
         <input
@@ -70,11 +70,11 @@ export function MekikiForm({ lotId }: { lotId: string }) {
           value={grade}
           onChange={(e) => setGrade(e.target.value)}
           disabled={submitting}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1 w-full"
         />
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}
@@ -83,7 +83,7 @@ export function MekikiForm({ lotId }: { lotId: string }) {
         tabIndex={2}
         disabled={submitting}
         aria-busy={submitting}
-        className="w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="sm-btn sm-btn-primary w-full"
       >
         {submitting ? t("lots.mekiki.submitting") : t("lots.mekiki.submit")}
       </button>

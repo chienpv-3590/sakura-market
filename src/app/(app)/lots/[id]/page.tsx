@@ -29,13 +29,13 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-8">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">
-            {dict["lots.detail.title"]}: <span className="font-mono">{lot.lot_code}</span>
+          <h1 className="text-2xl font-semibold text-strong">
+            {dict["lots.detail.title"]}: <span className="sm-mono">{lot.lot_code}</span>
           </h1>
-          <p className="mt-1 text-sm text-zinc-600">{lot.item}</p>
+          <p className="sm-hint mt-1">{lot.item}</p>
         </div>
         <div>
-          <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500">
+          <h2 className="text-sm font-medium uppercase tracking-wide text-muted">
             {dict["pipeline.title"]}
           </h2>
           <div className="mt-2">
@@ -50,7 +50,7 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
         />
         {user.role === "ROLE-SETTLEMENT" ? (
           <div>
-            <h2 className="text-lg font-semibold text-zinc-900">{dict["lots.detail.editTitle"]}</h2>
+            <h2 className="text-lg font-semibold text-strong">{dict["lots.detail.editTitle"]}</h2>
             <div className="mt-2">
               <LotEditForm lotId={lot.id} currentItem={lot.item} currentPackageCount={lot.package_count} />
             </div>

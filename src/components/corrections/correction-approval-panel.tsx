@@ -57,7 +57,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
   }
 
   return (
-    <div className="space-y-3 rounded-md border border-zinc-300 p-4">
+    <div className="sm-card space-y-3 p-4">
       <div className="flex gap-4 text-sm">
         <label className="flex items-center gap-1">
           <input type="radio" checked={kind === "reverse"} onChange={() => setKind("reverse")} disabled={pending} />
@@ -70,7 +70,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
       </div>
       {kind === "delta" && (
         <div className="flex gap-4">
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {t("corrections.approval.qtyDeltaLabel")}
             <input
               type="number"
@@ -78,10 +78,10 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
               value={qtyDelta}
               onChange={(e) => setQtyDelta(e.target.value)}
               disabled={pending}
-              className="mt-1 w-32 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field sm-num mt-1 w-32"
             />
           </label>
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {t("corrections.approval.unitPriceDeltaLabel")}
             <input
               type="number"
@@ -89,7 +89,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
               value={unitPriceDelta}
               onChange={(e) => setUnitPriceDelta(e.target.value)}
               disabled={pending}
-              className="mt-1 w-32 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field sm-num mt-1 w-32"
             />
           </label>
         </div>
@@ -100,7 +100,7 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
           onClick={() => decide("approve")}
           disabled={pending}
           aria-busy={pending}
-          className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="sm-btn sm-btn-approve"
         >
           {t("corrections.approval.approveButton")}
         </button>
@@ -109,13 +109,13 @@ export function CorrectionApprovalPanel({ correctionId, canDecide }: { correctio
           onClick={() => decide("reject")}
           disabled={pending}
           aria-busy={pending}
-          className="rounded-md bg-red-700 px-3 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="sm-btn sm-btn-danger"
         >
           {t("corrections.approval.rejectButton")}
         </button>
       </div>
       {errorKey && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="sm-error">
           {t(errorKey)}
         </p>
       )}

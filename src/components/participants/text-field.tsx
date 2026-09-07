@@ -1,7 +1,7 @@
 import type { ChangeEvent } from "react";
 
 export const INPUT_CLASS =
-  "mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none";
+  "sm-field mt-1 w-full";
 
 /** Shared label+input row used by participant-form.tsx's plain text/date fields. */
 export function TextField({
@@ -25,7 +25,7 @@ export function TextField({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-zinc-700">
+      <label htmlFor={id} className="sm-label">
         {label}
       </label>
       <input

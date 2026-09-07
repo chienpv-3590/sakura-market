@@ -13,38 +13,40 @@ export function SeriEditHistory({
   dict: Record<string, string>;
 }) {
   if (history.length === 0) {
-    return <p className="mt-2 text-sm text-zinc-500">{dict["seri.detail.historyEmpty"]}</p>;
+    return <p className="sm-empty">{dict["seri.detail.historyEmpty"]}</p>;
   }
 
   return (
-    <table className="mt-2 w-full text-left text-sm">
-      <thead>
-        <tr className="border-b border-zinc-200 text-zinc-500">
-          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.action"]}</th>
-          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.change"]}</th>
-          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.reason"]}</th>
-          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.at"]}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {history.map((row) => (
-          <tr key={row.id} className="border-b border-zinc-100 align-top">
-            <td className="py-1 pr-2 whitespace-nowrap">
-            {dict[`seri.action.${row.action}`] ?? row.action}
-          </td>
-          <td className="py-1 pr-2">
-            <AuditDiff
-              before={row.before}
-              after={row.after}
-              fieldLabels={SERI_FIELD_LABELS}
-              createFields={SERI_CREATE_FIELDS}
-            />
-          </td>
-            <td className="py-1 pr-2">{row.reason ?? "—"}</td>
-            <td className="py-1 pr-2">{new Date(row.created_at).toLocaleString()}</td>
+    <div className="sm-table-wrap sm-table-scroll">
+      <table className="sm-table">
+        <thead>
+          <tr>
+            <th>{dict["seri.detail.historyColumns.action"]}</th>
+            <th>{dict["seri.detail.historyColumns.change"]}</th>
+            <th>{dict["seri.detail.historyColumns.reason"]}</th>
+            <th>{dict["seri.detail.historyColumns.at"]}</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {history.map((row) => (
+            <tr key={row.id} className="align-top">
+              <td className="sm-mono">
+              {dict[`seri.action.${row.action}`] ?? row.action}
+            </td>
+            <td>
+              <AuditDiff
+                before={row.before}
+                after={row.after}
+                fieldLabels={SERI_FIELD_LABELS}
+                createFields={SERI_CREATE_FIELDS}
+              />
+            </td>
+              <td>{row.reason ?? "—"}</td>
+              <td>{new Date(row.created_at).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

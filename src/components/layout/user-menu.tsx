@@ -39,15 +39,15 @@ export function UserMenu({
 
   return (
     <div className="flex items-center gap-3 text-sm">
-      <span className="text-zinc-700">
-        <span className="font-medium">{displayName ?? "-"}</span>
-        <span className="ml-2 text-zinc-500">{t(`role.${role}`)}</span>
+      <span className="text-secondary">
+        <span className="font-medium text-strong">{displayName ?? "-"}</span>
+        <span className="ml-2 text-muted">{t(`role.${role}`)}</span>
       </span>
       <button
         type="button"
         onClick={handleSignOut}
         disabled={signingOut}
-        className="rounded-md border border-zinc-300 px-2 py-1 text-zinc-700 hover:bg-zinc-100 disabled:opacity-60"
+        className="sm-btn sm-btn-secondary"
       >
         {t("auth.signOut")}
       </button>

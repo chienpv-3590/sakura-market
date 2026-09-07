@@ -47,11 +47,11 @@ export default async function SeriPage({
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-zinc-900">{dict["seri.list.title"]}</h1>
+          <h1 className="text-2xl font-semibold text-strong">{dict["seri.list.title"]}</h1>
           {canCreate ? (
             <Link
               href="/seri/new"
-              className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+              className="sm-btn sm-btn-primary"
             >
               {dict["seri.list.newLink"]}
             </Link>
@@ -60,71 +60,73 @@ export default async function SeriPage({
           )}
         </div>
         <form method="GET" className="flex flex-wrap items-end gap-4">
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {dict["seri.list.filterLotCodeLabel"]}
             <input
               type="text"
               name="lotCode"
               defaultValue={lotCode ?? ""}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field mt-1"
             />
           </label>
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {dict["seri.list.filterBusinessDateLabel"]}
             <input
               type="date"
               name="businessDate"
               defaultValue={businessDate ?? ""}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field mt-1"
             />
           </label>
-          <label className="flex flex-col text-sm text-zinc-700">
+          <label className="flex flex-col text-sm font-medium text-secondary">
             {dict["seri.list.filterWinnerNameLabel"]}
             <input
               type="text"
               name="winnerName"
               defaultValue={winnerName ?? ""}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm"
+              className="sm-field mt-1"
             />
           </label>
           <button
             type="submit"
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+            className="sm-btn sm-btn-secondary"
           >
             {dict["seri.list.filterSubmit"]}
           </button>
         </form>
         {results.length === 0 ? (
-          <p className="text-sm text-zinc-500">{dict["seri.list.empty"]}</p>
+          <p className="sm-empty">{dict["seri.list.empty"]}</p>
         ) : (
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-zinc-200 text-left text-zinc-500">
-                <th className="py-2 pr-4 font-medium">{dict["seri.list.columns.lot"]}</th>
-                <th className="py-2 pr-4 font-medium">{dict["seri.list.columns.winner"]}</th>
-                <th className="py-2 pr-4 font-medium">{dict["seri.list.columns.qty"]}</th>
-                <th className="py-2 pr-4 font-medium">{dict["seri.list.columns.unitPrice"]}</th>
-                <th className="py-2 pr-4 font-medium">{dict["seri.list.columns.decidedAt"]}</th>
-                <th className="py-2 pr-4 font-medium">{dict["seri.list.columns.actions"]}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((r) => (
-                <tr key={r.id} className="border-b border-zinc-100">
-                  <td className="py-2 pr-4">{lotCodes[r.lot_id] ?? r.lot_id}</td>
-                  <td className="py-2 pr-4">{winnerNames[r.winner_participant_id] ?? r.winner_participant_id}</td>
-                  <td className="py-2 pr-4">{r.qty}</td>
-                  <td className="py-2 pr-4">{r.unit_price.toLocaleString()}</td>
-                  <td className="py-2 pr-4">{new Date(r.decided_at).toLocaleString()}</td>
-                  <td className="py-2 pr-4">
-                    <Link href={`/seri/${r.id}`} className="text-zinc-700 underline">
-                      {dict["seri.list.detailLink"]}
-                    </Link>
-                  </td>
+          <div className="sm-table-wrap sm-table-scroll">
+            <table className="sm-table">
+              <thead>
+                <tr>
+                  <th>{dict["seri.list.columns.lot"]}</th>
+                  <th>{dict["seri.list.columns.winner"]}</th>
+                  <th className="text-right">{dict["seri.list.columns.qty"]}</th>
+                  <th className="text-right">{dict["seri.list.columns.unitPrice"]}</th>
+                  <th>{dict["seri.list.columns.decidedAt"]}</th>
+                  <th>{dict["seri.list.columns.actions"]}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {results.map((r) => (
+                  <tr key={r.id}>
+                    <td>{lotCodes[r.lot_id] ?? r.lot_id}</td>
+                    <td>{winnerNames[r.winner_participant_id] ?? r.winner_participant_id}</td>
+                    <td className="sm-num">{r.qty}</td>
+                    <td className="sm-num">{r.unit_price.toLocaleString()}</td>
+                    <td className="sm-mono">{new Date(r.decided_at).toLocaleString()}</td>
+                    <td>
+                      <Link href={`/seri/${r.id}`} className="sm-link">
+                        {dict["seri.list.detailLink"]}
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </I18nProvider>

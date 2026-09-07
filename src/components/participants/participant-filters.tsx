@@ -31,12 +31,12 @@ export function ParticipantFilters({
 
   return (
     <div className="flex flex-wrap gap-4">
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("participants.list.filterCategoryLabel")}
         <select
           value={category ?? ""}
           onChange={(event) => updateFilter("category", event.target.value)}
-          className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1"
         >
           <option value="">{t("participants.list.filterAllCategories")}</option>
           {PARTICIPANT_CATEGORIES.map((c) => (
@@ -46,12 +46,12 @@ export function ParticipantFilters({
           ))}
         </select>
       </label>
-      <label className="flex flex-col text-sm text-zinc-700">
+      <label className="flex flex-col text-sm font-medium text-secondary">
         {t("participants.list.filterStatusLabel")}
         <select
           value={status ?? ""}
           onChange={(event) => updateFilter("status", event.target.value)}
-          className="mt-1 rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none"
+          className="sm-field mt-1"
         >
           <option value="">{t("participants.list.filterAllStatuses")}</option>
           {PARTICIPANT_STATUSES.map((s) => (

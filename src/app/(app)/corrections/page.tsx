@@ -53,8 +53,8 @@ export default async function CorrectionsPage({
     <I18nProvider locale={locale} dict={dict}>
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-zinc-900">{dict["corrections.list.title"]}</h1>
-          <Link href="/corrections/new" className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800">
+          <h1 className="text-2xl font-semibold text-strong">{dict["corrections.list.title"]}</h1>
+          <Link href="/corrections/new" className="sm-btn sm-btn-primary">
             {dict["corrections.list.newLink"]}
           </Link>
         </div>

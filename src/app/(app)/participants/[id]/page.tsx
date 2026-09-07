@@ -70,27 +70,27 @@ export default async function ParticipantDetailPage({
     <I18nProvider locale={locale} dict={dict}>
       <section className="max-w-3xl space-y-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-zinc-900">{participant.name}</h1>
-          <Link href="/participants" className="text-sm text-zinc-600 hover:underline">
+          <h1 className="text-2xl font-semibold text-strong">{participant.name}</h1>
+          <Link href="/participants" className="text-sm text-secondary hover:underline">
             {dict["participants.detail.backToList"]}
           </Link>
         </div>
 
-        <div className="rounded-md border border-zinc-200 p-4">
-          <h2 className="mb-3 text-lg font-medium text-zinc-900">{dict["participants.detail.profileSection"]}</h2>
+        <div className="sm-card p-4">
+          <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.detail.profileSection"]}</h2>
           <dl className="grid grid-cols-2 gap-3 text-sm">
             <div>
-              <dt className="text-zinc-500">{dict["participants.detail.categoryLabel"]}</dt>
-              <dd className="text-zinc-900">{dict[`category.${participant.category}`] ?? participant.category}</dd>
+              <dt className="text-muted">{dict["participants.detail.categoryLabel"]}</dt>
+              <dd className="text-strong">{dict[`category.${participant.category}`] ?? participant.category}</dd>
             </div>
             <div>
-              <dt className="text-zinc-500">{dict["participants.detail.licenseTypeLabel"]}</dt>
-              <dd className="text-zinc-900">
+              <dt className="text-muted">{dict["participants.detail.licenseTypeLabel"]}</dt>
+              <dd className="text-strong">
                 {dict[`licenseType.${participant.license_type}`] ?? participant.license_type}
               </dd>
             </div>
             <div>
-              <dt className="text-zinc-500">{dict["participants.detail.statusLabel"]}</dt>
+              <dt className="text-muted">{dict["participants.detail.statusLabel"]}</dt>
               <dd>
                 <EligibilityStatusBadge
                   status={participant.status}
@@ -99,19 +99,19 @@ export default async function ParticipantDetailPage({
               </dd>
             </div>
             <div>
-              <dt className="text-zinc-500">{dict["participants.detail.validFromLabel"]}</dt>
-              <dd className="text-zinc-900">{participant.valid_from}</dd>
+              <dt className="text-muted">{dict["participants.detail.validFromLabel"]}</dt>
+              <dd className="sm-mono text-strong">{participant.valid_from}</dd>
             </div>
             <div>
-              <dt className="text-zinc-500">{dict["participants.detail.validToLabel"]}</dt>
-              <dd className="text-zinc-900">{participant.valid_to ?? dict["participants.detail.validToNone"]}</dd>
+              <dt className="text-muted">{dict["participants.detail.validToLabel"]}</dt>
+              <dd className="sm-mono text-strong">{participant.valid_to ?? dict["participants.detail.validToNone"]}</dd>
             </div>
           </dl>
         </div>
 
         {canWrite ? (
-          <div className="rounded-md border border-zinc-200 p-4">
-            <h2 className="mb-3 text-lg font-medium text-zinc-900">{dict["participants.form.editTitle"]}</h2>
+          <div className="sm-card p-4">
+            <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.form.editTitle"]}</h2>
             <ParticipantForm
               mode="edit"
               initial={{
@@ -128,16 +128,16 @@ export default async function ParticipantDetailPage({
         )}
 
         {canWrite ? (
-          <div className="rounded-md border border-zinc-200 p-4">
-            <h2 className="mb-3 text-lg font-medium text-zinc-900">{dict["participants.detail.transitionSection"]}</h2>
+          <div className="sm-card p-4">
+            <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.detail.transitionSection"]}</h2>
             <TransitionActions participantId={participant.id} currentStatus={participant.status} />
           </div>
         ) : (
           <HandoffCaption actionLabel={dict["participants.detail.transitionSection"]} roles={["ROLE-SYS-ADMIN"]} />
         )}
 
-        <div className="rounded-md border border-zinc-200 p-4">
-          <h2 className="mb-3 text-lg font-medium text-zinc-900">{dict["participants.detail.historySection"]}</h2>
+        <div className="sm-card p-4">
+          <h2 className="mb-3 text-lg font-medium text-strong">{dict["participants.detail.historySection"]}</h2>
           <TransitionHistoryTable history={history ?? []} changedByNames={changedByNames} dict={dict} />
         </div>
       </section>

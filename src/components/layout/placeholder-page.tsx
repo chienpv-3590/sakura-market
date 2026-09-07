@@ -10,7 +10,7 @@ export async function PlaceholderPage({ titleKey }: { titleKey: string }) {
 
   return (
     <section>
-      <h1 className="text-2xl font-semibold text-zinc-900">{dict[titleKey] ?? titleKey}</h1>
+      <h1 className="text-2xl font-semibold text-strong">{dict[titleKey] ?? titleKey}</h1>
     </section>
   );
 }
