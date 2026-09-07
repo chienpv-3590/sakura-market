@@ -35,5 +35,6 @@
   "deliveries.error.alreadyCompleted": "Giao dịch này đã hoàn tất, không thể ghi nhận thêm lần giao.",
   "deliveries.error.overDelivery": "Số lượng vượt quá số lượng còn lại.",
   "deliveries.error.qtyMismatch": "Chưa đủ số lượng để xác nhận hoàn tất.",
-  "deliveries.error.generic": "Có lỗi xảy ra, vui lòng thử lại."
+  "deliveries.error.generic": "Có lỗi xảy ra, vui lòng thử lại.",
+  "deliveries.detail.progressTitle": "Tiến độ giao hàng"
 }

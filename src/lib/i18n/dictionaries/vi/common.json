@@ -74,5 +74,6 @@
   "home.stage.transactionsCancelled.title": "Giao dịch đã hủy",
   "home.stage.seriResults.title": "Kết quả せり",
   "home.stage.deliveriesException.title": "Giao hàng ngoại lệ",
-  "home.flow.description": "Sơ đồ luồng nghiệp vụ, đọc từ đầu đến cuối: lô hàng được tiếp nhận, qua thẩm định 目利き rồi công bố. Từ đó lô hàng vào khâu bán qua hai đường: 相対取引 chiếm khoảng 90% giá trị, còn せり là đường phụ khoảng 10% và nhập tay. Giao dịch ở trạng thái nháp sẽ rẽ thành đã chốt hoặc đã hủy; đã hủy là nhánh kết thúc. Giao dịch đã chốt đi tiếp sang giao nhận, ở đây lại rẽ thành hoàn tất hoặc ngoại lệ. Cuối cùng luồng đi qua cổng khóa ngày nghiệp vụ: khóa rồi không mở lại được và mọi ghi chép bị từ chối, chỉ còn đường điều chỉnh reverse/delta ở phía sau cổng."
+  "home.flow.description": "Sơ đồ luồng nghiệp vụ, đọc từ đầu đến cuối: lô hàng được tiếp nhận, qua thẩm định 目利き rồi công bố. Từ đó lô hàng vào khâu bán qua hai đường: 相対取引 chiếm khoảng 90% giá trị, còn せり là đường phụ khoảng 10% và nhập tay. Giao dịch ở trạng thái nháp sẽ rẽ thành đã chốt hoặc đã hủy; đã hủy là nhánh kết thúc. Giao dịch đã chốt đi tiếp sang giao nhận, ở đây lại rẽ thành hoàn tất hoặc ngoại lệ. Cuối cùng luồng đi qua cổng khóa ngày nghiệp vụ: khóa rồi không mở lại được và mọi ghi chép bị từ chối, chỉ còn đường điều chỉnh reverse/delta ở phía sau cổng.",
+  "section.details": "Thông tin chi tiết"
 }

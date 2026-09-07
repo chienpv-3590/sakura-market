@@ -9,7 +9,8 @@ import {
 } from "./process-flow-config";
 import type { StageCardValue } from "./resolve-stage-value";
 import { FlowNode } from "./flow-node";
-import { FlowBarrier, FlowConnector, FlowDefs, FlowFork, FlowMerge } from "./flow-glyphs";
+import { FlowDefs } from "./flow-defs";
+import { FlowBarrier, FlowConnector, FlowFork, FlowMerge } from "./flow-glyphs";
 
 // The dashboard's process drawing: an <ol> of lanes in process order, so a
 // screen reader and the tab key both walk the flow in the order a lot
@@ -17,7 +18,8 @@ import { FlowBarrier, FlowConnector, FlowDefs, FlowFork, FlowMerge } from "./flo
 // which is also the order a record reaches them.
 //
 // Everything graphical -- the tapered channel ribbons, the せり merge, the
-// terminal forks, the lock barrier -- is inline SVG in flow-glyphs.tsx, all
+// terminal forks, the lock barrier -- is inline SVG in flow-glyphs.tsx (with
+// the shared gradient and arrowheads in flow-defs.tsx), all
 // of it aria-hidden. It depicts nothing that is not also written as text: the
 // visually-hidden <p> below describes the whole flow in prose, and each node
 // carries its own label, figure and role in words.
@@ -78,13 +80,18 @@ export function ProcessFlow({ values }: { values: Record<string, StageCardValue>
             >
               <p className="cds-section-title cds-flow__lanelabel">{t(lane.laneKey)}</p>
 
+              {/* Inlets, then the curve that leaves them, then the spine it
+                  joins -- reading order matching the drawing. The merge is a
+                  child of the ROW, not of the inlet: it has to be positioned
+                  against the spine it points at, and the inlet column is
+                  bottom-aligned and content-sized (see .cds-flow__merge). */}
               <div className="cds-flow__row">
                 {lane.inlets?.map((def) => (
                   <span key={def.stageId} className="cds-flow__inletwrap">
                     {node(def)}
-                    <FlowMerge width={SERI_INLET_WIDTH} />
                   </span>
                 ))}
+                {lane.inlets && <FlowMerge width={SERI_INLET_WIDTH} />}
                 <div className="cds-flow__spine">{lane.spine.map(node)}</div>
               </div>
 

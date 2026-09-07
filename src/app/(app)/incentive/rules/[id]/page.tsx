@@ -10,8 +10,9 @@ import { todayJst } from "@/lib/db/business-date";
 import { listRuleVersions, loadRuleVersion } from "@/lib/incentive/rule-version-queries";
 import { computeDisplayStatuses } from "@/lib/incentive/rule-version-display-status";
 import { RuleVersionDetailActions } from "@/components/incentive/rule-version-detail-actions";
-import { StatusBadge } from "@/components/ui/status-badge";
+import { RuleVersionFields } from "@/components/incentive/rule-version-fields";
 import { PageFrame } from "@/components/layout/page-frame";
+import { SectionCard } from "@/components/layout/section-card";
 
 // SCR018_RuleVersionEditor detail (A2/A3, DEC-001, US002).
 export default async function RuleVersionDetailPage({
@@ -20,7 +21,7 @@ export default async function RuleVersionDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const [{ id }, user, locale] = await Promise.all([params, requireRole(["ROLE-RULE-ADMIN"]), getLocale()]);
-  const dict = await getDictionary(locale, ["common", "incentive"]);
+  const dict = await getDictionary(locale, ["common", "incentive", "nav"]);
 
   const supabase: SupabaseClient<Database> = await createClient();
   const version = await loadRuleVersion(supabase, id);
@@ -35,6 +36,12 @@ export default async function RuleVersionDetailPage({
     .filter((v) => v.id !== id && (v.status === "active" || v.status === "rolled_back"))
     .map((v) => ({ id: v.id, versionNo: v.version_no, effectiveFrom: v.effective_from }));
   const displayStatus = computeDisplayStatuses([version], todayJst()).get(version.id) ?? version.status;
+  // A superseded or rolled-back version has nothing to approve, nothing to
+  // roll back and nobody to explain that to -- RuleVersionDetailActions
+  // rendered null for it, so the card would be an empty box. No card either.
+  const isOwnPending = isCreator && version.status === "pending_approval";
+  const isOwnActive = isCreator && version.status === "active";
+  const hasActions = canApprove || canRollback || isOwnPending || isOwnActive;
 
   return (
     <I18nProvider locale={locale} dict={dict}>
@@ -44,45 +51,37 @@ export default async function RuleVersionDetailPage({
             {dict["incentive.rules.detail.title"]} v{version.version_no}
           </>
         }
+        backHref="/incentive/rules"
+        backLabel={dict["nav.incentiveRules"]}
       >
-        <section className="max-w-md space-y-6">
+        <section className="ms-0 me-auto max-w-3xl space-y-6">
+          <SectionCard title={dict["section.details"]}>
+            <RuleVersionFields
+              versionNo={version.version_no}
+              effectiveFrom={version.effective_from}
+              displayStatus={displayStatus}
+              rawStatus={version.status}
+              createdByName={version.createdByName}
+              approvedByName={version.approvedByName}
+              dict={dict}
+            />
+          </SectionCard>
 
-        <dl className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <dt className="text-muted">{dict["incentive.rules.detail.versionNoLabel"]}</dt>
-            <dd className="cds-table__mono text-strong">{version.version_no}</dd>
-          </div>
-          <div>
-            <dt className="text-muted">{dict["incentive.rules.detail.effectiveFromLabel"]}</dt>
-            <dd className="cds-table__mono text-strong">{version.effective_from}</dd>
-          </div>
-          <div>
-            <dt className="text-muted">{dict["incentive.rules.detail.statusLabel"]}</dt>
-            <dd>
-              <StatusBadge
-                status={displayStatus}
-                label={dict[`incentive.rules.status.${displayStatus}`] ?? version.status}
+          {/* 承認 and rollback both refuse the version's own author (DEC-001),
+              so this card holds either the buttons or the reason there are
+              none -- RuleVersionDetailActions decides which. */}
+          {hasActions && (
+            <SectionCard title={dict["incentive.rules.detail.actionsTitle"]}>
+              <RuleVersionDetailActions
+                versionId={version.id}
+                canApprove={canApprove}
+                canRollback={canRollback}
+                rollbackCandidates={rollbackCandidates}
+                isOwnPending={isOwnPending}
+                isOwnActive={isOwnActive}
               />
-            </dd>
-          </div>
-          <div>
-            <dt className="text-muted">{dict["incentive.rules.detail.createdByLabel"]}</dt>
-            <dd className="text-strong">{version.createdByName ?? "—"}</dd>
-          </div>
-          <div>
-            <dt className="text-muted">{dict["incentive.rules.detail.approvedByLabel"]}</dt>
-            <dd className="text-strong">{version.approvedByName ?? "—"}</dd>
-          </div>
-        </dl>
-
-        <RuleVersionDetailActions
-          versionId={version.id}
-          canApprove={canApprove}
-          canRollback={canRollback}
-          rollbackCandidates={rollbackCandidates}
-          isOwnPending={isCreator && version.status === "pending_approval"}
-          isOwnActive={isCreator && version.status === "active"}
-        />
+            </SectionCard>
+          )}
         </section>
       </PageFrame>
     </I18nProvider>

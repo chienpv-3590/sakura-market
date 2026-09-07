@@ -12,7 +12,6 @@
   "participants.list.tableHeaderStatus": "状態",
   "participants.list.tableHeaderValidFrom": "有効開始日",
   "participants.list.tableHeaderValidTo": "有効終了日",
-  "participants.detail.backToList": "← 一覧に戻る",
   "participants.detail.profileSection": "プロフィール",
   "participants.detail.categoryLabel": "区分",
   "participants.detail.licenseTypeLabel": "参加根拠",

@@ -14,7 +14,7 @@ export function SeriEditHistory({
   dict: Record<string, string>;
 }) {
   if (history.length === 0) {
-    return <EmptyState description={dict["seri.detail.historyEmpty"]} />;
+    return <EmptyState description={dict["seri.detail.historyEmpty"]} compact />;
   }
 
   return (

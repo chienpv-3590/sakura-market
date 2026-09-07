@@ -11,7 +11,7 @@ export function ShipmentHistoryTable({
   dict: Record<string, string>;
 }) {
   if (shipments.length === 0) {
-    return <EmptyState description={dict["deliveries.detail.shipmentsEmpty"]} />;
+    return <EmptyState description={dict["deliveries.detail.shipmentsEmpty"]} compact />;
   }
 
   return (

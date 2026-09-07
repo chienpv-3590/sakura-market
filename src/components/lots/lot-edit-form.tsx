@@ -73,8 +73,10 @@ export function LotEditForm({
     }
   }
 
+  // No card of its own -- the caller supplies the SectionCard this sits in,
+  // so a `cds-card` here would put a box inside a box.
   return (
-    <form onSubmit={handleSubmit} className="cds-card max-w-md space-y-3 p-4">
+    <form onSubmit={handleSubmit} className="max-w-md space-y-3">
       <div>
         <label htmlFor="edit-field" className="cds-field__label">
           {t("lots.edit.fieldLabel")}

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
@@ -9,12 +8,13 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import type { Database } from "@/lib/db/types";
 import { isParticipantCategory } from "@/lib/participants/category-rules";
 import { isParticipantStatus } from "@/lib/participants/state-machine";
-import { EligibilityStatusBadge } from "@/components/participants/eligibility-status-badge";
+import { ParticipantProfileFields } from "@/components/participants/participant-profile-fields";
 import { TransitionHistoryTable } from "@/components/participants/transition-history-table";
 import { TransitionActions } from "@/components/participants/transition-actions";
 import { ParticipantForm } from "@/components/participants/participant-form";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 import { PageFrame } from "@/components/layout/page-frame";
+import { SectionCard } from "@/components/layout/section-card";
 
 // SCR003_ParticipantDetail. Profile + current eligibility + full transition
 // history, plus (ROLE-SYS-ADMIN only) the edit form and transition actions.
@@ -25,7 +25,7 @@ export default async function ParticipantDetailPage({
 }) {
   const { id } = await params;
   const [user, locale] = await Promise.all([getCurrentUser(), getLocale()]);
-  const dict = await getDictionary(locale, ["common", "participants"]);
+  const dict = await getDictionary(locale, ["common", "participants", "nav"]);
 
   const supabase: SupabaseClient<Database> = await createClient();
   const { data: participant, error: participantError } = await supabase
@@ -71,78 +71,54 @@ export default async function ParticipantDetailPage({
     <I18nProvider locale={locale} dict={dict}>
       <PageFrame
         title={participant.name}
-        actions={
-          <Link href="/participants" className="text-sm text-secondary hover:underline">
-          {dict["participants.detail.backToList"]}
-          </Link>
-        }
+        backHref="/participants"
+        backLabel={dict["nav.participants"]}
       >
-        <section className="max-w-3xl space-y-8">
+        <section className="ms-0 me-auto max-w-3xl space-y-6">
+          <SectionCard title={dict["participants.detail.profileSection"]}>
+            <ParticipantProfileFields participant={participant} dict={dict} />
+          </SectionCard>
 
-        <div className="cds-card p-4">
-          <h2 className="cds-card__title mb-3">{dict["participants.detail.profileSection"]}</h2>
-          <dl className="grid grid-cols-2 gap-3 text-sm">
-            <div>
-              <dt className="text-muted">{dict["participants.detail.categoryLabel"]}</dt>
-              <dd className="text-strong">{dict[`category.${participant.category}`] ?? participant.category}</dd>
-            </div>
-            <div>
-              <dt className="text-muted">{dict["participants.detail.licenseTypeLabel"]}</dt>
-              <dd className="text-strong">
-                {dict[`licenseType.${participant.license_type}`] ?? participant.license_type}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-muted">{dict["participants.detail.statusLabel"]}</dt>
-              <dd>
-                <EligibilityStatusBadge
-                  status={participant.status}
-                  label={dict[`status.${participant.status}`] ?? participant.status}
-                />
-              </dd>
-            </div>
-            <div>
-              <dt className="text-muted">{dict["participants.detail.validFromLabel"]}</dt>
-              <dd className="cds-table__mono text-strong">{participant.valid_from}</dd>
-            </div>
-            <div>
-              <dt className="text-muted">{dict["participants.detail.validToLabel"]}</dt>
-              <dd className="cds-table__mono text-strong">{participant.valid_to ?? dict["participants.detail.validToNone"]}</dd>
-            </div>
-          </dl>
-        </div>
+          {/* Both write sections are ROLE-SYS-ADMIN's. Every other role keeps
+              the card and the heading, and reads whose the action is. */}
+          <SectionCard title={dict["participants.form.editTitle"]}>
+            {canWrite ? (
+              <ParticipantForm
+                mode="edit"
+                initial={{
+                  id: participant.id,
+                  category: participant.category,
+                  name: participant.name,
+                  validFrom: participant.valid_from,
+                  validTo: participant.valid_to,
+                }}
+              />
+            ) : (
+              <HandoffCaption
+                actionLabel={dict["participants.form.editTitle"]}
+                roles={["ROLE-SYS-ADMIN"]}
+              />
+            )}
+          </SectionCard>
 
-        {canWrite ? (
-          <div className="cds-card p-4">
-            <h2 className="cds-card__title mb-3">{dict["participants.form.editTitle"]}</h2>
-            <ParticipantForm
-              mode="edit"
-              initial={{
-                id: participant.id,
-                category: participant.category,
-                name: participant.name,
-                validFrom: participant.valid_from,
-                validTo: participant.valid_to,
-              }}
+          <SectionCard title={dict["participants.detail.transitionSection"]}>
+            {canWrite ? (
+              <TransitionActions participantId={participant.id} currentStatus={participant.status} />
+            ) : (
+              <HandoffCaption
+                actionLabel={dict["participants.detail.transitionSection"]}
+                roles={["ROLE-SYS-ADMIN"]}
+              />
+            )}
+          </SectionCard>
+
+          <SectionCard title={dict["participants.detail.historySection"]} tight>
+            <TransitionHistoryTable
+              history={history ?? []}
+              changedByNames={changedByNames}
+              dict={dict}
             />
-          </div>
-        ) : (
-          <HandoffCaption actionLabel={dict["participants.form.editTitle"]} roles={["ROLE-SYS-ADMIN"]} />
-        )}
-
-        {canWrite ? (
-          <div className="cds-card p-4">
-            <h2 className="cds-card__title mb-3">{dict["participants.detail.transitionSection"]}</h2>
-            <TransitionActions participantId={participant.id} currentStatus={participant.status} />
-          </div>
-        ) : (
-          <HandoffCaption actionLabel={dict["participants.detail.transitionSection"]} roles={["ROLE-SYS-ADMIN"]} />
-        )}
-
-        <div className="cds-card p-4">
-          <h2 className="cds-card__title mb-3">{dict["participants.detail.historySection"]}</h2>
-          <TransitionHistoryTable history={history ?? []} changedByNames={changedByNames} dict={dict} />
-        </div>
+          </SectionCard>
         </section>
       </PageFrame>
     </I18nProvider>

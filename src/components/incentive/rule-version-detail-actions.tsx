@@ -99,8 +99,10 @@ export function RuleVersionDetailActions({
     }
   }
 
+  // No card of its own -- the caller supplies the SectionCard this sits in,
+  // so a `cds-card` here would put a box inside a box.
   return (
-    <div className="cds-card space-y-3 p-4">
+    <div className="space-y-3">
       {canApprove && (
         <button
           type="button"

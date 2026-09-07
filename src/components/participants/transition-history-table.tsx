@@ -18,7 +18,7 @@ export function TransitionHistoryTable({
   dict: Record<string, string>;
 }) {
   if (history.length === 0) {
-    return <EmptyState description={dict["participants.detail.historyEmpty"]} />;
+    return <EmptyState description={dict["participants.detail.historyEmpty"]} compact />;
   }
 
   return (

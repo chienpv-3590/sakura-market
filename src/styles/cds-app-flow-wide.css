@@ -54,16 +54,35 @@
 
     /* The 2-unit merge curve, rising out of the せり node into the 相対取引
      * node beside it. Against the 18-unit ribbon entering that same node from
-     * the left, the 9:1 share is the first thing the eye reads. */
-    /* 96x88 box for a 96x88 viewBox, same 1:1 rule as the connector -- the
-     * 2-unit せり stroke is 2px, against the connector's 18px ribbon. */
+     * the left, the 9:1 share is the first thing the eye reads.
+     *
+     * 96x120 box for a 96x120 viewBox, same 1:1 rule as the connector -- the
+     * 2-unit せり stroke is 2px, against the connector's 18px ribbon.
+     *
+     * POSITIONED AGAINST THE ROW, which is the only stable frame here. It used
+     * to be positioned against the せり card (`right:-30px; bottom:24px`
+     * inside .cds-flow__inletwrap), and that card is bottom-aligned in a row
+     * whose height comes from the two-node spine -- so the arrowhead landed
+     * wherever unrelated content put it. Measured: 22px short of the spine
+     * node's left edge and 3.5px BELOW its bottom edge, i.e. pointing into the
+     * gap between the two spine nodes. */
     .cds-flow__merge {
       display: block;
       position: absolute;
-      right: -30px;
-      bottom: 24px;
+      /* 54 = 116 (inlet column) + 34 (row gap) - 96 (box width), so the box's
+       * RIGHT edge IS the spine's left edge: the path ending at x=92 lands 4
+       * units short of the node, the marker's tip 3. Same derivation as the
+       * 198 below; if any of those three change, this changes with them. */
+      left: 54px;
+      /* 46 = 62 - 16 (the path's end y). Puts the terminus 62px below the
+       * row's top -- 34px below where the main channel arrives on the same
+       * node edge (connwrap top 14 + mid 36, less the 22px of label + gap
+       * above the row). Both channels therefore land on one edge with the
+       * heavy one unmistakably first, and the terminus stays inside the node
+       * for any node taller than 62px. */
+      top: 46px;
       width: 96px;
-      height: 88px;
+      height: 120px;
       overflow: visible;
       pointer-events: none;
     }

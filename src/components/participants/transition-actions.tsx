@@ -68,7 +68,9 @@ export function TransitionActions({
   }
 
   if (events.length === 0) {
-    return <EmptyState description={t("participants.detail.transitionNoneAvailable")} />;
+    // `compact` -- this sits inside a SectionCard body, where the full 48px
+    // treatment would dominate the section it is only reporting on.
+    return <EmptyState description={t("participants.detail.transitionNoneAvailable")} compact />;
   }
 
   return (

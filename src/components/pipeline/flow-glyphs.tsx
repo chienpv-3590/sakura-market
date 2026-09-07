@@ -16,64 +16,25 @@
 // The connector's 44x72 box serves both layouts: upright for the horizontal
 // spine, quarter-turned by CSS (--conn-rot) for the vertical chain.
 
-const ARROW = "cds-flow-arrow";
-const ARROW_STOP = "cds-flow-arrow-stop";
-const RIBBON = "cds-flow-ribbon";
-
-/** Shared <defs>: rendered once per page by ProcessFlow. */
-export function FlowDefs() {
-  return (
-    <svg width="0" height="0" aria-hidden focusable="false" className="absolute">
-      <defs>
-        {/* The channel gradient: lighter upstream, saturated downstream, so the
-            spine has direction even in a still frame. cacao-600 -> cacao-700:
-            the ribbon carries direction and so owes 3:1 as non-text UI, but 3:1
-            is only the floor and a thin connector at the floor reads washed
-            out -- reported as unclear in review. Measured on --surface-page:
-            cacao-400 3.16:1 (the old, faint value), cacao-600 4.82:1,
-            cacao-700 6.57:1. Every stroke in this file sits at 600 or darker. */}
-        <linearGradient id={RIBBON} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="var(--cacao-600)" />
-          <stop offset="1" stopColor="var(--cacao-700)" />
-        </linearGradient>
-        {/* markerUnits=userSpaceOnUse: the head must not scale with a
-            stroke-width that varies from 2 to 18 across the drawing. */}
-        <marker
-          id={ARROW}
-          viewBox="0 0 12 12"
-          refX="10"
-          refY="6"
-          markerWidth="12"
-          markerHeight="12"
-          markerUnits="userSpaceOnUse"
-          orient="auto-start-reverse"
-        >
-          <path d="M1 1 L11 6 L1 11 Z" fill="var(--cacao-700)" />
-        </marker>
-        <marker
-          id={ARROW_STOP}
-          viewBox="0 0 12 12"
-          refX="10"
-          refY="6"
-          markerWidth="11"
-          markerHeight="11"
-          markerUnits="userSpaceOnUse"
-          orient="auto-start-reverse"
-        >
-          <path d="M1 1 L11 6 L1 11 Z" fill="var(--status-overdue-solid)" />
-        </marker>
-      </defs>
-    </svg>
-  );
-}
+import { ARROW, ARROW_STOP, RIBBON } from "./flow-defs";
 
 /**
  * A spine connector: a tapered ribbon carrying a record to the next stage.
  *
  * `from`/`to` are the channel's half-widths in viewBox units at each end, so
  * the ribbon can widen or narrow along the flow. A stroke cannot taper, hence
- * the filled path; the arrowhead is still a <marker>, placed on a stroke-less
- * one-unit path at the tip.
+ * the filled path.
+ *
+ * THE HEAD IS DRAWN HERE, NOT BY THE SHARED <marker>. The marker is a fixed
+ * 12x12 whose triangle is 10 units tall, and these channels are 12, 16 and 18
+ * units tall in the same cacao -- so the head was being drawn entirely inside
+ * the bar it was supposed to terminate, and every spine arrowhead in the
+ * drawing was invisible. Reported as "the arrow is covered by the horizontal
+ * bar", and it was: by its own ribbon.
+ *
+ * So the head is a path sized from `to`: it starts where the ribbon stops and
+ * projects 5 units past each of its edges, which is the only way an arrowhead
+ * reads as an arrowhead on a channel this thick.
  */
 export function FlowConnector({
   from = 7,
@@ -89,7 +50,13 @@ export function FlowConnector({
 }) {
   const mid = 36;
   const box = long ? 198 : 44;
-  const tip = box - 16;
+  /** Tip of the head. 4 units short of the box, so it points AT the next
+   *  card instead of touching it. */
+  const apex = box - 4;
+  const headLen = 14;
+  const headHalf = to + 5;
+  /** Where the channel stops and the head starts. */
+  const neck = apex - headLen;
   return (
     <svg
       className={`cds-flow__conn ${long ? "cds-flow__conn--long" : ""}`}
@@ -99,13 +66,13 @@ export function FlowConnector({
     >
       {!dashed && (
         <path
-          d={`M0 ${mid - from} C ${tip * 0.4} ${mid - from}, ${tip * 0.6} ${mid - to}, ${tip} ${mid - to} L ${tip} ${mid + to} C ${tip * 0.6} ${mid + to}, ${tip * 0.4} ${mid + from}, 0 ${mid + from} Z`}
+          d={`M0 ${mid - from} C ${neck * 0.4} ${mid - from}, ${neck * 0.6} ${mid - to}, ${neck} ${mid - to} L ${neck} ${mid + to} C ${neck * 0.6} ${mid + to}, ${neck * 0.4} ${mid + from}, 0 ${mid + from} Z`}
           fill={`url(#${RIBBON})`}
         />
       )}
       {dashed && (
         <path
-          d={`M0 ${mid} L ${tip} ${mid}`}
+          d={`M0 ${mid} L ${neck} ${mid}`}
           fill="none"
           stroke="var(--cacao-600)"
           strokeWidth={to * 2}
@@ -113,7 +80,12 @@ export function FlowConnector({
           strokeLinecap="round"
         />
       )}
-      <path d={`M${tip} ${mid} L ${tip + 1} ${mid}`} fill="none" markerEnd={`url(#${ARROW})`} />
+      {/* --cacao-700 is the gradient's downstream end, so the head is the
+          darkest point of the channel and reads as its terminus. */}
+      <path
+        d={`M${neck} ${mid - headHalf} L ${apex} ${mid} L ${neck} ${mid + headHalf} Z`}
+        fill="var(--cacao-700)"
+      />
     </svg>
   );
 }
@@ -123,13 +95,29 @@ export function FlowConnector({
  *
  * Its stroke width against FlowConnector's ribbon is the whole point -- see
  * MAIN_INLET_WIDTH / SERI_INLET_WIDTH in process-flow-config.ts, which are
- * 9:1 because 相対取引 carries roughly 90% of transaction value.
+ * 9:1 because 相対取引 carries roughly 90% of transaction value. The 12x12
+ * marker is right HERE, on a 2-unit stroke, for the same reason it was wrong
+ * on the ribbon: it is six times the channel's width, so it is unmistakable.
+ *
+ * The path leaves vertically (first control point shares the start's x) and
+ * ARRIVES HORIZONTALLY (last control point shares the end's y), so the head
+ * points straight into the spine node's left edge -- the same edge, and the
+ * same direction, as the 18-unit main channel arriving 34px above it. Two
+ * channels, one node, 9:1.
+ *
+ * Where the box sits is what makes the head land: see `.cds-flow__merge` in
+ * cds-app-flow-wide.css. It is anchored to the ROW, so the terminus is a
+ * fixed distance below the spine node's top. It must never be anchored to the
+ * せり card -- that card is bottom-aligned in a row sized by the spine, so its
+ * own edges move with unrelated content, which is exactly how the old
+ * `bottom: 24px` left this arrow 22px short of the spine and 3px below the
+ * node altogether.
  */
 export function FlowMerge({ width }: { width: number }) {
   return (
-    <svg className="cds-flow__merge" viewBox="0 0 96 88" aria-hidden focusable="false">
+    <svg className="cds-flow__merge" viewBox="0 0 96 120" aria-hidden focusable="false">
       <path
-        d="M8 80 C 8 44, 32 24, 78 16"
+        d="M8 120 C 8 64, 26 16, 92 16"
         fill="none"
         stroke="var(--cacao-600)"
         strokeWidth={width}

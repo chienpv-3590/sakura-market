@@ -48,5 +48,6 @@
   "incentive.error.NOT_ACTIVE": "Phiên bản này hiện không ở trạng thái đang hiệu lực.",
   "incentive.error.INVALID_TARGET": "Phiên bản đích không hợp lệ để rollback.",
   "incentive.error.NOT_FOUND": "Không tìm thấy phiên bản biểu suất này.",
-  "incentive.error.generic": "Có lỗi xảy ra, vui lòng thử lại."
+  "incentive.error.generic": "Có lỗi xảy ra, vui lòng thử lại.",
+  "incentive.rules.detail.actionsTitle": "Thao tác"
 }

@@ -35,5 +35,6 @@
   "deliveries.error.alreadyCompleted": "この取引はすでに完了しており、これ以上配送を記録できません。",
   "deliveries.error.overDelivery": "数量が残数量を超えています。",
   "deliveries.error.qtyMismatch": "完了を確認するには数量が不足しています。",
-  "deliveries.error.generic": "エラーが発生しました。もう一度お試しください。"
+  "deliveries.error.generic": "エラーが発生しました。もう一度お試しください。",
+  "deliveries.detail.progressTitle": "納品進捗"
 }

@@ -15,13 +15,14 @@ import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 import { PageFrame } from "@/components/layout/page-frame";
+import { SectionCard } from "@/components/layout/section-card";
 
 // SCR012_DeliveryDetail (A2/A3/A4, FR-DEL-02/04/05, US001-003).
 export default async function DeliveryDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { id } = await params;
   const locale = await getLocale();
-  const dict = await getDictionary(locale, ["common", "deliveries"]);
+  const dict = await getDictionary(locale, ["common", "deliveries", "nav"]);
 
   const supabase: SupabaseClient<Database> = await createClient();
   const found = await loadDeliveryWithTransaction(supabase, id);
@@ -71,43 +72,40 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
           </>
         }
       >
-        <section className="max-w-3xl space-y-8">
-        <div>
-          <h2 className="cds-section-title">
-            {dict["pipeline.title"]}
-          </h2>
-          <div className="mt-2">
+        <section className="ms-0 me-auto max-w-3xl space-y-6">
+          <SectionCard title={dict["pipeline.title"]}>
             <StageProgressBar kind="delivery" status={delivery.status} />
-          </div>
-        </div>
+          </SectionCard>
 
-        <DeliveryProgress
-          deliveryId={delivery.id}
-          deliveredQty={delivery.delivered_qty}
-          orderedQty={transaction.qty}
-          status={delivery.status}
-          canComplete={canComplete}
-        />
+          <SectionCard title={dict["deliveries.detail.progressTitle"]}>
+            <DeliveryProgress
+              deliveryId={delivery.id}
+              deliveredQty={delivery.delivered_qty}
+              orderedQty={transaction.qty}
+              status={delivery.status}
+              canComplete={canComplete}
+            />
+          </SectionCard>
 
-        {canRecordShipment && (
-          <div>
-            <h2 className="cds-card__title">{dict["deliveries.detail.newShipmentTitle"]}</h2>
-            <div className="mt-2">
+          {canRecordShipment && (
+            <SectionCard title={dict["deliveries.detail.newShipmentTitle"]}>
               <ShipmentForm deliveryId={delivery.id} />
-            </div>
-          </div>
-        )}
-        {/* "hoàn tất" is terminal -- nothing left to hand off to ROLE-DELIVERY. */}
-        {!canRecordShipment && delivery.status !== "hoàn tất" && (
-          <HandoffCaption actionLabel={dict["deliveries.detail.newShipmentTitle"]} roles={["ROLE-DELIVERY"]} />
-        )}
+            </SectionCard>
+          )}
+          {/* "hoàn tất" is terminal -- nothing left to record and nothing left
+              to hand off to ROLE-DELIVERY, so the section itself goes away. */}
+          {!canRecordShipment && delivery.status !== "hoàn tất" && (
+            <SectionCard title={dict["deliveries.detail.newShipmentTitle"]}>
+              <HandoffCaption
+                actionLabel={dict["deliveries.detail.newShipmentTitle"]}
+                roles={["ROLE-DELIVERY"]}
+              />
+            </SectionCard>
+          )}
 
-        <div>
-          <h2 className="cds-card__title">{dict["deliveries.detail.shipmentsTitle"]}</h2>
-          <div className="mt-2">
+          <SectionCard title={dict["deliveries.detail.shipmentsTitle"]} tight>
             <ShipmentHistoryTable shipments={shipments} dict={dict} />
-          </div>
-        </div>
+          </SectionCard>
         </section>
       </PageFrame>
     </I18nProvider>

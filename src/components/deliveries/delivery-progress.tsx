@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useT } from "@/lib/i18n/i18n-provider";
 import { COMPLETE_REJECT_I18N_KEY, isCompleteRejectReason } from "@/lib/deliveries/delivery-reject-reasons";
 import { HandoffCaption } from "@/components/pipeline/handoff-caption";
+import { FieldGrid, Field } from "@/components/layout/field-grid";
 
 // SCR012 progress panel (FR-DEL-05 lũy kế/còn lại) + "Xác nhận hoàn tất"
 // (A3, BR-DEL-03). `readyToComplete` is derived straight from the
@@ -56,21 +57,18 @@ export function DeliveryProgress({
   }
 
   return (
-    <div className="space-y-3">
-      <dl className="grid grid-cols-3 gap-4 text-sm">
-        <div>
-          <dt className="text-muted">{t("deliveries.detail.orderedQtyLabel")}</dt>
-          <dd className="cds-statcard__val !text-[22px]">{orderedQty}</dd>
-        </div>
-        <div>
-          <dt className="text-muted">{t("deliveries.detail.deliveredQtyLabel")}</dt>
-          <dd className="cds-statcard__val !text-[22px]">{deliveredQty}</dd>
-        </div>
-        <div>
-          <dt className="text-muted">{t("deliveries.detail.remainingQtyLabel")}</dt>
-          <dd className="cds-statcard__val !text-[22px]">{remaining}</dd>
-        </div>
-      </dl>
+    <div className="space-y-4">
+      <FieldGrid>
+        <Field label={t("deliveries.detail.orderedQtyLabel")} variant="figure">
+          {orderedQty}
+        </Field>
+        <Field label={t("deliveries.detail.deliveredQtyLabel")} variant="figure">
+          {deliveredQty}
+        </Field>
+        <Field label={t("deliveries.detail.remainingQtyLabel")} variant="figure">
+          {remaining}
+        </Field>
+      </FieldGrid>
       {/* Progress track (.rd-cat-track/.rd-cat-fill). The figures above carry
           the same information in words, so the bar is reinforcement only --
           it is aria-hidden rather than a redundant progressbar to announce. */}

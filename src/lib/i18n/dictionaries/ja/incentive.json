@@ -48,5 +48,6 @@
   "incentive.error.NOT_ACTIVE": "このバージョンは現在「有効」状態ではありません。",
   "incentive.error.INVALID_TARGET": "ロールバック先のバージョンが不正です。",
   "incentive.error.NOT_FOUND": "このルールバージョンが見つかりません。",
-  "incentive.error.generic": "エラーが発生しました。もう一度お試しください。"
+  "incentive.error.generic": "エラーが発生しました。もう一度お試しください。",
+  "incentive.rules.detail.actionsTitle": "操作"
 }

@@ -1,0 +1,89 @@
+/* Surface separation for the cds-* card.
+ *
+ * The design system ships `.cds-card` as a white face on the grey page with a
+ * single --border-subtle hairline. Measured, that boundary barely exists:
+ *
+ *   --surface-card #FFFFFF on --surface-page #F5F6F8 .... 1.08:1  (fill)
+ *   --border-subtle #E3E6EB on --surface-card ........... 1.25:1  (line)
+ *   --border-subtle #E3E6EB on --surface-page ........... 1.16:1  (line)
+ *
+ * so a detail screen built from cards still reads as one undivided sheet --
+ * exactly the complaint that started this. WCAG 2.1 SC 1.4.11 asks 3:1 of a
+ * boundary that has to be perceived, and NO token in the set reaches 3:1
+ * against white before --text-subtle #7C8697 (3.68:1), which the system
+ * reserves for type. A 1px #7C8697 outline on every card would read as a
+ * wireframe, not as a product.
+ *
+ * So the boundary is carried by four cues instead of one line:
+ *
+ *   1. --border-default #D2D7DE instead of the hairline .. 1.45:1 on card
+ *                                                          1.34:1 on page
+ *   2. --shadow-sm instead of --shadow-xs: the edge is lit, not just drawn.
+ *   3. A --surface-sunken head band, so every section starts with a visible
+ *      change of surface rather than with text alone.
+ *   4. The head's own bottom rule, at the same weight as the outline.
+ *
+ * Values only ever come from cds-tokens.css. The vendored rule in
+ * cds-components.css is not edited -- this file overrides it in the same
+ * cascade layer, loaded after, the way cds-app-layout.css already does.
+ */
+
+@layer components {
+  .cds-card {
+    border-color: var(--border-default);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* --flat is the system's own opt-out of elevation; keep it flat. */
+  .cds-card--flat {
+    box-shadow: none;
+  }
+
+  .cds-card__head {
+    background: var(--surface-sunken);
+    border-bottom-color: var(--border-default);
+    /* -1px so the band's corner sits inside the card's border instead of
+     * poking through it. Radius still comes from the token. */
+    border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+  }
+
+  /* Same reasoning for a table that stands on the page without a card of its
+   * own (the list screens): one hairline is not a boundary. */
+  .cds-table__wrap {
+    border-color: var(--border-default);
+  }
+
+  /* A full-bleed table inside `cds-card__body--tight`: the card already draws
+   * the surface, the border and the radius, so the wrap must not draw a
+   * second set 18px inside the first. Its overflow-x stays untouched -- the
+   * scroll container is still the wrap, not the card. */
+  .cds-card__body--tight > .cds-table__wrap {
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* The headline figure inside a field grid.
+   *
+   * The DS's own big-number treatment is `.cds-statcard__val` at 34px, sized
+   * for a dashboard tile standing alone -- inside a three-up field grid it
+   * shouted, so the detail screens had each patched it with an arbitrary
+   * `!text-[26px]` / `!text-[22px]`. Same intent, taken from --fs-display
+   * instead of from a number typed into a class name. */
+  .cds-figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--fs-display);
+    line-height: var(--lh-display);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-strong);
+  }
+
+  /* Clips the last row's hover fill to the card's own bottom corners. Does
+   * not clip the card's box-shadow (drawn outside the border box) and does
+   * not interfere with the wrap's horizontal scrolling. */
+  .cds-card--clip {
+    overflow: hidden;
+  }
+}

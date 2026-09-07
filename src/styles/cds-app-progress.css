@@ -1,0 +1,30 @@
+/* The progress bar's fill.
+ *
+ * Part of the app-side cds-* extension layer, and the same story as the badge
+ * tones in cds-app-controls.css: the design system's ProgressBar was a React
+ * component that passed its colour in from JSX, so the extracted
+ * `.cds-progress__fill` ships with a height, a radius and a transition and no
+ * background at all. Nothing supplied one here.
+ *
+ * It also renders on a <span>, so its `display` was `inline` -- and a
+ * non-replaced inline box ignores width and height outright. The extract's own
+ * `height: 100%` and the inline `width: {pct}%` both laid out as 0x0 while
+ * reporting their intended values in getComputedStyle the whole time, which is
+ * why this looked like a colour bug and was really two bugs.
+ *
+ * Net effect before the fix: a delivery 270 of 300 complete drew an empty
+ * track. Every value below reads a token from cds-tokens.css.
+ */
+
+@layer components {
+  .cds-progress__fill {
+    display: block;
+    /* --color-primary, not a status tone. The delivery's state is already
+     * carried by its StatusBadge and its StageProgressBar, and brand blue is
+     * the one saturated colour in this system that is never a status -- so a
+     * filled bar cannot be misread as one, and src/components/ui/status-tone.ts
+     * stays the single map from domain state to tone.
+     * 4.17:1 against the --neutral-200 track. */
+    background: var(--color-primary);
+  }
+}
