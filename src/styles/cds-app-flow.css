@@ -91,7 +91,7 @@
     /* --cacao-500, not --cacao-300: a 2px connector carries direction, so it
      * owes 3:1 as non-text UI. Measured 4.31:1 on --surface-card against
      * --cacao-300's 2.39:1. */
-    border-left: 2px solid var(--cacao-500);
+    border-left: 3px solid var(--cacao-600);
   }
 
   /* --- nodes ------------------------------------------------------------- */

@@ -26,14 +26,15 @@ export function FlowDefs() {
     <svg width="0" height="0" aria-hidden focusable="false" className="absolute">
       <defs>
         {/* The channel gradient: lighter upstream, saturated downstream, so the
-            spine has direction even in a still frame. cacao-400 -> cacao-600
-            rather than 200 -> 500 because the ribbon carries direction and
-            therefore owes 3:1 as non-text UI -- measured against
-            --surface-page, cacao-400 is 3.16:1 and cacao-600 4.82:1, where
-            cacao-200 would be 1.59:1. */}
+            spine has direction even in a still frame. cacao-600 -> cacao-700:
+            the ribbon carries direction and so owes 3:1 as non-text UI, but 3:1
+            is only the floor and a thin connector at the floor reads washed
+            out -- reported as unclear in review. Measured on --surface-page:
+            cacao-400 3.16:1 (the old, faint value), cacao-600 4.82:1,
+            cacao-700 6.57:1. Every stroke in this file sits at 600 or darker. */}
         <linearGradient id={RIBBON} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="var(--cacao-400)" />
-          <stop offset="1" stopColor="var(--cacao-600)" />
+          <stop offset="0" stopColor="var(--cacao-600)" />
+          <stop offset="1" stopColor="var(--cacao-700)" />
         </linearGradient>
         {/* markerUnits=userSpaceOnUse: the head must not scale with a
             stroke-width that varies from 2 to 18 across the drawing. */}
@@ -47,7 +48,7 @@ export function FlowDefs() {
           markerUnits="userSpaceOnUse"
           orient="auto-start-reverse"
         >
-          <path d="M1 1 L11 6 L1 11 Z" fill="var(--cacao-600)" />
+          <path d="M1 1 L11 6 L1 11 Z" fill="var(--cacao-700)" />
         </marker>
         <marker
           id={ARROW_STOP}
@@ -106,7 +107,7 @@ export function FlowConnector({
         <path
           d={`M0 ${mid} L ${tip} ${mid}`}
           fill="none"
-          stroke="var(--cacao-400)"
+          stroke="var(--cacao-600)"
           strokeWidth={to * 2}
           strokeDasharray="6 5"
           strokeLinecap="round"
@@ -130,7 +131,7 @@ export function FlowMerge({ width }: { width: number }) {
       <path
         d="M8 80 C 8 44, 32 24, 78 16"
         fill="none"
-        stroke="var(--cacao-500)"
+        stroke="var(--cacao-600)"
         strokeWidth={width}
         strokeLinecap="round"
         markerEnd={`url(#${ARROW})`}
@@ -187,7 +188,7 @@ export function FlowBarrier({ closed }: { closed: boolean }) {
       <path
         d="M32 36 L 40 36"
         fill="none"
-        stroke="var(--cacao-400)"
+        stroke="var(--cacao-600)"
         strokeWidth="3"
         strokeDasharray="4 4"
         strokeLinecap="round"
