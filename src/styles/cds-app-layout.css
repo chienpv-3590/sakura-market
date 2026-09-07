@@ -29,10 +29,33 @@
     min-width: 0;
   }
 
-  /* Body region: matches .cds-pageheader's 32px inline padding at desktop. */
+  /* Body region: matches .cds-pageheader's 32px inline padding at desktop.
+   *
+   * `--layout-max` (1440px) ships in the token set but the extract has no rule
+   * that applies it -- so on a wide monitor the content ran edge to edge and,
+   * with the 248px rail pinned left, the whole content mass read as drifting
+   * right. Capping at --layout-max and centring puts it back on axis.
+   *
+   * The header band stays full-bleed white (the topheader needs something to
+   * sit on), so the cap goes on its INNER rows instead -- otherwise a centred
+   * body would sit under a left-aligned title. Both use the same
+   * max-width + auto margins, so title and content share one left edge. */
   .cds-shell__page {
     padding: var(--space-7) var(--page-pad) var(--space-9);
     min-width: 0;
+  }
+
+  .cds-shell__page > * {
+    max-width: var(--layout-max);
+    margin-inline: auto;
+  }
+
+  .cds-pageheader__back,
+  .cds-pageheader__row,
+  .cds-pageheader__meta {
+    width: 100%;
+    max-width: var(--layout-max);
+    margin-inline: auto;
   }
 
   /* A page header with a long action label (or a handoff caption in place of
