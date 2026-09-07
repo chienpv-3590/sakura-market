@@ -11,6 +11,7 @@ import { loadDeliveryWithTransaction, loadShipments } from "@/lib/deliveries/del
 import { DeliveryProgress } from "@/components/deliveries/delivery-progress";
 import { ShipmentForm } from "@/components/deliveries/shipment-form";
 import { ShipmentHistoryTable } from "@/components/deliveries/shipment-history-table";
+import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 
 // SCR012_DeliveryDetail (A2/A3/A4, FR-DEL-02/04/05, US001-003).
 export default async function DeliveryDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -52,6 +53,15 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
               </Link>
             </p>
           )}
+        </div>
+
+        <div>
+          <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500">
+            {dict["pipeline.title"]}
+          </h2>
+          <div className="mt-2">
+            <StageProgressBar kind="delivery" status={delivery.status} />
+          </div>
         </div>
 
         <DeliveryProgress

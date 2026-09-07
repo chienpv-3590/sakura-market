@@ -9,6 +9,7 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { AvailabilityPanel } from "@/components/lots/availability-panel";
 import { LotEditForm } from "@/components/lots/lot-edit-form";
 import { loadLot, loadLotAuditHistory } from "@/lib/lots/lot-queries";
+import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 
 // SCR006_LotDetail -- REG-AVAILABILITY (everyone) + REG-EDIT (ROLE-SETTLEMENT
 // only, matching the PATCH /api/lots/[id] role gate).
@@ -31,6 +32,14 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
             {dict["lots.detail.title"]}: <span className="font-mono">{lot.lot_code}</span>
           </h1>
           <p className="mt-1 text-sm text-zinc-600">{lot.item}</p>
+        </div>
+        <div>
+          <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500">
+            {dict["pipeline.title"]}
+          </h2>
+          <div className="mt-2">
+            <StageProgressBar kind="lot" status={lot.status} />
+          </div>
         </div>
         <AvailabilityPanel
           availableQty={lot.available_qty}

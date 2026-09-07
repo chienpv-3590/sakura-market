@@ -54,3 +54,20 @@ export async function loadAdjustmentsByCorrection(
   }
   return data ?? [];
 }
+
+export type CorrectionStatus = "pending" | "approved" | "rejected";
+
+/** Read-only row count for one correction status -- feeds the home pipeline dashboard. */
+export async function countCorrectionsByStatus(
+  client: SupabaseClient<Database>,
+  status: CorrectionStatus,
+): Promise<number> {
+  const { count, error } = await client
+    .from("correction_request")
+    .select("id", { count: "exact", head: true })
+    .eq("status", status);
+  if (error) {
+    throw new Error(`countCorrectionsByStatus(${status}) failed: ${error.message}`);
+  }
+  return count ?? 0;
+}

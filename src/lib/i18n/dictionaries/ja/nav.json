@@ -1,4 +1,9 @@
 {
+  "nav.group.intake": "入荷",
+  "nav.group.trading": "取引",
+  "nav.group.delivery": "配送",
+  "nav.group.settlement": "精算",
+  "nav.group.admin": "管理",
   "nav.participants": "参加者",
   "nav.lots": "ロット",
   "nav.transactions": "取引",

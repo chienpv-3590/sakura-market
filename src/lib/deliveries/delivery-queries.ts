@@ -106,3 +106,20 @@ export async function loadShipmentsByTransaction(
   }
   return data ?? [];
 }
+
+export type DeliveryStatus = "chờ" | "đang giao" | "hoàn tất" | "ngoại lệ";
+
+/** Read-only row count for one delivery status -- feeds the home pipeline dashboard. */
+export async function countDeliveriesByStatus(
+  client: SupabaseClient<Database>,
+  status: DeliveryStatus,
+): Promise<number> {
+  const { count, error } = await client
+    .from("delivery")
+    .select("id", { count: "exact", head: true })
+    .eq("status", status);
+  if (error) {
+    throw new Error(`countDeliveriesByStatus(${status}) failed: ${error.message}`);
+  }
+  return count ?? 0;
+}

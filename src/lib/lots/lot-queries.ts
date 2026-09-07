@@ -57,3 +57,20 @@ export async function isBusinessDateLocked(
   }
   return data !== null;
 }
+
+export type LotStatus = "received" | "published" | "traded" | "delivered";
+
+/** Read-only row count for one lot status -- feeds the home pipeline dashboard. */
+export async function countLotsByStatus(
+  client: SupabaseClient<Database>,
+  status: LotStatus,
+): Promise<number> {
+  const { count, error } = await client
+    .from("lot")
+    .select("id", { count: "exact", head: true })
+    .eq("status", status);
+  if (error) {
+    throw new Error(`countLotsByStatus(${status}) failed: ${error.message}`);
+  }
+  return count ?? 0;
+}

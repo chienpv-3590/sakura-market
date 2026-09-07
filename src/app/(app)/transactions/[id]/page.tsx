@@ -8,6 +8,7 @@ import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { loadTransaction, loadTransactionAuditHistory } from "@/lib/transactions/txn-queries";
 import { ConfirmCancelButtonGroup } from "@/components/transactions/confirm-cancel-button-group";
+import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
 
 // SCR008_TransactionList detail view -- REG-CONFIRM + REG-CANCEL live here
 // too (not just the list row), plus the audit trail, same pattern lots'
@@ -37,6 +38,15 @@ export default async function TransactionDetailPage({ params }: { params: Promis
           <h1 className="text-2xl font-semibold text-zinc-900">
             {dict["transactions.detail.title"]}: <span className="font-mono">{txn.txn_code}</span>
           </h1>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500">
+            {dict["pipeline.title"]}
+          </h2>
+          <div className="mt-2">
+            <StageProgressBar kind="transaction" status={txn.status} />
+          </div>
         </div>
 
         <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-3">

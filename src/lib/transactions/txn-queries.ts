@@ -35,3 +35,20 @@ export async function loadTransactionAuditHistory(
   }
   return data ?? [];
 }
+
+export type TransactionStatus = "draft" | "confirmed" | "cancelled";
+
+/** Read-only row count for one transaction status -- feeds the home pipeline dashboard. */
+export async function countTransactionsByStatus(
+  client: SupabaseClient<Database>,
+  status: TransactionStatus,
+): Promise<number> {
+  const { count, error } = await client
+    .from("transaction")
+    .select("id", { count: "exact", head: true })
+    .eq("status", status);
+  if (error) {
+    throw new Error(`countTransactionsByStatus(${status}) failed: ${error.message}`);
+  }
+  return count ?? 0;
+}

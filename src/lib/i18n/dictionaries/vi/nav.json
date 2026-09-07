@@ -1,4 +1,9 @@
 {
+  "nav.group.intake": "Tiếp nhận",
+  "nav.group.trading": "Giao dịch",
+  "nav.group.delivery": "Giao nhận",
+  "nav.group.settlement": "Quyết toán",
+  "nav.group.admin": "Quản trị",
   "nav.participants": "Người tham gia",
   "nav.lots": "Lô hàng",
   "nav.transactions": "Giao dịch",
