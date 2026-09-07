@@ -36,7 +36,7 @@ export function TransactionAuditHistoryTable({
               <td className="cds-table__mono">
                 {dict[`transactions.action.${row.action}`] ?? row.action}
               </td>
-              <td>
+              <td className="cds-table__wrapcell">
                 <AuditDiff
                   before={row.before}
                   after={row.after}
@@ -45,7 +45,7 @@ export function TransactionAuditHistoryTable({
                   createFields={TXN_CREATE_FIELDS}
                 />
               </td>
-              <td>{row.reason ?? "—"}</td>
+              <td className="cds-table__wrapcell">{row.reason ?? "—"}</td>
               <td className="cds-table__mono">{new Date(row.created_at).toLocaleString()}</td>
             </tr>
           ))}

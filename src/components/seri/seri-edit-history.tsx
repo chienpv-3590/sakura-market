@@ -34,7 +34,7 @@ export function SeriEditHistory({
               <td className="cds-table__mono">
               {dict[`seri.action.${row.action}`] ?? row.action}
             </td>
-            <td>
+            <td className="cds-table__wrapcell">
               <AuditDiff
                 before={row.before}
                 after={row.after}
@@ -42,7 +42,7 @@ export function SeriEditHistory({
                 createFields={SERI_CREATE_FIELDS}
               />
             </td>
-              <td>{row.reason ?? "—"}</td>
+              <td className="cds-table__wrapcell">{row.reason ?? "—"}</td>
               <td>{new Date(row.created_at).toLocaleString()}</td>
             </tr>
           ))}

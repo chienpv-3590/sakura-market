@@ -54,7 +54,7 @@ export default async function RuleVersionDetailPage({
         backHref="/incentive/rules"
         backLabel={dict["nav.incentiveRules"]}
       >
-        <section className="ms-0 me-auto max-w-3xl space-y-6">
+        <section className="mx-auto max-w-5xl space-y-6">
           <SectionCard title={dict["section.details"]}>
             <RuleVersionFields
               versionNo={version.version_no}

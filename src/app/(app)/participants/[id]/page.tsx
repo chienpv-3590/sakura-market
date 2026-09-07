@@ -74,7 +74,7 @@ export default async function ParticipantDetailPage({
         backHref="/participants"
         backLabel={dict["nav.participants"]}
       >
-        <section className="ms-0 me-auto max-w-3xl space-y-6">
+        <section className="mx-auto max-w-5xl space-y-6">
           <SectionCard title={dict["participants.detail.profileSection"]}>
             <ParticipantProfileFields participant={participant} dict={dict} />
           </SectionCard>

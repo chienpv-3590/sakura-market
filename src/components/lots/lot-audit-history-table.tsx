@@ -35,7 +35,7 @@ export function LotAuditHistoryTable({
           {history.map((row) => (
             <tr key={row.id} className="align-top">
               <td className="cds-table__mono">{dict[`lots.action.${row.action}`] ?? row.action}</td>
-              <td>
+              <td className="cds-table__wrapcell">
                 <AuditDiff
                   before={row.before}
                   after={row.after}
@@ -44,7 +44,7 @@ export function LotAuditHistoryTable({
                   createFields={LOT_CREATE_FIELDS}
                 />
               </td>
-              <td>{row.reason ?? "—"}</td>
+              <td className="cds-table__wrapcell">{row.reason ?? "—"}</td>
               <td className="cds-table__mono">{new Date(row.created_at).toLocaleString()}</td>
             </tr>
           ))}

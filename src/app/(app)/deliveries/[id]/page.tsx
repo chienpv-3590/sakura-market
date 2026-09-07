@@ -72,7 +72,7 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
           </>
         }
       >
-        <section className="ms-0 me-auto max-w-3xl space-y-6">
+        <section className="mx-auto max-w-5xl space-y-6">
           <SectionCard title={dict["pipeline.title"]}>
             <StageProgressBar kind="delivery" status={delivery.status} />
           </SectionCard>
