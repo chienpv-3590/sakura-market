@@ -23,6 +23,10 @@
   "pipeline.nextActorLabel": "Người thực hiện tiếp theo",
   "pipeline.noNextActor": "Đã hoàn tất, không cần thao tác tiếp theo",
   "pipeline.unknownStatus": "Trạng thái không xác định",
+  "action.doneByRole": "Thực hiện bởi",
+  "breadcrumb.new": "Tạo mới",
+  "breadcrumb.detail": "Chi tiết",
+  "header.businessDateLabel": "Ngày nghiệp vụ (JST)",
   "term.aitai": "相対取引",
   "term.seri": "せり",
   "term.mekiki": "目利き",
@@ -45,5 +49,6 @@
   "role.ROLE-DELIVERY": "Nhân viên giao nhận",
   "role.ROLE-SETTLEMENT": "Bộ phận đối chiếu",
   "role.ROLE-RULE-ADMIN": "Quản lý quy tắc",
-  "role.ROLE-SYS-ADMIN": "Quản trị hệ thống"
+  "role.ROLE-SYS-ADMIN": "Quản trị hệ thống",
+  "audit.noChange": "Không có thay đổi"
 }

@@ -10,6 +10,7 @@ import { AvailabilityPanel } from "@/components/lots/availability-panel";
 import { LotEditForm } from "@/components/lots/lot-edit-form";
 import { loadLot, loadLotAuditHistory } from "@/lib/lots/lot-queries";
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR006_LotDetail -- REG-AVAILABILITY (everyone) + REG-EDIT (ROLE-SETTLEMENT
 // only, matching the PATCH /api/lots/[id] role gate).
@@ -47,13 +48,15 @@ export default async function LotDetailPage({ params }: { params: Promise<{ id: 
           status={lot.status}
           history={history}
         />
-        {user.role === "ROLE-SETTLEMENT" && (
+        {user.role === "ROLE-SETTLEMENT" ? (
           <div>
             <h2 className="text-lg font-semibold text-zinc-900">{dict["lots.detail.editTitle"]}</h2>
             <div className="mt-2">
               <LotEditForm lotId={lot.id} currentItem={lot.item} currentPackageCount={lot.package_count} />
             </div>
           </div>
+        ) : (
+          <HandoffCaption actionLabel={dict["lots.detail.editTitle"]} roles={["ROLE-SETTLEMENT"]} />
         )}
       </section>
     </I18nProvider>

@@ -54,8 +54,6 @@
   "lots.detail.historyTitle": "変更履歴",
   "lots.detail.historyEmpty": "変更履歴はまだありません。",
   "lots.detail.historyColumns.action": "操作",
-  "lots.detail.historyColumns.before": "変更前",
-  "lots.detail.historyColumns.after": "変更後",
   "lots.detail.historyColumns.reason": "理由",
   "lots.detail.historyColumns.actor": "実施者",
   "lots.detail.historyColumns.at": "日時",
@@ -72,5 +70,12 @@
   "lots.edit.error.locked": "業務日がロックされているため直接修正できません — 締め後修正フローをご利用ください。",
   "lots.edit.error.network": "エラーが発生しました。もう一度お試しください。",
   "lots.edit.error.notFound": "ロットが見つかりません。",
-  "lots.notFound": "ロットが見つかりません。"
+  "lots.notFound": "ロットが見つかりません。",
+  "lots.detail.historyColumns.change": "変更内容",
+  "lots.diff.noChange": "変更なし",
+  "lots.diff.businessDate": "業務日",
+  "lots.action.create": "ロット受付",
+  "lots.action.publish": "目利き記録・公開",
+  "lots.action.adjust": "属性の修正",
+  "lots.action.adjust_blocked_locked": "拒否 — 業務日ロック済み"
 }

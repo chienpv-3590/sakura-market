@@ -54,8 +54,6 @@
   "lots.detail.historyTitle": "Lịch sử điều chỉnh",
   "lots.detail.historyEmpty": "Chưa có lịch sử điều chỉnh.",
   "lots.detail.historyColumns.action": "Hành động",
-  "lots.detail.historyColumns.before": "Trước",
-  "lots.detail.historyColumns.after": "Sau",
   "lots.detail.historyColumns.reason": "Lý do",
   "lots.detail.historyColumns.actor": "Người thực hiện",
   "lots.detail.historyColumns.at": "Thời điểm",
@@ -72,5 +70,12 @@
   "lots.edit.error.locked": "Ngày nghiệp vụ đã lock, không thể sửa trực tiếp — dùng luồng điều chỉnh sau chốt.",
   "lots.edit.error.network": "Có lỗi xảy ra, vui lòng thử lại.",
   "lots.edit.error.notFound": "Không tìm thấy lô hàng.",
-  "lots.notFound": "Không tìm thấy lô hàng."
+  "lots.notFound": "Không tìm thấy lô hàng.",
+  "lots.detail.historyColumns.change": "Thay đổi",
+  "lots.diff.noChange": "Không có thay đổi",
+  "lots.diff.businessDate": "Ngày nghiệp vụ",
+  "lots.action.create": "Tiếp nhận lô",
+  "lots.action.publish": "Ghi 目利き / Công bố",
+  "lots.action.adjust": "Điều chỉnh thuộc tính",
+  "lots.action.adjust_blocked_locked": "Bị chặn — ngày đã khóa"
 }

@@ -7,6 +7,7 @@ export interface CorrectionRowView {
   status: string;
   evidenceUrl: string | null;
   canDecide: boolean;
+  isOwnPendingRequest: boolean;
 }
 
 // SCR015_CorrectionApproval list (A2, DEC-001). Server Component: the
@@ -32,6 +33,9 @@ export function CorrectionListTable({ rows, dict }: { rows: CorrectionRowView[];
             <a href={row.evidenceUrl} target="_blank" rel="noreferrer" className="text-sm text-zinc-700 underline">
               {dict["corrections.list.evidenceLink"]}
             </a>
+          )}
+          {row.isOwnPendingRequest && (
+            <p className="text-xs text-zinc-500">{dict["corrections.error.selfApproval"]}</p>
           )}
           <CorrectionApprovalPanel correctionId={row.id} canDecide={row.canDecide} />
         </li>

@@ -13,6 +13,7 @@ import { EligibilityStatusBadge } from "@/components/participants/eligibility-st
 import { TransitionHistoryTable } from "@/components/participants/transition-history-table";
 import { TransitionActions } from "@/components/participants/transition-actions";
 import { ParticipantForm } from "@/components/participants/participant-form";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR003_ParticipantDetail. Profile + current eligibility + full transition
 // history, plus (ROLE-SYS-ADMIN only) the edit form and transition actions.
@@ -108,7 +109,7 @@ export default async function ParticipantDetailPage({
           </dl>
         </div>
 
-        {canWrite && (
+        {canWrite ? (
           <div className="rounded-md border border-zinc-200 p-4">
             <h2 className="mb-3 text-lg font-medium text-zinc-900">{dict["participants.form.editTitle"]}</h2>
             <ParticipantForm
@@ -122,13 +123,17 @@ export default async function ParticipantDetailPage({
               }}
             />
           </div>
+        ) : (
+          <HandoffCaption actionLabel={dict["participants.form.editTitle"]} roles={["ROLE-SYS-ADMIN"]} />
         )}
 
-        {canWrite && (
+        {canWrite ? (
           <div className="rounded-md border border-zinc-200 p-4">
             <h2 className="mb-3 text-lg font-medium text-zinc-900">{dict["participants.detail.transitionSection"]}</h2>
             <TransitionActions participantId={participant.id} currentStatus={participant.status} />
           </div>
+        ) : (
+          <HandoffCaption actionLabel={dict["participants.detail.transitionSection"]} roles={["ROLE-SYS-ADMIN"]} />
         )}
 
         <div className="rounded-md border border-zinc-200 p-4">

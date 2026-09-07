@@ -2,6 +2,8 @@
 
 import { useT } from "@/lib/i18n/i18n-provider";
 import type { LotAuditRow } from "@/lib/lots/lot-queries";
+import { AuditDiff } from "@/components/audit/audit-diff";
+import { LOT_FIELD_LABELS, LOT_CREATE_FIELDS } from "@/components/audit/audit-field-maps";
 
 // SCR006_LotDetail / REG-AVAILABILITY: read-only. Renders available_qty +
 // initial_qty + status, then the lot's audit_log trail as its history --
@@ -47,8 +49,7 @@ export function AvailabilityPanel({
             <thead>
               <tr className="border-b border-zinc-200 text-zinc-500">
                 <th className="py-1 pr-2">{t("lots.detail.historyColumns.action")}</th>
-                <th className="py-1 pr-2">{t("lots.detail.historyColumns.before")}</th>
-                <th className="py-1 pr-2">{t("lots.detail.historyColumns.after")}</th>
+                <th className="py-1 pr-2">{t("lots.detail.historyColumns.change")}</th>
                 <th className="py-1 pr-2">{t("lots.detail.historyColumns.reason")}</th>
                 <th className="py-1 pr-2">{t("lots.detail.historyColumns.at")}</th>
               </tr>
@@ -56,11 +57,22 @@ export function AvailabilityPanel({
             <tbody>
               {history.map((row) => (
                 <tr key={row.id} className="border-b border-zinc-100 align-top">
-                  <td className="py-1 pr-2">{row.action}</td>
-                  <td className="py-1 pr-2 font-mono text-xs">{JSON.stringify(row.before)}</td>
-                  <td className="py-1 pr-2 font-mono text-xs">{JSON.stringify(row.after)}</td>
+                  <td className="py-1 pr-2 whitespace-nowrap">
+                    {t(`lots.action.${row.action}`, row.action)}
+                  </td>
+                  <td className="py-1 pr-2">
+                    <AuditDiff
+                      before={row.before}
+                      after={row.after}
+                      fieldLabels={LOT_FIELD_LABELS}
+                      statusPrefix="lots.status."
+                      createFields={LOT_CREATE_FIELDS}
+                    />
+                  </td>
                   <td className="py-1 pr-2">{row.reason ?? "—"}</td>
-                  <td className="py-1 pr-2">{new Date(row.created_at).toLocaleString()}</td>
+                  <td className="py-1 pr-2 whitespace-nowrap">
+                    {new Date(row.created_at).toLocaleString()}
+                  </td>
                 </tr>
               ))}
             </tbody>

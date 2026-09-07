@@ -7,6 +7,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { searchSeriResults } from "@/lib/seri/seri-queries";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR010_SeriLookup. Deliberately smaller than SCR008: no separate filter
 // component or table component -- せり is recording-only and much lighter
@@ -47,13 +48,15 @@ export default async function SeriPage({
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-zinc-900">{dict["seri.list.title"]}</h1>
-          {canCreate && (
+          {canCreate ? (
             <Link
               href="/seri/new"
               className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
             >
               {dict["seri.list.newLink"]}
             </Link>
+          ) : (
+            <HandoffCaption actionLabel={dict["seri.list.newLink"]} roles={["ROLE-TRADE"]} />
           )}
         </div>
         <form method="GET" className="flex flex-wrap items-end gap-4">

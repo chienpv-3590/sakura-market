@@ -10,6 +10,7 @@ import { loadReconciliationLines, loadLockStatus } from "@/lib/reconciliation/re
 import { isValidBusinessDate } from "@/lib/reconciliation/business-date-validation";
 import { ReconcileTable } from "@/components/reconciliation/reconcile-table";
 import { LockConfirmDialog } from "@/components/reconciliation/lock-confirm-dialog";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR013_ReconcileAndLock (A1/A2, FR-101/201/401). ROLE-SETTLEMENT's landing
 // page -- await searchParams per Next.js App Router's async API.
@@ -64,6 +65,9 @@ export default async function ReconciliationPage({
         <ReconcileTable lines={lines} dict={dict} />
 
         {canLock && <LockConfirmDialog businessDate={businessDate} />}
+        {!canLock && !lock.locked && (
+          <HandoffCaption actionLabel={dict["reconciliation.lock.openButton"]} roles={["ROLE-SETTLEMENT"]} />
+        )}
       </section>
     </I18nProvider>
   );

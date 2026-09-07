@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useT } from "@/lib/i18n/i18n-provider";
 import { COMPLETE_REJECT_I18N_KEY, isCompleteRejectReason } from "@/lib/deliveries/delivery-reject-reasons";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR012 progress panel (FR-DEL-05 lũy kế/còn lại) + "Xác nhận hoàn tất"
 // (A3, BR-DEL-03). `readyToComplete` is derived straight from the
@@ -84,6 +85,9 @@ export function DeliveryProgress({
             <p className="mt-1 text-sm text-zinc-500">{t("deliveries.detail.completeDisabledHint")}</p>
           )}
         </div>
+      )}
+      {!canComplete && status !== "hoàn tất" && (
+        <HandoffCaption actionLabel={t("deliveries.detail.completeButton")} roles={["ROLE-SETTLEMENT"]} />
       )}
       {errorKey && (
         <p role="alert" className="text-sm text-red-600">

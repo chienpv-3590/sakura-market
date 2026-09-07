@@ -12,6 +12,7 @@ import { DeliveryProgress } from "@/components/deliveries/delivery-progress";
 import { ShipmentForm } from "@/components/deliveries/shipment-form";
 import { ShipmentHistoryTable } from "@/components/deliveries/shipment-history-table";
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR012_DeliveryDetail (A2/A3/A4, FR-DEL-02/04/05, US001-003).
 export default async function DeliveryDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -79,6 +80,10 @@ export default async function DeliveryDetailPage({ params }: { params: Promise<{
               <ShipmentForm deliveryId={delivery.id} />
             </div>
           </div>
+        )}
+        {/* "hoàn tất" is terminal -- nothing left to hand off to ROLE-DELIVERY. */}
+        {!canRecordShipment && delivery.status !== "hoàn tất" && (
+          <HandoffCaption actionLabel={dict["deliveries.detail.newShipmentTitle"]} roles={["ROLE-DELIVERY"]} />
         )}
 
         <div>

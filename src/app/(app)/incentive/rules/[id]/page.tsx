@@ -69,6 +69,8 @@ export default async function RuleVersionDetailPage({
           canApprove={canApprove}
           canRollback={canRollback}
           rollbackCandidates={rollbackCandidates}
+          isOwnPending={isCreator && version.status === "pending_approval"}
+          isOwnActive={isCreator && version.status === "active"}
         />
       </section>
     </I18nProvider>

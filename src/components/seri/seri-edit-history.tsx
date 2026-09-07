@@ -1,3 +1,5 @@
+import { AuditDiff } from "@/components/audit/audit-diff";
+import { SERI_FIELD_LABELS, SERI_CREATE_FIELDS } from "@/components/audit/audit-field-maps";
 import type { SeriAuditRow } from "@/lib/seri/seri-queries";
 
 // SCR010 history block -- reads audit_log filtered by entity='seri_result',
@@ -19,8 +21,7 @@ export function SeriEditHistory({
       <thead>
         <tr className="border-b border-zinc-200 text-zinc-500">
           <th className="py-1 pr-2">{dict["seri.detail.historyColumns.action"]}</th>
-          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.before"]}</th>
-          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.after"]}</th>
+          <th className="py-1 pr-2">{dict["seri.detail.historyColumns.change"]}</th>
           <th className="py-1 pr-2">{dict["seri.detail.historyColumns.reason"]}</th>
           <th className="py-1 pr-2">{dict["seri.detail.historyColumns.at"]}</th>
         </tr>
@@ -28,9 +29,17 @@ export function SeriEditHistory({
       <tbody>
         {history.map((row) => (
           <tr key={row.id} className="border-b border-zinc-100 align-top">
-            <td className="py-1 pr-2">{row.action}</td>
-            <td className="py-1 pr-2 font-mono text-xs">{JSON.stringify(row.before)}</td>
-            <td className="py-1 pr-2 font-mono text-xs">{JSON.stringify(row.after)}</td>
+            <td className="py-1 pr-2 whitespace-nowrap">
+            {dict[`seri.action.${row.action}`] ?? row.action}
+          </td>
+          <td className="py-1 pr-2">
+            <AuditDiff
+              before={row.before}
+              after={row.after}
+              fieldLabels={SERI_FIELD_LABELS}
+              createFields={SERI_CREATE_FIELDS}
+            />
+          </td>
             <td className="py-1 pr-2">{row.reason ?? "—"}</td>
             <td className="py-1 pr-2">{new Date(row.created_at).toLocaleString()}</td>
           </tr>

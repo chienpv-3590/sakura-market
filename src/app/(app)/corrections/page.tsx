@@ -41,6 +41,10 @@ export default async function CorrectionsPage({
         status: c.status,
         evidenceUrl: signed?.signedUrl ?? null,
         canDecide: c.status === "pending" && c.requested_by !== user.id,
+        // DEC-001's maker-checker split within the *same* ROLE-SETTLEMENT
+        // role, distinct from a role gap -- surfaced separately so the note
+        // reads "you created this" rather than naming a role you already have.
+        isOwnPendingRequest: c.status === "pending" && c.requested_by === user.id,
       };
     }),
   );

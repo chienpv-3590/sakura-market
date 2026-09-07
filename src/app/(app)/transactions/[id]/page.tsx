@@ -1,3 +1,5 @@
+import { AuditDiff } from "@/components/audit/audit-diff";
+import { TXN_FIELD_LABELS, TXN_CREATE_FIELDS } from "@/components/audit/audit-field-maps";
 import { notFound } from "next/navigation";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireUser } from "@/lib/auth/require-role";
@@ -9,6 +11,7 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { loadTransaction, loadTransactionAuditHistory } from "@/lib/transactions/txn-queries";
 import { ConfirmCancelButtonGroup } from "@/components/transactions/confirm-cancel-button-group";
 import { StageProgressBar } from "@/components/pipeline/stage-progress-bar";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR008_TransactionList detail view -- REG-CONFIRM + REG-CANCEL live here
 // too (not just the list row), plus the audit trail, same pattern lots'
@@ -86,6 +89,10 @@ export default async function TransactionDetailPage({ params }: { params: Promis
             </div>
           </div>
         )}
+        {/* cancelled is terminal -- nothing left to hand off to ROLE-TRADE. */}
+        {!canAct && txn.status !== "cancelled" && (
+          <HandoffCaption actionLabel={dict["transactions.detail.actionsTitle"]} roles={["ROLE-TRADE"]} />
+        )}
 
         <div>
           <h2 className="text-lg font-semibold text-zinc-900">{dict["transactions.detail.historyTitle"]}</h2>
@@ -96,8 +103,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
               <thead>
                 <tr className="border-b border-zinc-200 text-zinc-500">
                   <th className="py-1 pr-2">{dict["transactions.detail.historyColumns.action"]}</th>
-                  <th className="py-1 pr-2">{dict["transactions.detail.historyColumns.before"]}</th>
-                  <th className="py-1 pr-2">{dict["transactions.detail.historyColumns.after"]}</th>
+                  <th className="py-1 pr-2">{dict["transactions.detail.historyColumns.change"]}</th>
                   <th className="py-1 pr-2">{dict["transactions.detail.historyColumns.reason"]}</th>
                   <th className="py-1 pr-2">{dict["transactions.detail.historyColumns.at"]}</th>
                 </tr>
@@ -105,9 +111,18 @@ export default async function TransactionDetailPage({ params }: { params: Promis
               <tbody>
                 {history.map((row) => (
                   <tr key={row.id} className="border-b border-zinc-100 align-top">
-                    <td className="py-1 pr-2">{row.action}</td>
-                    <td className="py-1 pr-2 font-mono text-xs">{JSON.stringify(row.before)}</td>
-                    <td className="py-1 pr-2 font-mono text-xs">{JSON.stringify(row.after)}</td>
+                    <td className="py-1 pr-2 whitespace-nowrap">
+            {dict[`transactions.action.${row.action}`] ?? row.action}
+          </td>
+                    <td className="py-1 pr-2">
+                      <AuditDiff
+                        before={row.before}
+                        after={row.after}
+                        fieldLabels={TXN_FIELD_LABELS}
+                        statusPrefix="transactions.status."
+                        createFields={TXN_CREATE_FIELDS}
+                      />
+                    </td>
                     <td className="py-1 pr-2">{row.reason ?? "—"}</td>
                     <td className="py-1 pr-2">{new Date(row.created_at).toLocaleString()}</td>
                   </tr>

@@ -30,11 +30,18 @@ export function RuleVersionDetailActions({
   canApprove,
   canRollback,
   rollbackCandidates,
+  isOwnPending,
+  isOwnActive,
 }: {
   versionId: string;
   canApprove: boolean;
   canRollback: boolean;
   rollbackCandidates: RollbackCandidate[];
+  /** DEC-001/GOV-RULE-01: maker-checker within the SAME role -- distinct
+   * from a role gap, so the note names "you created this" rather than a
+   * role the viewer already has. */
+  isOwnPending: boolean;
+  isOwnActive: boolean;
 }) {
   const t = useT();
   const router = useRouter();
@@ -42,7 +49,11 @@ export function RuleVersionDetailActions({
   const [errorKey, setErrorKey] = useState<string | null>(null);
   const [targetVersionId, setTargetVersionId] = useState(rollbackCandidates[0]?.id ?? "");
 
-  if (!canApprove && !canRollback) return null;
+  if (!canApprove && !canRollback) {
+    if (isOwnPending) return <p className="text-xs text-zinc-500">{t("incentive.error.SELF_APPROVAL")}</p>;
+    if (isOwnActive) return <p className="text-xs text-zinc-500">{t("incentive.error.SELF_ROLLBACK")}</p>;
+    return null;
+  }
 
   async function handleApprove() {
     if (pending) return;

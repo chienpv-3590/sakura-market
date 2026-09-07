@@ -9,6 +9,7 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { loadSeriResult, loadSeriAuditHistory } from "@/lib/seri/seri-queries";
 import { SeriEntryForm } from "@/components/seri/seri-entry-form";
 import { SeriEditHistory } from "@/components/seri/seri-edit-history";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 // SCR010_SeriLookup detail + edit. Edit is allowed for ROLE-TRADE OR
 // ROLE-SETTLEMENT (functional-spec.md §3 Open Decision -- role-only, not
@@ -43,7 +44,7 @@ export default async function SeriDetailPage({ params }: { params: Promise<{ id:
           <p className="mt-1 text-sm text-zinc-600">{lot?.item}</p>
         </div>
 
-        {canEdit && (
+        {canEdit ? (
           <SeriEntryForm
             mode="edit"
             seriResultId={seriResult.id}
@@ -56,6 +57,11 @@ export default async function SeriDetailPage({ params }: { params: Promise<{ id:
               decidedAt: seriResult.decided_at,
               confirmedBy: seriResult.confirmed_by,
             }}
+          />
+        ) : (
+          <HandoffCaption
+            actionLabel={dict["seri.detail.editAction"]}
+            roles={["ROLE-TRADE", "ROLE-SETTLEMENT"]}
           />
         )}
 

@@ -10,6 +10,7 @@ import { isParticipantCategory } from "@/lib/participants/category-rules";
 import { isParticipantStatus } from "@/lib/participants/state-machine";
 import { ParticipantFilters } from "@/components/participants/participant-filters";
 import { ParticipantTable } from "@/components/participants/participant-table";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 type ParticipantRow = Tables<"participant">;
 
@@ -51,13 +52,15 @@ export default async function ParticipantsPage({
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-zinc-900">{dict["participants.list.title"]}</h1>
-          {canWrite && (
+          {canWrite ? (
             <Link
               href="/participants/new"
               className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
             >
               {dict["participants.list.createButton"]}
             </Link>
+          ) : (
+            <HandoffCaption actionLabel={dict["participants.list.createButton"]} roles={["ROLE-SYS-ADMIN"]} />
           )}
         </div>
         <ParticipantFilters category={validCategory} status={validStatus} />

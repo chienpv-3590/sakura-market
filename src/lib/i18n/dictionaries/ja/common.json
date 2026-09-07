@@ -23,6 +23,10 @@
   "pipeline.nextActorLabel": "次の担当者",
   "pipeline.noNextActor": "完了しており、次の操作は不要です",
   "pipeline.unknownStatus": "不明な状態",
+  "action.doneByRole": "担当",
+  "breadcrumb.new": "新規作成",
+  "breadcrumb.detail": "詳細",
+  "header.businessDateLabel": "業務日(JST)",
   "term.aitai": "相対取引",
   "term.seri": "せり",
   "term.mekiki": "目利き",
@@ -45,5 +49,6 @@
   "role.ROLE-DELIVERY": "配送担当者",
   "role.ROLE-SETTLEMENT": "精算担当者",
   "role.ROLE-RULE-ADMIN": "奨励金ルール管理者",
-  "role.ROLE-SYS-ADMIN": "システム管理者"
+  "role.ROLE-SYS-ADMIN": "システム管理者",
+  "audit.noChange": "変更なし"
 }

@@ -7,6 +7,7 @@ import { getLocale } from "@/lib/i18n/get-locale";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import type { Database, Tables } from "@/lib/db/types";
 import { TransactionTable } from "@/components/transactions/transaction-table";
+import { HandoffCaption } from "@/components/pipeline/handoff-caption";
 
 const STATUSES = ["draft", "confirmed", "cancelled"] as const;
 
@@ -55,13 +56,15 @@ export default async function TransactionsPage({
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-zinc-900">{dict["transactions.list.title"]}</h1>
-          {canAct && (
+          {canAct ? (
             <Link
               href="/transactions/new"
               className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
             >
               {dict["transactions.list.newLink"]}
             </Link>
+          ) : (
+            <HandoffCaption actionLabel={dict["transactions.list.newLink"]} roles={["ROLE-TRADE"]} />
           )}
         </div>
         <form method="GET" className="flex flex-wrap items-end gap-4">
