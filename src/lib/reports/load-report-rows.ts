@@ -11,6 +11,7 @@ import { loadParticipantEligibilityRows } from "./queries/rpt-03-participant-eli
 import { loadDailyReconciliationRows } from "./queries/rpt-05-daily-reconciliation";
 import { loadAccountingExportRows } from "./queries/rpt-06-accounting-export";
 import { loadIncentiveReportRows } from "./queries/rpt-07-incentive-result";
+import { loadPostLockAdjustmentRows } from "./queries/rpt-08-post-lock-adjustments";
 
 // Keyed by `field.key` (URL query-string param name == form field `name`),
 // same generic contract ReportFilterField/ReportFilterForm already use.
@@ -51,6 +52,8 @@ async function queryAllRows(
       return loadAccountingExportRows(client, filters.businessDate ?? todayJst(), filters.batchCode);
     case "RPT-07":
       return loadIncentiveReportRows(client, filters.period ?? todayJst(), filters.participantId);
+    case "RPT-08":
+      return loadPostLockAdjustmentRows(client, filters.businessDate ?? todayJst(), filters.actorId);
     default:
       // Registry guarantees every non-mock code is one of the cases above --
       // an unhandled real code here means the registry and this dispatcher

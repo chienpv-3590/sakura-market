@@ -99,3 +99,24 @@ export const RPT_06_COLUMNS = [
   { key: "exportedAt", labelKey: "reports.column.exportedAt" },
   { key: "exportedBy", labelKey: "reports.column.exportedBy" },
 ];
+
+// RPT-08 "Log điều chỉnh sau khi lock" (phase-05 §Architecture) -- 15
+// columns, one row per approved `transaction_adjustment`. `evidence_path`
+// and any actor email are deliberately absent (§Security Considerations).
+export const RPT_08_COLUMNS = [
+  { key: "businessDate", labelKey: "reports.column.businessDate" },
+  { key: "txnCode", labelKey: "reports.column.txnCode" },
+  { key: "participant", labelKey: "reports.column.participant" },
+  { key: "correctionId", labelKey: "reports.column.correctionId" },
+  { key: "kind", labelKey: "reports.column.kind" },
+  { key: "qtyDelta", labelKey: "reports.column.qtyDelta" },
+  { key: "unitPriceDelta", labelKey: "reports.column.unitPriceDelta" },
+  { key: "amountDeltaJpy", labelKey: "reports.column.amountDeltaJpy" },
+  { key: "reason", labelKey: "reports.column.reason" },
+  { key: "requestedBy", labelKey: "reports.column.requestedBy" },
+  { key: "approvedBy", labelKey: "reports.column.approvedBy" },
+  { key: "requestedAt", labelKey: "reports.column.requestedAt" },
+  { key: "adjustedAt", labelKey: "reports.column.adjustedAt" },
+  { key: "dayLockedAt", labelKey: "reports.column.dayLockedAt" },
+  { key: "afterLock", labelKey: "reports.column.afterLock" },
+];

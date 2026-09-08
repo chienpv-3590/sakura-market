@@ -6,6 +6,7 @@ import {
   LOT_FILTER,
   TXN_STATUS_FILTER,
   ELIGIBILITY_STATUS_FILTER,
+  ACTOR_FILTER,
 } from "./registry-filters";
 import {
   RPT_01_COLUMNS,
@@ -14,6 +15,7 @@ import {
   RPT_05_COLUMNS,
   RPT_06_COLUMNS,
   RPT_07_COLUMNS,
+  RPT_08_COLUMNS,
 } from "./registry-columns";
 
 export interface ReportColumn {
@@ -48,11 +50,12 @@ const RPT_07_PERIOD_FILTER: ReportFilterField = {
  *
  * RPT-01/05/07 were real from the 10h prototype (phase-09 §"chọn 3 báo cáo
  * chạy thật"); phase-03 adds RPT-06 (= IF-ACC-01, P0), phase-04 adds
- * RPT-02/03 -- 6 real reports total. The remaining 6 carry `isMock: true`,
- * an empty filter/column set, and are declared mock everywhere they render
- * -- never blurred in with the real ones (Risk Assessment: "Báo cáo mock bị
- * hiểu là số thật"). RPT-04/RPT-09 stay mock permanently (no data source --
- * plan.md §Overview), not just until a later phase.
+ * RPT-02/03, phase-05 adds RPT-08 -- 7 real reports total. The remaining 5
+ * carry `isMock: true`, an empty filter/column set, and are declared mock
+ * everywhere they render -- never blurred in with the real ones (Risk
+ * Assessment: "Báo cáo mock bị hiểu là số thật"). RPT-04/RPT-09 stay mock
+ * permanently (no data source -- plan.md §Overview), not just until a
+ * later phase.
  */
 export const REPORT_REGISTRY: ReportDefinition[] = [
   {
@@ -123,9 +126,9 @@ export const REPORT_REGISTRY: ReportDefinition[] = [
     titleKey: "reports.catalog.RPT-08.title",
     frequencyKey: "reports.catalog.RPT-08.frequency",
     filterDescriptionKey: "reports.catalog.RPT-08.filter",
-    isMock: true,
-    filterFields: [],
-    columns: [],
+    isMock: false,
+    filterFields: [BUSINESS_DATE_FILTER, ACTOR_FILTER],
+    columns: RPT_08_COLUMNS,
   },
   {
     code: "RPT-09",
