@@ -1,4 +1,6 @@
 import type { ReportFilterField } from "./report-filter-field";
+import { BUSINESS_DATE_FILTER, PARTICIPANT_FILTER } from "./registry-filters";
+import { RPT_01_COLUMNS, RPT_05_COLUMNS, RPT_07_COLUMNS } from "./registry-columns";
 
 export interface ReportColumn {
   key: string;
@@ -15,45 +17,15 @@ export interface ReportDefinition {
   columns: ReportColumn[];
 }
 
-const BUSINESS_DATE_FILTER: ReportFilterField = {
-  key: "businessDate",
+// RPT-07 is the only report needing a "period" date filter distinct from
+// businessDate -- one report, so it stays inline rather than becoming an
+// 8th shared constant in registry-filters.ts.
+const RPT_07_PERIOD_FILTER: ReportFilterField = {
+  key: "period",
   type: "date",
-  labelKey: "reports.filter.businessDate",
+  labelKey: "reports.filter.period",
   required: true,
 };
-
-const RPT_01_COLUMNS: ReportColumn[] = [
-  { key: "businessDate", labelKey: "reports.column.businessDate" },
-  { key: "sourceType", labelKey: "reports.column.sourceType" },
-  { key: "code", labelKey: "reports.column.code" },
-  { key: "item", labelKey: "reports.column.item" },
-  { key: "participant", labelKey: "reports.column.participant" },
-  { key: "participantCategory", labelKey: "reports.column.participantCategory" },
-  { key: "qty", labelKey: "reports.column.qty" },
-  { key: "unitPrice", labelKey: "reports.column.unitPrice" },
-  { key: "amountJpy", labelKey: "reports.column.amount" },
-  { key: "status", labelKey: "reports.column.status" },
-];
-
-const RPT_05_COLUMNS: ReportColumn[] = [
-  { key: "businessDate", labelKey: "reports.column.businessDate" },
-  { key: "participant", labelKey: "reports.column.participant" },
-  { key: "sourceType", labelKey: "reports.column.sourceType" },
-  { key: "sourceId", labelKey: "reports.column.sourceId" },
-  { key: "qty", labelKey: "reports.column.qty" },
-  { key: "amountJpy", labelKey: "reports.column.amount" },
-  { key: "variance", labelKey: "reports.column.variance" },
-];
-
-const RPT_07_COLUMNS: ReportColumn[] = [
-  { key: "period", labelKey: "reports.column.period" },
-  { key: "participant", labelKey: "reports.column.participant" },
-  { key: "amountJpy", labelKey: "reports.column.amount" },
-  { key: "kind", labelKey: "reports.column.kind" },
-  { key: "ruleVersionNo", labelKey: "reports.column.ruleVersion" },
-  { key: "ruleEffectiveFrom", labelKey: "reports.column.effectiveFrom" },
-  { key: "originPeriod", labelKey: "reports.column.originPeriod" },
-];
 
 /**
  * TBL-REPORT-01, 12 fixed reports -- FR-RPT-03 explicitly forbids a
@@ -126,10 +98,7 @@ export const REPORT_REGISTRY: ReportDefinition[] = [
     frequencyKey: "reports.catalog.RPT-07.frequency",
     filterDescriptionKey: "reports.catalog.RPT-07.filter",
     isMock: false,
-    filterFields: [
-      { key: "period", type: "date", labelKey: "reports.filter.period", required: true },
-      { key: "participantId", type: "select", labelKey: "reports.filter.participant", optionsKey: "participants", required: false },
-    ],
+    filterFields: [RPT_07_PERIOD_FILTER, PARTICIPANT_FILTER],
     columns: RPT_07_COLUMNS,
   },
   {

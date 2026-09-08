@@ -9,11 +9,9 @@ import { loadDailyTransactionRows } from "./queries/rpt-01-daily-transactions";
 import { loadDailyReconciliationRows } from "./queries/rpt-05-daily-reconciliation";
 import { loadIncentiveReportRows } from "./queries/rpt-07-incentive-result";
 
-export interface ReportFilters {
-  businessDate?: string;
-  period?: string;
-  participantId?: string;
-}
+// Keyed by `field.key` (URL query-string param name == form field `name`),
+// same generic contract ReportFilterField/ReportFilterForm already use.
+export type ReportFilters = Record<string, string>;
 
 /** Reads `definition.filterFields` generically -- no per-report branch here. */
 export function parseReportFilters(definition: ReportDefinition, searchParams: URLSearchParams): ReportFilters {
@@ -21,11 +19,12 @@ export function parseReportFilters(definition: ReportDefinition, searchParams: U
   for (const field of definition.filterFields) {
     const raw = searchParams.get(field.key)?.trim();
     if (field.type === "date") {
-      const value = raw && isValidReportDate(raw) ? raw : todayJst();
-      if (field.key === "period") filters.period = value;
-      else filters.businessDate = value;
-    } else if (field.type === "select" && raw) {
-      filters.participantId = raw;
+      filters[field.key] = raw && isValidReportDate(raw) ? raw : todayJst();
+    } else if (field.type === "select") {
+      if (raw) filters[field.key] = raw;
+    } else if (field.type === "text") {
+      const trimmed = raw ? raw.slice(0, field.maxLength) : "";
+      if (trimmed) filters[field.key] = trimmed;
     }
   }
   return filters;

@@ -10,7 +10,8 @@ import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { getReportDefinition } from "@/lib/reports/registry";
 import { loadReportRows, parseReportFilters } from "@/lib/reports/load-report-rows";
 import { REPORT_PAGE_SIZE } from "@/lib/reports/report-page-size";
-import { loadParticipantOptions } from "@/lib/reports/participant-options";
+import { loadFilterOptions } from "@/lib/reports/filter-options";
+import type { ReportFilterOptionsKey } from "@/lib/reports/report-filter-field";
 import { MockDataBadge } from "@/components/reports/mock-data-badge";
 import { ReportFilterForm } from "@/components/reports/report-filter-form";
 import { ReportResultTable } from "@/components/reports/report-result-table";
@@ -46,15 +47,14 @@ export default async function ReportViewerPage({
   const supabase: SupabaseClient<Database> = await createClient();
   const filters = parseReportFilters(definition, urlSearchParams);
   const { rows, total } = await loadReportRows(supabase, definition, filters, { paginate: true, page });
-  const participantOptions = definition.filterFields.some((f) => f.type === "select")
-    ? await loadParticipantOptions(supabase)
-    : [];
 
-  const filterValues: Record<string, string> = {
-    ...(filters.businessDate ? { businessDate: filters.businessDate } : {}),
-    ...(filters.period ? { period: filters.period } : {}),
-    ...(filters.participantId ? { participantId: filters.participantId } : {}),
-  };
+  const selectOptionsKeys: ReportFilterOptionsKey[] = [];
+  for (const field of definition.filterFields) {
+    if (field.type === "select") selectOptionsKeys.push(field.optionsKey);
+  }
+  const filterOptions = await loadFilterOptions(supabase, selectOptionsKeys);
+
+  const filterValues: Record<string, string> = { ...filters };
   const exportHref = `/api/reports/${definition.code}/export.csv?${new URLSearchParams(filterValues).toString()}`;
 
   return (
@@ -98,7 +98,7 @@ export default async function ReportViewerPage({
         <ReportFilterForm
           fields={definition.filterFields}
           values={filterValues}
-          participantOptions={participantOptions}
+          filterOptions={filterOptions}
           dict={dict}
         />
 
