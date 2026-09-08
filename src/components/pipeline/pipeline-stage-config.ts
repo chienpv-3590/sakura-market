@@ -74,6 +74,12 @@ export const PIPELINE_STAGES: readonly PipelineStageDef[] = [
     allowedRoles: ROLES,
   },
   {
+    // Trang thai nay CO trong schema va CO trong luong nghiep vu (FIG-013),
+    // nhung FR-DEL-03 nam ngoai pham vi ban nay nen khong duong code nao set
+    // duoc no. Giu lai trong so do vi bo nhanh di la ve sai luong; nhung
+    // resolveStageValue tra ve kind:"notBuilt" nen no hien nhan "chua dung"
+    // thay vi con so 0 khong bao gio khac duoc. Cung cach xu ly nhu 9 bao cao
+    // mock. Xem docs/pham-vi-va-phan-mock.md.
     id: "deliveries-exception",
     titleKey: "home.stage.deliveriesException.title",
     href: `/deliveries?status=${encodeURIComponent("ngoại lệ")}`,

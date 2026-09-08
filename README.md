@@ -23,12 +23,25 @@ cp .env.example .env.local   # dien 3 khoa tu Supabase Dashboard -> Settings -> 
 npm run dev                  # http://localhost:3000
 ```
 
-Sau khi có `.env.local`, khởi tạo dữ liệu:
+Sau khi có `.env.local`, khởi tạo dữ liệu — **đủ cả ba bước**:
 
 ```bash
-npm run db:push       # ap migration (schema, RLS, trigger) len Supabase
-npm run seed:users    # tao 9 tai khoan demo ben duoi qua Auth Admin API
+npm run db:push       # 1. ap migration (schema, RLS, trigger) len Supabase
+npm run seed:users    # 2. tao 9 tai khoan demo ben duoi qua Auth Admin API
 ```
+
+**3. Nạp dữ liệu nghiệp vụ mẫu** — bước này phải làm tay:
+
+Mở Supabase Dashboard → **SQL Editor**, dán toàn bộ nội dung `supabase/seed.sql`
+rồi chạy. Sẽ có 10 người tham gia, 12 lô hàng, 12 giao dịch, 6 phiếu giao hàng
+và 2 phiên bản biểu suất.
+
+> Vì sao phải làm tay: `supabase db push --include-seed` **im lặng không chạy
+> seed** khi không còn migration nào pending (lỗi CLI đang mở). Nó không báo
+> lỗi, chỉ đơn giản là không nạp gì.
+
+**Bỏ bước 3 thì app vẫn chạy và vẫn đăng nhập được, nhưng mọi danh sách đều
+rỗng.** Đó là triệu chứng của thiếu seed, không phải của phân quyền.
 
 ## Tài khoản demo
 
@@ -55,13 +68,23 @@ duyệt (403).
 **Nhập sai mật khẩu 5 lần liên tiếp sẽ khóa tạm tài khoản 15 phút** — chờ 15
 phút rồi thử lại.
 
-## RLS được thực thi thật — không phải bug
+## RLS được thực thi thật — nhưng chỉ ở khâu GHI
 
-Row Level Security trên mọi bảng nghiệp vụ đọc theo vai trò trong `app_user`.
-Đăng nhập bằng tài khoản **sai vai trò** cho một chức năng sẽ thấy **danh
-sách rỗng**, không phải lỗi — đó là hành vi đúng của RLS, không phải app bị
-hỏng. Ví dụ: `judge@` mở màn giao dịch 相対取引 sẽ không thấy dữ liệu vì
-role không được cấp quyền đọc bảng đó.
+Row Level Security bật trên cả 16 bảng nghiệp vụ, và nó phân quyền theo vai
+trò trong `app_user`. Cần nói chính xác nó chặn cái gì:
+
+- **Đọc: mọi vai trò đang hoạt động đọc được mọi bảng.** Đây là chủ đích —
+  `FR-601` đòi các vai trò khác phải nhìn được ở mức chỉ-đọc. `judge@` mở màn
+  giao dịch 相対取引 **vẫn thấy đủ dữ liệu**, giống hệt `trade@`.
+- **Ghi: chặn theo vai trò.** `intake@` không sửa được `transaction`,
+  `trade@` không tạo được lô hàng. Thử qua API cũng bị Postgres chặn, không
+  chỉ ẩn nút trên giao diện.
+- **Vào trang: chặn ở tầng ứng dụng** bằng `requireRole`, không phải RLS.
+  Vai trò không có quyền mở `/corrections` nhận **404** — cố ý trả 404 thay vì
+  403 để không lộ sự tồn tại của tài nguyên.
+
+**Nếu mọi danh sách đều rỗng thì đó là thiếu bước seed** (bước 3 mục "Chạy
+local"), không phải RLS.
 
 ## Khi gặp lỗi kết nối DB (Resume project)
 

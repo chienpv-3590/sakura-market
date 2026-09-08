@@ -9,7 +9,12 @@ import { listDeliveries } from "@/lib/deliveries/delivery-queries";
 import { DeliveryTable } from "@/components/deliveries/delivery-table";
 import { PageFrame } from "@/components/layout/page-frame";
 
-const STATUSES = ["chờ", "đang giao", "hoàn tất", "ngoại lệ"] as const;
+// "ngoại lệ" bi bo khoi filter co chu dich: schema cho phep trang thai do
+// (FIG-013) nhung FR-DEL-03 -- ghi nhan ngoai le giao hang -- nam ngoai pham
+// vi ban nay, nen KHONG duong code nao set duoc no. Mot filter luon tra ve
+// rong khien nguoi dung khong phan biet duoc "hom nay khong co ngoai le" voi
+// "he thong chua ghi duoc ngoai le". Xem docs/pham-vi-va-phan-mock.md.
+const STATUSES = ["chờ", "đang giao", "hoàn tất"] as const;
 
 // SCR011_DeliveryList (A1, FR-DEL-01) -- ROLE-DELIVERY's landing page.
 export default async function DeliveriesPage({

@@ -12,7 +12,11 @@ import type { PipelineStageDef } from "./pipeline-stage-config";
 export type StageCardValue =
   | { kind: "count"; value: number }
   | { kind: "lock"; locked: boolean }
-  | { kind: "forbidden" };
+  | { kind: "forbidden" }
+  // Chang co that trong nghiep vu nhung ban nay chua dung duoc.
+  // Khac han "dem ra 0": 0 nghia la hom nay khong co, notBuilt
+  // nghia la he thong khong ghi duoc.
+  | { kind: "notBuilt" };
 
 /**
  * Resolves one dashboard card's real value.
@@ -52,7 +56,9 @@ export async function resolvePipelineStageValue(
     case "deliveries-in-progress":
       return { kind: "count", value: await countDeliveriesByStatus(client, "đang giao") };
     case "deliveries-exception":
-      return { kind: "count", value: await countDeliveriesByStatus(client, "ngoại lệ") };
+      // Khong goi countDeliveriesByStatus: FR-DEL-03 ngoai pham vi, khong
+      // duong nao set status="ngoại lệ", nen con dem se vinh vien la 0.
+      return { kind: "notBuilt" };
     case "business-day-lock": {
       const status = await loadLockStatus(client, todayBusinessDate);
       return { kind: "lock", locked: status.locked };

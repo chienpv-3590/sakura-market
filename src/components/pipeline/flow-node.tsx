@@ -77,7 +77,19 @@ export function FlowNode({
   );
 
   const figure =
-    value.kind === "forbidden" ? (
+    value.kind === "notBuilt" ? (
+      <>
+        <span className="cds-flow__figrow">
+          {chip}
+          <span className="cds-statcard__val" aria-label={t("home.stage.notBuiltTooltip")}>
+            —
+          </span>
+        </span>
+        <span className="cds-field__msg cds-field__msg--hint">
+          {t("home.stage.notBuiltCaption")}
+        </span>
+      </>
+    ) : value.kind === "forbidden" ? (
       <>
         <span className="cds-flow__figrow">
           {chip}
@@ -109,6 +121,18 @@ export function FlowNode({
         <span className="cds-statcard__val">{value.value}</span>
       </span>
     );
+
+  if (value.kind === "notBuilt") {
+    // Khong boc <Link>: bam vao chi dan toi mot danh sach vinh vien rong.
+    return (
+      <div className={`${className} cds-statcard--muted`} title={t("home.stage.notBuiltTooltip")}>
+        {roleWord}
+        {head}
+        {figure}
+        {note}
+      </div>
+    );
+  }
 
   if (value.kind === "forbidden") {
     const roleNames = allowedRoles.map((r) => t(`role.${r}`)).join(", ");
