@@ -37,3 +37,27 @@ export const RPT_07_COLUMNS = [
   { key: "ruleEffectiveFrom", labelKey: "reports.column.effectiveFrom" },
   { key: "originPeriod", labelKey: "reports.column.originPeriod" },
 ];
+
+// RPT-06 / IF-ACC-01 (phase-03 §Architecture) -- 13 columns, fixed order.
+// `batchCode`/`businessDate`/`exportedAt`/`exportedBy` cover RFP §08-05's 4
+// provenance fields; `businessDate`/`participantId`+`participantName`/
+// `netAmountJpy`/`taxJpy`/`status`/`batchCode` cover §08-03's 6 minimum
+// fields (businessDate and batchCode are shared by both sections, not
+// duplicated columns). The remaining 4 columns (participantCategory,
+// grossAmountJpy, adjustmentAmountJpy, totalWithTaxJpy) are reconciliation
+// aids, not RFP-mandated.
+export const RPT_06_COLUMNS = [
+  { key: "batchCode", labelKey: "reports.column.batchCode" },
+  { key: "businessDate", labelKey: "reports.column.businessDate" },
+  { key: "participantId", labelKey: "reports.column.participantId" },
+  { key: "participantName", labelKey: "reports.column.participantName" },
+  { key: "participantCategory", labelKey: "reports.column.participantCategory" },
+  { key: "grossAmountJpy", labelKey: "reports.column.grossAmount" },
+  { key: "adjustmentAmountJpy", labelKey: "reports.column.adjustmentAmount" },
+  { key: "netAmountJpy", labelKey: "reports.column.netAmount" },
+  { key: "taxJpy", labelKey: "reports.column.tax" },
+  { key: "totalWithTaxJpy", labelKey: "reports.column.totalWithTax" },
+  { key: "status", labelKey: "reports.column.status" },
+  { key: "exportedAt", labelKey: "reports.column.exportedAt" },
+  { key: "exportedBy", labelKey: "reports.column.exportedBy" },
+];

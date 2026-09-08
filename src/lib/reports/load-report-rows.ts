@@ -7,6 +7,7 @@ import { isValidReportDate } from "./is-valid-report-date";
 import { REPORT_PAGE_SIZE } from "./report-page-size";
 import { loadDailyTransactionRows } from "./queries/rpt-01-daily-transactions";
 import { loadDailyReconciliationRows } from "./queries/rpt-05-daily-reconciliation";
+import { loadAccountingExportRows } from "./queries/rpt-06-accounting-export";
 import { loadIncentiveReportRows } from "./queries/rpt-07-incentive-result";
 
 // Keyed by `field.key` (URL query-string param name == form field `name`),
@@ -40,6 +41,8 @@ async function queryAllRows(
       return loadDailyTransactionRows(client, filters.businessDate ?? todayJst());
     case "RPT-05":
       return loadDailyReconciliationRows(client, filters.businessDate ?? todayJst());
+    case "RPT-06":
+      return loadAccountingExportRows(client, filters.businessDate ?? todayJst(), filters.batchCode);
     case "RPT-07":
       return loadIncentiveReportRows(client, filters.period ?? todayJst(), filters.participantId);
     default:

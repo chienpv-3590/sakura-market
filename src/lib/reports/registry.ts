@@ -1,6 +1,6 @@
 import type { ReportFilterField } from "./report-filter-field";
-import { BUSINESS_DATE_FILTER, PARTICIPANT_FILTER } from "./registry-filters";
-import { RPT_01_COLUMNS, RPT_05_COLUMNS, RPT_07_COLUMNS } from "./registry-columns";
+import { BUSINESS_DATE_FILTER, PARTICIPANT_FILTER, BATCH_CODE_FILTER } from "./registry-filters";
+import { RPT_01_COLUMNS, RPT_05_COLUMNS, RPT_06_COLUMNS, RPT_07_COLUMNS } from "./registry-columns";
 
 export interface ReportColumn {
   key: string;
@@ -32,10 +32,11 @@ const RPT_07_PERIOD_FILTER: ReportFilterField = {
  * self-service report builder, so this list IS the entire catalog surface;
  * nothing lets a caller add a 13th report or a different filter shape.
  *
- * Only RPT-01/05/07 are real in this 10h prototype (phase-09 §"chọn 3 báo
- * cáo chạy thật"); the other 9 carry `isMock: true`, an empty filter/column
- * set, and are declared mock everywhere they render -- never blurred in
- * with the 3 real ones (Risk Assessment: "Báo cáo mock bị hiểu là số thật").
+ * RPT-01/05/07 were real from the 10h prototype (phase-09 §"chọn 3 báo cáo
+ * chạy thật"); phase-03 adds RPT-06 (= IF-ACC-01, P0) as the 4th. The
+ * remaining 8 carry `isMock: true`, an empty filter/column set, and are
+ * declared mock everywhere they render -- never blurred in with the real
+ * ones (Risk Assessment: "Báo cáo mock bị hiểu là số thật").
  */
 export const REPORT_REGISTRY: ReportDefinition[] = [
   {
@@ -88,9 +89,9 @@ export const REPORT_REGISTRY: ReportDefinition[] = [
     titleKey: "reports.catalog.RPT-06.title",
     frequencyKey: "reports.catalog.RPT-06.frequency",
     filterDescriptionKey: "reports.catalog.RPT-06.filter",
-    isMock: true,
-    filterFields: [],
-    columns: [],
+    isMock: false,
+    filterFields: [BUSINESS_DATE_FILTER, BATCH_CODE_FILTER],
+    columns: RPT_06_COLUMNS,
   },
   {
     code: "RPT-07",

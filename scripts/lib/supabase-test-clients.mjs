@@ -6,6 +6,8 @@
 // already uses (seed-demo-users.mjs), just not copy-pasted a third time.
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync, existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 
 function parseEnvFile(filePath) {
   const values = {};
@@ -40,4 +42,53 @@ export async function signInAs(url, publishableKey, email) {
   const { data, error } = await client.auth.signInWithPassword({ email, password });
   if (error || !data.user) throw new Error(`sign-in failed for ${email}: ${error?.message}`);
   return { client, userId: data.user.id };
+}
+
+/** One pass/fail counter + logger shared by every check across a verify script's own functions. */
+export function createChecker() {
+  let failures = 0;
+  function check(cond, passMsg, failMsg) {
+    if (cond) console.log(`OK    ${passMsg}`);
+    else {
+      failures += 1;
+      console.error(`FAIL  ${failMsg}`);
+    }
+  }
+  return {
+    check,
+    get failures() {
+      return failures;
+    },
+  };
+}
+
+/** Signs in via the APP's own /api/auth/sign-in (not raw Supabase Auth) -- returns the session's Cookie header, for scripts that exercise Route Handlers over real HTTP. */
+export async function signInHttp(baseUrl, email, password = process.env.SEED_DEMO_PASSWORD ?? "SakuraDemo@2026") {
+  const res = await fetch(`${baseUrl}/api/auth/sign-in`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (res.status !== 200) throw new Error(`sign-in ${email} failed: ${res.status}`);
+  const setCookies = typeof res.headers.getSetCookie === "function" ? res.headers.getSetCookie() : [];
+  return setCookies.map((c) => c.split(";")[0]).join("; ");
+}
+
+const DICT_NAMESPACES = [
+  "common", "nav", "participants", "lots", "transactions",
+  "deliveries", "reconciliation", "corrections", "incentive", "reports",
+];
+
+/** vi/ja dictionary key-set parity across all 10 namespaces (phase-01 §Success Criteria #4) -- reused by every later phase's own verify script instead of re-copying the namespace list. */
+export function verifyDictionaryParity(check) {
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "src", "lib", "i18n", "dictionaries");
+  for (const ns of DICT_NAMESPACES) {
+    const vi = Object.keys(JSON.parse(readFileSync(path.join(root, "vi", `${ns}.json`), "utf8"))).sort();
+    const ja = Object.keys(JSON.parse(readFileSync(path.join(root, "ja", `${ns}.json`), "utf8"))).sort();
+    check(
+      vi.length === ja.length && vi.every((k, i) => k === ja[i]),
+      `${ns}.json vi/ja key parity (${vi.length} keys)`,
+      `${ns}.json vi/ja key mismatch`,
+    );
+  }
 }
