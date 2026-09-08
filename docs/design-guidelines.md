@@ -4,13 +4,20 @@ Internal operations tool for a Japanese fisheries wholesale market. Used on a ma
 at 02:00. **Legibility beats decoration.** No animation, no gradients, no decorative icons.
 Adequate contrast, generous hit targets, unambiguous state.
 
-> **§1–§4 are stale and describe a layer that no longer ships.** They document the
-> hand-authored `sm-*` classes and `src/styles/design-tokens.css`, both replaced by the
-> vendored cds-* design system (`src/styles/cds-tokens.css` — 172 tokens, adopted verbatim —
-> plus `src/styles/cds-components.css`). Every value in those tables is from the old palette
-> and is wrong for the code as it stands; `--border-default` in particular is `#D2D7DE`
-> (1.45:1 on card), **not** the 3.48:1 the table claims. Read `src/styles/cds-tokens.css` for
-> values and §9 for the surface rules that are current. Reconciling §1–§4 is outstanding work.
+> **§1–§4 are stale in full, not just the one example below, and describe a layer that no
+> longer ships.** Verified against the code (2026-09-08): `design-tokens.css`, `theme.css`,
+> `components.css` and `controls.css` (§1's file table) **do not exist** — 4 of the 5 files
+> named there were deleted; only `globals.css` remains, and it imports a completely different
+> set (`cds-tokens.css`, `cds-components.css`, ten `cds-app-*.css` files). §2's ~15 hex values
+> are **all wrong** — every one differs from the real `cds-tokens.css` (`--border-default` in
+> particular is `#D2D7DE`, 1.45:1 on card, not the 3.48:1 the table claims). §4's 12 `.sm-*`
+> classes have **zero usages** anywhere in `src/` — the whole class layer was retired, not
+> just renamed. The one part still worth reading as-is: §3's semantic **mapping** (which state
+> maps to which tone) still matches `src/components/ui/status-tone.ts` exactly; only its hex
+> values are superseded by the real palette. Read `src/styles/cds-tokens.css` for current
+> values (172 tokens, adopted verbatim) and §9–§10 below for the surface rules that are
+> current. Reconciling §1–§4 into a correct description of the cds-* system is outstanding
+> work — nothing in §1/§2/§4 should be relied on to write code today.
 
 ---
 

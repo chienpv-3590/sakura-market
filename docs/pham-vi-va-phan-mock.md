@@ -1,9 +1,17 @@
 # Phạm vi bản chốt và phần mock — Sakura Market (LAB-3)
 
-Tài liệu này là bản chốt cuối của deliverable #4: 20 màn đã dựng, 12 màn để
+Tài liệu này là bản chốt của deliverable #4: 20 màn đã dựng, 12 màn để
 ngoài phạm vi, phần nào đang mock, và các quyết định kỹ thuật phát sinh khi
 thi công khác với thiết kế gốc. Nguồn: `plan.md`, `spec/feature-list.md`,
 `supabase/migrations/`, và mã nguồn `src/`.
+
+**Cập nhật 2026-09-08 (P0 kế toán):** `IF-ACC-01`/`FN-11`/`FE-037` — khoảng
+trống P0 nặng nhất theo cả ba audit ngày 2026-09-07 — nay **đã dựng thật**
+(`RPT-06`). Báo cáo thật tăng từ 3/12 lên **7/12**. Mục 2b khai lại toàn bộ
+khoảng trống còn lại **theo ID yêu cầu RFP**, không chỉ theo tên màn — đúng
+lỗi truy vết mà audit đã bắt (RFP §13-01 liệt "không truy vết được yêu cầu
+theo ID" là hạng mục loại thẳng đề xuất). Giả định phát sinh khi dựng kế toán
+nằm ở [`docs/gia-dinh-tich-hop-ke-toan.md`](./gia-dinh-tich-hop-ke-toan.md).
 
 ## 1. 20 màn đã dựng (SCR001..SCR020), theo 11 feature F001..F011
 
@@ -39,18 +47,42 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
 
 | Màn LAB-1 | Tên | Lý do để ngoài phạm vi |
 |---|---|---|
-| SC-02 | Xác thực MFA | Supabase Auth có sẵn MFA nhưng bật lên làm tài khoản demo khó dùng cho reviewer LAB-7 |
-| SC-03, SC-04 | Quản lý tài khoản và lịch sử quyền | Tài khoản demo cố định, không cần màn quản trị |
-| SC-07 | Cảnh báo hiệu lực sắp hết hạn | P1, phái sinh từ F002, không thêm hiểu biết nghiệp vụ mới |
-| SC-17 | Ghi nhận ngoại lệ giao hàng | P1, biến thể của F006 |
-| SC-19 | Quản lý tranh chấp | P1, nhánh riêng của F007 |
-| SC-27 | Batch xuất kế toán | Cần hệ thống kế toán đối tác — không mô phỏng thật được |
-| SC-28, SC-29 | Thông báo và cấu hình | P1, cần hạ tầng email/queue ngoài phạm vi 10h |
-| SC-30 | Tra cứu audit log | Audit **có ghi** ở F011; chỉ bỏ màn tra cứu và ngưỡng p95 ≤ 2s |
-| SC-31 | Quản lý file đính kèm | F003 (chứng từ tiếp nhận) và F008 (bằng chứng điều chỉnh) đều có upload + đọc lại qua signed URL thật (xem QĐ-6); màn **quản lý** riêng — liệt kê/xóa mọi file theo policy lưu trữ 7 năm/3 năm của `TBL-ATTACH-01` — vẫn ngoài phạm vi |
-| SC-32 | Trạng thái vận hành suy giảm | Cần offline queue — không khả thi trong prototype |
+| SC-02 | Xác thực MFA | **Hoãn có chủ đích cho một yêu cầu P0** — xem mục 2b (`FE-002`/`NFR-SEC-01`) |
+| SC-03, SC-04 | Quản lý tài khoản và lịch sử quyền | **Hoãn có chủ đích, cùng quyết định với MFA** — xem mục 2b (`FE-003`/`FR-IAM-02`) |
+| SC-07 | Cảnh báo hiệu lực sắp hết hạn | P1, phái sinh từ F002 — xem mục 2b (`FR-PARTY-03`) |
+| SC-17 | Ghi nhận ngoại lệ giao hàng | P1, biến thể của F006 — xem mục 2b (`FR-DEL-03`) |
+| SC-19 | Quản lý tranh chấp | P1, nhánh riêng của F007 — xem mục 2b (`FR-SETTLE-03`) |
+| SC-27 | Batch xuất kế toán | **Đã dựng** — dùng chung màn báo cáo (`RPT-06`), xem mục 2b (`FN-11`/`FE-037`/`IF-ACC-01`) |
+| SC-28, SC-29 | Thông báo và cấu hình | P1, cần hạ tầng email/queue ngoài phạm vi 10h — xem mục 2b (`FR-NOTIFY-01..03`) |
+| SC-30 | Tra cứu audit log | Audit **có ghi** ở F011; chỉ bỏ màn tra cứu — xem mục 2b (`FR-AUDIT-02`) |
+| SC-31 | Quản lý file đính kèm | F003/F008 đã có upload + đọc lại thật (QĐ-6); màn **quản lý** theo policy lưu trữ riêng vẫn ngoài phạm vi — xem mục 2b (`TBL-ATTACH-01`/`DR-RET-01`) |
+| SC-32 | Trạng thái vận hành suy giảm | Cần offline queue — xem mục 2b (`NFR-AVL-02`) |
 
-(32 màn LAB-1 − 20 màn trong phạm vi = 12 màn ở trên.)
+(32 màn LAB-1 − 20 màn trong phạm vi = 12 màn ở trên. `SC-27` vẫn liệt ở đây
+vì không có màn riêng — chức năng của nó chạy trong `SC-26`.)
+
+## 2b. Khai theo ID yêu cầu RFP — không chỉ theo tên màn
+
+Bảng 12 màn ở trên khai đúng nhưng khai theo tên màn hình; một khách hàng cầm
+bảng ID yêu cầu gốc dò từng dòng sẽ không thấy `FR-SETTLE-03`, `FR-AUDIT-02`…
+được gọi tên. Bảng dưới đây khai lại toàn bộ khoảng trống P0/P1 còn lại
+**theo ID**, cộng cả `IF-ACC-01` (đã dựng) và `GOV-RULE-01` (chưa từng được
+nhắc ở đâu trước bản này).
+
+| ID yêu cầu | Màn / vị trí | Trạng thái | Phụ thuộc thiếu / lý do |
+|---|---|---|---|
+| `FN-11` / `FE-037` / `IF-ACC-01` (P0) | SC-27 (= `RPT-06`) | **ĐÃ DỰNG** | `registry.ts` `isMock:false`; bảng `accounting_export_batch` thật; nút tạo batch trên màn báo cáo gọi `POST /api/accounting/export-batches` |
+| `FE-002` / `NFR-SEC-01` (P0, MFA) | SC-02 | **HOÃN CÓ CHỦ ĐÍCH** | Bật MFA làm 9 tài khoản demo dùng chung một mật khẩu không trình bày được; Supabase Auth có sẵn MFA, chỉ chưa bật; sẽ bật trước khi lên production |
+| `FE-003` / `FR-IAM-02` (P0, quản trị tài khoản) | SC-03, SC-04 | **HOÃN CÓ CHỦ ĐÍCH** | Cùng quyết định với MFA — tài khoản demo cố định qua `seed:users`, không qua màn quản trị riêng |
+| `FE-004` / `NFR-SEC-03` (P0, session) | — | **MỘT PHẦN** | Khóa 5 lần sai/15 phút có thật (`lockout.ts`); session timeout đang **tắt** (`supabase/config.toml` khối `[auth.sessions]` bị comment); log hành vi bất thường chỉ có `login_failed`/`login_locked` |
+| `RPT-04` / `FR-DEL-03` | SC-17 | **KHÔNG DỰNG ĐƯỢC** | Xem mục 3 "RPT-04 và RPT-09" — không đường ghi nào đặt được `delivery.status='ngoại lệ'`, không cột `reason` |
+| `RPT-09` / `FR-SETTLE-03` | SC-19 | **KHÔNG DỰNG ĐƯỢC** | Xem mục 3 — không bảng tranh chấp, không SLA, không gì để đếm |
+| `FR-AUDIT-02` (P1, tra cứu audit) | SC-30 | **NGOÀI PHẠM VI** | Audit có ghi (331 dòng sống, kiểm 2026-09-08); chỉ thiếu UI tìm theo ID giao dịch/ngày/người tham gia/loại thao tác |
+| `FR-PARTY-03` (P1, cảnh báo hết hạn) | SC-07 | **NGOÀI PHẠM VI** | `RPT-03` tính được "sắp mất hiệu lực" (ngưỡng 30 ngày, xem giả định #5 ở `gia-dinh-tich-hop-ke-toan.md`) nhưng không có màn cảnh báo chủ động riêng |
+| `FR-NOTIFY-01..03` (P1, thông báo) | SC-28, SC-29 | **NGOÀI PHẠM VI** | Cần hạ tầng email/queue ngoài phạm vi 11h |
+| `TBL-ATTACH-01` / `DR-RET-01` (lưu trữ đính kèm) | SC-31 | **NGOÀI PHẠM VI** | Upload/đọc lại thật đã có (F003, F008); màn quản lý theo policy 7 năm/3 năm riêng thì chưa |
+| `NFR-AVL-02` (vận hành suy giảm) | SC-32 | **NGOÀI PHẠM VI** | Cần offline queue — không khả thi trong prototype |
+| `GOV-RULE-01` §trần 4 lần đổi rule/năm | — (thuộc F009) | **KHÔNG KIỂM TRA** | `create-rule-version.ts` không đếm số version tạo trong năm hiện tại, không chặn lần thứ 5 |
 
 ## 3. Phần mock — khai rõ, không lẫn với phần thật
 
@@ -62,12 +94,47 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
   `eligible_amount_jpy` và `paid_on_time` mà không spec nào cấp nguồn cho
   chúng. Xem chú thích `MOCK` ngay trong migration
   `supabase/migrations/20260904090700_incentive.sql`.
-- **9/12 báo cáo chưa được dựng.** Chỉ `RPT-01`, `RPT-05`, `RPT-07` chạy
-  thật (đọc Postgres, xuất CSV thật). Chín báo cáo còn lại
-  (`RPT-02, 03, 04, 06, 08, 09, 10, 11, 12`) được khai `isMock: true` trong
-  `src/lib/reports/registry.ts`, hiển thị nhãn mock trên UI, và endpoint
-  `export.csv` của chúng trả **403 `MOCK_REPORT`** trước khi chạy bất kỳ
-  truy vấn nào — không để một tập dữ liệu mẫu giả làm bản xuất thật.
+- **7/12 báo cáo chạy thật, 5/12 còn mock.** `RPT-01, 02, 03, 05, 06, 07, 08`
+  đọc Postgres và xuất CSV thật (`isMock: false` trong
+  `src/lib/reports/registry.ts`). `RPT-04, 09, 10, 11, 12` còn `isMock: true`
+  (`filterFields`/`columns` rỗng), hiển thị nhãn mock trên UI, và endpoint
+  `export.csv` của chúng trả **403 `MOCK_REPORT`** trước khi chạy bất kỳ truy
+  vấn nào — không để một tập dữ liệu mẫu giả làm bản xuất thật. `RPT-10,
+  11, 12` (báo cáo tháng, thay đổi rule) mock vì hết ngân sách vòng này,
+  không phải vì thiếu nguồn dữ liệu — ứng viên rẻ nhất cho vòng sau
+  (`plan.md` §Next Steps). `RPT-04` và `RPT-09` khác hẳn: xem ngay dưới đây.
+- **`RPT-04` và `RPT-09` không dựng được — vì thiếu nguồn dữ liệu, không
+  phải thiếu giờ.** `RPT-04` (Giao hàng ùn tắc và ngoại lệ giao hàng) phụ
+  thuộc `FR-DEL-03`/`SC-17` (ngoài phạm vi): CHECK trên `delivery.status`
+  cho phép `'ngoại lệ'` (`supabase/migrations/20260904090400_delivery.sql:10`)
+  nhưng **không một đường ghi nào** trong `src/lib/deliveries/` hay
+  `src/app/api/deliveries/` đặt được giá trị đó, và `delivery`/
+  `delivery_shipment` không có cột `reason`. `RPT-09` (Tổng hợp tranh chấp
+  và SLA xử lý) phụ thuộc `FR-SETTLE-03`/`SC-19` (ngoài phạm vi): không bảng
+  tranh chấp, không trạng thái tranh chấp, không mốc SLA nào tồn tại trong
+  migrations — không có gì để đếm.
+  **Phương án nửa vời đã cân rồi bỏ:** nửa "ùn tắc" của `RPT-04` dựng được
+  về mặt dữ liệu (`transaction.qty` trừ tổng `delivery_shipment.qty`), nhưng
+  cột `variance` của `RPT-05` (`reconciliation_line`, xem
+  `supabase/migrations/20260904090800_reconciliation_view.sql:20`) đã hiển
+  thị đúng con số đó cho `source_type='aitai'`. Dựng thêm một báo cáo mang
+  đúng mã và tiêu đề RFP nhưng chỉ làm được nửa việc sẽ mời khách hiểu nhầm
+  nửa báo cáo là báo cáo đủ — vi phạm DRY và đúng loại lỗi niềm tin audit đã
+  bắt ở trạng thái "ngoại lệ" hiển thị trên UI mà backend không tạo ra được.
+  Quyết định: giữ cả hai declared-out, không dựng nửa vời.
+- **`accounting_export_batch` — bảng mới cho `IF-ACC-01`, append-only,
+  không trigger khóa ngày.** RFP §08-03/§08-05 đòi batch code, ngày nghiệp
+  vụ, người tham gia, tổng tiền, thuế và trạng thái — không bảng nào sẵn có
+  để lưu. Bảng này chứa snapshot bất biến của đúng các dòng đã gửi (cột
+  `lines` jsonb), không có policy update/delete (giống `audit_log`/
+  `lot_attachment`). Không mang trigger khóa ngày (QĐ-3 mở rộng): 4 bảng bị
+  khóa (`transaction`, `seri_result`, `mekiki_record`, `delivery_shipment`)
+  là dữ liệu **vào** một ngày nghiệp vụ; bảng này là một bản ghi **về** một
+  ngày đã khóa — nó phải ghi được ngay cả khi ngày đó đã lock, vì lock chính
+  là điều kiện để export (`createExportBatch` từ chối 409 `DAY_NOT_LOCKED`
+  nếu ngày chưa lock). Kiểm sống 2026-09-08: bảng tồn tại trên project
+  `esgqneojskshvidhivgv`, hiện **0 batch** — chưa ai xuất lần nào trong môi
+  trường demo.
 - **Không có test tự động nào trong repo** — đây là miễn trừ đã ghi vết ở
   `plan.md` (mục "Quyết định: không cài test runner cho LAB-3"), không phải
   thiếu sót bỏ quên. Lý do: đề không chấm điểm test, ngân sách 10h đã căng
@@ -105,8 +172,12 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
 - **Ngoài phạm vi hoàn toàn**: MFA, các màn quản lý tài khoản/quyền, thông
   báo (notification), tra cứu audit log, **màn quản lý file đính kèm**
   (SC-31 — liệt kê/xóa theo policy lưu trữ, không phải việc upload/đọc lại
-  bản thân file, đã thật từ QĐ-6), và chế độ vận hành suy giảm khi mất kết
-  nối (degraded-offline mode).
+  bản thân file, đã thật từ QĐ-6), chế độ vận hành suy giảm khi mất kết nối
+  (degraded-offline mode), và toàn bộ nhóm NFR đo lường vận hành —
+  `NFR-AVL-01/02/03` (khả dụng, liên tục, DR), `NFR-PERF-01/02` (hiệu năng),
+  `NFR-OPS-01` (giám sát), `NFR-COMP-01` (ma trận tương thích), accessibility
+  (§09-05) — không test, không ngưỡng cấu hình, không log giám sát nào cho
+  các mục này trong prototype 11h.
 - **`TBL-ATTACH-01`'s lưu trữ 7 năm (phiếu tiếp nhận) / 3 năm rồi cold
   archive (ảnh/chứng từ phụ trợ) là policy vận hành, không phải thứ
   prototype này triển khai.** Không có lifecycle rule, không có job dọn/di
@@ -173,6 +244,23 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
   `lot_attachment` sau đó lỗi, route tự xóa lại object vừa upload
   (`attach-intake-doc.ts`) thay vì để lại object mồ côi không có dòng DB nào
   trỏ tới. Xem `supabase/migrations/20260907090000_lot_attachment.sql`.
+- **QĐ-7 — thuế suất/cơ sở tính thuế là một hằng số ở tầng ứng dụng, không
+  phải cột trên `transaction`.** Giả định, chưa chốt với khách — chi tiết
+  đầy đủ (ảnh hưởng nếu sai, chi phí đổi) ở mục 1 của
+  [`gia-dinh-tich-hop-ke-toan.md`](./gia-dinh-tich-hop-ke-toan.md). Xem
+  `src/lib/accounting/tax.ts`.
+- **QĐ-8 — batch code mới mỗi lần xuất, không unique theo ngày.** Giả định,
+  chưa chốt với khách — câu hỏi thật là hệ thống nhận **thay thế** hay
+  **cộng dồn** theo batch code. Chi tiết ở mục 2 của
+  [`gia-dinh-tich-hop-ke-toan.md`](./gia-dinh-tich-hop-ke-toan.md). Xem
+  `src/lib/accounting/batch-code.ts`.
+- **QĐ-9 — không có cột mã người tham gia riêng cho phía kế toán.** Giả
+  định, chưa chốt với khách — chi tiết ở mục 3 của
+  [`gia-dinh-tich-hop-ke-toan.md`](./gia-dinh-tich-hop-ke-toan.md).
+- **QĐ-10 — kết nối là tải CSV thủ công, không SFTP/API/lịch chạy.** Giả
+  định, chưa chốt với khách — RFP §08-03 để ngỏ, hẹn buổi làm việc riêng.
+  Chi tiết ở mục 4 của
+  [`gia-dinh-tich-hop-ke-toan.md`](./gia-dinh-tich-hop-ke-toan.md).
 
 ## 5. Bằng chứng đã kiểm (verify trên database đang sống, không phải mock)
 
@@ -210,3 +298,30 @@ Chép nguyên từ `spec/feature-list.md` mục "Ngoài phạm vi LAB-3", không
   `keyboard-operable-form.tsx` phải loại trừ `input[type=file]` khỏi hành vi
   "Enter luôn submit": nếu không, `Enter` trên ô file sẽ bị `preventDefault`
   cướp mất trước khi trình duyệt kịp mở picker.
+- **IF-ACC-01, kiểm sống 2026-09-08**: bảng `accounting_export_batch` tồn
+  tại trên project `esgqneojskshvidhivgv` (0 batch — chưa ai export trong
+  môi trường demo). Cùng lúc: `audit_log` có **331 dòng** so với **31 dòng**
+  nghiệp vụ cốt lõi cộng dồn trên 4 bảng bị khóa (`transaction`=12,
+  `seri_result`=2, `delivery_shipment`=7, `mekiki_record`=10) — tỷ lệ
+  audit/nghiệp vụ ~10,7:1, cơ sở cho nhận định "OBJ-03 có cơ chế chắc nhất"
+  ở mục 6, nhưng đây vẫn chỉ là số suy ra bằng tay, không phải % app tự tính.
+
+## 6. Mục tiêu KPI đối khách — cơ chế đã có, con số nào chưa đo
+
+RFP §13-07 `ACC-03`: *"mỗi NFR phải kèm báo cáo test thực tế hoặc bằng chứng
+vận hành — không chấp nhận cam kết chỉ bằng lời."* Bảng dưới tách rõ hai cột
+để không ai đọc nhầm "có cơ chế" thành "đã đạt chỉ tiêu".
+
+| Mục tiêu | Baseline → Target | Cơ chế trong prototype | App tự đo? |
+|---|---|---|---|
+| `OBJ-01` giảm nhập lại | 2,4 → ≤1,2 lần/giao dịch | 1 mã lô + 1 mã giao dịch xuyên suốt mekiki/aitai/seri giảm nhập lại một phần; `IF-ACC-01` nay thay được phần nhập lại thủ công sang kế toán | **Không** |
+| `OBJ-02` rút ngắn tra cứu | 15–30′ → ≤2′ | Audit ghi đầy đủ; **không** có màn tra cứu (`FR-AUDIT-02`/SC-30 ngoài phạm vi) | **Không** |
+| `OBJ-03` tăng audit trail | 35% → ≥98% | `writeAuditLog()` gọi tại mọi thao tác nhạy cảm (đọc code xác nhận); sống 2026-09-08: `audit_log` 331 dòng vs 31 dòng nghiệp vụ cốt lõi | **Không** — tỷ lệ suy bằng tay, không dashboard % |
+| `OBJ-04` rút ngắn báo cáo ngày | 90′ → ≤15′; batch xong trước 11:00 JST | Báo cáo tính on-demand từ query, không phải batch theo lịch; `POST /api/accounting/export-batches` chạy khi `ROLE-SETTLEMENT` bấm nút trên UI, không cron | **Không** — không SLA giờ nào được enforce |
+| `OBJ-05` giảm chênh lệch đối chiếu | 1,8% → ≤0,3% | `reconciliation_line.variance` tính qty đặt trừ qty giao lũy kế theo dòng `aitai`; `IF-ACC-01` hợp nhất thêm nguồn kế toán | **Không** — variance là số per-row, không phải % tổng hợp |
+
+**Không KPI nào trong 5 mục được app tự tính ra một con số %.** Cơ chế nền có
+ở các mức khác nhau (`OBJ-03` chắc nhất — audit ghi rất đầy đủ, kiểm chứng
+được bằng code + DB sống; `OBJ-01/02/04/05` chỉ có một phần cơ chế), nhưng
+không mục nào có dashboard hay counter tính % — mọi con số trong bảng KPI
+gốc là mục tiêu hợp đồng, không phải số hệ thống đang hiển thị.
