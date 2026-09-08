@@ -38,6 +38,44 @@ export const RPT_07_COLUMNS = [
   { key: "originPeriod", labelKey: "reports.column.originPeriod" },
 ];
 
+// RPT-02 "Lịch sử lô hàng và log trạng thái giao dịch" (phase-04
+// §Architecture) -- 15 columns, one row per transaction/seri_result event.
+export const RPT_02_COLUMNS = [
+  { key: "lotCode", labelKey: "reports.column.lotCode" },
+  { key: "item", labelKey: "reports.column.item" },
+  { key: "lotStatus", labelKey: "reports.column.lotStatus" },
+  { key: "businessDate", labelKey: "reports.column.businessDate" },
+  { key: "mekikiGrade", labelKey: "reports.column.mekikiGrade" },
+  { key: "eventType", labelKey: "reports.column.eventType" },
+  { key: "txnCode", labelKey: "reports.column.txnCode" },
+  { key: "participant", labelKey: "reports.column.participant" },
+  { key: "qty", labelKey: "reports.column.qty" },
+  { key: "unitPrice", labelKey: "reports.column.unitPrice" },
+  { key: "amountJpy", labelKey: "reports.column.amount" },
+  { key: "txnStatus", labelKey: "reports.column.txnStatus" },
+  { key: "eventAt", labelKey: "reports.column.eventAt" },
+  { key: "actor", labelKey: "reports.column.actor" },
+  { key: "reason", labelKey: "reports.column.reason" },
+];
+
+// RPT-03 "Danh sách người tham gia đã hoặc sắp mất hiệu lực" (phase-04
+// §Architecture) -- 13 columns, one row per participant.
+export const RPT_03_COLUMNS = [
+  { key: "participantId", labelKey: "reports.column.participantId" },
+  { key: "participantName", labelKey: "reports.column.participantName" },
+  { key: "category", labelKey: "reports.column.category" },
+  { key: "licenseType", labelKey: "reports.column.licenseType" },
+  { key: "status", labelKey: "reports.column.status" },
+  { key: "validFrom", labelKey: "reports.column.validFrom" },
+  { key: "validTo", labelKey: "reports.column.validTo" },
+  { key: "daysUntilExpiry", labelKey: "reports.column.daysUntilExpiry" },
+  { key: "lastTransitionFrom", labelKey: "reports.column.lastTransitionFrom" },
+  { key: "lastTransitionTo", labelKey: "reports.column.lastTransitionTo" },
+  { key: "lastTransitionReason", labelKey: "reports.column.lastTransitionReason" },
+  { key: "lastTransitionBy", labelKey: "reports.column.lastTransitionBy" },
+  { key: "lastTransitionAt", labelKey: "reports.column.lastTransitionAt" },
+];
+
 // RPT-06 / IF-ACC-01 (phase-03 §Architecture) -- 13 columns, fixed order.
 // `batchCode`/`businessDate`/`exportedAt`/`exportedBy` cover RFP §08-05's 4
 // provenance fields; `businessDate`/`participantId`+`participantName`/

@@ -6,6 +6,8 @@ import type { ReportRow } from "./report-row";
 import { isValidReportDate } from "./is-valid-report-date";
 import { REPORT_PAGE_SIZE } from "./report-page-size";
 import { loadDailyTransactionRows } from "./queries/rpt-01-daily-transactions";
+import { loadLotAndTransactionHistoryRows } from "./queries/rpt-02-lot-and-transaction-history";
+import { loadParticipantEligibilityRows } from "./queries/rpt-03-participant-eligibility";
 import { loadDailyReconciliationRows } from "./queries/rpt-05-daily-reconciliation";
 import { loadAccountingExportRows } from "./queries/rpt-06-accounting-export";
 import { loadIncentiveReportRows } from "./queries/rpt-07-incentive-result";
@@ -39,6 +41,10 @@ async function queryAllRows(
   switch (definition.code) {
     case "RPT-01":
       return loadDailyTransactionRows(client, filters.businessDate ?? todayJst());
+    case "RPT-02":
+      return loadLotAndTransactionHistoryRows(client, filters.lotId, filters.txnStatus);
+    case "RPT-03":
+      return loadParticipantEligibilityRows(client, filters.participantId, filters.eligibilityStatus);
     case "RPT-05":
       return loadDailyReconciliationRows(client, filters.businessDate ?? todayJst());
     case "RPT-06":
@@ -46,7 +52,7 @@ async function queryAllRows(
     case "RPT-07":
       return loadIncentiveReportRows(client, filters.period ?? todayJst(), filters.participantId);
     default:
-      // Registry guarantees every non-mock code is one of the 3 above --
+      // Registry guarantees every non-mock code is one of the cases above --
       // an unhandled real code here means the registry and this dispatcher
       // drifted apart, a programming error, not a runtime user input case.
       throw new Error(`load-report-rows: unhandled real report code ${definition.code}`);
