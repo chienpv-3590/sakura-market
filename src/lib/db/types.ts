@@ -39,6 +39,62 @@ export type Database = {
   }
   public: {
     Tables: {
+      accounting_export_batch: {
+        Row: {
+          batch_code: string
+          business_date: string
+          exported_at: string
+          exported_by: string | null
+          id: string
+          kind: string
+          lines: Json
+          row_count: number
+          seq: number
+          tax_basis: string
+          tax_rate_bps: number
+          total_net_amount_jpy: number
+          total_tax_jpy: number
+        }
+        Insert: {
+          batch_code: string
+          business_date: string
+          exported_at?: string
+          exported_by?: string | null
+          id?: string
+          kind: string
+          lines: Json
+          row_count: number
+          seq: number
+          tax_basis: string
+          tax_rate_bps: number
+          total_net_amount_jpy: number
+          total_tax_jpy: number
+        }
+        Update: {
+          batch_code?: string
+          business_date?: string
+          exported_at?: string
+          exported_by?: string | null
+          id?: string
+          kind?: string
+          lines?: Json
+          row_count?: number
+          seq?: number
+          tax_basis?: string
+          tax_rate_bps?: number
+          total_net_amount_jpy?: number
+          total_tax_jpy?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounting_export_batch_exported_by_fkey"
+            columns: ["exported_by"]
+            isOneToOne: false
+            referencedRelation: "app_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       app_user: {
         Row: {
           created_at: string
