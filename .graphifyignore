@@ -1,0 +1,15 @@
+# Loai tru build output khoi knowledge graph cua rebuild-spec.
+# Ly do: graphify khong ap dung duoc pattern "/.next/" trong .gitignore, nen
+# lan index dau tien keo ca chunk da minify vao scout-report (1098 file, 2912
+# duong dan build). Moi researcher phia sau se doc rac neu khong chan.
+# .graphifyignore duoc doc SAU .gitignore nen pattern o day thang.
+
+.next/
+node_modules/
+graphify-out/
+out/
+build/
+coverage/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts

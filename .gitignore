@@ -43,3 +43,9 @@ next-env.d.ts
 
 # bo nho agent, khong thuoc san pham
 .claude/
+
+.vercel
+graphify-out/
+
+# artifact trung gian cua agent, khong thuoc san pham
+plans/
