@@ -1,0 +1,130 @@
+<!-- meta: sc=SC-28 | name=Hộp thông báo trong ứng dụng | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-28" data-sc="SC-28" data-name="Hộp thông báo trong ứng dụng" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-28 · Hộp thông báo trong ứng dụng</h2>
+    <p class="wf-screen__meta">
+      List · route <b>—</b> (đề xuất <code>/notifications</code> + badge đếm chưa đọc trên top header) ·
+      actor: toàn bộ 7 vai trò · <b>FE-038</b>, <b>FE-039</b> · <code>FR-NOTIFY-01</code>,
+      <code>FR-NOTIFY-02</code> (P1) · <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>Đề xuất thiết kế — màn này chưa tồn tại trong code.</b> Lý do ngoài phạm vi:
+    <code>FR-NOTIFY-01..03</code> — "cần hạ tầng email/queue ngoài phạm vi 11h".<br>
+    <b>Điều kiện tiền đề (mục 9 spec):</b> bảng <code>notification</code> <b>chưa có</b>
+    (<code>recipient_id</code> / <code>recipient_role</code>, <code>event_type</code>,
+    <code>severity</code>, <code>title</code>, <code>body</code>, <code>entity</code> +
+    <code>entity_id</code>, <code>read_at</code>, index theo <code>recipient_id, read_at</code>);
+    bảng <code>notification_delivery</code> <b>chưa có</b> (kênh, kết quả, số lần thử — đúng nghiệm
+    thu <code>FR-NOTIFY-01</code>); policy RLS theo người nhận, <b>không</b> dùng khuôn
+    <code>read_all_active_users</code>; và <b>hạ tầng gửi chưa quyết</b> — hai phương án ở mục 9.
+    Wireframe dưới đây vẽ phần giao diện <b>dùng chung cho cả hai phương án</b>.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Danh sách thông báo — field #1–#8 theo thứ tự spec</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Mức độ</th><th>Loại event</th><th>Tiêu đề</th><th>Nội dung</th>
+            <th>Liên kết đối tượng</th><th>Thời điểm</th><th>Đã đọc</th><th>Kết quả gửi</th><th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="wf-tag">critical</span></td>
+            <td><span class="wf-tag">lỗi xuất dữ liệu</span></td>
+            <td>Tiêu đề thông báo</td>
+            <td>Nội dung ngắn, cắt bớt</td>
+            <td>Mở đối tượng</td>
+            <td>YYYY-MM-DD hh:mm</td>
+            <td><span class="wf-tag">chưa đọc</span></td>
+            <td>in_app: ok · email: —</td>
+            <td><span class="wf-b wf-b--2">Đánh dấu đã đọc</span></td>
+          </tr>
+          <tr>
+            <td><span class="wf-tag">thường</span></td>
+            <td><span class="wf-tag">profile sắp hết hiệu lực</span></td>
+            <td>Tiêu đề thông báo</td>
+            <td>Nội dung ngắn, cắt bớt</td>
+            <td>Mở đối tượng</td>
+            <td>YYYY-MM-DD hh:mm</td>
+            <td><span class="wf-tag">đã đọc</span></td>
+            <td>in_app: ok · email: thất bại (3/3)</td>
+            <td><span class="wf-b wf-b--off">Đã đọc</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      #5 <b>dựng URL ở server từ</b> <code>entity</code> + <code>entity_id</code> (cùng khuôn
+      <code>audit_log</code>) — chỉ điều hướng nội bộ, <b>không</b> nhận URL thô từ dữ liệu.
+      #8 dẫn xuất từ <code>notification_delivery</code>; cột log gửi chi tiết chỉ ROLE-SYS-ADMIN thấy.
+    </p>
+    <p style="margin:0;"><span class="wf-b">Đánh dấu tất cả đã đọc</span></p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Bộ lọc — field #9–#10 theo thứ tự spec</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Chỉ chưa đọc</label>
+        <div class="wf-f__i">[ ] Chỉ hiện thông báo chưa đọc</div>
+        <p class="wf-f__h">#9 · checkbox, chỉ UI</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Lọc theo mức độ</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">#10 · <code>tất cả</code> / <code>critical</code> / <code>thường</code> — giá trị lạ thì bỏ qua bộ lọc</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái — mục 4 spec</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4><p>"Không có thông báo". Hộp rỗng là trạng thái hợp lệ, không cần tiền đề dữ liệu.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Skeleton danh sách.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Thông báo lỗi + nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Mở thẳng thông báo của người khác → <b>404</b>, không phải 403.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Đang ghi <code>read_at</code>: dòng đó disabled.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Ghi <code>read_at</code> thất bại: toast lỗi, giữ nguyên trạng thái chưa đọc.</p></div>
+      <div class="wf-state"><h4>Gửi ngoài thất bại</h4><p>Hết số lần retry mà <code>notification_delivery</code> còn dòng thất bại: nhãn "gửi email thất bại" trên dòng, mở được log gửi.</p></div>
+      <div class="wf-state"><h4>Không có "read-only vì lock"</h4><p>Màn không chạm bảng bị lock ngày. Không bao giờ trả <b>423</b>.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> <b>cả 7 vai trò</b> vào được — một trong ít màn không giới hạn vai trò. Mỗi
+    người chỉ thấy thông báo gửi cho <b>chính mình</b> hoặc cho vai trò mình giữ; mở thẳng thông báo
+    của người khác trả <b>404</b>. ROLE-SYS-ADMIN thấy thêm cột log gửi chi tiết.<br>
+    <b>Đây là bảng đầu tiên trong hệ không nên theo khuôn đọc rộng.</b> RLS hiện cho mọi vai trò
+    đang hoạt động đọc mọi bảng (FR-601, có chủ đích). Thông báo mang nội dung nhắm đích ("profile X
+    sắp hết hiệu lực", "tranh chấp Y đang mở") nên <code>notification</code> cần policy theo
+    <code>recipient_id</code>/<code>recipient_role</code>, không dùng
+    <code>read_all_active_users</code>.<br>
+    <b>3 trong 4 nhóm event của <code>FR-NOTIFY-01</code> chưa có nguồn dữ liệu.</b> Profile sắp hết
+    hiệu lực → SC-07 chưa dựng; tranh chấp đang mở → SC-19, <b>hiện không có bảng tranh chấp</b>;
+    giao hàng ùn tắc → SC-17, <b>hiện không đường ghi nào đặt được</b> trạng thái ngoại lệ của
+    <code>delivery</code>. Chỉ "lỗi xuất dữ liệu" có nguồn thật
+    (<code>accounting_export_batch</code>, RPT-06). Dựng SC-28 trước ba màn kia là dựng một hộp gần
+    như rỗng.<br>
+    <b>Quyết định hạ tầng thuộc ADR, không thuộc màn này.</b> (a) In-app polling / Realtime, event
+    sinh đồng bộ trong request nghiệp vụ — chi phí gần bằng 0 nhưng <b>thiếu hẳn kênh email</b>, chỉ
+    thoả một nửa <code>FR-NOTIFY-01</code> và không chứng minh được mốc 5 phút của
+    <code>FR-NOTIFY-02</code>. (b) Provider email + queue thật — đủ hai kênh, đổi lại thêm một
+    service, một khoản chi phí, một điểm hỏng và phần giám sát <code>NFR-OPS-01</code>. Wireframe này
+    vẽ được cả hai vì phần in-app giống nhau; khác biệt nằm ở cột #8 (Kết quả gửi).<br>
+    <b>Giả định cần chốt:</b> danh sách <code>event_type</code> (RFP nói "như:" — là ví dụ, không
+    phải danh sách đóng); chu kỳ polling của phương án (a); thời hạn lưu thông báo và số dòng mỗi
+    trang; gửi theo <b>vai trò</b> có đủ hay cần đích danh từng người; "đã đọc" theo từng người nhận
+    (nếu cần biết ai trong một vai trò đã đọc thì phải tách bảng <code>notification_read</code>).<br>
+    <b>Ghi chú:</b> SMS và FAX <b>không</b> thuộc kênh thông báo. Cần khoá chống trùng theo
+    (<code>recipient</code>, <code>event_type</code>, <code>entity_id</code>, chu kỳ) — quét profile
+    mỗi ngày sẽ sinh thông báo mỗi ngày. Đối tượng bị xoá sau khi thông báo đã gửi thì liên kết dẫn
+    tới 404: dòng thông báo phải chịu được ca này, không hiện lỗi kỹ thuật.<br>
+    <b>Spec:</b> <a href="../spec/SC-28-hop-thong-bao-trong-ung-dung.md">SC-28-hop-thong-bao-trong-ung-dung.md</a>
+  </div>
+</section>

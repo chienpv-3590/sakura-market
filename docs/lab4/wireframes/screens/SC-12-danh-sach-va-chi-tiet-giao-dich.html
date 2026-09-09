@@ -1,0 +1,197 @@
+<!-- meta: sc=SC-12 | name=Danh sách và chi tiết giao dịch | group=D · Giao dịch 相対取引 | status=built -->
+<section class="wf-screen" id="SC-12" data-sc="SC-12" data-name="Danh sách và chi tiết giao dịch" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-12 · Danh sách và chi tiết giao dịch</h2>
+    <p class="wf-screen__meta">
+      <b>SCR011_TransactionsList</b> + <b>SCR012_TransactionDetail</b> · List-Detail ·
+      route <b>/transactions</b>, <b>/transactions/[id]</b> ·
+      actor: ROLE-TRADE hành động, 6 vai còn lại tra cứu ·
+      <b>FE-016, FE-017</b> · <span class="wf-tag">Đã dựng</span> ·
+      <span class="wf-tag">Một mã SC- ứng hai SCR</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khung 1 — SCR011_TransactionsList · /transactions (landing page ROLE-TRADE)</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i">2026-09-09</div>
+        <p class="wf-f__h">
+          Không bắt buộc. Chưa validate định dạng — giá trị rác làm PostgREST lỗi → <b>500</b>,
+          không phải "0 kết quả".
+        </p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái · 状態</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">
+          4 option: rỗng + <code>draft</code> / <code>confirmed</code> / <code>cancelled</code>.
+          Giá trị lạ bị <b>bỏ im lặng</b> → trả về tất cả.
+        </p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">&nbsp;</label>
+        <p style="margin:0"><span class="wf-b wf-b--2">Lọc</span> <span class="wf-b">Tạo mới</span></p>
+        <p class="wf-f__h">Form <code>method="GET"</code> — submit là điều hướng, server render lại.
+          Nút "Tạo mới" chỉ hiện với ROLE-TRADE.</p>
+      </div>
+    </div>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Mã giao dịch<br>取引番号</th>
+            <th>Lô hàng<br>ロット</th>
+            <th>Người mua<br>買出人</th>
+            <th>Số lượng<br>数量</th>
+            <th>Đơn giá<br>単価</th>
+            <th>Ngày nghiệp vụ<br>業務日</th>
+            <th>Trạng thái<br>状態</th>
+            <th>Thao tác<br>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TXN-20260909-001</td><td>LOT-0001</td><td>Người tham gia A</td>
+            <td>120.00</td><td>1 800</td><td>2026-09-09</td>
+            <td><span class="wf-tag">Nháp</span></td>
+            <td><span class="wf-b">Chốt</span> <span class="wf-b wf-b--danger">Huỷ</span></td>
+          </tr>
+          <tr>
+            <td>TXN-20260909-002</td><td>LOT-0002</td><td>Người tham gia B</td>
+            <td>40.00</td><td>2 200</td><td>2026-09-09</td>
+            <td><span class="wf-tag">Đã chốt</span></td>
+            <td><span class="wf-b wf-b--off">Vai khác: hành động thuộc ROLE-TRADE</span></td>
+          </tr>
+          <tr>
+            <td>TXN-20260909-003</td><td>4f2c… (uuid)</td><td>Người tham gia C</td>
+            <td>15.50</td><td>900</td><td>2026-09-09</td>
+            <td><span class="wf-tag">Đã hủy</span></td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Lô hàng lấy <code>lot.lot_code</code>; không join được thì hiện thẳng uuid (dòng 3).
+      Giới hạn <b>100 dòng</b>, sắp <code>created_at</code> giảm dần, <b>không phân trang</b> —
+      dòng 101 mất khỏi màn không có cảnh báo nào.
+      Cột Thao tác tính bằng <code>canAct</code> server-side, nhưng cửa thật là
+      <code>requireRole</code> trên API.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khung 2 — SCR012_TransactionDetail · /transactions/[id] (nơi THẬT SỰ bấm Chốt và Huỷ)</p>
+    <div class="wf-f">
+      <label class="wf-f__l">Tiến trình xử lý · 処理状況</label>
+      <div class="wf-f__i wf-f__i--ro">Nháp ─── ● Đã chốt ─── ○ Đã hủy</div>
+      <p class="wf-f__h">Dẫn xuất từ <code>transaction.status</code> qua
+        <code>StageProgressBar kind="transaction"</code>.</p>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Lô hàng · ロット</label>
+        <div class="wf-f__i wf-f__i--ro">LOT-0001 — Cá A</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người mua · 買出人</label>
+        <div class="wf-f__i wf-f__i--ro">Người tham gia A</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Số lượng · 数量</label>
+        <div class="wf-f__i wf-f__i--ro">120.00</div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Đơn giá · 単価</label>
+        <div class="wf-f__i wf-f__i--ro">1 800</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">Nháp</div>
+      </div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Nhập lý do hủy · 取消理由を入力 <span class="req">*</span></label>
+      <div class="wf-f__i">Người mua rút hàng tại quầy</div>
+      <p class="wf-f__h">
+        Bắt buộc khi huỷ. Nút "Xác nhận hủy" <code>disabled</code> khi trim rỗng;
+        server trả <b>422 <code>reason_required</code></b>, nhưng client hiện
+        "Có lỗi xảy ra, vui lòng thử lại." vì 422 này không mang field để map i18n.
+      </p>
+    </div>
+    <p style="margin:0 0 13px;">
+      <span class="wf-b">Chốt</span>
+      <span class="wf-b wf-b--danger">Xác nhận hủy</span>
+      <span class="wf-b wf-b--off">Vai khác: mục Thao tác đổi thành chỉ dẫn ROLE-TRADE</span>
+    </p>
+    <p class="wf-box__t">Lịch sử · 履歴</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thời điểm</th><th>Người thực hiện</th><th>Hành động</th><th>Thay đổi</th></tr></thead>
+        <tbody>
+          <tr><td>2026-09-09 09:12</td><td>Người dùng A</td><td>transaction_confirm</td>
+            <td>Trạng thái: Nháp → Đã chốt</td></tr>
+          <tr><td>2026-09-09 08:41</td><td>Người dùng A</td><td>create</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Nguồn <code>audit_log</code> lọc <code>entity='transaction'</code>, mới nhất trước. Rỗng →
+      "Chưa có lịch sử". <b>Chưa có:</b> <code>confirmed_by/at</code> và
+      <code>cancelled_by/at</code> có trong DB nhưng <b>không hiển thị ở màn nào</b> — chỉ đọc lại
+      được qua bảng lịch sử. Đề xuất đưa "ai chốt, chốt lúc nào" lên mục chi tiết.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng (danh sách)</h4>
+        <p><code>EmptyState</code> "Chưa có giao dịch nào." Vẫn lọc lại được.</p></div>
+      <div class="wf-state"><h4>Đang tải — chưa có</h4>
+        <p>Không có <code>loading.tsx</code> nào trong cây.</p></div>
+      <div class="wf-state"><h4>Lỗi tải — chưa có</h4>
+        <p>Query lỗi thì <code>throw</code> về error boundary mặc định của Next. Không có
+          <code>error.tsx</code>, nên trang lỗi trần, không có nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không tìm thấy (chi tiết)</h4>
+        <p><code>txn === null</code> → <b>404</b>.</p></div>
+      <div class="wf-state"><h4>Không có quyền hành động</h4>
+        <p>Vai khác ROLE-TRADE vẫn thấy <b>đủ field</b>; mục Thao tác đổi thành chỉ dẫn
+          ROLE-TRADE. Riêng khi <code>status='cancelled'</code> thì <b>cả mục biến mất</b>.
+          Gọi API trực tiếp → <b>404</b>.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4>
+        <p>Cả hai nút <code>disabled</code> + <code>aria-busy</code>. Guard chặn gửi lần hai.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4>
+        <p>Map theo <code>reason</code>: 409 <code>NOT_DRAFT</code> /
+          <code>NOT_CANCELLABLE</code>, 422 <code>INELIGIBLE_PARTY</code> /
+          <code>INSUFFICIENT_QTY</code>. Reason lạ → thông báo chung.</p></div>
+      <div class="wf-state"><h4>Read-only vì ngày đã lock — 423</h4>
+        <p><b>Nút vẫn hiện bình thường</b> — lock chỉ lộ ra sau khi bấm. "Ngày nghiệp vụ đã lock,
+          không thể chốt trực tiếp — dùng luồng điều chỉnh sau chốt." Nhánh huỷ còn ghi audit
+          <code>locked_write_attempt</code>; nhánh chốt trả 423 trần. Đường ra duy nhất:
+          SC-20 / SC-21.</p></div>
+      <div class="wf-state"><h4>Đọc trúng trạng thái trung gian</h4>
+        <p>Giữa CAS và lúc bù trừ của một confirm đang fail, danh sách có thể hiện "Đã chốt" rồi
+          đổi lại "Nháp" khi refresh.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> cả <b>7 vai</b> vào được và thấy đủ dữ liệu (FR-601) — hai trang gọi
+    <code>requireUser()</code>, không <code>requireRole()</code>. Chặn chỉ ở <b>hành động</b>:
+    API confirm/cancel trả <b>404</b> cho 6 vai còn lại.<br>
+    <b>Ghi chú:</b> quy tắc CAS hai tầng đằng sau nút Chốt khai ở
+    <a href="../spec/SC-11-tao-giao-dich-aitai.md">SC-11 mục 6.1</a>, không lặp ở đây.
+    Sau khi chốt/huỷ thành công client chỉ <code>router.refresh()</code>, không điều hướng.<br>
+    <b>Spec:</b>
+    <a href="../spec/SC-12-danh-sach-va-chi-tiet-giao-dich.md">SC-12-danh-sach-va-chi-tiet-giao-dich.md</a>
+  </div>
+</section>

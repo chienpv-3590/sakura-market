@@ -1,0 +1,152 @@
+<!-- meta: sc=SC-02 | name=Xác thực MFA và thiết lập bảo mật | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-02" data-sc="SC-02" data-name="Xác thực MFA và thiết lập bảo mật" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-02 · Xác thực MFA và thiết lập bảo mật</h2>
+    <p class="wf-screen__meta">
+      <b>— (chưa dựng)</b> · Form · route đề xuất <b>/security/mfa</b> · actor: ROLE-SYS-ADMIN và
+      các vai trò phê duyệt nội bộ · <b>FE-002, FE-004</b> · <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>CHƯA THI CÔNG.</b> Toàn bộ field và trạng thái dưới đây là <b>đề xuất thiết kế</b>, chưa
+    tồn tại trong code. MFA của Supabase Auth đang tắt (<code>enroll_enabled</code>,
+    <code>verify_enabled</code> = false) và thuộc gói Pro — hoãn có chủ đích, xem mục 9 của spec.
+    Đây là màn bảo mật: wireframe chỉ vẽ <b>khung và nhãn</b>, không vẽ cấu hình khoá, cách sinh
+    yếu tố, nội dung mã dự phòng hay luồng khôi phục thiết bị.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">3.1 · Bước thử thách MFA — sau khi mật khẩu đúng</p>
+    <div class="wf-row">
+      <div>
+        <div class="wf-f">
+          <label class="wf-f__l">Phương thức xác thực <span class="req">*</span></label>
+          <div class="wf-f__i">Yếu tố đã đăng ký của phiên ▾</div>
+          <p class="wf-f__h"><code>factorId</code> · dẫn xuất từ danh sách yếu tố của chính phiên.
+            Bắt buộc chọn khi có nhiều hơn một yếu tố.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Mã xác thực một lần <span class="req">*</span></label>
+          <div class="wf-f__i">••• •••</div>
+          <p class="wf-f__h"><code>code</code> · chỉ chữ số, độ dài do provider quy định. Không tự
+            so sánh ở tầng app — để provider xác thực.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Ghi nhớ thiết bị này</label>
+          <div class="wf-f__i">☐ Ghi nhớ thiết bị này</div>
+          <p class="wf-f__h"><code>rememberDevice</code> · không bắt buộc. Thời hạn ghi nhớ lấy từ
+            cấu hình server, không nhận từ client.</p>
+        </div>
+        <p style="margin:13px 0 0;">
+          <span class="wf-b">Xác thực</span>
+          <span class="wf-b wf-b--2">Đăng xuất</span>
+        </p>
+      </div>
+      <div class="wf-box wf-box--todo" style="margin:0;">
+        <p class="wf-box__t">Vùng cố ý để trống</p>
+        <p style="font-size:11.5px; color:var(--g5); margin:0;">
+          Không vẽ QR, không vẽ chuỗi seed TOTP, không vẽ danh sách mã dự phòng. Những thứ đó chốt
+          ở tài liệu bảo mật nội bộ, không nằm trong repo public.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">3.2 · Thiết lập bảo mật của tài khoản</p>
+    <div class="wf-row">
+      <div>
+        <div class="wf-f">
+          <label class="wf-f__l">Trạng thái MFA</label>
+          <div class="wf-f__i wf-f__i--ro">Đã đăng ký 1 yếu tố</div>
+          <p class="wf-f__h"><code>mfaStatus</code> · read-only, dẫn xuất từ số yếu tố của phiên.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Mật khẩu hiện tại <span class="req">*</span></label>
+          <div class="wf-f__i">••••••••</div>
+          <p class="wf-f__h"><code>currentPassword</code> · xác thực lại trước <b>mọi</b> thay đổi
+            yếu tố.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Đăng ký phương thức mới <span class="req">*</span></label>
+          <div class="wf-f__i">Chỉ phương thức đang bật ở cấu hình ▾</div>
+          <p class="wf-f__h"><code>enrollMethod</code> · phương thức chưa bật thì từ chối.</p>
+        </div>
+      </div>
+      <div>
+        <div class="wf-f">
+          <label class="wf-f__l">Mã dự phòng</label>
+          <div class="wf-f__i wf-f__i--ro">Còn hiệu lực</div>
+          <p class="wf-f__h"><code>recoveryStatus</code> · read-only, chỉ hiện <b>còn hay hết</b>,
+            không bao giờ hiện nội dung mã.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Chính sách phiên</label>
+          <div class="wf-f__i wf-f__i--ro">Theo cấu hình timeout của provider</div>
+          <p class="wf-f__h"><code>sessionPolicy</code> · read-only. Khối
+            <code>[auth.sessions]</code> đang bị comment nên timeout chưa bật.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Trạng thái khóa tạm</label>
+          <div class="wf-f__i wf-f__i--ro">Không bị khóa · 0 lần sai liên tiếp</div>
+          <p class="wf-f__h"><code>lockoutState</code> · read-only, từ
+            <code>failed_login_count</code> và <code>locked_until</code>.</p>
+        </div>
+      </div>
+    </div>
+    <p style="margin:0;">
+      <span class="wf-b">Lưu thiết lập</span>
+      <span class="wf-b wf-b--danger">Huỷ một yếu tố</span>
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state">
+        <h4>Rỗng</h4>
+        <p>Chưa đăng ký yếu tố nào: hiện lời mời đăng ký, <b>không</b> có ô nhập mã.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang tải</h4>
+        <p>Skeleton trong lúc đọc danh sách yếu tố của phiên.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Lỗi tải</h4>
+        <p>Provider không trả lời: thông báo lỗi + nút thử lại + đăng xuất.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Không có quyền</h4>
+        <p>Vai trò không thuộc diện bắt buộc MFA → <b>404</b>, không phải 403.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang gửi</h4>
+        <p>Nút disabled, spinner. Không cho gửi lần hai.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Gửi lỗi</h4>
+        <p>Mã sai, hết hiệu lực, hoặc provider từ chối: lỗi tại field, form giữ nguyên.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Bị khóa tạm</h4>
+        <p><code>locked_until</code> còn hiệu lực: nói rõ còn bao lâu, chỉ cho đăng xuất.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Chờ nâng mức phiên</h4>
+        <p>Mật khẩu đúng, MFA chưa xong: chặn mọi route nghiệp vụ. Chỉ hoàn tất MFA hoặc đăng xuất.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> ROLE-SYS-ADMIN và các vai trò phê duyệt thuộc diện bắt buộc MFA
+    (ROLE-RULE-ADMIN, ROLE-SETTLEMENT — <i>giả định cần chốt</i>); mọi field ở 3.2 là của
+    <b>chính phiên đang đăng nhập</b>, không truy vấn tài khoản người khác. Vai trò ngoài diện →
+    <b>404</b>.<br>
+    <b>Ghi chú:</b> màn không chạm bảng bị lock ngày → không có trạng thái read-only vì lock, không
+    bao giờ trả 423. Bộ đếm sai của MFA dùng chung hay tách khỏi
+    <code>failed_login_count</code> là giả định chưa chốt.<br>
+    <b>Spec:</b> <a href="../spec/SC-02-xac-thuc-mfa-va-thiet-lap-bao-mat.md">SC-02-xac-thuc-mfa-va-thiet-lap-bao-mat.md</a>
+  </div>
+</section>

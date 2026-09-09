@@ -1,0 +1,199 @@
+<!-- meta: sc=SC-17 | name=Ghi nhận ngoại lệ giao hàng | group=F · Giao nhận | status=todo -->
+<section class="wf-screen" id="SC-17" data-sc="SC-17" data-name="Ghi nhận ngoại lệ giao hàng" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-17 · Ghi nhận ngoại lệ giao hàng</h2>
+    <p class="wf-screen__meta">
+      Mã thi công: <b>—</b> · Form · route đề xuất
+      <b>/deliveries/[id]/exceptions/new</b> · actor: Bộ phận vận chuyển ·
+      <b>FE-023</b> · FR-DEL-03 · RPT-04 ·
+      <span class="wf-tag">CHƯA THI CÔNG</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>CHƯA THI CÔNG.</b> Toàn bộ field, validation và trạng thái dưới đây là <b>đề xuất thiết
+    kế</b>, chưa tồn tại trong code. Cần bảng mới <code>delivery_exception</code>, endpoint mới
+    <code>POST /api/deliveries/{id}/exceptions</code>, và 5 giả định phải chốt trước khi dựng.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Vì sao màn này đang chặn một báo cáo</p>
+    <p style="font-size:11.5px; color:var(--g5); margin:0;">
+      <code>delivery.status</code> cho phép giá trị <code>'ngoại lệ'</code> ở tầng CHECK, nhưng
+      <b>không một đường ghi nào</b> đặt được giá trị đó — <code>recordShipment</code> chỉ đặt
+      <code>'đang giao'</code>, <code>completeDelivery</code> chỉ đặt <code>'hoàn tất'</code> — và
+      <b>không bảng nào có cột <code>reason</code></b>. Vì thế <b>RPT-04</b> phải để
+      <code>isMock: true</code>. Màn này là điều kiện để RPT-04 chạy thật.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Form đề xuất — 9 field (thứ tự đúng theo spec mục 3)</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Giao hàng · 配送 <span class="req">*</span></label>
+        <div class="wf-f__i wf-f__i--ro">TXN-20260909-001 (ẩn / readonly, lấy từ route)</div>
+        <p class="wf-f__h">Đề xuất: uuid; không tồn tại → 404.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Lần giao liên quan</label>
+        <div class="wf-f__i">Lần 2 — 60.00 (2026-09-09) ▾</div>
+        <p class="wf-f__h">
+          Không bắt buộc. Chỉ lần giao thuộc chính <code>delivery</code> này;
+          <code>shipment_id</code> lệch <code>delivery_id</code> → 422.
+        </p>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Loại ngoại lệ <span class="req">*</span></label>
+        <div class="wf-f__i">Giao thiếu ▾</div>
+        <p class="wf-f__h">
+          Đúng <b>4 giá trị FR-DEL-03</b>: giao thiếu · giao thừa · hoàn trả · hủy một phần.
+          Ngoài tập → 422. Chưa có key JA.
+        </p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Số lượng · 数量</label>
+        <div class="wf-f__i">8.00</div>
+        <p class="wf-f__h">
+          Tuỳ loại. <code>&gt; 0</code>, 2 chữ số thập phân như <code>delivery_shipment.qty</code>;
+          với "giao thiếu"/"hoàn trả" không vượt phần đã giao → 422.
+        </p>
+      </div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Lý do · 理由 <span class="req">*</span></label>
+      <div class="wf-f__i wf-f__i--ta">Xe giao chỉ nhận được 52 trong 60 thùng, 8 thùng hỏng bao bì tại kho</div>
+      <p class="wf-f__h">Textarea. Trim không rỗng; rỗng sau trim → 422.</p>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Người xác nhận · 実施者 <span class="req">*</span></label>
+        <div class="wf-f__i wf-f__i--ro">Người dùng A (từ session)</div>
+        <p class="wf-f__h"><b>Không bao giờ nhận từ body</b> — cùng nguyên tắc
+          <code>recordShipment</code> đang giữ.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 営業日 <span class="req">*</span></label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+        <p class="wf-f__h">Server đặt bằng <code>todayJst()</code>, <b>không nhận từ body</b>.</p>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Ảnh/chứng từ đính kèm</label>
+        <div class="wf-f__i">Chọn file… (không bắt buộc)</div>
+        <p class="wf-f__h">
+          Bucket đính kèm dùng lại khuôn SC-31 · DR-IMAGE-01. Giới hạn 5MB, 4 loại MIME;
+          kiểm ở <b>server</b>, <code>accept</code> của client chỉ là gợi ý.
+          Lỗi: <code>INVALID_TYPE</code> / <code>TOO_LARGE</code>.
+        </p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái sau khi ghi · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">ngoại lệ</div>
+        <p class="wf-f__h">
+          Giá trị CHECK <b>đã có</b>, chưa đường nào ghi. Đề xuất CAS trên
+          <code>delivery.status</code> hiện tại.
+        </p>
+      </div>
+    </div>
+    <p style="margin:13px 0 0;"><span class="wf-b">Ghi ngoại lệ</span></p>
+    <p class="wf-f__h">
+      Thứ tự ghi đề xuất: INSERT <code>delivery_exception</code> <b>trước</b> (nó là bằng chứng),
+      rồi CAS <code>delivery.status</code>. CAS thất bại thì bản ghi ngoại lệ vẫn còn và hiện ra
+      được, không mất bằng chứng. Không có transaction xuyên bảng (PostgREST).<br>
+      <b>Không đề xuất sửa ngoại lệ đã ghi</b> — FR-CORR-02 yêu cầu điều chỉnh phải tạo bản ghi
+      reverse/delta thay vì ghi đè lịch sử. Ghi sai thì ghi một bản đính chính mới, hoặc đi SC-20.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái đề xuất</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4>
+        <p>Giao hàng chưa có lần giao nào: vẫn cho ghi ngoại lệ cấp <code>delivery</code> (ví dụ hủy
+          một phần trước khi giao), field "Lần giao liên quan" để trống.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4>
+        <p>Skeleton form trong lúc nạp <code>delivery</code> và các lần giao.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4>
+        <p>Khối lỗi + nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4>
+        <p>Vai không được vào → trang <b>404</b> (không phải 403 — có chủ đích, không lộ sự tồn tại
+          tài nguyên).</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4>
+        <p>Nút bị vô hiệu.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4>
+        <p>Thông báo lỗi trên form, <b>giữ nguyên dữ liệu đã nhập</b>. Mã: 404 · 409 · 422 · 423 · 500.</p></div>
+      <div class="wf-state"><h4>Giao hàng đã hoàn tất — 409</h4>
+        <p><code>delivery.status='hoàn tất'</code>: form ở chế độ đọc kèm lời giải thích. Ngoại lệ
+          sau khi hoàn tất phải đi qua SC-20, không phải màn này.</p></div>
+      <div class="wf-state"><h4>Read-only vì ngày đã lock — 423</h4>
+        <p>Ngoại lệ gắn vào một <code>delivery_shipment</code> thuộc ngày đã lock: form ở chế độ
+          đọc, thông báo ngày đã lock. Đường ra: SC-20 (yêu cầu điều chỉnh).</p></div>
+      <div class="wf-state"><h4>Khe lock giữa hai cấp</h4>
+        <p><code>delivery</code> <b>không</b> bị lock, <code>delivery_shipment</code> <b>bị</b>.
+          Nên một ngoại lệ mô tả một lần giao của ngày đã lock thì không sửa được lần giao đó, nhưng
+          <b>vẫn cập nhật được <code>delivery.status</code></b>. Thiết kế phải đóng khe này lại, kẻo
+          <code>'ngoại lệ'</code> thành giá trị UI hiện được mà dữ liệu không giải thích được.</p></div>
+      <div class="wf-state"><h4>Giao thừa không ghi bằng lần giao mới</h4>
+        <p><code>recordShipment</code> trả 422 OVER_DELIVERY khi vượt số lượng, nên "giao thừa"
+          chỉ tồn tại như một bản ghi ngoại lệ. Đây là lý do loại này phải có trong tập giá trị.</p></div>
+      <div class="wf-state"><h4>Ảnh hưởng lên đối chiếu</h4>
+        <p><code>reconciliation_line.variance</code> tính từ <code>delivery_shipment</code>; ngoại lệ
+          không ghi vào bảng đó nên <code>variance</code> không đổi. SC-18 phải đọc thêm ngoại lệ,
+          nếu không cùng một chênh lệch sẽ có hai cách giải thích.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Điều kiện tiền đề — phải có trước khi dựng</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Loại</th><th>Cần gì</th></tr></thead>
+        <tbody>
+          <tr><td>Bảng/cột</td>
+            <td>Bảng mới <code>delivery_exception</code>: <code>id</code>,
+              <code>delivery_id</code> (NOT NULL, FK), <code>shipment_id</code> (nullable, FK),
+              <code>kind</code> (CHECK 4 giá trị), <code>qty</code> (nullable, CHECK &gt; 0),
+              <code>reason</code> (NOT NULL), <code>confirmed_by</code> (FK
+              <code>app_user</code>), <code>business_date</code>, <code>created_at</code></td></tr>
+          <tr><td>Bảng/cột</td>
+            <td>Quyết định lock cho bảng mới: có mang <code>trg_block_after_lock</code> hay không.
+              Append-only là đủ cho FR-CORR-02, nhưng nếu nó mang <code>business_date</code> thì
+              phải chọn theo QĐ-2 (event của một ngày → nên bị lock) hay theo lối
+              <code>correction_request</code> (bản ghi <i>về</i> một ngày → miễn)</td></tr>
+          <tr><td>Bảng/cột</td>
+            <td>Policy RLS: read mở như 17 bảng còn lại, insert theo vai trò chốt ở giả định #4</td></tr>
+          <tr><td>Hạ tầng</td>
+            <td>Bucket đính kèm (nếu bật field #8) — khuôn bucket private + signed URL của SC-31;
+              DR-IMAGE-01 xếp nhóm này vào diện lưu 3 năm</td></tr>
+          <tr><td>API</td>
+            <td><code>POST /api/deliveries/{id}/exceptions</code> — chưa có. Audit đề xuất
+              <code>action="delivery_exception_record"</code>, <code>entity="delivery"</code></td></tr>
+          <tr><td>Màn phụ thuộc</td>
+            <td>SC-15, SC-16 (đã dựng) — nơi mở màn này; SC-18 và RPT-04 — nơi tiêu thụ dữ liệu</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      <b>5 giả định cần chốt:</b> ①&nbsp;ngoại lệ gắn vào <code>delivery</code> hay
+      <code>delivery_shipment</code>, và bảng mới có bị lock không · ②&nbsp;tập giá trị
+      <code>kind</code> (có cho phép "khác" không) · ③&nbsp;ngoại lệ ảnh hưởng thế nào tới đối chiếu
+      và 完納奨励金 · ④&nbsp;ai được ghi ngoại lệ (chỉ ROLE-DELIVERY hay thêm ROLE-SETTLEMENT) ·
+      ⑤&nbsp;giới hạn số lần giao và số lần ghi ngoại lệ trên một giao hàng (RFP đòi làm rõ nhưng
+      không cho con số).
+    </p>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền đề xuất:</b> <b>ROLE-DELIVERY</b> ghi ngoại lệ (vai duy nhất ghi được
+    <code>delivery_shipment</code> và là actor FE-023). <b>ROLE-SETTLEMENT</b> cần quyết định —
+    RLS hiện cho vai này ghi <code>delivery</code> nên là ứng viên thứ hai (giả định #4). 5 vai còn
+    lại: <b>404</b>. Đọc thì mở cho mọi vai đang hoạt động (FR-601) — chặn ở <b>vào trang</b> và ở
+    <b>ghi</b>.<br>
+    <b>Spec:</b>
+    <a href="../spec/SC-17-ghi-nhan-ngoai-le-giao-hang.md">SC-17-ghi-nhan-ngoai-le-giao-hang.md</a>
+  </div>
+</section>

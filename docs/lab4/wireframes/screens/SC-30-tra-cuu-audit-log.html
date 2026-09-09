@@ -1,0 +1,144 @@
+<!-- meta: sc=SC-30 | name=Tra cứu audit log | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-30" data-sc="SC-30" data-name="Tra cứu audit log" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-30 · Tra cứu audit log</h2>
+    <p class="wf-screen__meta">
+      List · route <b>—</b> (đề xuất <code>/audit</code>) · actor: kiểm toán nội bộ, bộ phận hành
+      chính · <b>FE-042</b> · <code>FR-AUDIT-02</code> · <code>NFR-PERF-01</code> · RFP §09-06 (APPI) ·
+      <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>Đề xuất thiết kế — màn này chưa tồn tại trong code.</b> Bảng <code>audit_log</code> thì
+    <b>đã có và đang ghi thật</b> ở 32 điểm gọi <code>writeAuditLog</code> khắp F001–F011 (kiểm sống
+    2026-09-08: 331 dòng), và chi tiết audit theo <b>một</b> thực thể đã render được trên SC-10 và
+    SC-12. Thiếu là màn tra cứu <b>xuyên thực thể</b>.<br>
+    <b>Điều kiện tiền đề (mục 9 spec):</b> thêm <code>business_date date null</code> vào
+    <code>audit_log</code> (do từng đường ghi truyền vào, <b>không tính ngược được</b>); thêm
+    <b>index</b> cho <code>created_at</code>, <code>entity + entity_id</code>, <code>action</code>
+    (bảng hiện <b>chỉ có primary key</b>); đường tới người tham gia — thêm
+    <code>participant_id</code> hoặc một view join theo từng <code>entity</code>;
+    <code>GET /api/audit</code> (chưa có); và <b>một ADR về siết đọc <code>audit_log</code></b> —
+    bắt buộc trước khi dựng.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Bốn tiêu chí tìm kiếm của <code>FR-AUDIT-02</code> + hai tiêu chí phụ — field #1–#6</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">ID giao dịch</label>
+        <div class="wf-f__i">uuid hoặc mã giao dịch</div>
+        <p class="wf-f__h">#1 · <code>entity_id</code> lọc kèm <code>entity = 'transaction'</code> — chỉ tới được qua <b>cặp cột</b>, không có cột riêng. Không parse được → danh sách rỗng, không 4xx</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ</label>
+        <div class="wf-f__i wf-f__i--ro">YYYY-MM-DD (cột chưa có)</div>
+        <p class="wf-f__h">#2 · <b>không có cột nào chứa nó.</b> Suy từ <code>created_at</code> theo JST là <b>sai</b> ở đúng nhóm dòng kiểm toán quan tâm nhất — điều chỉnh sau 10:00 ghi <i>về</i> một ngày trước đó</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người tham gia</label>
+        <div class="wf-f__i wf-f__i--ro">Chọn ▾ (cột chưa có)</div>
+        <p class="wf-f__h">#3 · <b>không có cột nào.</b> Hiện chỉ tới được bằng join theo từng <code>entity</code>; 12 giá trị <code>entity</code> mỗi giá trị một đường khác nhau, <b>có giá trị không tới được</b></p>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Loại thao tác</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">#4 · <code>action</code> · tập giá trị nạp từ server; ngoài tập → 422</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Thực thể</label>
+        <div class="wf-f__i">Tất cả ▾ (12 giá trị)</div>
+        <p class="wf-f__h">#5 · <code>entity</code> · 12 giá trị đang có trong code; ngoài tập → 422</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người thực hiện</label>
+        <div class="wf-f__i">Chọn ▾</div>
+        <p class="wf-f__h">#6 · <code>actor_id</code> → <code>display_name</code>. <b>Không hiện email</b> ở bất kỳ cột nào — APPI §09-06</p>
+      </div>
+    </div>
+    <p style="margin:0;"><span class="wf-b">Tra cứu</span> <span class="wf-b wf-b--2">Xoá điều kiện</span></p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Kết quả — field #7–#11 · chỉ vẽ khung và nhãn, không vẽ nội dung dữ liệu</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Thời điểm</th><th>Thao tác</th><th>Thực thể / ID</th><th>Người thực hiện</th><th>Lý do</th><th>Trước / Sau</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>YYYY-MM-DD hh:mm</td><td>&lt;action&gt;</td><td>&lt;entity&gt; / &lt;id&gt;</td>
+            <td>Người tham gia A</td><td>&lt;reason, nullable&gt;</td>
+            <td><span class="wf-b wf-b--2">Mở panel diff</span></td>
+          </tr>
+          <tr>
+            <td>YYYY-MM-DD hh:mm</td><td>&lt;action&gt;</td><td>&lt;entity&gt; / &lt;id&gt;</td>
+            <td>hệ thống</td><td>—</td><td>— (cả hai NULL)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      #6 khi <code>actor_id</code> NULL thì hiện <b>"hệ thống"</b>, không hiện ô trống — cột nullable
+      và các đường ghi trước khi có session (đăng nhập thất bại) truyền <code>null</code>. Người thực
+      hiện đã bị vô hiệu thì dòng vẫn hiện, join hỏng thì rơi về <code>actor_id</code>, không ẩn dòng.
+      #11 <code>before</code>/<code>after</code> là jsonb tự do — <b>không hiện thô trên bảng</b>;
+      dùng lại <code>audit-diff.tsx</code> và <code>audit-field-maps.ts</code> đã dựng cho SC-10/SC-12
+      ở panel chi tiết một dòng. Cả hai NULL là hợp lệ (<code>locked_write_attempt</code>,
+      <code>login_failed</code>): panel diff phải chịu được, không throw.
+    </p>
+    <p style="margin:0;">
+      <span class="wf-b wf-b--2">Trang trước</span> <span class="wf-b wf-b--2">Trang sau</span>
+      <span class="wf-b wf-b--off">Xuất CSV — không đề xuất cho vòng đầu</span>
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái — mục 4 spec</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4><p>"Không có bản ghi audit nào khớp điều kiện" + gợi ý đổi filter.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Skeleton bảng.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Khối lỗi + nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò không được vào → trang <b>404</b>, không phải 403.</p></div>
+      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4><p><b>Không áp dụng</b> — màn chỉ đọc, không có form ghi.</p></div>
+      <div class="wf-state"><h4>Quá nhiều kết quả</h4><p>Vượt ngưỡng trang: thông báo cần thu hẹp điều kiện + phân trang. Phải phân trang <b>từ đầu</b>, không "tải hết rồi lọc client".</p></div>
+      <div class="wf-state"><h4>Không có "read-only vì lock"</h4><p><code>audit_log</code> không thuộc 4 bảng bị lock và màn không ghi gì. Không bao giờ trả <b>423</b>.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> đề xuất <b>ROLE-SYS-ADMIN</b> cho vòng đầu; ROLE-SETTLEMENT <b>cần quyết
+    định</b>; 5 vai trò nghiệp vụ còn lại nhận <b>404</b>. <code>FR-AUDIT-02</code> nêu actor là "bộ
+    phận hành chính / kiểm toán nội bộ" — <b>hai vai trò này không có</b> trong 7 vai trò
+    <code>TBL-ROLE-01</code>.<br>
+    <b>Ba trong bốn tiêu chí của <code>FR-AUDIT-02</code> không map trực tiếp vào cột nào — phải thêm
+    cột/index trước khi dựng:</b> "ngày nghiệp vụ" <b>không có cột</b> (<code>business_date</code>
+    phải thêm và do từng đường ghi truyền vào); "người tham gia" <b>không có cột</b>
+    (<code>participant_id</code> hoặc view join); "ID giao dịch" chỉ tới được qua cặp
+    <code>entity</code> + <code>entity_id</code>. Và <code>audit_log</code> hiện <b>không có index
+    nào ngoài primary key</b>, nên lọc theo <code>entity</code>/<code>action</code>/<code>created_at</code>
+    sẽ quét toàn bảng — <b><code>NFR-PERF-01</code> p95 ≤ 2 giây không có cách nào đạt</b> khi bảng
+    lớn. 331 dòng hôm nay không nói gì về một năm vận hành thật.<br>
+    <b>Đánh đổi cần ADR:</b> RLS cho mọi vai trò đang hoạt động đọc được <code>audit_log</code>
+    (FR-601, có chủ đích, và cần cho đường review LAB-7). Gác màn ở tầng route <b>không</b> làm dữ
+    liệu audit thành bí mật ở tầng dữ liệu — nó chỉ bỏ đi một giao diện tiện lợi để duyệt hàng loạt.
+    FR-601 muốn mở, §09-06 (APPI) đòi kiểm soát truy cập theo vai trò cho thông tin cá nhân. Siết quá
+    thì phá FR-601; mở quá thì mọi vai trò duyệt được toàn bộ dấu vết thao tác của đồng nghiệp.
+    <b>Cần chung một ADR với SC-31.</b><br>
+    <b>Không đề xuất xuất CSV:</b> <code>FR-AUDIT-02</code> chỉ đòi <b>tìm kiếm</b>, và
+    <code>FR-RPT-03</code> khoanh phạm vi xuất dữ liệu vào catalog 12 báo cáo — audit không nằm trong
+    catalog. Thêm CSV ở đây là mở một đường mang dữ liệu APPI ra ngoài hệ thống mà RFP không yêu cầu.<br>
+    <b>Giả định cần chốt:</b> (1) ai được tra cứu và có siết RLS hay không — <b>quyết định kiến trúc,
+    phải có ADR riêng</b>; (2) tập giá trị <code>action</code> cho dropdown — code hiện có 28 giá trị
+    phân biệt trên 32 điểm gọi, <b>đều là chuỗi tự do</b>, không CHECK, không hằng số dùng chung, và
+    trộn hai lối đặt tên; (3) có ghi audit cho chính hành vi tra cứu audit hay không (§09-06 đòi "log
+    truy cập" nhưng không nói rõ có áp cho việc đọc audit); (4) số dòng mỗi trang và trần kết quả.<br>
+    <b>Ghi chú bảo mật:</b> màn chạm dữ liệu nhạy — wireframe này <b>chỉ vẽ khung và nhãn</b>, không
+    vẽ nội dung dữ liệu thật. Quyền bị thu hồi giữa phiên → <b>404</b> ở lần điều hướng sau.<br>
+    <b>Spec:</b> <a href="../spec/SC-30-tra-cuu-audit-log.md">SC-30-tra-cuu-audit-log.md</a>
+  </div>
+</section>

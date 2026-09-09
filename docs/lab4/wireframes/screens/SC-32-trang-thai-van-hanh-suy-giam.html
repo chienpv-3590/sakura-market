@@ -1,0 +1,157 @@
+<!-- meta: sc=SC-32 | name=Trạng thái vận hành suy giảm | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-32" data-sc="SC-32" data-name="Trạng thái vận hành suy giảm" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-32 · Trạng thái vận hành suy giảm</h2>
+    <p class="wf-screen__meta">
+      <b>Component</b> — <b>không có route riêng</b>, không có URL để mở · actor: người dùng tại hiện
+      trường (ROLE-INTAKE, ROLE-JUDGE, ROLE-TRADE, ROLE-DELIVERY) · <b>FE-045</b> ·
+      <code>NFR-AVL-02</code> · <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>Đề xuất thiết kế — chưa tồn tại trong code.</b> Lý do ngoài phạm vi: <code>NFR-AVL-02</code>
+    (vận hành suy giảm) — "cần offline queue, không khả thi trong prototype".
+    <b>Đây là Component, không phải trang</b> (Screen List LAB-1 khai <code>Loại = Component</code>):
+    nó hiển thị <b>chồng lên màn khác</b>, nên wireframe dưới đây vẽ nó trên một khung giả lập của
+    SC-16 để thấy ngữ cảnh.<br>
+    <b>Điều kiện tiền đề (mục 9 spec):</b> <b>offline queue trên client</b> — service worker +
+    IndexedDB hoặc một thư viện đồng bộ; repo hiện <b>không có gì</b> trong hướng này (6 dependency,
+    <code>public/</code> không có manifest). Đây là hạng mục lớn nhất của SC-32, <b>không phải một
+    component UI</b>. Thêm: <b>cache đọc</b> cho dữ liệu tham chiếu (nhập offline mà không có dữ liệu
+    tham chiếu thì không nhập được gì); endpoint <code>GET /api/health</code> để ping thật; bảng
+    <code>offline_sync_attempt</code> append-only <b>chưa có</b> — cần vì thao tác trong hàng đợi hiện
+    <b>không để lại vết audit nào</b>; và chốt danh sách "tác vụ quan trọng" cho kịch bản diễn tập
+    business continuity.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Lớp 1 · Chỉ báo toàn cục — top header, cạnh BusinessDayIndicator, mọi màn trong <code>(app)</code></p>
+    <div class="wf-box" style="margin:0; padding:9px 11px;">
+      <div class="wf-row" style="align-items:center;">
+        <div style="flex:1 1 200px; font-size:11.5px; color:var(--g5);">Sakura Market · điều hướng</div>
+        <div style="flex:0 0 auto;"><span class="wf-tag">Ngày nghiệp vụ: YYYY-MM-DD · đã lock</span></div>
+        <div style="flex:0 0 auto;"><span class="wf-tag">Mất kết nối · 3 thao tác chờ</span></div>
+        <div style="flex:0 0 auto; font-size:11.5px; color:var(--g5);">Người tham gia A ▾</div>
+      </div>
+    </div>
+    <p class="wf-f__h">
+      Tiền lệ đúng khuôn: <code>BusinessDayIndicator</code> là một chỉ báo cắt ngang đặt ở top header
+      <b>vì</b> gần như mọi màn ghi đều từ chối input khi ngày đã lock — chỗ đặt và lý do đặt của
+      SC-32 giống hệt. <code>(app)</code> layout là điểm treo duy nhất cho một thành phần toàn cục.
+      Có mặt sau khi đăng nhập, chỉ đổi hình thái khi mất kết nối hoặc còn thao tác chờ;
+      <code>pendingCount = 0</code> và online thì <b>ẩn hoàn toàn</b>.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Lớp 2 · Banner trong màn — vẽ chồng lên khung giả lập SC-16 <code>/deliveries/[id]</code></p>
+    <div class="wf-box" style="margin:0;">
+      <p class="wf-box__t" style="margin-bottom:8px;">SC-16 · Chi tiết giao hàng và các lần giao <span class="wf-tag">màn nền, chỉ giả lập</span></p>
+      <p class="wf-todo" style="margin-bottom:11px;">
+        <b>Mất kết nối.</b> 3 thao tác của bạn <b>chưa tới được server</b>. Thao tác chờ lâu nhất:
+        YYYY-MM-DD hh:mm · ngày nghiệp vụ lúc nhập: YYYY-MM-DD.
+        <span class="wf-b wf-b--2">Đồng bộ lại</span> <span class="wf-b wf-b--2">Xem thao tác chờ</span>
+      </p>
+      <div class="wf-row">
+        <div class="wf-f">
+          <label class="wf-f__l">Lô hàng</label>
+          <div class="wf-f__i wf-f__i--ro">LOT-0001</div>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Số lượng lần giao này</label>
+          <div class="wf-f__i">0</div>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">&nbsp;</label>
+          <p style="margin:0;"><span class="wf-b">Ghi nhận lần giao</span></p>
+        </div>
+      </div>
+      <p class="wf-f__h">
+        Banner nằm <b>đầu vùng nội dung, trên form</b>, chỉ hiện khi màn <b>có ghi dữ liệu</b> và đang
+        mất kết nối hoặc còn thao tác chờ <b>của chính màn đó</b>. Form vẫn nhận input hay bị chặn là
+        tuỳ phương án ADR ở mục 9 — wireframe không quyết thay.
+      </p>
+    </div>
+    <p class="wf-f__h">
+      <b>Các màn có banner trong màn:</b> SC-08 <code>/lots/new</code> (lô đến trong khung 02:00–10:00
+      JST, nhập tại bến) · SC-09 <code>/lots/[id]/mekiki</code> (đánh giá tại chỗ, trên tablet) ·
+      SC-11 <code>/transactions/new</code> (chốt giá tại sàn) · SC-13 <code>/seri/new</code> (nhập ngay
+      sau phiên đấu giá) · SC-16 <code>/deliveries/[id]</code> (ghi nhận từng lần giao ngoài hiện
+      trường) · SC-17 (chưa dựng, cùng bối cảnh SC-16).
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Field #1–#7 — <b>không có field nhập</b>, toàn bộ là dẫn xuất từ hàng đợi cục bộ và trạng thái mạng</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>#</th><th>Field</th><th>Nhãn</th><th>Kiểu</th><th>Nguồn dẫn xuất và ràng buộc</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><code>connectionState</code></td><td>Trạng thái kết nối</td><td>badge</td>
+              <td><code>navigator.onLine</code> + <b>một lần ping thật</b> tới server. <b>Không tin <code>navigator.onLine</code> một mình</b> — tablet nối wifi của chợ mà đường ra internet chết vẫn báo online</td></tr>
+          <tr><td>2</td><td><code>pendingCount</code></td><td>Số thao tác chờ đồng bộ</td><td>number</td>
+              <td>Đếm bản ghi trong hàng đợi cục bộ. Bằng 0 thì ẩn chỉ báo</td></tr>
+          <tr><td>3</td><td><code>oldestPendingAt</code></td><td>Thao tác chờ lâu nhất</td><td>datetime</td>
+              <td>Hàng đợi cục bộ. Cảnh báo mạnh hơn khi vượt ngưỡng — ngưỡng chưa chốt</td></tr>
+          <tr><td>4</td><td><code>syncState</code></td><td>Trạng thái đồng bộ</td><td>badge</td>
+              <td>Tiến trình replay hàng đợi</td></tr>
+          <tr><td>5</td><td><code>conflictCount</code></td><td>Thao tác đồng bộ thất bại</td><td>number</td>
+              <td>Bản ghi bị server từ chối khi replay. <b>Không tự xoá</b>, phải người dùng xử lý</td></tr>
+          <tr><td>6</td><td><code>conflictDetail</code></td><td>Lý do thất bại</td><td>text</td>
+              <td>Mã lỗi + thông điệp server của lần replay. <b>Giữ nguyên mã lỗi gốc</b> (409 / 423 / 422), không quy về "lỗi không xác định"</td></tr>
+          <tr><td>7</td><td><code>businessDateAtCapture</code></td><td>Ngày nghiệp vụ lúc nhập</td><td>date</td>
+              <td>Ngày nghiệp vụ JST tại thời điểm xếp vào hàng đợi. Server so lại với ngày nghiệp vụ hiện tại và trạng thái lock</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái — mục 4 spec</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng (mặc định)</h4><p>Online, hàng đợi rỗng: <b>ẩn hoàn toàn</b>, hoặc một dấu hiệu tối giản.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Đang đọc hàng đợi cục bộ khi khởi động: chỉ báo trung tính, <b>không báo online sớm</b>.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Không đọc được hàng đợi (storage bị chặn hoặc đầy): cảnh báo chế độ suy giảm <b>không khả dụng</b>, và khi đó <b>chặn ghi</b> thay vì để người dùng nhập vào chỗ không lưu được.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p><b>Không áp dụng</b> — thành phần không có route riêng, nên không có 404 riêng. Màn chứa nó giữ nguyên cơ chế 404 của mình.</p></div>
+      <div class="wf-state"><h4>Mất kết nối</h4><p>Ping server thất bại: badge + banner trên màn có ghi dữ liệu.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Đang replay hàng đợi: badge "Đang đồng bộ" + tiến độ.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Replay bị server từ chối: badge + danh sách thao tác thất bại. Hành động: xem lý do, nhập lại tay, bỏ thao tác.</p></div>
+      <div class="wf-state"><h4>Read-only vì ngày đã lock</h4><p>Replay chạm <code>transaction</code>/<code>seri_result</code>/<code>mekiki_record</code>/<code>delivery_shipment</code> của một ngày đã lock: nêu rõ thao tác <b>không vào được</b>, phải đi đường điều chỉnh <b>SC-20</b> — mã <b>423</b>.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> <b>không lọc theo vai trò</b> — mất kết nối là sự kiện của thiết bị, không của
+    quyền. Cả 7 vai trò thấy chỉ báo toàn cục (field 1–4); 4 vai trò hiện trường thấy thêm banner
+    trong màn (field 1–7) và xử lý được thao tác thất bại của chính mình.<br>
+    <b>Ràng buộc nặng nhất — replay không thể vô điều kiện.</b> Bốn bảng bị trigger khoá ngày sẽ từ
+    chối một thao tác nhập lúc 09:50 mà chỉ đồng bộ được sau khi ngày đã lock. Đường duy nhất còn lại
+    là yêu cầu điều chỉnh SC-20 — <b>người dùng phải nhập lại tay, không có đường tự động</b>. CAS
+    chặn oversell cũng vậy: một giao dịch hợp lệ lúc nhập có thể vô hiệu lúc replay (lô đã bán hết) →
+    409, và không có cách nào "đúng" để tự giải quyết. Hệ <b>không có transaction xuyên bảng</b>, nên
+    replay cũng không được bọc trong một đơn vị nguyên tử.<br>
+    <b>Quyết định thuộc ADR, không thuộc màn này.</b> (a) <b>Suy giảm chỉ-đọc</b> — cache dữ liệu
+    đọc, chặn mọi ghi khi offline: chi phí thấp, vết audit nguyên vẹn, không có gì để replay nên không
+    xung đột với lock ngày; đổi lại chỉ thoả <b>một phần</b> <code>NFR-AVL-02</code> vì người dùng
+    <b>không "tiếp tục thực hiện tác vụ"</b> như RFP đòi. (b) <b>Hàng đợi ghi + replay</b> — đúng chữ
+    của yêu cầu, nhưng chi phí cao (phần lớn ngân sách SC-32 nằm ở đây), xung đột với lock ngày và
+    CAS không giải được tự động, vết audit hở, và rủi ro tệ hơn cả không có gì: <b>người dùng tin đã
+    lưu rồi mất khi replay thất bại</b>. Quyết định này đổi cả kiến trúc client (có service worker hay
+    không) và cả phạm vi nghiệm thu.<br>
+    <b>Rủi ro riêng của hàng đợi:</b> nó nằm <b>trên thiết bị</b>, không trong Postgres — dữ liệu
+    nghiệp vụ chưa gửi <b>nằm ngoài mọi lớp RLS và audit</b> của hệ, trên một tablet dùng chung ở hiện
+    trường. Hàng đợi phải khoá theo người dùng, và không cho replay dưới danh nghĩa người khác. Thao
+    tác nhập offline rồi bị bỏ đi <b>không để lại dấu gì</b> — trái tinh thần <code>FR-AUDIT-01</code>,
+    nên cần bảng log thử đồng bộ phía server.<br>
+    <b>Giả định cần chốt:</b> (1) "tác vụ quan trọng" = 5 màn ghi ở trên — <code>NFR-AVL-02</code>
+    nghiệm thu "cho từng tác vụ quan trọng" nhưng <b>không liệt tác vụ nào</b>; (2) "ngắt trong thời
+    gian ngắn" là bao lâu và hàng đợi giữ tối đa bao nhiêu / bao lâu — <b>RFP không định lượng</b>;
+    (3) thao tác offline thuộc ngày nghiệp vụ <b>lúc nhập</b>, không phải lúc replay — nếu khách coi
+    là lúc replay thì mọi thao tác vắt qua 10:00 JST rơi sang ngày sau và bảng đối chiếu ngày sai;
+    (4) thao tác replay thất bại không bị tự xoá; (5) hàng đợi khoá theo người dùng trên thiết bị dùng
+    chung — nếu không thì thao tác của người A đồng bộ dưới danh nghĩa người B, sai
+    <code>actor_id</code> trong <code>audit_log</code>.<br>
+    <b>Spec:</b> <a href="../spec/SC-32-trang-thai-van-hanh-suy-giam.md">SC-32-trang-thai-van-hanh-suy-giam.md</a>
+  </div>
+</section>

@@ -1,0 +1,199 @@
+<!-- meta: sc=SC-16 | name=Chi tiết giao hàng và các lần giao | group=F · Giao nhận | status=built -->
+<section class="wf-screen" id="SC-16" data-sc="SC-16" data-name="Chi tiết giao hàng và các lần giao" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-16 · Chi tiết giao hàng và các lần giao</h2>
+    <p class="wf-screen__meta">
+      <b>SCR017_DeliveryDetail</b> (composite) · Detail · route <b>/deliveries/[id]</b> ·
+      actor: ROLE-DELIVERY ghi lần giao, ROLE-SETTLEMENT chốt hoàn tất ·
+      <b>FE-020, FE-021, FE-022, FE-024</b> · <span class="wf-tag">Đã dựng</span></p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.A — đầu trang, chỉ đọc</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Chi tiết giao hàng · 配送詳細</label>
+        <div class="wf-f__i wf-f__i--ro">TXN-20260909-001</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">Đang giao · 配送中</div>
+        <p class="wf-f__h">enum 4 giá trị: chờ / đang giao / hoàn tất / ngoại lệ.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+        <p class="wf-f__h"><b>của giao dịch</b>, không phải của lần giao.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Truy vết · この日の照合表を見る</label>
+        <p style="margin:0"><span class="wf-b wf-b--2">Xem bảng đối chiếu ngày này</span></p>
+        <p class="wf-f__h"><b>Chỉ hiện khi ngày ĐÃ lock</b> — ngược với trực giác, vì lúc đối chiếu
+          tạm (05:00–08:00) mới là lúc cần nhảy qua SC-18 nhất.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.B — tiến độ giao hàng, chỉ đọc + 1 nút</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Số lượng đặt · 注文数量</label>
+        <div class="wf-f__i wf-f__i--ro">120.00</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Đã giao lũy kế · 配送済み累計</label>
+        <div class="wf-f__i wf-f__i--ro">60.00</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Còn lại · 残数量</label>
+        <div class="wf-f__i wf-f__i--ro">60.00</div>
+        <p class="wf-f__h">Dẫn xuất <code>max(0, round2(qty - delivered_qty))</code>; server tính
+          lại độc lập trong vòng CAS trước khi cho ghi.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Thanh tiến độ (aria-hidden)</label>
+        <div class="wf-f__i wf-f__i--ro">▓▓▓▓▓░░░░░ 50%</div>
+        <p class="wf-f__h"><code>min(100, round(delivered/ordered*100))</code>; chỉ chia khi
+          <code>orderedQty &gt; 0</code>.</p>
+      </div>
+    </div>
+    <p style="margin:0;"><span class="wf-b wf-b--off">Xác nhận hoàn tất</span>
+      <span class="wf-tag">disabled — chỉ bật khi lũy kế đã giao bằng đúng số lượng đặt</span></p>
+    <p class="wf-f__h">BR-DEL-03 <b>không dung sai</b>: so sánh "bằng chính xác" qua <code>round2()</code>. Chỉ
+      <b>ROLE-SETTLEMENT</b> bấm được. Nút <b>không tự bật lại</b> — prop chỉ mới sau
+      <code>router.refresh()</code>, người khác ghi lần giao ở tab khác thì tab này vẫn thấy số cũ.</p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.C — ghi nhận lần giao mới (form duy nhất của màn)</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Số lượng lần này · 今回の数量 <span class="req">*</span></label>
+        <div class="wf-f__i">60.00</div>
+        <p class="wf-f__h">numeric(12,2) · <code>min=0.01</code> <code>step=0.01</code>. Vượt số còn lại →
+          <b>422 OVER_DELIVERY</b> "Số lượng vượt quá số lượng còn lại."</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">&nbsp;</label>
+        <p style="margin:0"><span class="wf-b">Ghi nhận lần giao</span></p>
+        <p class="wf-f__h">Chỉ <b>ROLE-DELIVERY</b>. Vai khác thấy chỉ dẫn thay cho nút.</p>
+      </div>
+    </div>
+    <p class="wf-box__t">Server sinh — không có trên form (field 10–13)</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Lần · 回数</label>
+        <div class="wf-f__i wf-f__i--ro">2</div>
+        <p class="wf-f__h"><code>count + 1</code>, không nguyên tử. <code>unique (delivery_id, seq)</code>;
+          trùng <code>23505</code> → thử lại tối đa 5 lần, hết thì ghi bù rồi 500.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+        <p class="wf-f__h"><code>todayJst()</code> — <b>hôm nay theo JST</b>, không lấy theo
+          <code>transaction.business_date</code>.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người xác nhận (không hiện)</label>
+        <div class="wf-f__i wf-f__i--ro">id người gọi, lấy từ session</div>
+        <p class="wf-f__h">Client không gửi được. <code>shipped_at</code> · 配送日時 do DB đặt
+          <code>default now()</code>, cũng không có trên form.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.D — các lần giao, bảng chỉ đọc, sắp theo seq tăng</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Lần<br>回数</th><th>Số lượng<br>数量</th><th>Thời điểm giao<br>配送日時</th>
+          <th>Ngày nghiệp vụ<br>業務日</th><th>Sửa được?</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>60.00</td><td>2026-09-08 06:10</td><td>2026-09-08</td>
+            <td><span class="wf-tag">Ngày đã lock — bất biến ở tầng DB</span></td></tr>
+          <tr><td>2</td><td>60.00</td><td>2026-09-09 05:40</td><td>2026-09-09</td>
+            <td><span class="wf-tag">Ngày chưa lock</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">Rỗng → "Chưa có lần giao nào được ghi nhận." (EmptyState compact; ba khối kia vẫn đủ).</p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Sự phân biệt cốt lõi — hai cấp, hai chế độ lock khác nhau</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Bảng</th><th>Trigger khoá ngày?</th><th>Hệ quả trên màn này</th></tr></thead>
+        <tbody>
+          <tr><td><code>delivery</code> — phiếu giao hàng</td>
+            <td><b>KHÔNG</b> (QĐ-3 miễn: nó trải nhiều ngày nghiệp vụ)</td>
+            <td>Cả hai hành động ghi của màn — CAS <code>delivered_qty</code> và chốt <code>status='hoàn tất'</code>
+              — đều ghi vào <code>delivery</code>, nên <b>vẫn chạy được sau khi ngày của giao dịch đã lock</b>.
+              Có chủ đích, không phải lỗ hổng.</td></tr>
+          <tr><td><code>delivery_shipment</code> — một lần giao</td>
+            <td><b>CÓ</b>, theo <code>business_date</code> của <b>chính nó</b>, độc lập với giao dịch mẹ</td>
+            <td>Hàng lần giao thuộc ngày đã lock <b>bất biến ở tầng DB</b>: <code>trg_block_after_lock</code> chặn
+              UPDATE/DELETE với <code>P0001</code>, chặn cả <code>authenticated</code> lẫn <code>service_role</code>.
+              Sửa phải đi <code>correction_request</code> + maker-checker (SC-20/SC-21).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h"><b>Nói gọn:</b> sửa phiếu giao hàng thì được, sửa một lần giao thuộc ngày đã
+      lock thì không.</p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Đang giao</h4>
+        <p><code>status</code> ∈ {chờ, đang giao}: đủ 4 khối. Ghi nhận lần giao (ROLE-DELIVERY).</p></div>
+      <div class="wf-state"><h4>Đủ / chưa đủ số lượng</h4>
+        <p><code>delivered_qty == qty</code> (so sánh <code>round2</code>) → nút "Xác nhận hoàn tất"
+          bật cho ROLE-SETTLEMENT; khác đi thì <code>disabled</code> + hint.</p></div>
+      <div class="wf-state"><h4>Hoàn tất — terminal</h4>
+        <p>Khối "Ghi nhận lần giao mới" <b>biến mất hẳn</b>, không phải disabled. Nút chốt cũng mất.</p></div>
+      <div class="wf-state"><h4>Rỗng · Đang tải · Lỗi tải</h4>
+        <p>Chưa có lần giao → <code>EmptyState</code> compact trong khối 3.D. Không có
+          <code>loading.tsx</code>, không có <code>error.tsx</code> — chưa có.</p></div>
+      <div class="wf-state"><h4>Không tìm thấy</h4>
+        <p><code>delivery</code> hoặc <code>transaction</code> của nó không đọc được →
+          <b>404</b> mặc định.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4>
+        <p>Vai ngoài ROLE-DELIVERY / ROLE-SETTLEMENT: thấy đủ 13 field (FR-601), nút đổi thành chỉ dẫn. Gọi thẳng API → <b>404</b>.</p></div>
+      <div class="wf-state"><h4>Đang gửi · Gửi lỗi</h4>
+        <p>Nút <code>disabled</code> + <code>aria-busy</code>, input <code>disabled</code>. Lỗi hiện
+          <code>role="alert"</code> map từ <code>reason</code>: 409 ALREADY_COMPLETED ·
+          422 OVER_DELIVERY · 422 QTY_MISMATCH · 404 NOT_FOUND.</p></div>
+      <div class="wf-state"><h4>Read-only vì ngày đã lock — 423</h4>
+        <p>Bảng 3.D vẫn hiện đủ (đọc không bị chặn). Lần giao thuộc ngày đã lock không sửa/xoá được;
+          route dịch <code>P0001</code> → <b>423</b>. <b>Nhưng</b> hiện <b>chưa đường nào trong codebase
+          phát sinh 423 từ màn này</b> — không route nào UPDATE/DELETE <code>delivery_shipment</code>. Đây là
+          ràng buộc DB đang có thật, chưa phải mã lỗi UI quan sát được.</p></div>
+      <div class="wf-state"><h4>Ghi lần giao vào ngày đã lock — gap thật</h4>
+        <p>Trigger chỉ BEFORE UPDATE OR DELETE, không bắt INSERT; RLS insert chỉ kiểm vai. Lock lúc
+          08:00 rồi ghi lần giao lúc 09:00 vẫn vào được → số của view đối chiếu cho ngày đã lock
+          <b>thay đổi sau khi lock</b>. Đề xuất chặn INSERT.</p></div>
+      <div class="wf-state"><h4>CAS thua thì thử lại 10 lần</h4>
+        <p>Người thua đọc lại và kiểm lại OVER_DELIVERY với con số mới; hết 10 lần → 500, không phải 409.
+          Ghi bù <code>revertDeliveredQty()</code> là best-effort — thất bại thì <code>delivered_qty</code>
+          cao hơn tổng thật của ledger, không có cơ chế phát hiện lệch.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> cả <b>7 vai</b> vào được (màn không gọi <code>requireRole()</code>) — phân quyền nằm ở
+    <b>nút</b>, không ở cửa. <b>Ghi lần giao</b>: chỉ ROLE-DELIVERY. <b>Chốt hoàn tất</b>: chỉ
+    ROLE-SETTLEMENT. Vi phạm → <b>404</b> ở cả hai route ghi.<br>
+    <b>Chỗ lệch phải khai:</b> LAB-3 <code>deliverytracking/technical-spec.md §5.2</code> nói "cả 2 role" đều
+    được chốt hoàn tất. Code chỉ cho ROLE-SETTLEMENT — vì chốt còn ghi <code>lot.status</code>, mà RLS
+    <code>write_lot_operational</code> không có ROLE-DELIVERY; để ROLE-DELIVERY qua thì lệnh ghi
+    <code>lot</code> bị RLS lọc hàng im lặng và <code>delivery</code> thành "hoàn tất" trong khi
+    <code>lot</code> vẫn "traded". <b>Tin code.</b><br>
+    <b>Ghi chú:</b> không có transaction database xuyên bảng (QĐ-5) — thay bằng CAS + ghi bù, audit chạy sau
+    khi nghiệp vụ đã commit. <code>status='ngoại lệ'</code> schema cho nhưng <b>không đặt được</b> vì SC-17
+    chưa dựng.<br>
+    <b>Spec:</b>
+    <a href="../spec/SC-16-chi-tiet-giao-hang-va-cac-lan-giao.md">SC-16-chi-tiet-giao-hang-va-cac-lan-giao.md</a>
+  </div>
+</section>

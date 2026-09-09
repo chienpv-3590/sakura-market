@@ -1,0 +1,158 @@
+<!-- meta: sc=SC-05 | name=Danh sách người tham gia | group=B · Người tham gia | status=built -->
+<section class="wf-screen" id="SC-05" data-sc="SC-05" data-name="Danh sách người tham gia" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-05 · Danh sách người tham gia</h2>
+    <p class="wf-screen__meta">
+      <b>SCR003_ParticipantList</b> · List · route <b>/participants</b> · actor: nhân viên vận hành
+      chợ (đọc) · ROLE-SYS-ADMIN (tạo mới) · <b>FE-005</b> · <span class="wf-tag">Đã dựng</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">3 · Bộ lọc (field 1–2) — ghi vào query string, server component đọc lại</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Phân loại · 区分</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h"><code>?category=</code> · 4 giá trị: 卸売業者 · 仲卸 · 売買参加者 ·
+          買出人. Giá trị lạ ở <b>trang</b> thì bỏ qua im lặng; cùng giá trị đó vào
+          <code>GET /api/participants</code> thì <b>400</b>.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h"><code>?status=</code> · 4 giá trị: có hiệu lực · tạm ngừng · mất hiệu
+          lực · xét lại. Cùng độ lệch trang / API như trên.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">3 · Bảng danh sách (field 3–8) — chỉ đọc, 6 cột</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Tên · 名称</th>
+            <th>Phân loại · 区分</th>
+            <th>Căn cứ tham gia · 参加根拠</th>
+            <th>Trạng thái · 状態</th>
+            <th>Hiệu lực từ · 有効開始日</th>
+            <th>Hiệu lực đến · 有効終了日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Người tham gia A</td>
+            <td>仲卸</td>
+            <td>Giấy phép (許可)</td>
+            <td><span class="wf-tag">Có hiệu lực</span></td>
+            <td>2026-04-01</td>
+            <td>2027-03-31</td>
+          </tr>
+          <tr>
+            <td>Người tham gia B</td>
+            <td>売買参加者</td>
+            <td>Chấp thuận (承認)</td>
+            <td><span class="wf-tag">Tạm ngừng</span></td>
+            <td>2026-04-01</td>
+            <td>2026-09-30</td>
+          </tr>
+          <tr>
+            <td>Người tham gia C</td>
+            <td>卸売業者</td>
+            <td>Đăng ký</td>
+            <td><span class="wf-tag">Có hiệu lực</span></td>
+            <td>2025-10-01</td>
+            <td>Không giới hạn</td>
+          </tr>
+          <tr>
+            <td>Người tham gia D</td>
+            <td>買出人</td>
+            <td>Đăng ký</td>
+            <td><span class="wf-tag">Mất hiệu lực</span></td>
+            <td>2025-04-01</td>
+            <td>2026-03-31</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Cột <b>Tên</b> là link sang SC-06. <code>valid_to</code> null hiển thị "Không giới hạn" /
+      無期限. Mapping cố định phân loại → căn cứ: 卸売業者 → đăng ký · 仲卸 → giấy phép (許可) ·
+      売買参加者 → chấp thuận (承認) · 買出人 → đăng ký.
+    </p>
+    <p class="wf-f__h">
+      Sắp xếp <code>created_at</code> giảm dần, <b>trần 50 hàng, không có phân trang</b> — quá 50
+      là mất dữ liệu khỏi màn mà không có dấu hiệu nào. Gap thật, không phải quyết định.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Hành động — đổi theo vai trò</p>
+    <div class="wf-row">
+      <div>
+        <p style="margin:0 0 6px;"><span class="wf-b">Tạo mới</span></p>
+        <p class="wf-f__h">Chỉ ROLE-SYS-ADMIN thấy nút này; dẫn sang <code>/participants/new</code>.</p>
+      </div>
+      <div class="wf-box" style="margin:0;">
+        <p class="wf-box__t">6 vai trò còn lại</p>
+        <p style="font-size:11.5px; color:var(--g5); margin:0;">
+          Nút bị thay bằng <code>HandoffCaption</code> — một dòng nói rõ hành động tạo người tham
+          gia thuộc ROLE-SYS-ADMIN. Không ẩn im lặng, không disable nút.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state">
+        <h4>Rỗng</h4>
+        <p>Bảng rỗng hoặc bộ lọc không khớp: "Không có người tham gia nào phù hợp với bộ lọc."
+          ROLE-SYS-ADMIN vẫn còn nút "Tạo mới".</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang tải</h4>
+        <p>Đổi query param. <b>Chưa có <code>loading.tsx</code></b> cho route này — skeleton là đề
+          xuất.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Lỗi tải</h4>
+        <p>Query Supabase trả error → error boundary của Next. <b>Chưa có UI riêng</b>, đề xuất.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Không có quyền</h4>
+        <p>Không xảy ra ở màn này — cả 7 vai trò active đều vào được.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Không phải ROLE-SYS-ADMIN</h4>
+        <p>Thay nút "Tạo mới" bằng dòng nhắc ai là người làm việc đó. Chỉ đọc và lọc.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang gửi / gửi lỗi</h4>
+        <p>Không áp dụng — màn không có form ghi nào.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Read-only vì ngày đã lock</h4>
+        <p>Không áp dụng: <code>participant</code> <b>không</b> thuộc 4 bảng có
+          <code>trg_block_after_lock</code>. Màn này không bao giờ 423.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> cả 7 vai trò vào được (trang chỉ <code>requireUser()</code>, không
+    <code>requireRole</code>); không cột nào bị ẩn theo vai trò. Chặn là ở <b>ghi</b> và ở
+    <b>vào trang</b> <code>/participants/new</code> → <b>404</b> cho vai trò khác. Không session →
+    <b>307</b> về <code>/login?reason=unauthenticated</code>; <code>is_active = false</code> →
+    <b>307</b> <code>?reason=inactive</code>.<br>
+    <b>Ghi chú:</b> badge <b>Trạng thái</b> là ảnh của cột <code>status</code>, <b>không</b> phải
+    kết luận "hôm nay được giao dịch hay không" — không có cron nào flip trạng thái khi qua
+    <code>valid_to</code>; hiệu lực thật tính lại mỗi lần dùng ở
+    <code>checkParticipantEligibility()</code>. <code>license_type</code> chỉ bị chặn ở tầng app,
+    cột DB là <code>text</code> không CHECK.<br>
+    <b>Spec:</b> <a href="../spec/SC-05-danh-sach-nguoi-tham-gia.md">SC-05-danh-sach-nguoi-tham-gia.md</a>
+  </div>
+</section>

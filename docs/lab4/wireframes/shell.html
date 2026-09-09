@@ -1,0 +1,136 @@
+<!-- Khung wireframe LAB-4. File nay la NGUON. Dung sua index.html.
+     Build: node scripts/build-wireframes.mjs
+     Sidebar duoc sinh tu dong tu dong meta cua tung partial trong screens/. -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe 32 màn — Sakura Market LAB-4</title>
+<style>
+  :root {
+    --g0:#ffffff; --g1:#f6f6f5; --g2:#ececeb; --g3:#dcdcda; --g4:#b8b8b4;
+    --g5:#8a8a85; --g6:#5c5c58; --g7:#2e2e2c; --ink:#1a1a19;
+    --warn:#8a6d1f; --warn-bg:#fdf7e3;
+    --sidebar:264px;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--g1); color:var(--ink);
+    font:13px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  }
+  /* ---------- layout ---------- */
+  .wf-shell { display:flex; min-height:100vh; }
+  .wf-nav {
+    width:var(--sidebar); flex:0 0 var(--sidebar); background:var(--g0);
+    border-right:1px solid var(--g3); position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .wf-nav__hd { padding:14px 16px 10px; border-bottom:1px solid var(--g2); }
+  .wf-nav__hd h1 { margin:0 0 3px; font-size:13px; letter-spacing:.01em; }
+  .wf-nav__hd p { margin:0; font-size:11px; color:var(--g5); }
+  .wf-nav__grp {
+    padding:11px 16px 4px; font-size:10px; font-weight:700; letter-spacing:.07em;
+    text-transform:uppercase; color:var(--g5);
+  }
+  .wf-nav a {
+    display:flex; gap:7px; align-items:baseline; padding:5px 16px;
+    color:var(--g7); text-decoration:none; font-size:12px; border-left:2px solid transparent;
+  }
+  .wf-nav a:hover { background:var(--g1); }
+  .wf-nav a[aria-current="true"] { background:var(--g2); border-left-color:var(--g7); font-weight:600; }
+  .wf-nav a code { color:var(--g5); font-size:10.5px; flex:0 0 42px; }
+  .wf-nav a.is-todo code { color:var(--warn); }
+  .wf-main { flex:1; min-width:0; padding:22px 26px 60px; }
+  /* ---------- man hinh ---------- */
+  .wf-screen { max-width:1000px; }
+  .wf-screen__hd { margin-bottom:16px; padding-bottom:11px; border-bottom:1px solid var(--g3); }
+  .wf-screen__hd h2 { margin:0 0 5px; font-size:17px; }
+  .wf-screen__meta { font-size:11.5px; color:var(--g5); }
+  .wf-screen__meta b { color:var(--g6); font-weight:600; }
+  .wf-todo {
+    margin:0 0 16px; padding:8px 11px; background:var(--warn-bg);
+    border:1px dashed var(--warn); border-radius:3px; font-size:11.5px; color:var(--warn);
+  }
+  /* khung wireframe: xam, khong brand color */
+  .wf-box { background:var(--g0); border:1px solid var(--g3); border-radius:3px; padding:15px; margin-bottom:13px; }
+  .wf-box--todo { border-style:dashed; border-color:var(--g4); background:var(--g1); }
+  .wf-box__t { margin:0 0 11px; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--g5); }
+  .wf-row { display:flex; gap:11px; flex-wrap:wrap; }
+  .wf-row > * { flex:1 1 190px; min-width:0; }
+  /* field gia lap */
+  .wf-f { margin-bottom:10px; }
+  .wf-f__l { display:block; font-size:11px; color:var(--g6); margin-bottom:3px; }
+  .wf-f__l .req { color:#a33; }
+  .wf-f__i {
+    height:29px; border:1px solid var(--g4); border-radius:2px; background:var(--g0);
+    display:flex; align-items:center; padding:0 8px; font-size:11.5px; color:var(--g5);
+  }
+  .wf-f__i--ro { background:var(--g2); border-style:dashed; }
+  .wf-f__i--ta { height:56px; align-items:flex-start; padding-top:6px; }
+  .wf-f__h { font-size:10.5px; color:var(--g5); margin-top:3px; }
+  /* nut */
+  .wf-b { display:inline-flex; align-items:center; height:29px; padding:0 13px; border:1px solid var(--g6);
+          border-radius:2px; background:var(--g7); color:var(--g0); font-size:11.5px; }
+  .wf-b--2 { background:var(--g0); color:var(--g7); }
+  .wf-b--off { background:var(--g2); color:var(--g5); border-color:var(--g4); }
+  .wf-b--danger { background:var(--g0); color:#a33; border-color:#a33; }
+  /* bang */
+  table.wf-t { width:100%; border-collapse:collapse; font-size:11.5px; }
+  .wf-t th, .wf-t td { border:1px solid var(--g3); padding:5px 7px; text-align:left; vertical-align:top; }
+  .wf-t th { background:var(--g2); font-weight:600; font-size:10.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--g6); }
+  .wf-t td { color:var(--g6); }
+  .wf-scroll { overflow-x:auto; }
+  /* trang thai + chu thich */
+  .wf-states { display:grid; gap:9px; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); }
+  .wf-state { border:1px dashed var(--g4); border-radius:3px; padding:9px 11px; background:var(--g1); }
+  .wf-state h4 { margin:0 0 4px; font-size:11px; color:var(--g7); }
+  .wf-state p { margin:0; font-size:11px; color:var(--g5); }
+  .wf-tag { display:inline-block; padding:1px 6px; border:1px solid var(--g4); border-radius:9px;
+            font-size:10px; color:var(--g6); background:var(--g1); }
+  .wf-note { margin-top:15px; padding-top:11px; border-top:1px solid var(--g3); font-size:11.5px; color:var(--g5); }
+  .wf-note b { color:var(--g6); }
+  .wf-note a { color:var(--g6); }
+  @media (max-width:820px) {
+    .wf-shell { flex-direction:column; }
+    .wf-nav { width:100%; flex:none; height:auto; position:static; border-right:0; border-bottom:1px solid var(--g3); }
+    .wf-main { padding:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-shell">
+  <nav class="wf-nav">
+    <div class="wf-nav__hd">
+      <h1>Wireframe 32 màn</h1>
+      <p>Sakura Market · LAB-4</p>
+    </div>
+    <!--WF_SIDEBAR-->
+  </nav>
+  <main class="wf-main">
+    <!--WF_SECTIONS-->
+  </main>
+</div>
+<script>
+  (function () {
+    var secs = Array.prototype.slice.call(document.querySelectorAll('.wf-screen'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('.wf-nav a'));
+    function show(id) {
+      var hit = null;
+      secs.forEach(function (s) {
+        var on = s.id === id;
+        s.hidden = !on;
+        if (on) hit = s;
+      });
+      if (!hit && secs.length) { secs[0].hidden = false; hit = secs[0]; }
+      links.forEach(function (a) {
+        a.setAttribute('aria-current', hit && a.hash === '#' + hit.id ? 'true' : 'false');
+      });
+      document.title = (hit ? hit.dataset.sc + ' — ' + hit.dataset.name + ' · ' : '') +
+        'Wireframe Sakura Market LAB-4';
+    }
+    window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+    show(location.hash.slice(1));
+  })();
+</script>
+</body>
+</html>

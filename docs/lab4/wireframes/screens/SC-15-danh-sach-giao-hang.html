@@ -1,0 +1,126 @@
+<!-- meta: sc=SC-15 | name=Danh sách giao hàng | group=F · Giao nhận | status=built -->
+<section class="wf-screen" id="SC-15" data-sc="SC-15" data-name="Danh sách giao hàng" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-15 · Danh sách giao hàng</h2>
+    <p class="wf-screen__meta">
+      <b>SCR016_DeliveryList</b> · List · route <b>/deliveries</b> ·
+      actor: Bộ phận vận chuyển (ROLE-DELIVERY) ·
+      <b>FE-020</b> · <span class="wf-tag">Đã dựng</span> ·
+      <span class="wf-tag">Landing page ROLE-DELIVERY</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bộ lọc — form method="GET", submit là điều hướng trang</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i">2026-09-09</div>
+        <p class="wf-f__h">
+          <code>YYYY-MM-DD</code>, không bắt buộc. <b>Không có <code>max</code></b> nên ngày tương
+          lai nhập được — khác SC-18 vốn có <code>max={todayJst()}</code>. Chuỗi sai chỉ cho ra danh
+          sách rỗng: người dùng không phân biệt được "sai định dạng" với "ngày đó không có hàng".
+        </p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái · 状態</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">
+          Chỉ <b>3 option</b>: <code>chờ</code> · <code>đang giao</code> · <code>hoàn tất</code>.
+          Giá trị lạ → bỏ lọc im lặng, trả cả bảng.
+        </p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">&nbsp;</label>
+        <p style="margin:0"><span class="wf-b wf-b--2">Lọc</span></p>
+      </div>
+    </div>
+    <p class="wf-f__h">
+      <b>Lệch có chủ đích:</b> schema cho <b>4</b> trạng thái, filter chỉ đưa ra <b>3</b>.
+      <code>ngoại lệ</code> bị bỏ vì FR-DEL-03 (tức SC-17) chưa dựng — không đường code nào set được
+      nó, nên một filter luôn trả rỗng sẽ gây hiểu sai. Nhãn VI/JA của trạng thái đó vẫn có đủ để
+      badge render được nếu sau này có hàng.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bảng 5 cột — sắp theo created_at giảm dần, không phân trang</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Mã giao dịch<br>取引番号</th>
+            <th>Ngày nghiệp vụ<br>業務日</th>
+            <th>Đã giao<br>配送済み数量</th>
+            <th>Số lượng đặt<br>注文数量</th>
+            <th>Trạng thái<br>状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>TXN-20260909-002</td><td>2026-09-09</td><td>0.00</td><td>40.00</td>
+            <td><span class="wf-tag">Chờ · 待機</span></td></tr>
+          <tr><td>TXN-20260909-001</td><td>2026-09-09</td><td>60.00</td><td>120.00</td>
+            <td><span class="wf-tag">Đang giao · 配送中</span></td></tr>
+          <tr><td>TXN-20260908-014</td><td>2026-09-08</td><td>35.00</td><td>35.00</td>
+            <td><span class="wf-tag">Hoàn tất · 完了</span></td></tr>
+          <tr><td>TXN-20260908-009</td><td>2026-09-08</td><td>12.00</td><td>20.00</td>
+            <td><span class="wf-tag">Ngoại lệ · 例外</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Mỗi dòng là một <code>&lt;Link&gt;</code> sang SC-16 — <b>màn không ghi gì</b>, mọi thao tác
+      ghi nằm ở SC-16. Nguồn: <code>transaction.txn_code</code> ·
+      <code>transaction.business_date</code> · <code>delivery.delivered_qty</code> ·
+      <code>transaction.qty</code> · <code>delivery.status</code>.
+      Dòng cuối chỉ để cho thấy badge <code>ngoại lệ</code> render được — hiện <b>không đường code
+      nào set được giá trị đó</b>.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Có dữ liệu</h4>
+        <p>Bảng 5 cột, sắp <code>created_at</code> giảm dần. Lọc · mở chi tiết.</p></div>
+      <div class="wf-state"><h4>Rỗng</h4>
+        <p>Không có <code>delivery</code> nào, hoặc lọc không khớp: <code>EmptyState</code>
+          "Chưa có giao dịch nào cần giao." Lọc lại được.</p></div>
+      <div class="wf-state"><h4>Đang tải — chưa có</h4>
+        <p>Không có <code>loading.tsx</code> ở bất kỳ route nào; người dùng thấy màn trắng cho tới
+          khi HTML về.</p></div>
+      <div class="wf-state"><h4>Lỗi tải — chưa có</h4>
+        <p>Không có <code>error.tsx</code>; rơi về error boundary mặc định của Next. Route API
+          tương ứng trả <code>500 internal_error</code>.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4>
+        <p><b>Không phát sinh</b> — màn không gọi <code>requireRole()</code>. Quy ước "404 thay vì
+          403" chỉ áp cho màn/route có <code>requireRole()</code>.</p></div>
+      <div class="wf-state"><h4>Chưa đăng nhập / tài khoản bị vô hiệu</h4>
+        <p><code>is_active=false</code> → redirect <code>/login?reason=inactive</code>. Là redirect,
+          không phải 404.</p></div>
+      <div class="wf-state"><h4>Đang gửi · Gửi lỗi</h4>
+        <p><b>Không áp dụng</b> — form lọc là <code>GET</code>, màn không ghi.</p></div>
+      <div class="wf-state"><h4>Read-only vì ngày đã lock — không áp dụng</h4>
+        <p><code>delivery</code> được <b>QĐ-3 miễn</b> trigger khoá ngày, và màn không có đường ghi
+          nào → <b>423 không thể phát sinh</b>. Lock chặn ghi, không chặn đọc (FR-601): một
+          <code>delivery</code> của ngày đã lock vẫn hiện đầy đủ, vẫn mở được chi tiết — đúng ý QĐ-3
+          vì <code>delivery</code> trải nhiều ngày nghiệp vụ.</p></div>
+      <div class="wf-state"><h4>Lọc chạy trong bộ nhớ</h4>
+        <p><code>select</code> toàn bộ <code>delivery</code> rồi mới <code>.filter()</code> trong JS.
+          Không <code>LIMIT</code>, không phân trang, không cursor — task tối ưu bắt buộc cho LAB-5
+          khi bảng lớn.</p></div>
+      <div class="wf-state"><h4>Hàng có transaction null bị loại im lặng</h4>
+        <p>Với RLS hiện tại (mọi vai đọc mọi bảng) không xảy ra; nhưng nếu sau này siết RLS đọc thì
+          danh sách tự rút ngắn mà không báo gì.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> cả <b>7 vai</b> vào được, <b>không field nào bị ẩn theo vai</b> —
+    <code>requireUser()</code> chứ không <code>requireRole()</code>. Khác biệt giữa các vai chỉ xuất
+    hiện khi vào SC-16, chỗ đó mới có nút.<br>
+    <b>Ghi chú:</b> đây là cửa vào khâu giao nhận, màn của đoạn <b>05:00–08:00</b> (cập nhật giao
+    nhận) theo khung giờ vận hành RFP §02-07 — nhưng khung giờ đó <b>không được cài trong code</b>.<br>
+    <b>Spec:</b> <a href="../spec/SC-15-danh-sach-giao-hang.md">SC-15-danh-sach-giao-hang.md</a>
+  </div>
+</section>

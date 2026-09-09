@@ -1,0 +1,199 @@
+<!-- meta: sc=SC-18 | name=Bảng đối chiếu ngày và lock kỳ | group=G · Đối chiếu và lock | status=built -->
+<section class="wf-screen" id="SC-18" data-sc="SC-18" data-name="Bảng đối chiếu ngày và lock kỳ" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-18 · Bảng đối chiếu ngày và lock kỳ</h2>
+    <p class="wf-screen__meta">
+      <b>SCR018_ReconcileAndLock</b> · Detail · route <b>/reconciliation</b> ·
+      actor: Bộ phận đối chiếu (ROLE-SETTLEMENT) ·
+      <b>FE-024, FE-025, FE-026</b> · <span class="wf-tag">Đã dựng</span> ·
+      <span class="wf-tag">Trung tâm hệ thống · lock một chiều</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.A — chọn ngày và trạng thái lock</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i">2026-09-09</div>
+        <p class="wf-f__h">Mặc định <code>todayJst()</code>. <code>max={todayJst()}</code> chặn chọn ngày
+          tương lai qua widget. Server kiểm định dạng + là ngày thật + <code>&lt;= todayJst()</code>.
+          <b>Ở trang: sai thì âm thầm rơi về hôm nay</b> (người dùng không biết mình bị đổi ngày — chưa có);
+          ở API: sai thì <b>400 <code>invalid_business_date</code></b>.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái lock · ロック済み / 未ロック</label>
+        <div class="wf-f__i wf-f__i--ro">Chưa lock</div>
+        <p class="wf-f__h"><code>business_day_lock</code> có hàng cho ngày này hay không.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Thời điểm lock</label>
+        <div class="wf-f__i wf-f__i--ro">— (nối sau nhãn "Đã lock")</div>
+        <p class="wf-f__h"><code>locked_at</code>, render <code>toLocaleString()</code> — theo múi giờ <b>của
+          trình duyệt</b>, không phải JST, trong khi mọi ngày nghiệp vụ neo vào JST. Đề xuất hiện kèm JST.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">locked_by — chưa có</label>
+        <div class="wf-f__i wf-f__i--ro">API trả về, UI không hiển thị</div>
+        <p class="wf-f__h">Chưa có nhãn VI, chưa có key JA.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.B — bảng đối chiếu, 5 cột chỉ đọc, nguồn là view reconciliation_line</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Nguồn<br>区分</th><th>Số lượng<br>数量</th><th>Thành tiền (JPY)<br>金額 (JPY)</th>
+            <th>Chênh lệch<br>差異</th><th>Truy vết<br>配送を見る</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>相対取引 (Thỏa thuận)</td><td>120.00</td><td>216 000</td><td>60.00</td>
+            <td><span class="wf-b wf-b--2">Xem giao hàng</span></td></tr>
+          <tr><td>相対取引 (Thỏa thuận)</td><td>40.00</td><td>88 000</td><td>0.00</td>
+            <td><span class="wf-b wf-b--2">Xem giao hàng</span></td></tr>
+          <tr><td>せり (Đấu giá)</td><td>80.00</td><td>192 000</td><td>—</td><td>—</td></tr>
+          <tr><td>Giao hàng</td><td>60.00</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      <b>Chênh lệch chỉ có nghĩa cho nhánh <code>aitai</code></b>: số lượng đặt trừ lũy kế đã giao.
+      Nhánh <code>seri</code> và <code>delivery</code> trả <code>null</code> → hiện <code>—</code>,
+      dễ đọc thành "không lệch" thay vì "không tính được" (chưa có — đề xuất phân biệt trên UI).
+      Nút truy vết chỉ render cho <code>aitai</code>; mở ra hàng phụ liệt kê các lần giao.<br>
+      <b>Về view:</b> <code>reconciliation_line</code> là <b>view tính khi gọi, không phải bảng vật
+      lý</b> — <code>union all</code> 3 nhánh, dựng với <code>security_invoker = true</code> nên
+      chạy bằng RLS <b>của người gọi</b>. Nhánh <code>aitai</code> loại giao dịch
+      <code>status='cancelled'</code>; hai nhánh kia không có điều kiện loại nào — hủy trước lock là
+      dòng <b>mất hẳn</b>, không thành dòng gạch.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Khối 3.C — hộp xác nhận lock · HÀNH ĐỘNG KHÔNG THỂ HOÀN TÁC</p>
+    <p style="margin:0 0 13px;">
+      <span class="wf-b wf-b--danger">Lock ngày nghiệp vụ · 業務日をロック</span>
+      <span class="wf-tag">chỉ render khi vai = ROLE-SETTLEMENT và ngày chưa lock</span>
+    </p>
+    <div class="wf-box wf-box--todo" style="margin:0;">
+      <p class="wf-box__t">Hộp xác nhận (mở ra khi bấm nút trên — chưa gọi API)</p>
+      <p style="font-size:11.5px; color:var(--warn); margin:0 0 11px; font-weight:600;">
+        Hành động này không thể hoàn tác
+      </p>
+      <p style="font-size:11.5px; color:var(--g6); margin:0 0 11px;">
+        Sau khi lock, mọi bản ghi thuộc ngày nghiệp vụ này chỉ có thể sửa qua yêu cầu điều chỉnh.
+        <b>Không có cách nào để mở lock lại.</b><br>
+        <span style="color:var(--g5)">
+          ロック後、この業務日の記録は修正依頼を通じてのみ変更できます。ロック解除の方法はありません。
+        </span>
+      </p>
+      <div class="wf-f">
+        <label class="wf-f__l">
+          Gõ lại "2026-09-09" để xác nhận · 確認のため「2026-09-09」を再入力してください
+          <span class="req">*</span>
+        </label>
+        <div class="wf-f__i">2026-09-09</div>
+        <p class="wf-f__h"><code>typed.trim() === businessDate</code> mới bật nút xác nhận — bước xác nhận
+          tách rời khỏi thao tác xem bảng, đúng FR-401. <b>Chưa có:</b> server <b>không</b> nhận và không
+          kiểm chuỗi gõ lại — ai gọi thẳng <code>POST /api/reconciliation/{date}/lock</code> là lock được
+          bằng một request. Đề xuất buộc body mang lại <code>business_date</code> để server kiểm.</p>
+      </div>
+      <p style="margin:0;"><span class="wf-b wf-b--danger">Xác nhận lock · ロックを確定</span>
+        <span class="wf-b wf-b--2">Hủy · キャンセル</span></p>
+      <p class="wf-f__h">Nút xác nhận <code>disabled</code> khi <code>pending</code> hoặc gõ chưa đúng, có
+        <code>aria-busy</code>. Nút Hủy đóng hộp, không gọi API.</p>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Một cú bấm lock kéo theo những gì</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Bước</th><th>Ghi vào</th><th>Nếu lỗi</th></tr></thead>
+        <tbody>
+          <tr><td>1 · INSERT <code>business_day_lock</code></td><td>1 hàng, insert-only</td>
+            <td>Trùng khoá chính <code>23505</code> → <b>409 ALREADY_LOCKED</b></td></tr>
+          <tr><td>2 · Ghi audit <code>lock_business_day</code></td><td><code>audit_log</code></td>
+            <td>Chạy <b>sau</b> khi lock commit → audit lỗi trả 500 trong khi ngày <b>đã lock thật</b></td></tr>
+          <tr><td>3 · Engine 完納奨励金 <code>runIncentiveForPeriod()</code> — <b>đồng bộ ngay</b></td>
+            <td><code>incentive_result</code> qua <code>service_role</code></td>
+            <td><b>Không mã lỗi nào</b> — engine lỗi bị nuốt, lock vẫn trả 200. Ghi audit
+              <code>incentive_skipped_no_rule</code> hoặc <code>incentive_engine_error</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      <b>Vì sao đồng bộ:</b> QĐ-5 — stack không có queue, nên "background job" của spec thành lệnh gọi trực
+      tiếp trong request lock. Lock là hành động chính, phải thành công bất kể engine.<br>
+      <b>Vì sao lock đặt ở trigger chứ không ở RLS (QĐ-4):</b> điều kiện lock trong <code>USING</code> của RLS
+      thì RLS lọc hàng ra khỏi lệnh UPDATE <b>trước khi</b> trigger chạy, nên client nhận <code>200 []</code>
+      — không phân biệt được "ngày đã lock" với "không có hàng" hay "sai vai trò". Bản sửa bỏ hẳn điều kiện
+      lock khỏi RLS và để trigger độc quyền, nên <code>P0001</code> phát ra cho <b>mọi</b> người gọi:
+      <code>authenticated</code>, <code>service_role</code> (có BYPASSRLS), và cả <code>psql</code> trực tiếp.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Chưa lock, có dữ liệu</h4>
+        <p>Bảng + dòng "Chưa lock" + nút lock (nếu đúng vai). Đổi ngày · truy vết · lock.</p></div>
+      <div class="wf-state"><h4>Chưa lock, rỗng</h4>
+        <p><code>EmptyState</code> "Chưa có giao dịch nào cho ngày nghiệp vụ này." — <b>nút lock VẪN hiện</b>.
+          Lock một ngày trắng là khoá vĩnh viễn một ngày trắng. Đề xuất cảnh báo trước.</p></div>
+      <div class="wf-state"><h4>Đã lock — read-only vì ngày đã lock</h4>
+        <p>Dòng "Đã lock — {thời điểm}". Nút lock và chỉ dẫn vai <b>cùng biến mất</b>. Bảng vẫn hiện
+          đủ (đọc không bị chặn — FR-601). Mọi ghi vào <code>transaction</code> /
+          <code>seri_result</code> / <code>mekiki_record</code> / <code>delivery_shipment</code> của
+          ngày đó bị chặn <code>P0001</code> → <b>423</b>. Đường sửa duy nhất còn lại:
+          <code>correction_request</code> + maker-checker (SC-20/SC-21).</p></div>
+      <div class="wf-state"><h4>Đang mở hộp xác nhận</h4>
+        <p>Hộp cảnh báo + input gõ lại ngày. Xác nhận (khi gõ đúng) · hủy.</p></div>
+      <div class="wf-state"><h4>Đang gửi lock</h4>
+        <p>Hai nút <code>disabled</code>, <code>aria-busy</code>, input <code>disabled</code>. Không hành động nào khả dụng.</p></div>
+      <div class="wf-state"><h4>Gửi lock lỗi</h4>
+        <p><code>role="alert"</code> "Có lỗi xảy ra, vui lòng thử lại." — <b>một thông báo duy nhất
+          cho mọi mã</b>: 400 (ngày sai) · 409 (đã lock) · 404 (mất quyền) · 500 (engine/audit) hiện
+          y như nhau. Đề xuất map <code>reason</code> → key riêng.</p></div>
+      <div class="wf-state"><h4>Lock hai lần đồng thời</h4>
+        <p>Điểm tuần tự hoá là <b>khoá chính trên <code>business_date</code></b>: Postgres nhận đúng
+          một, người thua nhận <code>23505</code> → <b>409 ALREADY_LOCKED</b>. Không cần khoá ứng
+          dụng.</p></div>
+      <div class="wf-state"><h4>Đang tải · Lỗi tải bảng — chưa có</h4>
+        <p>Không có <code>loading.tsx</code>, không có <code>error.tsx</code>; API trả
+          <code>500 internal_error</code>.</p></div>
+      <div class="wf-state"><h4>Truy vết rỗng / lỗi</h4>
+        <p>Hàng phụ hiện "Chưa có lần giao nào cho giao dịch này." — <b>lỗi mạng và không có dữ liệu hiện giống nhau</b>.</p></div>
+      <div class="wf-state"><h4>Không có quyền lock</h4>
+        <p>Vai khác ROLE-SETTLEMENT và ngày chưa lock: chỉ dẫn nói rõ hành động thuộc ROLE-SETTLEMENT. Gọi thẳng route lock → <b>404</b>.</p></div>
+      <div class="wf-state"><h4>Số của ngày đã lock vẫn có thể đổi</h4>
+        <p>Trigger chỉ BEFORE UPDATE OR DELETE, không bắt INSERT. ROLE-DELIVERY ghi lần giao mới sau
+          08:00 vẫn vào được với <code>business_date</code> đã lock (xem SC-16). Chưa có — đề xuất.</p></div>
+      <div class="wf-state"><h4>Ngoài khung giờ 08:00–10:00 — chưa có</h4>
+        <p>Không có kiểm khung giờ nào trong code. RFP §02-07 là ràng buộc vận hành thật nhưng chưa
+          thành ràng buộc kỹ thuật — lock được bất kỳ giờ nào.</p></div>
+      <div class="wf-state"><h4>Không có biểu suất phủ ngày đó</h4>
+        <p>Engine dừng, ghi audit <code>incentive_skipped_no_rule</code>, không đoán số. Lock vẫn
+          thành công, nhưng ngày đó <b>không có</b> <code>incentive_result</code> — và vì không
+          unlock được, chỉ chạy lại engine bằng đường riêng.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> cả <b>7 vai</b> vào được (trang không gọi <code>requireRole()</code>) —
+    FR-601 cho vai khác xem bảng ở chế độ chỉ đọc. Chặn nằm ở <b>nút lock</b>, không ở cửa:
+    chỉ <b>ROLE-SETTLEMENT</b> lock được, 6 vai còn lại gọi thẳng route lock nhận <b>404</b>.<br>
+    <b>Lock là MỘT CHIỀU:</b> không endpoint, không hàm, không migration nào xoá hàng
+    <code>business_day_lock</code>; bảng chỉ có policy INSERT — không UPDATE, không DELETE, kể cả cho
+    ROLE-SYS-ADMIN và <code>service_role</code>. <b>Lock sai ngày là hỏng thật</b>, chỉ còn đường
+    <code>correction_request</code>.<br>
+    <b>Ghi chú:</b> theo khung giờ RFP §02-07 đây là màn của đoạn <b>08:00–10:00</b> (chốt và xuất);
+    đoạn 05:00–08:00 dùng nó ở chế độ đối chiếu tạm.<br>
+    <b>Spec:</b>
+    <a href="../spec/SC-18-bang-doi-chieu-ngay-va-lock-ky.md">SC-18-bang-doi-chieu-ngay-va-lock-ky.md</a>
+  </div>
+</section>

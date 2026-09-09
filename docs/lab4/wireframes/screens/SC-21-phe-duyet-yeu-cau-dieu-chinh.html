@@ -1,0 +1,147 @@
+<!-- meta: sc=SC-21 | name=Phê duyệt yêu cầu điều chỉnh | group=H · Điều chỉnh sau lock | status=built -->
+<section class="wf-screen" id="SC-21" data-sc="SC-21" data-name="Phê duyệt yêu cầu điều chỉnh" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-21 · Phê duyệt yêu cầu điều chỉnh</h2>
+    <p class="wf-screen__meta">
+      <b>SCR020_CorrectionApproval</b> · List-Detail · route <b>/corrections</b> ·
+      actor: bộ phận quyết toán, vai người duyệt (ROLE-SETTLEMENT) · <b>FE-029</b> ·
+      <span class="wf-tag">Đã dựng</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bộ lọc trạng thái — chỉ qua URL, không có UI</p>
+    <div class="wf-row">
+      <div class="wf-f" style="flex:1 1 300px;">
+        <label class="wf-f__l">?status= (mặc định pending)</label>
+        <div class="wf-f__i wf-f__i--ro">/corrections?status=pending</div>
+        <p class="wf-f__h">
+          Không có dropdown trên màn. Giá trị lạ (<code>?status=xxx</code>) đưa thẳng vào truy vấn →
+          0 dòng, không báo lỗi: trạng thái rỗng <b>không phân biệt</b> "hết việc" với "lọc sai".
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Danh sách yêu cầu</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Mã giao dịch</th><th>Lý do</th><th>Trạng thái</th><th>Bằng chứng</th><th>Ghi chú maker-checker</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TXN-0001</td><td>Số lượng nhận thực tế thiếu 12kg so với phiếu</td>
+            <td><span class="wf-tag">Chờ duyệt</span></td>
+            <td><a href="#SC-21">Xem bằng chứng đính kèm</a></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>TXN-0002</td><td>Đơn giá ghi sai bảng giá ngày</td>
+            <td><span class="wf-tag">Chờ duyệt</span></td>
+            <td><a href="#SC-21">Xem bằng chứng đính kèm</a></td>
+            <td><b>Bạn không thể phê duyệt yêu cầu do chính mình tạo.</b></td>
+          </tr>
+          <tr>
+            <td>TXN-0003</td><td>Huỷ toàn bộ giao dịch nhập trùng</td>
+            <td><span class="wf-tag">Đã duyệt</span></td>
+            <td><a href="#SC-21">Xem bằng chứng đính kèm</a></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>TXN-0004</td><td>Chứng từ không khớp, đề nghị bổ sung</td>
+            <td><span class="wf-tag">Bị từ chối</span></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Mã giao dịch join qua giao dịch đích; join rỗng thì rơi về id nội bộ. Link bằng chứng là
+      signed URL <b>300 giây</b> sinh lúc render, không bao giờ là URL public. Tạo signed URL lỗi
+      thì link biến mất, không có thông báo.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Panel duyệt — chỉ render khi chờ duyệt VÀ người xem khác người tạo</p>
+    <div class="wf-f">
+      <label class="wf-f__l">Loại điều chỉnh <span class="req">*</span></label>
+      <div class="wf-f__i">( • ) Đảo ngược toàn bộ &nbsp;&nbsp; ( ) Chỉ chỉnh phần chênh lệch</div>
+      <p class="wf-f__h">Mặc định "đảo ngược toàn bộ", luôn có giá trị. Thiếu khi duyệt → <b>422</b>.</p>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Chênh lệch số lượng <span class="req">*</span></label>
+        <div class="wf-f__i">-12.00</div>
+        <p class="wf-f__h">Bắt buộc khi chọn "chỉ chênh lệch". Cả hai chênh lệch bằng 0 → <b>422</b>.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Chênh lệch đơn giá <span class="req">*</span></label>
+        <div class="wf-f__i">0</div>
+        <p class="wf-f__h">
+          Bước nhảy 1 nhưng client <b>không chặn số thập phân</b>; cột integer của Postgres mới từ
+          chối và lỗi nổi lên thành <b>500</b> thay vì 422.
+        </p>
+      </div>
+    </div>
+    <p style="margin:13px 0 0;">
+      <span class="wf-b">Duyệt</span>
+      <span class="wf-b wf-b--danger">Từ chối</span>
+    </p>
+    <p class="wf-f__h" style="margin-top:9px;">
+      Không hiện trên màn: số tiền chênh lệch (server tự tính lại từ số lượng và đơn giá gốc tại
+      thời điểm duyệt), người duyệt, và <code>note</code> — route nhận <code>note</code> nhưng panel
+      không bao giờ gửi, nên lý do trong dấu vết kiểm toán luôn rỗng.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Panel duyệt — trường hợp bạn là người tạo (maker-checker)</p>
+    <p style="font-size:11.5px; color:var(--g6); margin:0 0 9px;">
+      <b>Bạn không thể phê duyệt yêu cầu do chính mình tạo.</b> Panel không render, hai nút không tồn tại.
+    </p>
+    <p style="margin:0;">
+      <span class="wf-b wf-b--off">Duyệt</span>
+      <span class="wf-b wf-b--off">Từ chối</span>
+    </p>
+    <p class="wf-f__h">
+      Ẩn nút <b>chỉ là gợi ý</b>. Gọi API trực tiếp vẫn bị chặn: server so người tạo với người đang
+      thao tác rồi trả <b>403 <code>SELF_APPROVAL</code></b>. Đây là ràng buộc kiến trúc
+      (<code>GOV-RULE-01</code>), không phải quy tắc trình bày — 403 mới là biên giới thật.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4><p>"Không có yêu cầu điều chỉnh nào." Kèm link sang SC-20 để tạo.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Server Component đang render, khung trang stream dần.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Truy vấn danh sách lỗi — error boundary, có nút tải lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-SETTLEMENT → trang <b>404</b>; endpoint duyệt cũng 404.</p></div>
+      <div class="wf-state"><h4>Tự tạo — không được duyệt</h4><p>Chờ duyệt và người tạo là chính mình: ghi chú thay cho panel, không có nút. Gọi API trực tiếp → <b>403</b>.</p></div>
+      <div class="wf-state"><h4>Chờ duyệt, được duyệt</h4><p>Người tạo khác mình → panel duyệt/từ chối hiện đủ.</p></div>
+      <div class="wf-state"><h4>Đã xử lý</h4><p>Đã duyệt hoặc bị từ chối: chỉ badge trạng thái, không panel.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Hai nút vô hiệu kèm <code>aria-busy</code>.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Thông báo <code>role="alert"</code> theo mã lỗi: 422 sai chênh lệch · 404 giao dịch đích biến mất · 409 người khác đã xử lý trước.</p></div>
+      <div class="wf-state"><h4>Hai người duyệt cùng lúc</h4><p>CAS trên trạng thái là điểm serialize; người thứ hai nhận <b>409</b>.</p></div>
+      <div class="wf-state"><h4>Ngày đã lock — luôn đúng, không cản gì</h4><p>SC-20 chỉ nhận giao dịch thuộc ngày đã lock, nên giao dịch đích ở đây <b>luôn</b> nằm trong ngày đã lock. Màn không hiện gì đặc biệt: hai bảng ghi cố ý không mang trigger chặn-sau-lock nên duyệt vẫn ghi được. <b>423</b> chỉ xuất hiện khi có ai cố sửa trực tiếp giao dịch cùng ngày đó ở màn khác.</p></div>
+      <div class="wf-state"><h4>Engine thưởng lỗi sau khi duyệt</h4><p>Duyệt xong hệ thống chạy tiếp engine 完納奨励金 trong cùng request. Engine lỗi bị bắt và chỉ log — phê duyệt vẫn đứng, vẫn trả 200.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> ROLE-SETTLEMENT và người tạo khác mình → duyệt/từ chối được. ROLE-SETTLEMENT
+    nhưng là người tạo → thấy đủ dữ liệu, panel bị ẩn, <b>tự phê duyệt bị từ chối 403
+    <code>SELF_APPROVAL</code></b> kể cả khi gọi API trực tiếp. 6 vai trò còn lại nhận trang
+    <b>404</b>. Cả người tạo và người duyệt đều là ROLE-SETTLEMENT — tách nhau bằng maker-checker
+    theo người yêu cầu, không theo vai trò; hai tài khoản demo tách đôi là cố ý.<br>
+    <b>Ghi chú:</b> duyệt xong ghi một dòng điều chỉnh, <b>không bao giờ sửa giao dịch gốc</b>. Ghi
+    hai bảng không có transaction — INSERT dòng điều chỉnh lỗi sau khi đổi trạng thái thành công thì
+    bù ngược về chờ duyệt rồi trả 500. File bằng chứng chặn cả đọc, chỉ ROLE-SETTLEMENT mở được, và
+    đường dẫn file không bao giờ ra CSV.<br>
+    <b>Spec:</b> <a href="../spec/SC-21-phe-duyet-yeu-cau-dieu-chinh.md">SC-21-phe-duyet-yeu-cau-dieu-chinh.md</a>
+  </div>
+</section>

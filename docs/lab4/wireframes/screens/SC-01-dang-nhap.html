@@ -1,0 +1,73 @@
+<!-- meta: sc=SC-01 | name=Đăng nhập | group=A · Xác thực và điều hướng | status=built -->
+<section class="wf-screen" id="SC-01" data-sc="SC-01" data-name="Đăng nhập" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-01 · Đăng nhập</h2>
+    <p class="wf-screen__meta">
+      <b>SCR001_Login</b> · Form · route <b>/login</b> · actor: toàn bộ người dùng nội bộ ·
+      <b>FE-001</b> · <span class="wf-tag">Đã dựng</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bố cục 52/48 — panel thương hiệu bên trái, form bên phải</p>
+    <div class="wf-row">
+      <div class="wf-box wf-box--todo" style="flex:0 0 52%; margin:0; min-height:210px;">
+        <p class="wf-box__t">Panel thương hiệu</p>
+        <p style="font-size:11.5px; color:var(--g5); margin:0;">
+          Nền đậm, chỉ mang dấu hiệu nhận diện. Không có trường nhập, không có liên kết
+          điều hướng — đây là vùng tĩnh.
+        </p>
+      </div>
+      <div style="flex:1 1 44%;">
+        <div class="wf-f">
+          <label class="wf-f__l">Email <span class="req">*</span></label>
+          <div class="wf-f__i">ten@vi-du.local</div>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Mật khẩu <span class="req">*</span></label>
+          <div class="wf-f__i">••••••••</div>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Ngôn ngữ</label>
+          <div class="wf-f__i">Tiếng Việt ▾</div>
+          <p class="wf-f__h">Chuyển VI / JA. Không yêu cầu đăng nhập.</p>
+        </div>
+        <p style="margin:13px 0 0;"><span class="wf-b">Đăng nhập</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state">
+        <h4>Mặc định</h4>
+        <p>Hai trường rỗng, nút bật.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang gửi</h4>
+        <p>Nút chuyển sang vô hiệu, không cho gửi lần hai.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Sai thông tin</h4>
+        <p>Thông báo chung, không nói sai email hay sai mật khẩu.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Khoá tạm</h4>
+        <p>Sai 5 lần liên tiếp thì khoá 15 phút. Thông báo nêu rõ thời gian chờ.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đã đăng nhập</h4>
+        <p>Form không hiện. Chuyển thẳng theo vai trò qua <code>roleLanding</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> màn công khai, không qua <code>requireUser</code>/<code>requireRole</code>.
+    Đây là màn duy nhất trong hệ thống không có cổng xác thực.<br>
+    <b>Ghi chú:</b> thông báo lỗi cố ý không phân biệt email sai và mật khẩu sai — tránh dò
+    tài khoản tồn tại.<br>
+    <b>Spec:</b> <a href="../spec/SC-01-dang-nhap.md">SC-01-dang-nhap.md</a>
+  </div>
+</section>

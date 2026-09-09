@@ -1,0 +1,150 @@
+<!-- meta: sc=SC-24 | name=Tạo và phê duyệt phiên bản biểu suất | group=I · 完納奨励金 | status=built -->
+<section class="wf-screen" id="SC-24" data-sc="SC-24" data-name="Tạo và phê duyệt phiên bản biểu suất" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-24 · Tạo và phê duyệt phiên bản biểu suất</h2>
+    <p class="wf-screen__meta">
+      <b>SCR023_RuleVersionNew</b> (Form, route <b>/incentive/rules/new</b>) +
+      <b>SCR024_RuleVersionDetail</b> (Detail, route <b>/incentive/rules/[id]</b>) ·
+      actor: quản trị rule (ROLE-RULE-ADMIN), maker và checker là hai người khác nhau ·
+      <b>FE-031</b> · <span class="wf-tag">Đã dựng</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">SCR023 · TẠO — /incentive/rules/new</p>
+    <div class="wf-f">
+      <label class="wf-f__l">Ngày hiệu lực <span class="req">*</span></label>
+      <div class="wf-f__i">2026-10-01</div>
+      <p class="wf-f__h">
+        Gợi ý dưới input: "Phải là một ngày trong tương lai (sau hôm nay)." Client <b>không</b> đặt
+        giới hạn ngày nhỏ nhất — chọn được ngày quá khứ rồi mới bị server trả <b>422</b>: "Ngày hiệu
+        lực phải ở tương lai." / 「発効日は未来の日付である必要があります。」
+      </p>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Ghi chú (tùy chọn)</label>
+      <div class="wf-f__i">Điều chỉnh theo thoả thuận quý IV</div>
+      <p class="wf-f__h">Rỗng thì lưu là không có ghi chú. Không có validation nào ở client.</p>
+    </div>
+    <p style="margin:13px 0 0;">
+      <span class="wf-b">Tạo phiên bản</span>
+      <span class="wf-b wf-b--off">Tạo phiên bản (khi chưa nhập ngày hiệu lực)</span>
+    </p>
+    <p class="wf-f__h" style="margin-top:9px;">
+      Không hiện trên màn và không nhập được: số phiên bản (server sinh bằng số lớn nhất + 1),
+      trạng thái (server ghi cứng "chờ duyệt"), <b>nội dung biểu suất</b> (110/100 cố định trong
+      code, cố ý không lộ ra UI) và người tạo (lấy từ phiên đăng nhập).
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">SCR024 · PHÊ DUYỆT VÀ ROLLBACK — /incentive/rules/[id]</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Phiên bản</label>
+        <div class="wf-f__i wf-f__i--ro">v4</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày hiệu lực</label>
+        <div class="wf-f__i wf-f__i--ro">2026-10-01</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái</label>
+        <div class="wf-f__i wf-f__i--ro">Chờ duyệt</div>
+        <p class="wf-f__h">5 nhãn: Chờ duyệt · Đang hiệu lực · Đã rollback · Đã bị thay thế · Đã duyệt, chờ tới ngày hiệu lực.</p>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Người tạo</label>
+        <div class="wf-f__i wf-f__i--ro">Người dùng D</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người duyệt</label>
+        <div class="wf-f__i wf-f__i--ro">—</div>
+      </div>
+    </div>
+
+    <p class="wf-box__t" style="margin-top:15px;">Thao tác — trường hợp bạn KHÔNG phải người tạo</p>
+    <p style="margin:0 0 11px;"><span class="wf-b">Phê duyệt</span></p>
+    <div class="wf-f">
+      <label class="wf-f__l">Khôi phục về phiên bản <span class="req">*</span></label>
+      <div class="wf-f__i">v2 (2026-08-01) ▾</div>
+      <p class="wf-f__h">
+        Ứng viên do server lọc: khác phiên bản đang mở, và trạng thái phải là đang hiệu lực hoặc đã
+        rollback. Chọn một bản <b>chờ duyệt</b> làm đích → <b>422</b> "Phiên bản đích không hợp lệ để
+        rollback." — nếu cho, một bản chưa ai duyệt sẽ thành đang hiệu lực mà bỏ qua hẳn cổng
+        maker-checker.
+      </p>
+    </div>
+    <p style="margin:0;"><span class="wf-b wf-b--danger">Rollback</span></p>
+    <p class="wf-f__h">Nút Phê duyệt chỉ render khi trạng thái là chờ duyệt; nút Rollback chỉ render khi trạng thái là đang hiệu lực.</p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">SCR024 · Thao tác — trường hợp bạn LÀ người tạo (maker-checker)</p>
+    <p style="font-size:11.5px; color:var(--g6); margin:0 0 9px;">
+      Chờ duyệt: <b>"Bạn không thể phê duyệt phiên bản do chính mình tạo."</b><br>
+      Đang hiệu lực: <b>"Bạn không thể rollback phiên bản do chính mình tạo."</b><br>
+      Card Thao tác vẫn render, nhưng chỉ chứa ghi chú — không có nút nào.
+    </p>
+    <p style="margin:0;">
+      <span class="wf-b wf-b--off">Phê duyệt</span>
+      <span class="wf-b wf-b--off">Rollback</span>
+    </p>
+    <p class="wf-f__h">
+      Ẩn nút <b>chỉ là gợi ý</b>. Gọi API trực tiếp vẫn bị chặn: <b>403
+      <code>SELF_APPROVAL</code></b> khi tự duyệt, <b>403 <code>SELF_ROLLBACK</code></b> khi tự
+      rollback. Đây là ràng buộc kiến trúc <code>GOV-RULE-01</code> — cùng một luật với SC-21 — không
+      phải quy tắc trình bày; 403 mới là biên giới thật. Bản thân maker-checker <b>không</b> được cài
+      ở cơ sở dữ liệu, chỉ ở tầng ứng dụng.<br>
+      Riêng rollback: kiểm người tạo của <b>phiên bản đang bị hạ cấp</b>, không phải của phiên bản
+      đích. Spec gốc không nói rõ, code đã chọn và ghi lý do.<br>
+      Hai tài khoản demo tách đôi (một maker, một checker) là cố ý, không phải trùng lặp.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái — SCR023 (tạo)</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng (mặc định)</h4><p>Form trống, nút tạo vô hiệu cho tới khi nhập ngày hiệu lực.</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4><p>Khung trang stream dần; lỗi từ điển i18n rơi vào error boundary, có nút tải lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-RULE-ADMIN → trang <b>404</b>; endpoint tạo cũng 404.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Nút vô hiệu kèm <code>aria-busy</code>.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>422 ngày không ở tương lai · <b>409</b> hai người tạo cùng lúc trùng số phiên bản — 409 hiện thông báo chung, người dùng không biết là do đua nhau và nên thử lại.</p></div>
+      <div class="wf-state"><h4>Gửi xong</h4><p>Điều hướng về danh sách SC-23.</p></div>
+      <div class="wf-state"><h4>Read-only vì lock (423)</h4><p>Không áp dụng — bảng phiên bản ngoài 4 bảng mang trigger chặn-sau-lock.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái — SCR024 (chi tiết)</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Không tìm thấy</h4><p>Id không tồn tại → trang <b>404</b>.</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4><p>Khung trang stream dần; truy vấn lỗi rơi vào error boundary.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-RULE-ADMIN → trang <b>404</b>.</p></div>
+      <div class="wf-state"><h4>Chờ duyệt, được duyệt</h4><p>Người xem khác người tạo → card Thao tác có nút Phê duyệt.</p></div>
+      <div class="wf-state"><h4>Chờ duyệt, tự tạo</h4><p>Card Thao tác chỉ chứa ghi chú "Bạn không thể phê duyệt phiên bản do chính mình tạo." Gọi API → <b>403</b>.</p></div>
+      <div class="wf-state"><h4>Đang hiệu lực, rollback được</h4><p>Nút Rollback cùng select phiên bản đích.</p></div>
+      <div class="wf-state"><h4>Đang hiệu lực, tự tạo</h4><p>Ghi chú "Bạn không thể rollback phiên bản do chính mình tạo." Gọi API → <b>403</b>.</p></div>
+      <div class="wf-state"><h4>Không còn gì để làm</h4><p>Đã rollback, hoặc đang hiệu lực nhưng đã bị thay thế → <b>không render</b> card Thao tác.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Nút vô hiệu kèm <code>aria-busy</code>.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>403 tự duyệt / tự rollback · 404 không tìm thấy · <b>409</b> "Phiên bản này đã được xử lý trước đó." hoặc "Phiên bản này hiện không ở trạng thái đang hiệu lực." · 422 phiên bản đích không hợp lệ.</p></div>
+      <div class="wf-state"><h4>Duyệt xong nhưng chưa tới ngày hiệu lực</h4><p>Trạng thái là đang hiệu lực nhưng nhãn hiển thị là "Đã duyệt, chờ tới ngày hiệu lực", và hệ thống vẫn chưa chọn nó. <b>Số thưởng không đổi ngay khi bấm Phê duyệt.</b></p></div>
+      <div class="wf-state"><h4>Rollback nửa đường</h4><p>Không có transaction: hạ cấp xong mà nâng cấp lỗi thì bù ngược bằng một lần ghi thứ ba. Nếu chính lần bù đó lỗi, hệ thống ở trạng thái không có phiên bản nào đang hiệu lực cho tới khi có người sửa tay.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> chỉ ROLE-RULE-ADMIN vào được cả hai route; 6 vai trò còn lại nhận trang
+    <b>404</b> và cả ba endpoint (tạo, phê duyệt, rollback) cũng 404. Trong ROLE-RULE-ADMIN, điều
+    kiện không phải "vai trò nào" mà là <b>người duyệt phải khác người tạo</b>. Chặn ghi ở cơ sở dữ
+    liệu chỉ tới mức vai trò; maker-checker nằm ở tầng ứng dụng.<br>
+    <b>Ghi chú:</b> trần <b>≤4 lần đổi rule/năm</b> của <code>GOV-RULE-01</code> <b>không được kiểm</b>
+    — code không đếm số phiên bản tạo trong năm, không chặn lần thứ 5; yêu cầu này chỉ tồn tại trên
+    giấy. Tạo phiên bản <b>không ghi dấu vết kiểm toán</b>, còn duyệt và rollback thì có — dấu vết
+    "ai tạo" chỉ nằm ở một cột. Đổi biểu suất thật thì phải sửa code: tạo phiên bản mới không làm số
+    thưởng thay đổi, chỉ đổi dấu phiên bản đóng lên dòng kết quả của SC-22.<br>
+    <b>Spec:</b> <a href="../spec/SC-24-tao-va-phe-duyet-phien-ban-bieu-suat.md">SC-24-tao-va-phe-duyet-phien-ban-bieu-suat.md</a>
+  </div>
+</section>

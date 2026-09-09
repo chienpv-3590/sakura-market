@@ -1,0 +1,95 @@
+<!-- meta: sc=SC-23 | name=Danh sách phiên bản biểu suất | group=I · 完納奨励金 | status=built -->
+<section class="wf-screen" id="SC-23" data-sc="SC-23" data-name="Danh sách phiên bản biểu suất" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-23 · Danh sách phiên bản biểu suất</h2>
+    <p class="wf-screen__meta">
+      <b>SCR022_RuleVersionList</b> · List · route <b>/incentive/rules</b> ·
+      actor: quản trị rule (ROLE-RULE-ADMIN), cả vai maker và vai checker · <b>FE-031</b> ·
+      <span class="wf-tag">Đã dựng</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bộ lọc (form GET về chính trang)</p>
+    <div class="wf-row">
+      <div class="wf-f" style="flex:1 1 260px;">
+        <label class="wf-f__l">Lọc theo trạng thái</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">
+          Đúng 4 lựa chọn: rỗng (tất cả) · Chờ duyệt · Đang hiệu lực · Đã rollback. <b>Không lọc
+          được</b> theo "Đã bị thay thế" và "Đã duyệt, chờ tới ngày hiệu lực" — hai nhãn đó tính tại
+          thời điểm đọc, không lưu trong dữ liệu.
+        </p>
+      </div>
+      <div style="flex:0 0 auto; align-self:flex-start; padding-top:17px;">
+        <span class="wf-b wf-b--2">Lọc</span>
+        <span class="wf-b">Tạo phiên bản mới</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Danh sách phiên bản — sắp theo số phiên bản giảm dần, không phân trang</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Phiên bản</th><th>Ngày hiệu lực</th><th>Trạng thái</th><th>Người tạo</th><th>Người duyệt</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#SC-24">v4</a></td><td>2026-10-01</td>
+            <td><span class="wf-tag">Chờ duyệt</span></td><td>Người dùng D</td><td>—</td>
+          </tr>
+          <tr>
+            <td><a href="#SC-24">v3</a></td><td>2026-09-01</td>
+            <td><span class="wf-tag">Đang hiệu lực</span></td><td>Người dùng D</td><td>Người dùng E</td>
+          </tr>
+          <tr>
+            <td><a href="#SC-24">v2</a></td><td>2026-08-01</td>
+            <td><span class="wf-tag">Đã bị thay thế</span></td><td>Người dùng D</td><td>Người dùng E</td>
+          </tr>
+          <tr>
+            <td><a href="#SC-24">v1</a></td><td>2026-07-01</td>
+            <td><span class="wf-tag">Đã rollback</span></td><td>Người dùng E</td><td>Người dùng D</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Chỉ 3 giá trị được lưu trong dữ liệu: chờ duyệt · đang hiệu lực · đã rollback. Hai nhãn
+      <b>"Đã bị thay thế"</b> và <b>"Đã duyệt, chờ tới ngày hiệu lực"</b> tính tại thời điểm đọc, nên
+      nhãn của một dòng <b>tự đổi khi qua ngày</b> mà không ai ghi gì.<br>
+      Nhiều dòng "đang hiệu lực" cùng lúc là bình thường, không phải lỗi dữ liệu: hệ thống luôn chọn
+      dòng có ngày hiệu lực lớn nhất mà đã tới, những dòng còn lại được dán nhãn "đã bị thay thế".<br>
+      Không hiện trên màn: nội dung biểu suất. Biểu suất 110/100 cố định trong code, phần lưu kèm
+      phiên bản chỉ là metadata hiển thị và kiểm toán.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4><p>"Chưa có phiên bản biểu suất nào." Vẫn tạo được phiên bản mới — màn không cần dữ liệu tiền đề.</p></div>
+      <div class="wf-state"><h4>Rỗng do lọc</h4><p>Có dữ liệu nhưng lọc không khớp — dùng <b>cùng một</b> trạng thái rỗng, <b>không phân biệt</b> với "chưa có gì". Bỏ lọc để xem lại.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Server Component đang render, khung trang stream dần.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Truy vấn danh sách lỗi — error boundary, có nút tải lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-RULE-ADMIN → trang <b>404</b>; API danh sách cũng 404.</p></div>
+      <div class="wf-state"><h4>Lọc giá trị lạ</h4><p>Trên trang: bỏ lọc, hiện tất cả, không báo lỗi. Qua API: trả 0 dòng. Hai đường vào cùng dữ liệu, hai hành vi khác nhau.</p></div>
+      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4><p>Không áp dụng — màn chỉ đọc, không có hành động ghi nào. Mọi thao tác ghi ở SC-24.</p></div>
+      <div class="wf-state"><h4>Read-only vì lock (423)</h4><p>Không áp dụng — bảng phiên bản không nằm trong 4 bảng mang trigger chặn-sau-lock.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> chỉ ROLE-RULE-ADMIN vào được, và chỉ đọc — 6 vai trò còn lại nhận trang
+    <b>404</b>. Mọi vai trò đang hoạt động <b>đọc</b> được bảng này, nghĩa là một tài khoản
+    ROLE-SETTLEMENT vẫn đọc được dữ liệu qua API cơ sở dữ liệu trực tiếp, chỉ không vào được trang.
+    Chặn ghi thì hẹp: insert/update chỉ ROLE-RULE-ADMIN.<br>
+    <b>Ghi chú:</b> đây là trang đích của ROLE-RULE-ADMIN (cả tài khoản maker và checker đều vào đây
+    sau khi đăng nhập) và là điểm vào của SC-24. Tên người tạo/người duyệt rơi về <b>email</b> khi
+    tên hiển thị rỗng — lệch kỷ luật của RPT-08 (rơi về id, không bao giờ email); đã ghi là điểm cần
+    sửa. Trần <b>≤4 lần đổi rule/năm</b> của <code>GOV-RULE-01</code> không được code kiểm — xem
+    SC-24.<br>
+    <b>Spec:</b> <a href="../spec/SC-23-danh-sach-phien-ban-bieu-suat.md">SC-23-danh-sach-phien-ban-bieu-suat.md</a>
+  </div>
+</section>

@@ -1,0 +1,140 @@
+<!-- meta: sc=SC-29 | name=Cấu hình thông báo | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-29" data-sc="SC-29" data-name="Cấu hình thông báo" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-29 · Cấu hình thông báo</h2>
+    <p class="wf-screen__meta">
+      Form · route <b>—</b> (đề xuất <code>/admin/notifications</code>) · actor: quản trị vận hành,
+      ánh xạ <b>ROLE-SYS-ADMIN</b> · <b>FE-040</b> · <code>FR-NOTIFY-03</code> (P1) ·
+      <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>Đề xuất thiết kế — màn này chưa tồn tại trong code.</b> Lý do ngoài phạm vi:
+    <code>FR-NOTIFY-01..03</code> — "cần hạ tầng email/queue ngoài phạm vi 11h".<br>
+    <b>Điều kiện tiền đề (mục 9 spec):</b> bảng <code>notification_rule</code> <b>chưa có</b>
+    (<code>event_type</code> unique, <code>is_enabled</code>, <code>severity</code>,
+    <code>channels text[]</code> ⊆ (<code>in_app</code>, <code>email</code>),
+    <code>recipient_roles text[]</code>, <code>recipient_user_ids uuid[]</code>,
+    <code>threshold_value</code>, <code>threshold_unit</code>, <code>send_at_jst</code>);
+    <b>lịch sử cấu hình chưa có</b> — bắt buộc vì <code>FR-NOTIFY-03</code> cấm thay đổi cấu hình làm
+    mất lịch sử gửi; <code>notification</code> và <code>notification_delivery</code> dùng chung với
+    SC-28, <b>không tạo hai bộ bảng</b>; <b>scheduler</b> cho field #9 (stack hiện tại không có);
+    và <b>hạ tầng email/queue chưa quyết</b> — hai phương án nằm ở mục 9 của SC-28.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Một dòng cấu hình cho mỗi loại event — field #1–#10 theo thứ tự spec</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Loại event</label>
+        <div class="wf-f__i wf-f__i--ro">profile sắp hết hiệu lực</div>
+        <p class="wf-f__h">#1 · read-only · CHECK theo danh sách <code>FR-NOTIFY-01</code></p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Bật thông báo <span class="req">*</span></label>
+        <div class="wf-f__i">[ ] Bật · toggle</div>
+        <p class="wf-f__h">#2 · <code>is_enabled</code>, mặc định <code>false</code></p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Phân loại <span class="req">*</span></label>
+        <div class="wf-f__i">thường ▾</div>
+        <p class="wf-f__h">#3 · <code>critical</code> / <code>thường</code>. Chọn <code>critical</code> là <b>kéo theo mốc 5 phút</b> của <code>FR-NOTIFY-02</code></p>
+      </div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Kênh gửi <span class="req">*</span></label>
+      <div class="wf-f__i">[x] in_app &nbsp;·&nbsp; [ ] email</div>
+      <p class="wf-f__h">
+        #4 · phải chọn tối thiểu một kênh. Chỉ <code>in_app</code> và <code>email</code> —
+        <b>SMS và FAX không phải kênh</b> (<code>FR-NOTIFY-01</code>). Chọn <code>email</code> khi
+        chưa có hạ tầng gửi thì hiện cảnh báo, xem trạng thái "kênh chưa khả dụng".
+      </p>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Người nhận theo vai trò <span class="req">*</span></label>
+        <div class="wf-f__i">Chọn nhiều ▾ (7 vai trò)</div>
+        <p class="wf-f__h">#5 · bắt buộc nếu không chọn #6 · chỉ 7 giá trị của CHECK trên <code>app_user.role</code></p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người nhận đích danh <span class="req">*</span></label>
+        <div class="wf-f__i">Chọn nhiều ▾ (Người tham gia A, …)</div>
+        <p class="wf-f__h">#6 · bắt buộc nếu không chọn #5 · chỉ tài khoản đang hoạt động; tài khoản đã vô hiệu thì bỏ khi gửi, không lỗi</p>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Ngưỡng</label>
+        <div class="wf-f__i">— (không đặt mặc định bịa)</div>
+        <p class="wf-f__h">#7 · số nguyên dương · bắt buộc nếu event thuộc loại có ngưỡng</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Đơn vị ngưỡng</label>
+        <div class="wf-f__i">ngày ▾</div>
+        <p class="wf-f__h">#8 · <code>ngày</code> / <code>số lượng</code> tuỳ event</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Thời điểm gửi (JST)</label>
+        <div class="wf-f__i">hh:mm</div>
+        <p class="wf-f__h">#9 · trong khung giờ dịch vụ <b>02:00–10:00 JST</b> (<code>NFR-AVL-01</code>), hoặc khai rõ là gửi ngoài khung. Luôn hiểu theo JST, không theo timezone client</p>
+      </div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Lý do thay đổi <span class="req">*</span></label>
+      <div class="wf-f__i wf-f__i--ta">Ghi vào lịch sử cấu hình…</div>
+      <p class="wf-f__h">#10 · không rỗng sau trim · rỗng thì không ghi thay đổi</p>
+    </div>
+    <p style="margin:13px 0 0;">
+      <span class="wf-b">Lưu cấu hình</span>
+      <span class="wf-b wf-b--2">Gửi thử</span>
+      <span class="wf-b wf-b--2">Xem lịch sử cấu hình</span>
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái — mục 4 spec</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4><p>Chưa có dòng cấu hình nào: liệt danh sách <code>event_type</code> với trạng thái "chưa cấu hình" + nút tạo.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Skeleton.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Thông báo lỗi + nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-SYS-ADMIN → <b>404</b> ở route, <b>403</b> khi gọi API ghi.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Form disabled + spinner.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Server từ chối hoặc CAS thất bại: lỗi tại field, giữ nguyên giá trị đang nhập.</p></div>
+      <div class="wf-state"><h4>Kênh chưa khả dụng</h4><p>Đã chọn <code>email</code> nhưng chưa có hạ tầng gửi: cảnh báo rõ — cấu hình lưu được, <b>email sẽ không gửi</b>.</p></div>
+      <div class="wf-state"><h4>Không có "read-only vì lock"</h4><p>Màn không chạm bảng bị lock ngày. Không bao giờ trả <b>423</b>.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> chỉ <b>ROLE-SYS-ADMIN</b> — 6 vai trò còn lại nhận <b>404</b> ở route và
+    <b>403</b> khi gọi API ghi. Phiên phải đủ mức xác thực theo SC-02 nếu vai trò thuộc diện bắt buộc
+    MFA. RLS đọc rộng theo FR-601 chấp nhận được ở đây (cấu hình không nhạy như nội dung thông báo);
+    chặn là ở <b>ghi</b> và ở <b>vào trang</b> — nhưng <code>recipient_user_ids</code> phơi ra ai
+    nhận cảnh báo gì, cân khi chốt policy.<br>
+    <b>Ràng buộc cứng của <code>FR-NOTIFY-03</code>:</b> "thay đổi cấu hình không làm mất lịch sử gửi
+    trong quá khứ". Nghĩa là <b>không được sửa tại chỗ kiểu ghi đè</b>: hoặc phiên bản hoá
+    <code>notification_rule</code> và log gửi trỏ tới <code>rule_version_id</code> (cùng khuôn
+    <code>incentive_rule_version</code>), hoặc log gửi giữ snapshot cấu hình dạng jsonb (cùng khuôn
+    cột <code>lines</code> của <code>accounting_export_batch</code>). <b>Chốt ở ADR.</b><br>
+    <b>Quyết định hạ tầng thuộc ADR, không thuộc màn này.</b> SC-29 <b>không tự quyết thay</b> SC-28:
+    hai phương án (in-app polling vs email + queue thật) nằm ở mục 9 của SC-28. Wireframe này vẽ
+    được phần giao diện chung của cả hai — cấu hình kênh <code>email</code> mà không có hạ tầng gửi
+    thì màn bán một lời hứa rỗng, nên trạng thái "kênh chưa khả dụng" là bắt buộc, không phải trang
+    trí. Riêng field #9 (<code>send_at_jst</code>) khiến <b>cả phương án in-app cũng không đủ</b>:
+    gửi theo thời điểm cần một scheduler chạy ngoài request, stack hiện tại không có.<br>
+    <b>Ngưỡng đang bị đặt hai chỗ:</b> <code>EXPIRY_WARNING_DAYS = 30</code> là hằng số cứng trong
+    RPT-03. Nếu SC-29 cấu hình được ngưỡng cảnh báo hết hiệu lực thì <b>phải bỏ hằng số đó</b> —
+    hai nguồn chân lý sẽ lệch.<br>
+    <b>Giả định cần chốt:</b> (1) "quản trị vận hành" ánh xạ sang ROLE-SYS-ADMIN — hệ có 7 vai trò,
+    không vai trò nào tên vậy; (2) ngưỡng mặc định từng event — <b>RFP không cho một con số nào</b>,
+    con số 30 hiện có là mặc định prototype; (3) <code>send_at_jst</code> mặc định trong khung
+    02:00–10:00 JST; (4) một dòng cho mỗi <code>event_type</code>, không tách theo vai trò; (5) bắt
+    buộc <code>reason</code> khi sửa — <code>FR-NOTIFY-03</code> không đòi, chỉ đòi không mất lịch sử
+    gửi.<br>
+    <b>Ghi chú:</b> cấu hình bật cho một event <b>không bao giờ phát sinh</b> (SC-07/SC-17/SC-19 chưa
+    dựng) sẽ im lặng — UI phải cho thấy điều đó, không để quản trị tưởng đã hoạt động. Không có
+    transaction xuyên bảng: ghi dòng lịch sử trước, rồi CAS bảng chính.<br>
+    <b>Spec:</b> <a href="../spec/SC-29-cau-hinh-thong-bao.md">SC-29-cau-hinh-thong-bao.md</a>
+  </div>
+</section>

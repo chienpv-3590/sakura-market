@@ -1,0 +1,187 @@
+<!-- meta: sc=SC-19 | name=Quản lý tranh chấp | group=G · Đối chiếu và lock | status=todo -->
+<section class="wf-screen" id="SC-19" data-sc="SC-19" data-name="Quản lý tranh chấp" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-19 · Quản lý tranh chấp</h2>
+    <p class="wf-screen__meta">
+      <b>— (chưa dựng)</b> · List/Detail · route đề xuất <b>/disputes</b> và <b>/disputes/[id]</b> ·
+      actor: bộ phận đối chiếu (đề xuất ROLE-SETTLEMENT) · <b>FE-027</b> ·
+      <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    CHƯA THI CÔNG — toàn bộ field, validation và trạng thái dưới đây là <b>đề xuất thiết kế</b>.
+    Không có bảng <code>dispute</code>, không có bảng <code>dispute_update</code>, không có endpoint
+    nào trong repo. Đây là điều kiện để RPT-09 bỏ được <code>isMock</code>.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Bộ lọc danh sách</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">Tập giá trị chưa chốt — giả định #1 của spec. RFP không liệt.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ <span class="req">*</span></label>
+        <div class="wf-f__i">2026-09-08</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Nguồn</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h"><code>aitai</code> / <code>seri</code> / <code>delivery</code> — 3 giá trị của view đối chiếu.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người tham gia</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+      </div>
+    </div>
+    <p style="margin:0;"><span class="wf-b wf-b--off">Lọc</span> <span class="wf-b wf-b--2">Mở tranh chấp mới</span></p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Danh sách tranh chấp</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Ngày nghiệp vụ</th><th>Nguồn</th><th>Người tham gia</th><th>Nguyên nhân</th>
+            <th>Người phụ trách</th><th>Ngày dự kiến</th><th>Trạng thái</th>
+            <th>Tồn đọng (ngày)</th><th>Quá hạn</th><th>Chênh lệch</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-09-08</td><td>aitai · TXN-0001</td><td>Người tham gia A</td>
+            <td>Lệch số lượng khi rà cuối ngày</td><td>Người dùng B</td><td>2026-09-11</td>
+            <td><span class="wf-tag">Đang xử lý</span></td><td>1</td><td>—</td><td>−12.00</td>
+          </tr>
+          <tr>
+            <td>2026-09-05</td><td>delivery · SHP-0001</td><td>Người tham gia B</td>
+            <td>Người nhận không xác nhận lần giao thứ hai</td><td>Người dùng C</td><td>2026-09-07</td>
+            <td><span class="wf-tag">Đang xử lý</span></td><td>4</td>
+            <td><span class="wf-tag">Quá hạn dự kiến</span></td><td>không áp dụng</td>
+          </tr>
+          <tr>
+            <td>2026-09-02</td><td>seri · SERI-0001</td><td>Người tham gia C</td>
+            <td>Ghi nhận giá せり sai bảng</td><td>Người dùng B</td><td>2026-09-04</td>
+            <td><span class="wf-tag">Đã đóng</span></td><td>7</td><td>—</td><td>không áp dụng</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Cột chênh lệch chỉ có nghĩa với nguồn <code>aitai</code>. Với <code>seri</code> và
+      <code>delivery</code> phải ghi "không áp dụng", tuyệt đối không hiện "0".
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Chi tiết / mở tranh chấp — thứ tự field theo spec § 3</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái <span class="req">*</span></label>
+        <div class="wf-f__i">Đang xử lý ▾</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ <span class="req">*</span></label>
+        <div class="wf-f__i">2026-09-08</div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Nguồn <span class="req">*</span></label>
+        <div class="wf-f__i">aitai ▾</div>
+        <p class="wf-f__h">Cặp (nguồn, id) phải tồn tại trong view đối chiếu — kiểm ở tầng ứng dụng, view không đặt được khoá ngoại.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Người tham gia</label>
+        <div class="wf-f__i">Người tham gia A ▾</div>
+      </div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Nguyên nhân <span class="req">*</span></label>
+      <div class="wf-f__i wf-f__i--ta">Lệch số lượng giữa phiếu 相対 và bản ghi giao hàng.</div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Người phụ trách <span class="req">*</span></label>
+        <div class="wf-f__i">Người dùng B ▾</div>
+        <p class="wf-f__h">Chỉ tài khoản đang hoạt động. Người phụ trách bị vô hiệu giữa lúc tranh chấp mở thì vẫn phải gán lại được.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày dự kiến xử lý <span class="req">*</span></label>
+        <div class="wf-f__i">2026-09-11</div>
+        <p class="wf-f__h">Nhập tay. RFP không cho một con số SLA nào — spec cố ý không đặt ngưỡng.</p>
+      </div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Kết quả cuối cùng <span class="req">*</span></label>
+      <div class="wf-f__i wf-f__i--ta">Bắt buộc khi chuyển sang trạng thái đóng. Rỗng lúc đóng → 422.</div>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Ảnh/chứng từ</label>
+      <div class="wf-f__i wf-f__i--ro">[ Chọn tệp ] — chưa chọn tệp nào</div>
+      <p class="wf-f__h">Tối đa 5MB, 4 loại MIME. Hàng rào thật ở server; <code>accept</code> của client chỉ là gợi ý.</p>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Tồn đọng (ngày)</label>
+        <div class="wf-f__i wf-f__i--ro">1 — dẫn xuất, chỉ đọc</div>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Quá hạn</label>
+        <div class="wf-f__i wf-f__i--ro">Không — dẫn xuất, chỉ đọc</div>
+      </div>
+    </div>
+    <p style="margin:0;">
+      <span class="wf-b">Lưu tiến độ</span>
+      <span class="wf-b wf-b--2">Đóng tranh chấp</span>
+      <span class="wf-b wf-b--2">Tạo yêu cầu điều chỉnh (SC-20)</span>
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Lịch sử cập nhật — bảng con append-only</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Thời điểm</th><th>Từ trạng thái</th><th>Đến trạng thái</th><th>Ghi chú</th><th>Người ghi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2026-09-09 09:20</td><td>Mới mở</td><td>Đang xử lý</td><td>Đã liên hệ người tham gia</td><td>Người dùng B</td></tr>
+          <tr><td>2026-09-08 17:05</td><td>—</td><td>Mới mở</td><td>Phát hiện khi rà số cuối ngày</td><td>Người dùng A</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">Chỉ hiện tên hiển thị, không bao giờ hiện email người phụ trách hay người ghi.</p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Rỗng</h4><p>"Không có tranh chấp nào khớp điều kiện". Vẫn mở được tranh chấp mới — màn không cần dữ liệu tiền đề.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Skeleton bảng.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Khối lỗi kèm nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Trang <b>404</b>, không phải 403 — cố ý không lộ sự tồn tại tài nguyên.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Nút vô hiệu, không cho gửi lần hai.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Thông báo trên form, giữ nguyên dữ liệu đã nhập.</p></div>
+      <div class="wf-state"><h4>Đã đóng</h4><p>Chi tiết ở chế độ đọc, hiện kết quả cuối cùng và toàn bộ lịch sử. Mở lại là giả định chưa chốt (#2).</p></div>
+      <div class="wf-state"><h4>Quá hạn dự kiến</h4><p>Ngày dự kiến đã qua mà chưa đóng — nhãn cảnh báo trên dòng.</p></div>
+      <div class="wf-state"><h4>Hai người đóng cùng lúc</h4><p>CAS trên trạng thái là điểm serialize; người thua nhận <b>409</b>, không ghi đè kết quả của người thắng.</p></div>
+      <div class="wf-state"><h4>KHÔNG có read-only vì lock</h4><p>Màn này <b>không</b> trả 423. Tranh chấp gần như luôn nổi lên sau khi lock, khoá theo ngày nghiệp vụ sẽ làm nó không ghi được đúng lúc cần nhất.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> đề xuất mở và đóng thuộc ROLE-SETTLEMENT; vai trò được gán làm người phụ trách
+    (giao hàng, giao dịch) chỉ cập nhật tiến độ, không đóng. Mọi vai trò còn lại nhận <b>404</b>.
+    Ai mở / ai xử lý / ai đóng vẫn là giả định #4, chưa phải quyết định.<br>
+    <b>Ghi chú:</b> không đề xuất xoá tranh chấp; mỗi lần đổi trạng thái sinh một dòng lịch sử.
+    Đường dẫn file đính kèm không bao giờ ra CSV, mọi link xem đi qua signed URL ngắn hạn do server
+    sinh. Tranh chấp và điều chỉnh hậu-lock là hai luồng khác nhau — tranh chấp có thể dẫn tới một
+    yêu cầu điều chỉnh nhưng không thay thế nó.<br>
+    <b>Spec:</b> <a href="../spec/SC-19-quan-ly-tranh-chap.md">SC-19-quan-ly-tranh-chap.md</a>
+  </div>
+</section>

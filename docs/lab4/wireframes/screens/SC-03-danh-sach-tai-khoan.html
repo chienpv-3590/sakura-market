@@ -1,0 +1,156 @@
+<!-- meta: sc=SC-03 | name=Danh sách tài khoản | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-03" data-sc="SC-03" data-name="Danh sách tài khoản" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-03 · Danh sách tài khoản</h2>
+    <p class="wf-screen__meta">
+      <b>— (chưa dựng)</b> · List · route đề xuất <b>/admin/accounts</b> · actor: Quản trị hệ thống
+      (ROLE-SYS-ADMIN) · <b>FE-003</b> · <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>CHƯA THI CÔNG.</b> Đây là <b>đề xuất thiết kế</b>. Khác các màn mức 3 còn lại: bảng
+    <code>app_user</code> <b>đã tồn tại thật</b>, nên phần cột danh sách bám được cột thật; chỉ
+    phần <b>hành động</b> (tạo, vô hiệu, mở lại, mở khoá) là chưa có. Là màn bảo mật nên wireframe
+    chỉ vẽ khung và nhãn, không vẽ cấu hình khoá hay bí mật của tài khoản.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">3 · Cột danh sách (field 1–8, đúng thứ tự spec)</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Tên hiển thị</th>
+            <th>Email</th>
+            <th>Vai trò</th>
+            <th>Đang hoạt động</th>
+            <th>Khóa tạm</th>
+            <th>Số lần sai liên tiếp</th>
+            <th>Ngày tạo</th>
+            <th>Trạng thái MFA</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Quản trị A</td>
+            <td>quantri-a@vi-du.local</td>
+            <td><span class="wf-tag">ROLE-SYS-ADMIN</span></td>
+            <td><span class="wf-tag">Có</span></td>
+            <td>—</td>
+            <td>0</td>
+            <td>2026-01-05</td>
+            <td><span class="wf-tag">Chưa có nguồn</span></td>
+            <td><span class="wf-b wf-b--2">Mở chi tiết</span></td>
+          </tr>
+          <tr>
+            <td>Nhân viên B</td>
+            <td>nhanvien-b@vi-du.local</td>
+            <td><span class="wf-tag">ROLE-INTAKE</span></td>
+            <td><span class="wf-tag">Có</span></td>
+            <td><span class="wf-tag">Đang khóa</span></td>
+            <td>5</td>
+            <td>2026-02-11</td>
+            <td><span class="wf-tag">Chưa có nguồn</span></td>
+            <td><span class="wf-b wf-b--2">Mở khoá tạm</span></td>
+          </tr>
+          <tr>
+            <td>Nhân viên C</td>
+            <td>nhanvien-c@vi-du.local</td>
+            <td><span class="wf-tag">ROLE-SETTLEMENT</span></td>
+            <td><span class="wf-tag">Đã vô hiệu</span></td>
+            <td>—</td>
+            <td>0</td>
+            <td>2026-03-02</td>
+            <td><span class="wf-tag">Chưa có nguồn</span></td>
+            <td><span class="wf-b wf-b--2">Mở lại</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Cột 8 <code>mfaStatus</code> <b>chưa có nguồn</b> — phụ thuộc SC-02. Vẽ ô nhưng phải nhìn ra
+      là chưa có dữ liệu, không được để trống như thể "không bật MFA".
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">3 · Bộ lọc (field 9–11) — trên bố cục thật, khối này nằm trên bảng</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Lọc theo vai trò</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h"><code>filterRole</code> · chỉ 7 giá trị của CHECK trên
+          <code>app_user.role</code>. Giá trị lạ thì bỏ qua bộ lọc, không 500.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Lọc theo trạng thái</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h"><code>filterActive</code> · tất cả / đang hoạt động / đã vô hiệu.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Tìm theo tên hoặc email</label>
+        <div class="wf-f__i">Nhập tên hoặc email</div>
+        <p class="wf-f__h"><code>keyword</code> · trim; escape ký tự wildcard trước khi ghép truy
+          vấn. Độ dài tối đa là giả định cần chốt.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Hành động của màn — toàn bộ là đề xuất</p>
+    <p style="margin:0;">
+      <span class="wf-b">Tạo tài khoản</span>
+      <span class="wf-b wf-b--2">Mở khoá tạm</span>
+      <span class="wf-b wf-b--2">Mở lại tài khoản</span>
+      <span class="wf-b wf-b--danger">Vô hiệu tài khoản</span>
+    </p>
+    <p class="wf-f__h">
+      Vô hiệu và mở lại đều đòi <code>reason</code> (đề xuất bắt buộc) và ghi một dòng lịch sử
+      quyền. <b>Đổi vai trò không ở đây</b> — cần trang before/after nên thuộc SC-04.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state">
+        <h4>Rỗng</h4>
+        <p>Bộ lọc không khớp tài khoản nào: "Không có tài khoản khớp điều kiện" + nút xoá lọc.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang tải</h4>
+        <p>Skeleton bảng trong lúc đọc <code>app_user</code>.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Lỗi tải</h4>
+        <p>Truy vấn thất bại: thông báo lỗi + nút thử lại.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Không có quyền</h4>
+        <p>Vai trò khác ROLE-SYS-ADMIN → <b>404</b> (không phải 403, không lộ tài nguyên).</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang gửi</h4>
+        <p>Đúng dòng đang vô hiệu / mở lại / mở khoá bị disabled, có spinner.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Gửi lỗi</h4>
+        <p>Ghi thất bại hoặc bị RLS chặn: toast lỗi, danh sách giữ nguyên giá trị cũ.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> chỉ ROLE-SYS-ADMIN vào được; 6 vai trò còn lại nhận <b>404</b> ở route và
+    <b>403</b> khi gọi API ghi. Nhưng <b>404 ở tầng route là toàn bộ lớp chắn</b>: RLS
+    <code>read_all_active_users</code> cho mọi vai trò active đọc <code>app_user</code> (FR-601, có
+    chủ đích), nên gọi thẳng PostgREST vẫn đọc được email và trạng thái khóa của mọi tài khoản.<br>
+    <b>Ghi chú:</b> màn không chạm 4 bảng bị lock ngày → <b>không có</b> trạng thái read-only vì
+    lock, không bao giờ 423. Chặn cứng ở API: không tự vô hiệu chính mình, không vô hiệu
+    ROLE-SYS-ADMIN cuối cùng. Tạo tài khoản chạm ba nơi mà không có transaction xuyên bảng — cần
+    ghi bù hoặc một database function.<br>
+    <b>Spec:</b> <a href="../spec/SC-03-danh-sach-tai-khoan.md">SC-03-danh-sach-tai-khoan.md</a>
+  </div>
+</section>

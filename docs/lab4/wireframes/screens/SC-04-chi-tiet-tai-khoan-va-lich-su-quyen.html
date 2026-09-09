@@ -1,0 +1,177 @@
+<!-- meta: sc=SC-04 | name=Chi tiết tài khoản và lịch sử quyền | group=K · Quản trị và hệ thống | status=todo -->
+<section class="wf-screen" id="SC-04" data-sc="SC-04" data-name="Chi tiết tài khoản và lịch sử quyền" hidden>
+  <div class="wf-screen__hd">
+    <h2>SC-04 · Chi tiết tài khoản và lịch sử quyền</h2>
+    <p class="wf-screen__meta">
+      <b>— (chưa dựng)</b> · Detail · route đề xuất <b>/admin/accounts/[id]</b> · actor: Quản trị
+      hệ thống (ROLE-SYS-ADMIN) · <b>FE-003</b> · <span class="wf-tag">Chưa thi công</span>
+    </p>
+  </div>
+
+  <p class="wf-todo">
+    <b>CHƯA THI CÔNG.</b> Đề xuất thiết kế. Bảng lịch sử quyền
+    (<code>app_user_permission_history</code>) <b>chưa tồn tại</b> — DDL đề xuất ở mục 9 của spec.
+    Ràng buộc cứng: Screen List LAB-1 và <code>FR-IAM-02</code> đòi <b>bắt buộc hiển thị
+    before/after</b>. Là màn bảo mật nên chỉ vẽ khung và nhãn, không vẽ chi tiết khoá hay bí mật.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">3.1 · Thông tin tài khoản (field 1–8)</p>
+    <div class="wf-row">
+      <div>
+        <div class="wf-f">
+          <label class="wf-f__l">Email</label>
+          <div class="wf-f__i wf-f__i--ro">nhanvien-b@vi-du.local</div>
+          <p class="wf-f__h"><code>email</code> · read-only. Không cho đổi ở màn này — đổi email là
+            luồng của provider.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Tên hiển thị</label>
+          <div class="wf-f__i">Nhân viên B</div>
+          <p class="wf-f__h"><code>displayName</code> · không bắt buộc (cột nullable), trim. Độ dài
+            tối đa là giả định cần chốt.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Vai trò <span class="req">*</span></label>
+          <div class="wf-f__i">ROLE-INTAKE ▾</div>
+          <p class="wf-f__h"><code>role</code> · đúng 7 giá trị của CHECK trên
+            <code>app_user.role</code>; CHECK của Postgres là chốt cuối.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Đang hoạt động <span class="req">*</span></label>
+          <div class="wf-f__i">◉ Bật · ○ Tắt</div>
+          <p class="wf-f__h"><code>isActive</code> · toggle. Chặn nếu là ROLE-SYS-ADMIN cuối đang
+            hoạt động: "Không thể vô hiệu tài khoản quản trị cuối cùng."</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Lý do thay đổi <span class="req">*</span></label>
+          <div class="wf-f__i wf-f__i--ta">Bắt buộc (đề xuất) — rỗng thì không ghi thay đổi</div>
+          <p class="wf-f__h"><code>reason</code> · vào bảng lịch sử quyền, không vào
+            <code>app_user</code>.</p>
+        </div>
+      </div>
+      <div>
+        <div class="wf-f">
+          <label class="wf-f__l">Khóa tạm</label>
+          <div class="wf-f__i wf-f__i--ro">Đang khóa · 5 lần sai liên tiếp</div>
+          <p class="wf-f__h"><code>lockState</code> · read-only, dẫn xuất từ
+            <code>locked_until</code> và <code>failed_login_count</code>.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Trạng thái MFA</label>
+          <div class="wf-f__i wf-f__i--ro">Chưa có nguồn — phụ thuộc SC-02</div>
+          <p class="wf-f__h"><code>mfaStatus</code> · read-only. Ô vẫn vẽ nhưng phải nhìn ra là
+            chưa có dữ liệu.</p>
+        </div>
+        <div class="wf-f">
+          <label class="wf-f__l">Ngày tạo</label>
+          <div class="wf-f__i wf-f__i--ro">2026-02-11</div>
+          <p class="wf-f__h"><code>createdAt</code> · read-only.</p>
+        </div>
+        <p style="margin:13px 0 0;">
+          <span class="wf-b">Lưu thay đổi quyền</span>
+          <span class="wf-b wf-b--2">Mở khoá tạm</span>
+          <span class="wf-b wf-b--danger">Vô hiệu</span>
+        </p>
+        <p class="wf-f__h">Sửa tên hiển thị <b>không</b> phải thay đổi quyền → chỉ vào
+          <code>audit_log</code>, không sinh dòng lịch sử quyền.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">3.2 · Lịch sử quyền — before/after, bắt buộc theo FR-IAM-02 (field 9–14)</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr>
+            <th>Thời điểm</th>
+            <th>Loại thay đổi</th>
+            <th>Trước</th>
+            <th>Sau</th>
+            <th>Lý do</th>
+            <th>Người thực hiện</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-02-11 09:14</td>
+            <td><span class="wf-tag">cấp</span></td>
+            <td>—</td>
+            <td>ROLE-INTAKE · đang hoạt động</td>
+            <td>Nhận việc tại quầy tiếp nhận</td>
+            <td>Quản trị A</td>
+          </tr>
+          <tr>
+            <td>2026-05-20 15:02</td>
+            <td><span class="wf-tag">đổi vai trò</span></td>
+            <td>ROLE-INTAKE · đang hoạt động</td>
+            <td>ROLE-JUDGE · đang hoạt động</td>
+            <td>Điều chuyển sang bộ phận 目利き</td>
+            <td>Quản trị A</td>
+          </tr>
+          <tr>
+            <td>2026-08-03 11:40</td>
+            <td><span class="wf-tag">tạm ngừng</span></td>
+            <td>ROLE-JUDGE · đang hoạt động</td>
+            <td>ROLE-JUDGE · đã vô hiệu</td>
+            <td>Nghỉ dài hạn</td>
+            <td>Quản trị A</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Loại thay đổi: <code>cấp</code> · <code>đổi vai trò</code> · <code>tạm ngừng</code> ·
+      <code>mở lại</code> · <code>mở khoá tạm</code>. Bảng <b>chỉ ghi thêm</b> — không có policy
+      update/delete, giống <code>audit_log</code> và <code>lot_attachment</code>.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Trạng thái</p>
+    <div class="wf-states">
+      <div class="wf-state">
+        <h4>Rỗng</h4>
+        <p>Khối 3.1 đầy đủ; khối 3.2 hiện "Chưa có thay đổi quyền nào". Vẫn đổi được vai trò.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang tải</h4>
+        <p>Skeleton cả hai khối trong lúc đọc <code>app_user</code> + lịch sử.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Lỗi tải</h4>
+        <p>Truy vấn thất bại: thông báo lỗi + nút thử lại.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Không có quyền</h4>
+        <p>Vai trò khác ROLE-SYS-ADMIN → <b>404</b>.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Không tìm thấy</h4>
+        <p><code>id</code> không tồn tại → <b>404</b>, cùng mã với ca trên. Có chủ đích: người xem
+          không phân biệt được hai ca.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Đang gửi</h4>
+        <p>Form disabled, spinner.</p>
+      </div>
+      <div class="wf-state">
+        <h4>Gửi lỗi</h4>
+        <p>CAS thất bại (409), thiếu lý do (422), hoặc bị chặn: lỗi tại field, giữ nguyên giá trị
+          đang nhập.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-note">
+    <b>Phân quyền:</b> chỉ ROLE-SYS-ADMIN; 6 vai trò còn lại <b>404</b> ở route, <b>403</b> khi gọi
+    API ghi. Nếu bảng lịch sử quyền dùng chung khuôn <code>read_all_active_users</code> thì mọi vai
+    trò đọc được toàn bộ lịch sử phân quyền của mọi người — phải quyết trước khi tạo bảng.<br>
+    <b>Ghi chú:</b> màn không chạm bảng bị lock ngày → <b>không có</b> trạng thái read-only vì
+    lock, không 423. Thứ tự ghi phải là <b>lịch sử trước, rồi CAS <code>app_user</code></b>; không
+    có transaction xuyên bảng nên CAS thất bại thì ghi bù một dòng huỷ, không xoá dòng đã ghi. Chặn
+    tự đổi vai trò của chính mình ra khỏi ROLE-SYS-ADMIN và chặn vô hiệu quản trị cuối cùng.<br>
+    <b>Spec:</b> <a href="../spec/SC-04-chi-tiet-tai-khoan-va-lich-su-quyen.md">SC-04-chi-tiet-tai-khoan-va-lich-su-quyen.md</a>
+  </div>
+</section>
