@@ -1,0 +1,11 @@
+# Chuan hoa line ending: repo lam viec tren Windows nhung commit LF.
+# Khong co file nay thi moi file moi sinh 1 canh bao LF->CRLF, tran mat canh bao that.
+* text=auto eol=lf
+
+# Binary: khong dung line ending
+*.xlsx binary
+*.pptx binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.ico binary
