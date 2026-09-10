@@ -2,7 +2,9 @@
 
 Tài liệu nền của bộ nộp LAB-4. Mọi tài liệu khác trong `docs/lab4/` index theo mã `SC-` ở đây.
 
-**Nguồn:** Screen List LAB-1 (`docs/sakura-market-proposal/.../[000] SakuraMarket - Screen List_VI.xlsx`),
+**Nguồn:** Screen List LAB-1 — `C:\Projects\Baitap\docs\sakura-market-proposal\01_For External\01_Estimation\01_Effort Estimation\[000] SakuraMarket - Screen List_VI.xlsx`
+(**ngoài repo `sakura-market`**, nằm ở thư mục cha `Baitap`; cùng thư mục đó có Function List,
+Feature List và User Stories — cả bốn đều là `.xlsx`, không có bản markdown trong repo),
 bảng khai LAB-3 (`docs/pham-vi-va-phan-mock.md` § 1–2), roster đọc từ code
 (`docs/generated/screen-list.md`), route thật (`src/app/**/page.tsx`).
 
