@@ -3,155 +3,192 @@
   <div class="wf-screen__hd">
     <h2>SC-08 · Tiếp nhận lô hàng</h2>
     <p class="wf-screen__meta">
-      <b>SCR007_LotIntake</b> · Form · route <b>/lots/new</b> · actor: nhân viên tiếp nhận —
-      ROLE-INTAKE · <b>FE-009, FE-013</b> · <span class="wf-tag">Đã dựng</span>
+      <b>FE-009</b> Tiếp nhận lô hàng · <b>FE-013</b> Tra cứu lô hàng và trạng thái · <b>FN-03</b>
+      Quản lý lô hàng · ưu tiên <b>P0</b> · yêu cầu <b>FR-LOT-01</b>, <b>NFR-USE-01</b> · Form ·
+      actor: nhân viên tiếp nhận · <span class="wf-tag">Đã dựng</span><br>
+      Tham chiếu prototype: <code>SCR007_LotIntake</code> · route <code>/lots/new</code>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">3 · Field nhập (1–4) — thao tác của 02:00–03:00 sáng, tại quầy</p>
-    <p class="wf-f__h" style="margin:0 0 11px;">
-      Mô tả trên màn nhắc thẳng: <b>"Tab để chuyển trường, Enter để lưu"</b>. Con trỏ tự nhảy vào
-      field đầu khi mở màn. <code>tabIndex</code> khai tường minh 1→5 nên thứ tự Tab không phụ
-      thuộc thứ tự DOM — đây là ràng buộc chức năng <code>NFR-USE-01</code>, không phải trang trí.
+    <p class="wf-box__t">Dùng được bằng bàn phím — NFR-USE-01 là yêu cầu chức năng, không phải trang trí</p>
+    <p class="wf-f__h" style="margin:0;">
+      Thao tác này diễn ra 02:00–03:00 sáng, tại quầy, người nhập không rời tay khỏi bàn phím. Màn
+      phải: đặt con trỏ vào trường đầu khi mở; khai thứ tự Tab tường minh theo thứ tự nghiệp vụ,
+      không phụ thuộc thứ tự dựng DOM; Enter ở bất kỳ trường văn bản nào cũng lưu; và <b>thông báo
+      lỗi nói đúng trường nào sai và sai thế nào</b> — một câu chung cho mọi lỗi là không đạt
+      NFR-USE-01.
     </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trường nhập — FR-LOT-01</p>
     <div class="wf-row">
       <div>
-        <div class="wf-f">
-          <label class="wf-f__l">Mặt hàng · 品目 <span class="req">*</span></label>
-          <div class="wf-f__i">Nhập tên mặt hàng &nbsp;·&nbsp; tabIndex 1</div>
-          <p class="wf-f__h"><code>item</code> · text, trim; rỗng → <b>422</b>
-            <code>invalid_request</code>.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Số kiện · 梱数 <span class="req">*</span></label>
-          <div class="wf-f__i">0 &nbsp;·&nbsp; min 1, step 1 &nbsp;·&nbsp; tabIndex 2</div>
-          <p class="wf-f__h"><code>packageCount</code> · số nguyên &gt; 0, CHECK cả ở DB.</p>
-        </div>
+        <div class="wf-f"><label class="wf-f__l">Mặt hàng · 品目 <span class="req">*</span></label>
+          <div class="wf-f__i">Nhập tên mặt hàng &nbsp;·&nbsp; Tab 1</div>
+          <p class="wf-f__h">Bắt buộc, cắt khoảng trắng hai đầu.</p></div>
+        <div class="wf-f"><label class="wf-f__l">Số kiện · 梱数 <span class="req">*</span></label>
+          <div class="wf-f__i">0 &nbsp;·&nbsp; số nguyên ≥ 1 &nbsp;·&nbsp; Tab 2</div>
+          <p class="wf-f__h">Thông tin kiện hàng mà FR-LOT-01 đòi.</p></div>
       </div>
       <div>
-        <div class="wf-f">
-          <label class="wf-f__l">Số lượng ban đầu · 初期数量 <span class="req">*</span></label>
-          <div class="wf-f__i">0.00 &nbsp;·&nbsp; min 0.01, step 0.01 &nbsp;·&nbsp; tabIndex 3</div>
-          <p class="wf-f__h"><code>initialQty</code> · <b>ba tầng kiểm lệch nhau</b>: client
-            <code>min=0.01</code>, server chỉ <code>&gt; 0</code>, DB
-            <code>numeric(12,2)</code> — <code>0.001</code> lọt server rồi vỡ CHECK thành
-            <b>500</b>, không phải 422.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Chứng từ tiếp nhận · 受付証憑</label>
-          <div class="wf-f__i">Chọn nhiều file &nbsp;·&nbsp; tabIndex 4</div>
-          <p class="wf-f__h"><code>intakeDocs</code> · <b>không bắt buộc</b>. JPEG / PNG / WEBP /
-            PDF, mỗi file ≤ 5MB; <code>accept</code> chỉ là gợi ý UX, chốt thật ở server. <b>Chưa
-            có trần số file</b> — đề xuất.</p>
-        </div>
+        <div class="wf-f"><label class="wf-f__l">Số lượng ban đầu · 初期数量 <span class="req">*</span></label>
+          <div class="wf-f__i">0.00 &nbsp;·&nbsp; &gt; 0, hai chữ số thập phân &nbsp;·&nbsp; Tab 3</div>
+          <p class="wf-f__h">Một ngưỡng duy nhất, khai ở một chỗ và áp dụng ở cả ba tầng — nhập
+            sai phải ra lỗi nhập, không được thành lỗi hệ thống.</p></div>
+        <div class="wf-f"><label class="wf-f__l">Chứng từ tiếp nhận · 受付証憑 <span class="req">*</span></label>
+          <div class="wf-f__i">Chọn tệp &nbsp;·&nbsp; Tab 4</div>
+          <p class="wf-f__h">Nghiệm thu FR-LOT-01: "lưu được các chứng từ <b>bắt buộc</b>". Ảnh
+            hoặc PDF, có trần dung lượng và trần số tệp. Loại chứng từ nào là bắt buộc:
+            <span class="wf-tag">CHƯA CHỐT</span>.</p></div>
       </div>
     </div>
-    <p style="margin:0;"><span class="wf-b">Lưu lô hàng</span> <span class="wf-f__h">tabIndex 5 · Enter ở bất kỳ field text nào cũng submit</span></p>
+    <p style="margin:0;"><span class="wf-b">Lưu lô hàng</span> <span class="wf-f__h">Tab 5</span></p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">3 · Field dẫn xuất (5–8) — server sinh, không nhập được</p>
+    <p class="wf-box__t">Trường hệ thống sinh — không nhập được</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Mã lô hàng · ロット番号</label>
+      <div class="wf-f"><label class="wf-f__l">Mã lô hàng · ロット番号</label>
         <div class="wf-f__i wf-f__i--ro">LOT-0001 (mẫu)</div>
-        <p class="wf-f__h"><code>lot_code</code> · công thức <code>LOT-YYYYMMDD-NNN</code>,
-          <code>NNN</code> = số lô đã tạo trong ngày JST + 1. Trùng thì retry <b>đúng 1 lần</b>;
-          công thức vẫn là <b>giả định chờ chốt</b>.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
-        <div class="wf-f__i wf-f__i--ro">Hôm nay theo JST</div>
-        <p class="wf-f__h"><code>business_date</code> · <b>không có field trên form, không
-          backdate được</b>. Xe về 23:50 và nhập 00:10 thì lô rơi sang ngày nghiệp vụ sau.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">SL khả dụng · 利用可能数量</label>
+        <p class="wf-f__h">Nghiệm thu FR-LOT-01: <b>mỗi lô một mã duy nhất</b>. Duy nhất phải là
+          ràng buộc ở tầng dữ liệu, không dựa vào việc thử lại. Công thức mã:
+          <span class="wf-tag">CHƯA CHỐT</span> — chủ đầu tư quyết định có nhúng ngày, chợ, hay
+          loại hàng vào mã hay không.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">Ngày nghiệp vụ hiện hành (JST)</div>
+        <p class="wf-f__h">Quyết định lô thuộc kỳ nào khi đối chiếu và lock (FR-SETTLE-01).</p></div>
+      <div class="wf-f"><label class="wf-f__l">Số lượng khả dụng · 利用可能数量</label>
         <div class="wf-f__i wf-f__i--ro">= Số lượng ban đầu</div>
-        <p class="wf-f__h"><code>available_qty</code> · sau đó <b>chỉ</b> đổi qua
-          <code>reserveLotQty</code>/<code>releaseLotQty</code>, không bao giờ qua PATCH tự do.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái · 状態</label>
-        <div class="wf-f__i wf-f__i--ro">Đã tiếp nhận (received)</div>
-        <p class="wf-f__h"><code>status</code> · 4 giá trị: received → published → traded →
-          delivered.</p>
-      </div>
+        <p class="wf-f__h">BR-LOT-02: từ đây trở đi chỉ đổi qua đường giữ / hoàn số lượng, không
+          bao giờ sửa trực tiếp.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Trạng thái · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">Tiếp nhận — bước 1/5 của FIG-011</div>
+        <p class="wf-f__h">FE-013 đòi trạng thái đi theo state machine FIG-011.</p></div>
     </div>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Card thành công — thay hẳn form, không phải toast</p>
-    <div class="wf-f">
-      <label class="wf-f__l">Mã lô hàng vừa tạo</label>
-      <div class="wf-f__i wf-f__i--ro" style="height:44px; font-size:24px; font-weight:700; color:var(--g7);">LOT-0001</div>
-      <p class="wf-f__h">Cỡ 24px bold, <code>readOnly</code>, <code>autoFocus</code> — để đọc được
-        từ xa ở quầy và dán lên lô. tabIndex 1→3 trên card này.</p>
+    <p class="wf-box__t">FIG-011 — trạng thái lô hàng, đúng NĂM trạng thái</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>#</th><th>Trạng thái</th><th>Sự kiện vào</th><th>Ai làm</th><th>Màn</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Tiếp nhận</td><td>Lô hàng đến quầy</td><td>Nhân viên tiếp nhận</td><td>SC-08 (màn này)</td></tr>
+          <tr><td>2</td><td>Đã 下見</td><td>Đăng ký 下見</td><td>Người đánh giá</td><td>SC-09</td></tr>
+          <tr><td>3</td><td>Công bố</td><td>Chuẩn bị bán</td><td>Vận hành chợ</td><td>SC-10</td></tr>
+          <tr><td>4</td><td>Đã chốt</td><td>Chốt mua bán</td><td>Vận hành giao dịch</td><td>SC-11 · SC-12 · SC-13</td></tr>
+          <tr><td>5</td><td>Hoàn tất giao hàng</td><td>Giao hàng</td><td>Vận hành giao hàng</td><td>SC-16</td></tr>
+        </tbody>
+      </table>
     </div>
-    <p style="margin:0;">
-      <span class="wf-b">Ghi 目利き</span>
-      <span class="wf-b wf-b--2">Tiếp nhận lô khác</span>
+    <p class="wf-f__h">
+      Năm trạng thái, bốn cạnh, đi một chiều. Cái phải phân biệt được là lô <b>đã tiếp nhận nhưng
+      chưa xem hàng</b> với lô <b>đã xem hàng, chờ công bố</b> — hai tình huống khác nhau ở quầy
+      lúc 03:00. Gộp hai trạng thái này là mất khả năng biết việc gì còn tồn.
     </p>
+    <p class="wf-f__h">
+      <span class="wf-tag">CHƯA CHỐT</span> RFP dùng <b>下見</b> (xem hàng trước) ở FIG-011 nhưng
+      dùng <b>目利き</b> (thẩm định) ở FR-LOT-02 và FE-010. Bảng thuật ngữ tách hai nghĩa, nhưng
+      RFP §05 lại định nghĩa 目利き là "下見 bằng mắt", và FIG-008 viết hai từ cạnh nhau. Hai
+      nghiệp vụ khác nhau hay một việc hai tên? Câu trả lời quyết định trạng thái #2 vào bằng sự
+      kiện nào và ai làm — nêu lại ở SC-09.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Kết quả sau khi lưu — thay hẳn form, không phải toast</p>
+    <div class="wf-f"><label class="wf-f__l">Mã lô hàng vừa tạo</label>
+      <div class="wf-f__i wf-f__i--ro" style="height:44px; font-size:24px; font-weight:700; color:var(--g7);">LOT-0001</div>
+      <p class="wf-f__h">Cỡ lớn, chỉ đọc, tự nhận con trỏ — để đọc được từ xa ở quầy và ghi lên
+        kiện hàng.</p></div>
+    <p style="margin:0;"><span class="wf-b">Ghi kết quả đánh giá</span> <span class="wf-b wf-b--2">Tiếp nhận lô khác</span></p>
+    <p class="wf-f__h">Hai đường tiếp: sang SC-09, hoặc nhập lô kế tiếp ngay — nhịp làm việc thật
+      là nhiều lô liên tiếp.</p>
   </div>
 
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng (mặc định)</h4>
-        <p>4 field trống, con trỏ tự vào field đầu.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải</h4>
-        <p>Không áp dụng — trang không query bảng nào, chỉ <code>requireRole</code> + dictionary.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Lỗi tải</h4>
-        <p>Query <code>app_user</code> lỗi → error boundary Next. <b>Chưa có UI riêng</b>, đề xuất.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền</h4>
-        <p>Vai trò khác ROLE-INTAKE → <b>404</b>. <b>Không có bản chỉ đọc</b>, không có
-          <code>HandoffCaption</code>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>4 input disabled, nút <code>aria-busy</code> + "Đang lưu...".</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p><code>role="alert"</code> với câu tương ứng; <b>form giữ nguyên dữ liệu đã nhập</b> —
-          quan trọng ở quầy lúc 02:00.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Thành công</h4>
-        <p>Đổi hẳn sang card kết quả ở trên. HTTP <b>201</b> kèm
-          <code>{id, lotCode, attachmentsFailed}</code>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Thành công nhưng chứng từ lỗi</h4>
-        <p>Thêm dòng cảnh báo "vào chi tiết lô để thử đính kèm lại" — <b>nhưng SC-10 không có ô
-          upload nào</b>, nên chứng từ lỗi coi như mất. Lệch phải sửa, đã ghi ở spec.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Read-only vì ngày đã lock</h4>
-        <p><b>Không áp dụng, và đó là chủ đích (QĐ-3)</b>: lô nhận trong ngày đã lock vẫn bán ngày
-          sau, nên <code>lot</code> không có trigger lock và <code>POST</code> không gọi
-          <code>isBusinessDateLocked</code> — tiếp nhận trên ngày đã lock vẫn trả 201.</p>
-      </div>
+      <div class="wf-state"><h4>Mặc định</h4>
+        <p>Bốn trường trống, con trỏ ở trường đầu.</p></div>
+      <div class="wf-state"><h4>Lỗi nhập</h4>
+        <p>Báo trên đúng trường sai và nói rõ sai thế nào (NFR-USE-01). <b>Giữ nguyên dữ liệu đã
+          nhập</b> — nhập lại từ đầu lúc 02:00 là không chấp nhận được.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4>
+        <p>Các trường vô hiệu, nút báo đang lưu, không cho gửi lần hai.</p></div>
+      <div class="wf-state"><h4>Thành công</h4>
+        <p>Đổi sang thẻ kết quả, hiện mã lô cỡ lớn.</p></div>
+      <div class="wf-state"><h4>Thành công nhưng chứng từ lỗi</h4>
+        <p>Nói rõ chứng từ nào chưa lên được và cho <b>đính kèm lại</b> ngay tại đây hoặc ở SC-10 —
+          không được để chứng từ bắt buộc mất im lặng.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4>
+        <p>Ngoài vai trò tiếp nhận: không hiện form, nói rõ ai làm được việc này.</p></div>
+      <div class="wf-state"><h4>Ngày nghiệp vụ đã lock</h4>
+        <p>Vẫn tiếp nhận được, <b>có chủ đích</b>: lô nhận trong ngày đã chốt vẫn bán ngày sau.
+          Cái bị chặn sau lock là <b>sửa thuộc tính lô</b> ở SC-10.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Năm trạng thái FIG-011 (FE-013: "theo state machine FIG-011")</td>
+            <td>Bốn giá trị <code>received / published / traded / delivered</code> —
+              <b>thiếu "Đã 下見"</b>, gộp vào "Tiếp nhận". Không phân biệt được lô chưa xem hàng
+              với lô đã xem hàng chờ công bố</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Chứng từ tiếp nhận <b>bắt buộc</b> (nghiệm thu FR-LOT-01)</td>
+            <td>Không bắt buộc — lưu được lô không có chứng từ nào</td>
+            <td>cần khách chốt</td>
+          </tr>
+          <tr>
+            <td>Ngưỡng số lượng khai một chỗ, áp dụng nhất quán</td>
+            <td>Ba tầng lệch nhau (giao diện ≥ 0.01, tầng API chỉ &gt; 0, cơ sở dữ liệu hai chữ số
+              thập phân) — một giá trị như 0.001 lọt tầng API rồi vỡ ràng buộc thành lỗi hệ thống
+              thay vì lỗi nhập, trái NFR-USE-01</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Chứng từ lỗi phải đính kèm lại được</td>
+            <td>Màn báo "vào chi tiết lô để thử lại", nhưng SC-10 không có ô đính kèm nào — chứng
+              từ lỗi coi như mất</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Thông báo lỗi chỉ đúng trường sai (NFR-USE-01)</td>
+            <td>Nhiều nguyên nhân khác nhau hiện chung một câu ở mức form</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Ngày nghiệp vụ của lô nhận qua nửa đêm</td>
+            <td>Luôn lấy ngày JST hiện tại, không nhập được — xe về 23:50 mà nhập 00:10 thì lô rơi
+              sang ngày nghiệp vụ sau</td>
+            <td>cần khách chốt</td>
+          </tr>
+          <tr>
+            <td>Tiếp nhận vẫn chạy khi ngày đã lock</td>
+            <td>Đúng như vậy, và là quyết định có ghi lại (QĐ-3)</td>
+            <td>khác có chủ đích</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> chỉ ROLE-INTAKE; 6 vai trò còn lại <b>404</b> cả ở trang và ở
-    <code>POST /api/lots</code> — chặn UI không phải chặn duy nhất. Ghi bị siết ở RLS
-    (<code>write_intake</code> trên <code>lot</code>, <code>lot_attachment</code> và bucket
-    <code>lot-attachment</code>), còn đọc thì mọi vai trò active đọc được (FR-601).<br>
-    <b>Ghi chú:</b> cái bị chặn khi ngày đã lock là <b>sửa thuộc tính lô ở SC-10</b> (423), không
-    phải tiếp nhận — đừng sinh task "chặn tiếp nhận sau lock". MIME chỉ tin lời khai của trình
-    duyệt, không sniff magic byte. <code>lot_attachment</code> <b>chỉ ghi thêm</b>: đính kèm sai
-    file thì không rút lại được từ trong ứng dụng.<br>
+    <b>Phân quyền:</b> ghi thuộc vai trò tiếp nhận, chặn ở cả tầng API và tầng dữ liệu — ẩn form
+    không phải chặn. Đọc lô hàng mở cho các vai trò vận hành.<br>
+    <b>Ghi chú:</b> mã lô là nền tảng của toàn bộ truy vết (lý do của FR-LOT-01), nên tính duy
+    nhất và công thức mã là quyết định thiết kế, không phải chi tiết cài đặt. Kiểm loại tệp phải
+    dựa vào nội dung tệp, không tin lời khai của trình duyệt.<br>
     <b>Spec:</b> <a href="../spec/SC-08-tiep-nhan-lo-hang.md">SC-08-tiep-nhan-lo-hang.md</a>
   </div>
 </section>

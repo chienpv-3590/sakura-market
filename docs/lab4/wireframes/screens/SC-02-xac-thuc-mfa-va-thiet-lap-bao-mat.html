@@ -2,151 +2,149 @@
 <section class="wf-screen" id="SC-02" data-sc="SC-02" data-name="Xác thực MFA và thiết lập bảo mật" hidden>
   <div class="wf-screen__hd">
     <h2>SC-02 · Xác thực MFA và thiết lập bảo mật</h2>
-    <p class="wf-screen__meta">
-      <b>— (chưa dựng)</b> · Form · route đề xuất <b>/security/mfa</b> · actor: ROLE-SYS-ADMIN và
-      các vai trò phê duyệt nội bộ · <b>FE-002, FE-004</b> · <span class="wf-tag">Chưa thi công</span>
-    </p>
-  </div>
+    <p class="wf-screen__meta"><b>FE-002 · FE-004</b> · nhóm <b>FN-01</b> · ưu tiên <b>P0</b> · yêu cầu khách <b>NFR-SEC-01, NFR-SEC-03</b> · Form · actor: tài khoản quản trị và các vai trò có quyền phê duyệt nội bộ · <span class="wf-tag">Chưa thi công</span></p></div>
 
-  <p class="wf-todo">
-    <b>CHƯA THI CÔNG.</b> Toàn bộ field và trạng thái dưới đây là <b>đề xuất thiết kế</b>, chưa
-    tồn tại trong code. MFA của Supabase Auth đang tắt (<code>enroll_enabled</code>,
-    <code>verify_enabled</code> = false) và thuộc gói Pro — hoãn có chủ đích, xem mục 9 của spec.
-    Đây là màn bảo mật: wireframe chỉ vẽ <b>khung và nhãn</b>, không vẽ cấu hình khoá, cách sinh
-    yếu tố, nội dung mã dự phòng hay luồng khôi phục thiết bị.
-  </p>
+  <p class="wf-todo">Wireframe vẽ theo <b>NFR-SEC-01</b> (MFA bắt buộc cho tài khoản quản trị và role phê duyệt) và <b>NFR-SEC-03</b> (timeout phiên · khoá tạm khi sai nhiều lần · log hành vi bất thường) — cả hai đều là yêu cầu <b>P0 còn hiệu lực</b>. Prototype hoãn màn này; lý do hoãn nằm ở khối ĐỐI CHIẾU PROTOTYPE, không phải ở đây. Là màn bảo mật nên chỉ vẽ <b>khung và nhãn</b>: không vẽ cấu hình khoá, cách sinh yếu tố xác thực, nội dung mã dự phòng hay luồng khôi phục thiết bị.</p>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">3.1 · Bước thử thách MFA — sau khi mật khẩu đúng</p>
+    <p class="wf-box__t">1 · Diện bắt buộc MFA — NFR-SEC-01</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Vai trò</th><th>Có quyền phê duyệt nội bộ</th><th>Thuộc diện bắt buộc MFA</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ROLE-SYS-ADMIN</td><td>Quản trị tài khoản và phân quyền</td><td>Bắt buộc</td></tr>
+          <tr><td>ROLE-RULE-ADMIN</td><td>Phê duyệt phiên bản biểu suất (maker-checker)</td><td>Bắt buộc</td></tr>
+          <tr><td>ROLE-SETTLEMENT</td><td>Lock ngày nghiệp vụ, phê duyệt điều chỉnh sau lock</td><td>Bắt buộc</td></tr>
+          <tr><td>ROLE-INTAKE · ROLE-JUDGE · ROLE-TRADE · ROLE-DELIVERY</td><td>Không</td><td>Chưa chốt</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">NFR-SEC-01 nói "tài khoản quản trị và các role phê duyệt nội bộ" nhưng <b>không liệt vai trò</b>. Ba dòng đầu suy từ quyền phê duyệt thực tế của hệ thống; bốn vai trò hiện trường ở dòng cuối là <b>giả định cần khách chốt</b>. Diện bắt buộc phải khai được theo vai trò, đổi được bằng cấu hình — thêm hay bớt vai trò không được sửa màn.</p></div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">2 · Nâng mức phiên — sau khi bí mật xác thực đã đúng ở SC-01</p>
     <div class="wf-row">
       <div>
         <div class="wf-f">
-          <label class="wf-f__l">Phương thức xác thực <span class="req">*</span></label>
-          <div class="wf-f__i">Yếu tố đã đăng ký của phiên ▾</div>
-          <p class="wf-f__h"><code>factorId</code> · dẫn xuất từ danh sách yếu tố của chính phiên.
-            Bắt buộc chọn khi có nhiều hơn một yếu tố.</p>
-        </div>
+          <label class="wf-f__l">Yếu tố xác thực <span class="req">*</span></label>
+          <div class="wf-f__i">Yếu tố đã đăng ký của tài khoản ▾</div>
+          <p class="wf-f__h">Chỉ liệt yếu tố của chính tài khoản đang đăng nhập. Có nhiều hơn một thì bắt buộc chọn.</p></div>
         <div class="wf-f">
           <label class="wf-f__l">Mã xác thực một lần <span class="req">*</span></label>
           <div class="wf-f__i">••• •••</div>
-          <p class="wf-f__h"><code>code</code> · chỉ chữ số, độ dài do provider quy định. Không tự
-            so sánh ở tầng app — để provider xác thực.</p>
-        </div>
+          <p class="wf-f__h">Chỉ chữ số. Việc đối chiếu mã thuộc nhà cung cấp xác thực, không so sánh ở tầng ứng dụng.</p></div>
         <div class="wf-f">
           <label class="wf-f__l">Ghi nhớ thiết bị này</label>
           <div class="wf-f__i">☐ Ghi nhớ thiết bị này</div>
-          <p class="wf-f__h"><code>rememberDevice</code> · không bắt buộc. Thời hạn ghi nhớ lấy từ
-            cấu hình server, không nhận từ client.</p>
-        </div>
-        <p style="margin:13px 0 0;">
-          <span class="wf-b">Xác thực</span>
-          <span class="wf-b wf-b--2">Đăng xuất</span>
-        </p>
-      </div>
+          <p class="wf-f__h">Không bắt buộc. Thời hạn ghi nhớ lấy từ cấu hình server, không nhận từ client — nếu không thì NFR-SEC-03 bị vô hiệu hoá từ phía người dùng.</p></div>
+        <p style="margin:13px 0 0;"><span class="wf-b">Xác thực</span> <span class="wf-b wf-b--2">Đăng xuất</span></p></div>
       <div class="wf-box wf-box--todo" style="margin:0;">
         <p class="wf-box__t">Vùng cố ý để trống</p>
-        <p style="font-size:11.5px; color:var(--g5); margin:0;">
-          Không vẽ QR, không vẽ chuỗi seed TOTP, không vẽ danh sách mã dự phòng. Những thứ đó chốt
-          ở tài liệu bảo mật nội bộ, không nằm trong repo public.
-        </p>
-      </div>
+        <p style="font-size:11.5px; color:var(--g5); margin:0;">Không vẽ QR, không vẽ chuỗi khởi tạo yếu tố, không vẽ danh sách mã dự phòng. Những thứ đó chốt ở tài liệu bảo mật nội bộ, không nằm trong tài liệu thiết kế công khai.</p></div>
     </div>
   </div>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">3.2 · Thiết lập bảo mật của tài khoản</p>
+    <p class="wf-box__t">3 · Thiết lập bảo mật của chính tài khoản — FE-002 và FE-004</p>
     <div class="wf-row">
       <div>
         <div class="wf-f">
-          <label class="wf-f__l">Trạng thái MFA</label>
-          <div class="wf-f__i wf-f__i--ro">Đã đăng ký 1 yếu tố</div>
-          <p class="wf-f__h"><code>mfaStatus</code> · read-only, dẫn xuất từ số yếu tố của phiên.</p>
-        </div>
+          <label class="wf-f__l">Trạng thái yếu tố xác thực</label>
+          <div class="wf-f__i wf-f__i--ro">Đã đăng ký · 1 yếu tố</div>
+          <p class="wf-f__h">Chỉ đọc. Thuộc diện bắt buộc mà chưa đăng ký thì phải hiện rõ là <b>chưa thoả NFR-SEC-01</b>.</p></div>
         <div class="wf-f">
-          <label class="wf-f__l">Mật khẩu hiện tại <span class="req">*</span></label>
+          <label class="wf-f__l">Bí mật xác thực hiện tại <span class="req">*</span></label>
           <div class="wf-f__i">••••••••</div>
-          <p class="wf-f__h"><code>currentPassword</code> · xác thực lại trước <b>mọi</b> thay đổi
-            yếu tố.</p>
-        </div>
+          <p class="wf-f__h">Xác thực lại trước <b>mọi</b> thay đổi yếu tố, kể cả khi phiên đang còn hiệu lực.</p></div>
         <div class="wf-f">
-          <label class="wf-f__l">Đăng ký phương thức mới <span class="req">*</span></label>
-          <div class="wf-f__i">Chỉ phương thức đang bật ở cấu hình ▾</div>
-          <p class="wf-f__h"><code>enrollMethod</code> · phương thức chưa bật thì từ chối.</p>
-        </div>
-      </div>
-      <div>
+          <label class="wf-f__l">Đăng ký yếu tố mới <span class="req">*</span></label>
+          <div class="wf-f__i">Phương thức đang được cho phép ▾</div>
+          <p class="wf-f__h">Phương thức ngoài danh sách cho phép thì từ chối ở server, không chỉ ẩn ở màn.</p></div>
         <div class="wf-f">
           <label class="wf-f__l">Mã dự phòng</label>
           <div class="wf-f__i wf-f__i--ro">Còn hiệu lực</div>
-          <p class="wf-f__h"><code>recoveryStatus</code> · read-only, chỉ hiện <b>còn hay hết</b>,
-            không bao giờ hiện nội dung mã.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Chính sách phiên</label>
-          <div class="wf-f__i wf-f__i--ro">Theo cấu hình timeout của provider</div>
-          <p class="wf-f__h"><code>sessionPolicy</code> · read-only. Khối
-            <code>[auth.sessions]</code> đang bị comment nên timeout chưa bật.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Trạng thái khóa tạm</label>
-          <div class="wf-f__i wf-f__i--ro">Không bị khóa · 0 lần sai liên tiếp</div>
-          <p class="wf-f__h"><code>lockoutState</code> · read-only, từ
-            <code>failed_login_count</code> và <code>locked_until</code>.</p>
-        </div>
+          <p class="wf-f__h">Chỉ đọc, chỉ hiện <b>còn hay hết</b> — không bao giờ hiện nội dung mã, kể cả cho chính chủ.</p></div>
       </div>
+      <div>
+        <div class="wf-f">
+          <label class="wf-f__l">Timeout phiên</label>
+          <div class="wf-f__i wf-f__i--ro">Theo cấu hình: giới hạn tổng và giới hạn không hoạt động</div>
+          <p class="wf-f__h">Chỉ đọc. NFR-SEC-03 đòi <b>phải có</b> timeout; thời lượng do khách chốt, cân với khung giờ nghiệp vụ 02:00–10:00 JST.</p></div>
+        <div class="wf-f">
+          <label class="wf-f__l">Trạng thái khoá tạm</label>
+          <div class="wf-f__i wf-f__i--ro">Không bị khoá</div>
+          <p class="wf-f__h">Chỉ đọc. Sai quá ngưỡng cấu hình thì khoá tạm; ngưỡng và thời lượng là giá trị cấu hình.</p></div>
+        <div class="wf-f">
+          <label class="wf-f__l">Hành vi bất thường phải ghi log</label>
+          <div class="wf-f__i wf-f__i--ro">Chỉ đọc — tra cứu ở SC-30</div>
+          <p class="wf-f__h">Sai mã quá ngưỡng · đăng ký hoặc huỷ yếu tố · dùng mã dự phòng · xác thực từ nguồn lạ · phiên kết thúc do timeout · tài khoản bị khoá hoặc được mở khoá.</p></div>
+        <p style="margin:13px 0 0;"><span class="wf-b">Lưu thiết lập</span> <span class="wf-b wf-b--danger">Huỷ một yếu tố</span></p></div>
     </div>
-    <p style="margin:0;">
-      <span class="wf-b">Lưu thiết lập</span>
-      <span class="wf-b wf-b--danger">Huỷ một yếu tố</span>
-    </p>
   </div>
 
   <div class="wf-box wf-box--todo">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng</h4>
-        <p>Chưa đăng ký yếu tố nào: hiện lời mời đăng ký, <b>không</b> có ô nhập mã.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải</h4>
-        <p>Skeleton trong lúc đọc danh sách yếu tố của phiên.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Lỗi tải</h4>
-        <p>Provider không trả lời: thông báo lỗi + nút thử lại + đăng xuất.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền</h4>
-        <p>Vai trò không thuộc diện bắt buộc MFA → <b>404</b>, không phải 403.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>Nút disabled, spinner. Không cho gửi lần hai.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p>Mã sai, hết hiệu lực, hoặc provider từ chối: lỗi tại field, form giữ nguyên.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Bị khóa tạm</h4>
-        <p><code>locked_until</code> còn hiệu lực: nói rõ còn bao lâu, chỉ cho đăng xuất.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Chờ nâng mức phiên</h4>
-        <p>Mật khẩu đúng, MFA chưa xong: chặn mọi route nghiệp vụ. Chỉ hoàn tất MFA hoặc đăng xuất.</p>
-      </div>
+      <div class="wf-state"><h4>Thuộc diện, chưa có yếu tố</h4>
+        <p>Chặn ở bước nâng mức phiên: chỉ cho đăng ký yếu tố hoặc đăng xuất, <b>không</b> có ô nhập mã. Bỏ chỗ này thì NFR-SEC-01 chỉ còn là hình thức.</p></div>
+      <div class="wf-state"><h4>Chờ nâng mức phiên</h4>
+        <p>Bí mật đã đúng, yếu tố thứ hai chưa xong: chặn mọi khu vực nghiệp vụ.</p></div>
+      <div class="wf-state"><h4>Mã không hợp lệ</h4>
+        <p>Sai, hết hiệu lực, hoặc đã dùng: báo lỗi tại trường, không nói mã sai ở chỗ nào.</p></div>
+      <div class="wf-state"><h4>Bị khoá tạm</h4>
+        <p>Sai quá ngưỡng: nêu rõ phải chờ đến khi nào, chỉ cho đăng xuất.</p></div>
+      <div class="wf-state"><h4>Phiên hết hiệu lực</h4>
+        <p>Timeout tổng hoặc timeout không hoạt động: kết thúc phiên, quay về SC-01 kèm lý do.</p></div>
+      <div class="wf-state"><h4>Vai trò đổi giữa phiên</h4>
+        <p>SC-04 đổi sang vai trò thuộc diện bắt buộc → phiên hiện tại thành chưa đủ mức, lần điều hướng kế tiếp quay về màn này.</p></div>
+      <div class="wf-state"><h4>Huỷ yếu tố cuối bị từ chối</h4>
+        <p>Còn thuộc diện bắt buộc thì không cho tự hạ mức bảo mật của mình.</p></div>
+      <div class="wf-state"><h4>Ngoài diện bắt buộc</h4>
+        <p>Vai trò không thuộc diện → <b>404</b>, không phải 403: không lộ sự tồn tại của màn.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>MFA bắt buộc cho tài khoản quản trị và role phê duyệt (NFR-SEC-01)</td>
+            <td>Không có màn, không có bước nâng mức phiên; MFA của nhà cung cấp xác thực đang tắt</td>
+            <td><span class="wf-tag">khác có chủ đích</span> — hoãn vì lý do <b>phạm vi prototype</b>: bật MFA làm các tài khoản demo dùng chung một bí mật không trình bày được. Đây không phải lý do thiết kế, NFR-SEC-01 vẫn còn hiệu lực</td></tr>
+          <tr><td>Phiên đăng nhập phải có timeout (NFR-SEC-03)</td>
+            <td>Cấu hình phiên chưa bật — phiên không tự hết hiệu lực</td>
+            <td><span class="wf-tag">khác không chủ đích</span></td></tr>
+          <tr><td>Khoá tạm khi sai nhiều lần, ngưỡng cấu hình được</td>
+            <td>Có khoá tạm, nhưng đếm số lần sai liên tiếp thay vì trong một cửa sổ thời gian, và ngưỡng cố định trong mã</td>
+            <td><span class="wf-tag">cần khách chốt</span> — NFR-SEC-03 không định lượng</td></tr>
+          <tr><td>Log hành vi bất thường (6 loại sự kiện ở khối 3)</td>
+            <td>Chỉ ghi xác thực thất bại và tài khoản bị khoá</td>
+            <td><span class="wf-tag">khác không chủ đích</span></td></tr>
+          <tr><td>Diện bắt buộc MFA khai được theo vai trò</td>
+            <td>Chưa có nơi khai diện bắt buộc</td>
+            <td><span class="wf-tag">cần khách chốt</span> — NFR-SEC-01 không liệt vai trò</td></tr>
+          <tr><td>Bộ đếm sai riêng cho bước mã xác thực</td>
+            <td>Chỉ có một bộ đếm sai cho bước bí mật</td>
+            <td><span class="wf-tag">cần khách chốt</span> — dùng chung thì người biết bí mật vẫn khoá được tài khoản người khác bằng mã sai</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> ROLE-SYS-ADMIN và các vai trò phê duyệt thuộc diện bắt buộc MFA
-    (ROLE-RULE-ADMIN, ROLE-SETTLEMENT — <i>giả định cần chốt</i>); mọi field ở 3.2 là của
-    <b>chính phiên đang đăng nhập</b>, không truy vấn tài khoản người khác. Vai trò ngoài diện →
-    <b>404</b>.<br>
-    <b>Ghi chú:</b> màn không chạm bảng bị lock ngày → không có trạng thái read-only vì lock, không
-    bao giờ trả 423. Bộ đếm sai của MFA dùng chung hay tách khỏi
-    <code>failed_login_count</code> là giả định chưa chốt.<br>
-    <b>Spec:</b> <a href="../spec/SC-02-xac-thuc-mfa-va-thiet-lap-bao-mat.md">SC-02-xac-thuc-mfa-va-thiet-lap-bao-mat.md</a>
+    <b>Phân quyền:</b> chỉ vai trò thuộc diện bắt buộc MFA vào được; vai trò ngoài diện nhận
+    <b>404</b>. Mọi trường ở khối 3 là của <b>chính tài khoản đang đăng nhập</b> — màn này không
+    đọc và không sửa thiết lập bảo mật của người khác; việc đó thuộc SC-03 / SC-04.<br>
+    <b>Yêu cầu khách màn này thoả:</b> <b>NFR-SEC-01</b> qua FE-002 (khối 1 khai diện bắt buộc,
+    khối 2 là bước xác thực yếu tố thứ hai, khối 3 là nơi tự đăng ký yếu tố) và <b>NFR-SEC-03</b>
+    qua FE-004 (timeout · khoá tạm · log hành vi bất thường ở khối 3). Nghiệm thu của RFP là
+    "kiểm tra cấu hình và kịch bản xác thực" + "kiểm thử bảo mật và review log" → cả hai đều đòi
+    thiết lập phải <b>xem được</b>, nên khối 3 là read-only nhưng bắt buộc có.
+    Chỉ mục FE → màn: <a href="../00-roster-va-gap.md">00-roster-va-gap.md</a>.<br>
+    <b>Spec as-built:</b> <a href="../spec/SC-02-xac-thuc-mfa-va-thiet-lap-bao-mat.md">SC-02-xac-thuc-mfa-va-thiet-lap-bao-mat.md</a>
   </div>
 </section>

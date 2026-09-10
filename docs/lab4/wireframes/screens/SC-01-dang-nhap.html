@@ -2,72 +2,127 @@
 <section class="wf-screen" id="SC-01" data-sc="SC-01" data-name="Đăng nhập" hidden>
   <div class="wf-screen__hd">
     <h2>SC-01 · Đăng nhập</h2>
-    <p class="wf-screen__meta">
-      <b>SCR001_Login</b> · Form · route <b>/login</b> · actor: toàn bộ người dùng nội bộ ·
-      <b>FE-001</b> · <span class="wf-tag">Đã dựng</span>
-    </p>
+    <p class="wf-screen__meta"><b>FE-001</b> · nhóm <b>FN-01</b> · ưu tiên <b>P0</b> · yêu cầu khách <b>FR-IAM-01</b> · Form · actor: toàn bộ người dùng nội bộ · <span class="wf-tag">Đã thi công</span> <b>SCR001_Login</b> · <code>/login</code></p></div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">1 · Xác thực người dùng nội bộ — FR-IAM-01</p>
+    <div class="wf-row">
+      <div class="wf-box wf-box--todo" style="flex:0 0 42%; margin:0; min-height:200px;">
+        <p class="wf-box__t">Vùng nhận diện</p>
+        <p style="font-size:11.5px; color:var(--g5); margin:0;">Vùng tĩnh, chỉ mang dấu hiệu nhận diện của chợ. Không trường nhập, không liên kết điều hướng — cổng vào hệ thống phải chỉ có một đường.</p></div>
+      <div style="flex:1 1 50%;">
+        <div class="wf-f">
+          <label class="wf-f__l">Định danh người dùng nội bộ <span class="req">*</span></label>
+          <div class="wf-f__i">ten@vi-du.local</div>
+          <p class="wf-f__h">Định danh duy nhất trong danh bạ người dùng nội bộ.</p></div>
+        <div class="wf-f">
+          <label class="wf-f__l">Bí mật xác thực <span class="req">*</span></label>
+          <div class="wf-f__i">••••••••</div>
+          <p class="wf-f__h">Không hiển thị lại, không ghi vào log, không đi qua URL.</p></div>
+        <div class="wf-f">
+          <label class="wf-f__l">Ngôn ngữ hiển thị</label>
+          <div class="wf-f__i">Tiếng Việt ▾</div>
+          <p class="wf-f__h">VI / JA. Đổi được trước khi đăng nhập, vì đây là cổng vào duy nhất.</p></div>
+        <div class="wf-f">
+          <label class="wf-f__l">Vùng thông báo lý do</label>
+          <div class="wf-f__i wf-f__i--ro">Lý do bị đưa về màn đăng nhập</div>
+          <p class="wf-f__h">Chỉ đọc. Phiên hết hiệu lực, hoặc quyền tài khoản đã bị tạm ngừng — người bị đẩy về đây phải biết vì sao.</p></div>
+        <p style="margin:13px 0 0;"><span class="wf-b">Đăng nhập</span></p></div>
+    </div>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Bố cục 52/48 — panel thương hiệu bên trái, form bên phải</p>
-    <div class="wf-row">
-      <div class="wf-box wf-box--todo" style="flex:0 0 52%; margin:0; min-height:210px;">
-        <p class="wf-box__t">Panel thương hiệu</p>
-        <p style="font-size:11.5px; color:var(--g5); margin:0;">
-          Nền đậm, chỉ mang dấu hiệu nhận diện. Không có trường nhập, không có liên kết
-          điều hướng — đây là vùng tĩnh.
-        </p>
-      </div>
-      <div style="flex:1 1 44%;">
-        <div class="wf-f">
-          <label class="wf-f__l">Email <span class="req">*</span></label>
-          <div class="wf-f__i">ten@vi-du.local</div>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Mật khẩu <span class="req">*</span></label>
-          <div class="wf-f__i">••••••••</div>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Ngôn ngữ</label>
-          <div class="wf-f__i">Tiếng Việt ▾</div>
-          <p class="wf-f__h">Chuyển VI / JA. Không yêu cầu đăng nhập.</p>
-        </div>
-        <p style="margin:13px 0 0;"><span class="wf-b">Đăng nhập</span></p>
-      </div>
+    <p class="wf-box__t">2 · Gán vai trò tại thời điểm đăng nhập — 7 vai trò nội bộ</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Vai trò</th><th>Khu vực làm việc được đưa tới ngay sau khi xác thực</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ROLE-INTAKE</td><td>Tiếp nhận lô hàng</td></tr>
+          <tr><td>ROLE-JUDGE</td><td>Lô hàng chờ 目利き / 下見</td></tr>
+          <tr><td>ROLE-TRADE</td><td>Giao dịch 相対取引 và せり</td></tr>
+          <tr><td>ROLE-DELIVERY</td><td>Theo dõi giao hàng</td></tr>
+          <tr><td>ROLE-SETTLEMENT</td><td>Đối chiếu và quyết toán ngày</td></tr>
+          <tr><td>ROLE-RULE-ADMIN</td><td>Phiên bản biểu suất</td></tr>
+          <tr><td>ROLE-SYS-ADMIN</td><td>Quản trị người tham gia và tài khoản</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+    <p class="wf-f__h">Vai trò được gán <b>tại thời điểm đăng nhập</b>, không phải lúc dựng menu. Đổi vai trò giữa phiên (SC-04) làm phiên đang dùng không còn đúng mức → lần điều hướng kế tiếp phải xác thực lại. Không có trang trung gian kiểu "chọn khu vực": nghiệm thu FR-IAM-01 đòi vào <b>đúng</b> khu vực làm việc.</p></div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">3 · Ghi log truy cập — FR-IAM-01 đòi, không hiển thị trên màn</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Sự kiện phải ghi</th><th>Nội dung bắt buộc của bản ghi</th></tr></thead>
+        <tbody>
+          <tr><td>Xác thực thành công</td><td>Chủ thể · thời điểm · vai trò được gán</td></tr>
+          <tr><td>Xác thực bị từ chối</td><td>Định danh đã dùng · thời điểm · nguồn truy cập</td></tr>
+          <tr><td>Tài khoản bị khoá tạm</td><td>Chủ thể · thời điểm · thời điểm hết khoá</td></tr>
+          <tr><td>Đăng nhập vào tài khoản đã tạm ngừng</td><td>Chủ thể · thời điểm</td></tr>
+          <tr><td>Đăng xuất, hoặc phiên kết thúc do timeout</td><td>Chủ thể · thời điểm · nguyên nhân kết thúc</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">Màn này là nơi <b>sinh ra</b> bản ghi log; nơi tra cứu là SC-30.</p></div>
 
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Mặc định</h4>
-        <p>Hai trường rỗng, nút bật.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>Nút chuyển sang vô hiệu, không cho gửi lần hai.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Sai thông tin</h4>
-        <p>Thông báo chung, không nói sai email hay sai mật khẩu.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Khoá tạm</h4>
-        <p>Sai 5 lần liên tiếp thì khoá 15 phút. Thông báo nêu rõ thời gian chờ.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đã đăng nhập</h4>
-        <p>Form không hiện. Chuyển thẳng theo vai trò qua <code>roleLanding</code>.</p>
-      </div>
+      <div class="wf-state"><h4>Mặc định</h4>
+        <p>Hai trường bắt buộc còn rỗng, nút bật, không có thông báo nào.</p></div>
+      <div class="wf-state"><h4>Đang xác thực</h4>
+        <p>Nút và cả hai trường vô hiệu. Không cho gửi lần hai.</p></div>
+      <div class="wf-state"><h4>Bị từ chối</h4>
+        <p>Một thông báo duy nhất cho mọi nhánh từ chối — không phân biệt sai định danh hay sai bí mật, kể cả qua mã trả về. Chống dò tài khoản tồn tại.</p></div>
+      <div class="wf-state"><h4>Quyền đã bị tạm ngừng</h4>
+        <p>Tài khoản còn nhưng quyền đã bị tạm ngừng ở SC-03 → nói rõ phải liên hệ quản trị, không để người dùng thử lại vô ích.</p></div>
+      <div class="wf-state"><h4>Đang bị khoá tạm</h4>
+        <p>Sai quá ngưỡng cấu hình (NFR-SEC-03 · FE-004): nêu rõ phải chờ đến khi nào. Ngưỡng và thời lượng là giá trị cấu hình, không cứng trong màn.</p></div>
+      <div class="wf-state"><h4>Phiên hết hiệu lực</h4>
+        <p>Timeout phiên đẩy người dùng về đây giữa lúc làm việc → vùng thông báo lý do phải nói là hết phiên, không im lặng.</p></div>
+      <div class="wf-state"><h4>Đã có phiên hợp lệ</h4>
+        <p>Không render form; đưa thẳng tới khu vực làm việc của vai trò.</p></div>
+      <div class="wf-state"><h4>Chưa đủ mức bảo mật</h4>
+        <p>Vai trò thuộc diện bắt buộc MFA: xác thực xong bí mật vẫn chưa vào được dữ liệu nghiệp vụ, phải qua SC-02 trước (NFR-SEC-01).</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>Vai trò thuộc diện bắt buộc MFA phải qua bước nâng mức phiên trước khi chạm dữ liệu nghiệp vụ</td>
+            <td>Xác thực xong bí mật là vào thẳng khu vực làm việc, không có bước nâng mức</td>
+            <td><span class="wf-tag">khác có chủ đích</span> — hoãn cùng SC-02</td></tr>
+          <tr><td>Mọi nhánh từ chối không phân biệt được từ bên ngoài</td>
+            <td>Nội dung thông báo giống nhau, nhưng mã trả về của nhánh "đang bị khoá" khác hai nhánh còn lại → vẫn suy ra được</td>
+            <td><span class="wf-tag">khác không chủ đích</span></td></tr>
+          <tr><td>Người bị đẩy về màn đăng nhập biết được lý do</td>
+            <td>Chỉ hiện lý do khi quyền tài khoản bị tạm ngừng; hết phiên thì về màn im lặng</td>
+            <td><span class="wf-tag">khác không chủ đích</span></td></tr>
+          <tr><td>Khoá tạm khi sai nhiều lần, theo ngưỡng cấu hình được</td>
+            <td>Đếm số lần sai liên tiếp thay vì trong một cửa sổ thời gian; ngưỡng và thời lượng cố định trong mã</td>
+            <td><span class="wf-tag">cần khách chốt</span> — NFR-SEC-03 không định lượng</td></tr>
+          <tr><td>Ghi log hành vi bất thường quanh cổng đăng nhập</td>
+            <td>Chỉ ghi xác thực thất bại và tài khoản bị khoá; không có dấu hiệu bất thường theo nguồn truy cập hay tần suất thử</td>
+            <td><span class="wf-tag">khác không chủ đích</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> màn công khai, không qua <code>requireUser</code>/<code>requireRole</code>.
-    Đây là màn duy nhất trong hệ thống không có cổng xác thực.<br>
-    <b>Ghi chú:</b> thông báo lỗi cố ý không phân biệt email sai và mật khẩu sai — tránh dò
-    tài khoản tồn tại.<br>
-    <b>Spec:</b> <a href="../spec/SC-01-dang-nhap.md">SC-01-dang-nhap.md</a>
+    <b>Phân quyền:</b> màn công khai — cổng duy nhất đứng trước mọi tầng kiểm quyền. Đây là màn
+    duy nhất trong 32 màn không có cổng xác thực.<br>
+    <b>Yêu cầu khách màn này thoả:</b> <b>FR-IAM-01</b> — xác thực người dùng nội bộ · gán vai trò
+    tại thời điểm đăng nhập · ghi log truy cập. Nghiệm thu của RFP: "người dùng hợp lệ vào được
+    đúng khu vực làm việc, người dùng không hợp lệ bị từ chối, và có log" → khối 1 lo nhánh từ
+    chối, khối 2 lo "đúng khu vực làm việc", khối 3 lo "và có log". Chỉ mục FE → màn:
+    <a href="../00-roster-va-gap.md">00-roster-va-gap.md</a>.<br>
+    <b>Spec as-built:</b> <a href="../spec/SC-01-dang-nhap.md">SC-01-dang-nhap.md</a>
   </div>
 </section>

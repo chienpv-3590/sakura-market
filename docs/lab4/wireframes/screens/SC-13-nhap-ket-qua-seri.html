@@ -3,140 +3,190 @@
   <div class="wf-screen__hd">
     <h2>SC-13 · Nhập kết quả せり</h2>
     <p class="wf-screen__meta">
-      <b>SCR013_SeriEntry</b> · Form · route <b>/seri/new</b> ·
-      actor: Người điều hành đấu giá (thi công gán cho ROLE-TRADE) ·
-      <b>FE-018</b> · <span class="wf-tag">Đã dựng</span> ·
-      <span class="wf-tag">Nhập tay · không OCR</span>
+      <b>FE-018</b> Nhập kết quả せり · <b>FN-05</b> Ghi nhận kết quả đấu giá せり · ưu tiên <b>P0</b><br>
+      Yêu cầu khách: <b>FR-SERI-01</b>, <b>FR-SERI-02</b> · ràng buộc phạm vi <b>SCOPE-OUT-02</b> ·
+      kế thừa <b>FR-PARTY-02</b>, <b>BR-PERM-01</b>, <b>FR-LOT-03</b>, <b>BR-LOT-02</b> vì chúng
+      viết trung tính về kênh<br>
+      actor: Người điều hành đấu giá (<b>ROLE-TRADE</b> — TBL-ROLE-01 giao vai này cả việc
+      <i>"ghi nhận kết quả đấu giá"</i>)<br>
+      Tham chiếu prototype: <code>SCR013_SeriEntry</code> · Form · route <code>/seri/new</code> ·
+      <span class="wf-tag">Đã dựng</span> <span class="wf-tag">Chỉ nhập tay · không nhận dạng</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Form nhập tay kết quả cuối cùng — 6 field người dùng điền (thứ tự đúng theo spec mục 3)</p>
+    <p class="wf-box__t">Form nhập tay kết quả cuối cùng — năm trường FR-SERI-02 đòi</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Lô hàng · ロット <span class="req">*</span></label>
+      <div class="wf-f"><label class="wf-f__l">Lô hàng · ロット <span class="req">*</span></label>
         <div class="wf-f__i">LOT-0003 — Cá C ▾</div>
-        <p class="wf-f__h">
-          Option = mọi <code>lot</code> <b>trừ</b> lô đã có bản ghi せり. Lọc chạy ở tầng app,
-          <b>không có UNIQUE ở DB</b>. <b>Không lọc theo <code>lot.status</code></b> — khác SC-11
-          vốn chỉ nhận <code>published</code>.
-        </p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Người thắng · 落札者 <span class="req">*</span></label>
+        <p class="wf-f__h">Lô đang ở chặng bán được của FIG-011. Một lô có <b>đúng một</b> kết quả
+          せり cuối cùng — FR-SERI-01 nói <i>"chỉ ghi nhận kết quả cuối cùng"</i>, nên tính duy nhất
+          phải là ràng buộc dữ liệu, không phải một lần đọc trước khi ghi.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Người thắng · 落札者 <span class="req">*</span></label>
         <div class="wf-f__i">Người tham gia B ▾</div>
-        <p class="wf-f__h">
-          Danh sách <b>không lọc hiệu lực</b>, và luồng せり <b>không có cửa hiệu lực nào</b> —
-          khác hẳn SC-11. Người thắng đã hết hiệu lực vẫn ghi được.
-        </p>
-      </div>
+        <p class="wf-f__h">Người tham gia có 許可/承認 <b>còn hiệu lực tại thời điểm chốt kết quả</b>
+          — <b>BR-PERM-01</b> và <b>FR-PARTY-02</b> (P0) viết ở tầng nghiệp vụ, không giới hạn kênh,
+          và ghi kết quả せり đúng là một lần chốt giao dịch.</p></div>
     </div>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Số lượng · 数量 <span class="req">*</span></label>
-        <div class="wf-f__i">80.00</div>
-        <p class="wf-f__h">numeric(12,2) · <code>min=0.01</code> <code>step=0.01</code>.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Đơn giá (JPY) · 単価 (JPY) <span class="req">*</span></label>
+      <div class="wf-f"><label class="wf-f__l">Số lượng · 数量 <span class="req">*</span></label>
+        <div class="wf-f__i">80,00</div>
+        <p class="wf-f__h">Không vượt số lượng khả dụng của lô và không làm số đó âm —
+          <b>FR-LOT-03</b> (P0) đòi kiểm <i>"trước khi cho phép giao dịch"</i>, <b>BR-LOT-02</b> đòi
+          truy vết được. Tồn của lô là tồn dùng chung cho cả hai kênh bán.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Đơn giá · 単価 (JPY) <span class="req">*</span></label>
         <div class="wf-f__i">2 400</div>
-        <p class="wf-f__h">integer · <code>min=1</code> <code>step=1</code>.</p>
-      </div>
+        <p class="wf-f__h">Giá thắng cuối cùng, JPY không phần thập phân.</p></div>
     </div>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Thời điểm quyết định · 決定時刻 <span class="req">*</span></label>
+      <div class="wf-f"><label class="wf-f__l">Thời điểm quyết định · 決定時刻 <span class="req">*</span></label>
         <div class="wf-f__i">2026-09-09 06:35</div>
-        <p class="wf-f__h">
-          <code>datetime-local</code> → <code>timestamptz</code>. Mặc định "bây giờ" theo giờ trình
-          duyệt. <b>Không có min/max</b> — không chặn thời điểm tương lai, không chặn quá khứ xa.
-        </p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Người xác nhận · 確認者 <span class="req">*</span></label>
-        <div class="wf-f__i">Người dùng A (đang đăng nhập) ▾</div>
-        <p class="wf-f__h">
-          FK thật tới <code>app_user</code>, không phải text tự do. Option = mọi
-          <code>app_user</code> có <code>is_active=true</code>.
-        </p>
-      </div>
+        <p class="wf-f__h">Thời điểm phiên đấu giá chốt tại sàn, do người vận hành nhập — có thể
+          sớm hơn lúc nhập liệu. Không nhận thời điểm tương lai.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Người xác nhận · 確認者 <span class="req">*</span></label>
+        <div class="wf-f__i">Người dùng A ▾</div>
+        <p class="wf-f__h">Người chịu trách nhiệm về kết quả, là một tài khoản nội bộ đang hoạt
+          động — không phải chữ tự do. Cặp <i>người xác nhận + thời điểm</i> là điều FR-SERI-02
+          nhắc tên.</p></div>
     </div>
     <p style="margin:13px 0 0;"><span class="wf-b">Lưu kết quả せり</span></p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Server sinh — không có trên form (field 7)</p>
-    <div class="wf-f">
-      <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
-      <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
-      <p class="wf-f__h">
-        <code>todayJst()</code>, không nhận từ client. Denormalize theo QĐ-2 để trigger lock đọc
-        trực tiếp, không JOIN. <b>Bám ngày GỬI FORM, không bám <code>decided_at</code></b> — nhập bù
-        kết quả hôm qua thì bản ghi rơi vào ngày nghiệp vụ hôm nay và vào đúng kỳ đối chiếu hôm nay
-        (SC-18).
-      </p>
+    <p class="wf-box__t">Hệ thống gán — không nhập tay</p>
+    <div class="wf-row">
+      <div class="wf-f"><label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+        <p class="wf-f__h">Ngày nghiệp vụ mà bản ghi thuộc về — đơn vị của kỳ đối chiếu
+          (<b>FR-SETTLE-01</b>) và của lock (<b>FR-SETTLE-02</b>). <b>[CHƯA CHỐT]</b>: thiết kế
+          không nói ngày này bám <b>thời điểm quyết định</b> hay <b>lúc nhập liệu</b>. Đấu giá chạy
+          sáng sớm rồi nhập bù thì hai cách cho hai kỳ đối chiếu khác nhau.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Kênh · 取引区分</label>
+        <div class="wf-f__i wf-f__i--ro">せり</div>
+        <p class="wf-f__h">Kênh 相対取引 ghi ở SC-11. Hai kênh khác nhau ở cách hình thành giá, giống
+          nhau ở chỗ đều là một lần bán hàng cho người tham gia.</p></div>
     </div>
   </div>
 
+  <div class="wf-box">
+    <p class="wf-box__t">Vòng đời bản ghi せり — FIG-012 phủ cả hai kênh (RFP:637)</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Từ trạng thái</th><th>Sự kiện</th><th>Tới trạng thái</th><th>Ghi chú thiết kế</th></tr></thead>
+        <tbody>
+          <tr><td>Nháp · 下書き</td><td>gửi</td>
+            <td><b>Chờ xác nhận</b> <span class="wf-tag">[CHƯA CHỐT]</span></td>
+            <td>FIG-012 có bước này. <b>FR-SERI-01</b>, <b>FR-SERI-02</b> và <b>FE-018</b>
+              <b>không nhắc bước phê duyệt nào</b></td></tr>
+          <tr><td><b>Chờ xác nhận</b> <span class="wf-tag">[CHƯA CHỐT]</span></td><td>phê duyệt / từ chối</td>
+            <td>Đã chốt / về Nháp</td>
+            <td>Không yêu cầu nào định nghĩa ai duyệt, quyền duyệt hay SLA duyệt cho kênh せり</td></tr>
+          <tr><td>Đã chốt</td><td>đề nghị đính chính</td><td>Hủy / Đính chính</td>
+            <td>FR-CORR-01 → SC-20. FR-SERI-03 đòi tra cứu lại được sau khi có đính chính → SC-14</td></tr>
+          <tr><td>Hủy / Đính chính</td><td>chốt lại</td><td>Đã chốt</td>
+            <td>FR-CORR-02 · sinh reverse/delta ở SC-21, không ghi đè lịch sử</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-note" style="margin-top:11px">
+      Tiêu đề FIG-012 ghi thẳng: <i>"trạng thái của bản ghi 相対取引 <b>và</b> せり"</i> — thiết kế
+      coi hai kênh dùng <b>chung một vòng đời</b>, và đó là <i>"các trạng thái thuộc đối tượng kiểm
+      toán"</i>. Nhưng ba dòng yêu cầu của FN-05 (FR-SERI-01/02/03) không nhắc trạng thái nào, nên
+      cách <b>ánh xạ</b> FIG-012 lên bản ghi せり vẫn là <b>[CHƯA CHỐT]</b>: một kết quả đấu giá đã
+      chốt tại sàn thì vào hệ thống ở chặng Nháp hay vào thẳng Đã chốt? Phải hỏi cùng lúc với câu
+      hỏi "Chờ xác nhận" của SC-11.
+    </p>
+  </div>
+
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Ngoài phạm vi — cố ý KHÔNG có trên màn</p>
+    <p class="wf-box__t">Ngoài phạm vi — cố ý không có trên màn</p>
     <p style="font-size:11.5px; color:var(--g5); margin:0;">
-      <b>Không upload ảnh, không OCR, không nhận dạng ký hiệu tay 手やり.</b> SCOPE-OUT-02 và
-      FR-SERI-01 cấm thẳng; form không có <code>input[type=file]</code> nào. Nếu LAB-5 thấy đề xuất
-      "tự nhận dạng 手やり" thì đó là mở rộng phạm vi, không phải hoàn thiện màn này.<br>
-      Màn cũng <b>không chạm <code>lot.available_qty</code></b> — luồng せり không trừ số lượng,
-      khác hẳn SC-11. Một lô vừa bán 相対 vừa ghi せり thì hai con số đứng độc lập, không ai đối chiếu.
+      <b>Không upload ảnh, không OCR, không nhận dạng ký hiệu tay 手やり.</b> <b>SCOPE-OUT-02</b>
+      (RFP:405) và <b>FR-SERI-01</b> cấm bằng chữ; nghiệm thu của FR-SERI-01 là
+      <i>"Không tồn tại chức năng OCR hay suy luận kết quả từ hình ảnh/ký hiệu"</i>. Màn chỉ ghi
+      nhận kết quả cuối cùng do người vận hành nhập. Đề xuất "tự nhận dạng 手やり" ở bất kỳ giai đoạn
+      sau là <b>mở rộng phạm vi</b>, không phải hoàn thiện màn này.
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Trạng thái</p>
+    <p class="wf-box__t">Trạng thái màn</p>
     <div class="wf-states">
       <div class="wf-state"><h4>Mặc định</h4>
-        <p>6 field có sẵn giá trị đầu; <code>decided_at</code> = bây giờ, người xác nhận = người
-          đang đăng nhập.</p></div>
-      <div class="wf-state"><h4>Rỗng — chưa có</h4>
-        <p>Mọi lô đều đã có bản ghi せり: form <b>vẫn render</b> với select lô hàng không có option
-          nào, bấm Lưu → 422. Khác SC-11 vốn có nhánh <code>EmptyState</code>. Đề xuất thêm nhánh
-          rỗng.</p></div>
-      <div class="wf-state"><h4>Đang tải — chưa có</h4>
-        <p>Không có <code>loading.tsx</code> nào trong cây.</p></div>
-      <div class="wf-state"><h4>Lỗi tải — chưa có</h4>
-        <p>Query bỏ <code>error</code> → lỗi thành danh sách rỗng, im lặng.</p></div>
-      <div class="wf-state"><h4>Không có quyền</h4>
-        <p>Vai khác ROLE-TRADE → trang <b>404</b>.</p></div>
-      <div class="wf-state"><h4>Đang gửi</h4>
-        <p>Mọi field <code>disabled</code>, nút <code>aria-busy</code> + "Đang lưu...".
-          Guard chặn gửi lần hai.</p></div>
-      <div class="wf-state"><h4>Trùng bản ghi — 409</h4>
-        <p>Lô đã có <code>seri_result</code> → <code>already_recorded</code>: "Lô hàng này đã có kết
-          quả せり. Vui lòng chỉnh sửa thay vì tạo mới." Chuyển sang SC-14 để sửa.</p></div>
-      <div class="wf-state"><h4>Hai người nhập cùng lô — khe TOCTOU</h4>
-        <p>Cửa duy nhất là đọc trước rồi INSERT. <b>Không CAS, không UNIQUE (lot_id)</b> → cả hai
-          đọc thấy "chưa có" rồi cả hai INSERT thành công, lô có <b>hai</b> bản ghi せり. Đề xuất
-          LAB-5: thêm <code>unique (lot_id)</code>.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi</h4>
-        <p>Một message duy nhất "Dữ liệu không hợp lệ, vui lòng kiểm tra lại các trường." —
-          404 <code>lot_not_found</code>, 422 và 500 <b>mất phân biệt</b>.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi mạng</h4>
-        <p>"Có lỗi xảy ra, vui lòng thử lại." Gửi lại được.</p></div>
+        <p>Năm trường trống hoặc có giá trị đầu; người xác nhận mặc định là người đang đăng nhập.</p></div>
+      <div class="wf-state"><h4>Rỗng — không có lô đấu giá được</h4>
+        <p>Nêu rõ lý do và đường đi tiếp (SC-08, SC-10), không để form không chọn được gì.</p></div>
+      <div class="wf-state"><h4>Đang tải · Lỗi tải</h4>
+        <p>Khung chờ cho danh sách lô và người tham gia; lỗi tải phải phân biệt được với rỗng và có
+          nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền · Đang gửi</h4>
+        <p>Ngoài ROLE-TRADE thì không ghi được. Khi gửi: khoá form, chặn gửi trùng.</p></div>
+      <div class="wf-state"><h4>Từ chối — người thắng hết hiệu lực</h4>
+        <p>Nêu tên người tham gia và ngày mất hiệu lực; không ghi bản ghi. Cùng một cửa với SC-11
+          (FR-PARTY-02, P0).</p></div>
+      <div class="wf-state"><h4>Từ chối — lô không đủ số lượng</h4>
+        <p>Nêu số còn khả dụng và số đang cần; không ghi bản ghi. Cùng một cửa với SC-11
+          (FR-LOT-03, P0).</p></div>
+      <div class="wf-state"><h4>Lô đã có kết quả せり</h4>
+        <p>Chặn tạo mới và chỉ đường sang SC-14 để đính chính — FR-SERI-01 chỉ cho <b>một</b> kết
+          quả cuối cùng cho mỗi lô. Hai người nhập cùng lô cùng lúc thì đúng một người ghi được.</p></div>
+      <div class="wf-state"><h4>Lỗi nhập trường</h4>
+        <p>Báo tại từng trường, nói rõ trường nào sai — không dùng một thông báo chung.</p></div>
       <div class="wf-state"><h4>Lưu thành công</h4>
-        <p>201, rồi <code>router.push('/seri/{id}')</code> sang SC-14 chi tiết.</p></div>
-      <div class="wf-state"><h4>Read-only vì ngày đã lock — 423</h4>
-        <p><b>Màn này KHÔNG chặn.</b> Trigger trên <code>seri_result</code> chỉ
-          <code>before update or delete</code>, không bắt INSERT → vẫn ghi được bản ghi mới vào ngày
-          đã lock. <b>423</b> chỉ xuất hiện khi <b>SỬA</b> ở SC-14. Bản ghi vừa tạo lập tức thành
-          read-only.</p></div>
+        <p>Chuyển sang chi tiết bản ghi ở SC-14 để người vận hành đọc lại.</p></div>
+      <div class="wf-state"><h4>Ngày nghiệp vụ đã lock</h4>
+        <p>FR-CORR-03 · BR-CLOSE-01: không ghi mới và không sửa trực tiếp vào ngày đã lock, mọi lần
+          thử đều bị chặn và <b>có log</b>. Đường ra: SC-20 / SC-21.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>FIG-012 phủ cả 相対取引 <b>và</b> せり — một vòng đời dùng chung, thuộc đối tượng
+            kiểm toán</td>
+            <td>Bảng kết quả せり <b>không có cột trạng thái nào</b>: ghi xong là xong, bản ghi không
+              có vòng đời, không lọc hay theo dõi được theo chặng</td>
+            <td><b>Cần khách chốt</b> (ánh xạ FIG-012 lên せり) <b>+ khác không chủ đích</b> —
+              tách bảng riêng bảo vệ được ở tầng lưu trữ, nhưng kéo theo việc mất vòng đời thì chưa
+              ai biện minh</td></tr>
+          <tr><td><b>FR-PARTY-02</b> (P0) · BR-PERM-01: kiểm hiệu lực 許可/承認 tại thời điểm chốt
+            giao dịch — viết trung tính về kênh</td>
+            <td>Nhánh せり <b>không có cửa hiệu lực nào</b>; kiểm duy nhất về người thắng là khoá
+              ngoại, tức chỉ chứng minh người tham gia <b>tồn tại</b>, không chứng minh <b>còn hiệu
+              lực</b> → bán được cho người đã mất hiệu lực</td>
+            <td>Khác không chủ đích — <b>P0</b>. LAB-3 có ghi vết đây là "giả định phạm vi", lý lẽ
+              <i>"RFP không đòi cho せり"</i> <b>không đứng được</b>: BR-PERM-01 viết ở tầng quy tắc
+              nghiệp vụ và FR-PARTY-02 không giới hạn kênh</td></tr>
+          <tr><td><b>FR-LOT-03</b> (P0) · BR-LOT-02: kiểm số lượng khả dụng trước khi cho phép giao
+            dịch, không để âm, truy vết được</td>
+            <td>Nhánh せり <b>không chạm số lượng khả dụng của lô</b> → cùng một lô bán được hai lần
+              qua hai kênh; cửa của nhánh 相対取引 không thấy phần đã bán qua せり và ràng buộc
+              không-âm cũng không bắt được</td>
+            <td>Khác không chủ đích — <b>P0</b>, không giả định nào che</td></tr>
+          <tr><td>FR-SERI-01: mỗi lô đúng <b>một</b> kết quả cuối cùng</td>
+            <td>Thiếu ràng buộc duy nhất theo lô ở tầng dữ liệu; chống trùng chỉ là đọc-rồi-ghi ở
+              tầng ứng dụng → hai người nhập cùng lúc thì lô có <b>hai</b> bản ghi せり</td>
+            <td>Khác không chủ đích — <b>P0</b></td></tr>
+          <tr><td>FR-CORR-03 · BR-CLOSE-01: ngày đã lock thì không ghi được bản ghi mới</td>
+            <td>Lock không chặn INSERT → vẫn ghi được kết quả mới vào ngày đã lock, và bản ghi vừa
+              tạo lập tức thành chỉ đọc</td>
+            <td>Khác không chủ đích — <b>P0</b></td></tr>
+          <tr><td>SCOPE-OUT-02 · FR-SERI-01: không OCR, không nhận dạng 手やり</td>
+            <td>Đúng — không có đường nhận ảnh nào trên màn</td><td>Khớp</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> chỉ <b>ROLE-TRADE</b> vào được; 6 vai còn lại nhận <b>404</b> ở cả trang và
-    API. Chú ý <b>ROLE-SETTLEMENT</b>: <b>không tạo được</b> bản ghi mới nhưng <b>sửa được</b> bản
-    ghi đã có (SC-14) — allowlist 2 vai có chủ đích.<br>
-    <b>Ghi chú:</b> QĐ-1 — <code>seri_result</code> là bảng RIÊNG. せり không phải một giá trị của
-    <code>transaction.type</code>; cột đó có <code>check (type='aitai')</code>, là cột chết.
-    Audit chạy sau khi INSERT đã commit, không rollback được (QĐ-5).<br>
-    <b>Spec:</b> <a href="../spec/SC-13-nhap-ket-qua-seri.md">SC-13-nhap-ket-qua-seri.md</a>
+    <b>Phân quyền:</b> ghi kết quả せり thuộc <b>ROLE-TRADE</b> (TBL-ROLE-01). Sửa bản ghi đã có mở
+    thêm cho <b>ROLE-SETTLEMENT</b> — xem SC-14; hai việc khác nhau nên hai danh sách vai khác nhau.<br>
+    <b>Ghi chú:</b> mọi lần ghi phải để lại logical audit theo <b>FR-AUDIT-01</b> (FE-041): chủ thể,
+    timestamp, before/after, lý do.<br>
+    <b>Prototype (as-built):</b> <a href="../spec/SC-13-nhap-ket-qua-seri.md">SC-13-nhap-ket-qua-seri.md</a>
   </div>
 </section>

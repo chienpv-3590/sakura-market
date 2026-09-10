@@ -3,67 +3,112 @@
   <div class="wf-screen__hd">
     <h2>SC-22 · Kết quả tính 完納奨励金</h2>
     <p class="wf-screen__meta">
-      <b>SCR021_IncentiveResult</b> · List chỉ đọc, không có hành động ghi nào · route <b>/incentive</b> ·
-      actor: bộ phận quyết toán (ROLE-SETTLEMENT) · <b>FE-030</b>, <b>FE-032</b>, <b>FE-043</b> ·
+      <b>FE-030</b> Engine tính 完納奨励金 · <b>FE-032</b> Delta tiền thưởng kỳ tiếp theo ·
+      <b>FE-043</b> Hiển thị version rule đã áp dụng · <b>FN-09</b> · <b>FN-13</b> ·
+      ưu tiên <b>P0</b> (FE-043: P1) · yêu cầu <b>BR-INC-01</b>, <b>FR-INC-01</b>,
+      <b>FR-INC-03</b>, <b>FR-AUDIT-03</b> · actor: bộ phận quyết toán<br>
+      Tham chiếu phụ: <b>SCR021_IncentiveResult</b> · List chỉ đọc · route <b>/incentive</b> ·
       <span class="wf-tag">Đã dựng</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Bộ lọc kỳ (form GET về chính trang)</p>
+    <p class="wf-box__t">Thiết kế đòi — cột "Nghiệm thu" của yêu cầu khách</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Yêu cầu</th><th>Phải thấy được trên màn</th></tr></thead>
+        <tbody>
+          <tr><td>BR-INC-01</td><td>Hệ số <b>110/100</b> · <b>làm tròn xuống theo đơn vị JPY</b> · <b>không có thời gian gia hạn</b> · mốc thời gian theo <b>JST/ngày nghiệp vụ</b> · quá hạn thanh toán thì thưởng = <b>0</b>.</td></tr>
+          <tr><td>FR-INC-01</td><td>Số tiền tính từ số tiền đủ điều kiện, tỷ lệ chi trả và <b>phiên bản rule đang có hiệu lực</b>; kết quả khớp test vector Phụ lục C.</td></tr>
+          <tr><td>FR-INC-03 · FE-032</td><td>Điều chỉnh sau khi chốt sinh <b>delta ở kỳ sau, có nguyên nhân rõ ràng</b>; <b>báo cáo kỳ trước giữ nguyên</b>.</td></tr>
+          <tr><td>FR-AUDIT-03 · FE-043</td><td>Mở một bản ghi tiền thưởng là thấy <b>version rule và ngày hiệu lực</b> đã dùng.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Quy tắc nghiệp vụ đang áp dụng — BR-INC-01, hiển thị được, không phải hằng số nội bộ</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Yếu tố</th><th>Giá trị khách đã cố định</th><th>Thấy ở đâu trên màn</th></tr></thead>
+        <tbody>
+          <tr><td>Hệ số</td><td><b>110/100</b></td><td>Khối quy tắc này, kèm phiên bản biểu suất của từng dòng kết quả</td></tr>
+          <tr><td>Làm tròn</td><td>Làm tròn <b>xuống</b>, cắt phần lẻ, đơn vị <b>JPY</b></td><td>Cột số tiền không bao giờ có phần thập phân</td></tr>
+          <tr><td>Thời gian gia hạn</td><td><b>Không áp dụng</b></td><td>Không có cột "hạn gia hạn", không có trạng thái "trong thời gian ân hạn"</td></tr>
+          <tr><td>Quá hạn thanh toán</td><td>Thưởng = <b>0</b>, không chia tỷ lệ</td><td>Dòng 0 JPY là dữ liệu thật, kèm nhãn lý do quá hạn</td></tr>
+          <tr><td>Mốc thời gian</td><td><b>JST</b> và ngày nghiệp vụ</td><td>Cột kỳ là ngày nghiệp vụ JST, không phải thời điểm tính</td></tr>
+          <tr><td>Điều chỉnh sau khi chốt</td><td>Sinh <b>delta ở kỳ tiếp theo</b></td><td>Cột loại và cột kỳ gốc</td></tr>
+          <tr><td>Version áp dụng</td><td>Theo version có <b>ngày hiệu lực</b></td><td>Cột phiên bản biểu suất, luôn có giá trị</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bộ lọc</p>
     <div class="wf-row">
-      <div class="wf-f" style="flex:1 1 240px;">
-        <label class="wf-f__l">Kỳ (ngày nghiệp vụ) <span class="req">*</span></label>
+      <div class="wf-f" style="flex:1 1 220px;">
+        <label class="wf-f__l">Kỳ — ngày nghiệp vụ JST <span class="req">*</span></label>
         <div class="wf-f__i">2026-09-09</div>
-        <p class="wf-f__h">
-          Mặc định hôm nay (JST); picker chặn ngày tương lai. Giá trị sai định dạng hoặc không phải
-          ngày lịch thật thì <b>âm thầm rơi về hôm nay</b>, không có thông báo nào.
-        </p>
+        <p class="wf-f__h">Mặc định hôm nay. Không chọn được ngày tương lai; giá trị không phải ngày lịch thật thì phải báo lỗi, không âm thầm đổi kỳ.</p>
+      </div>
+      <div class="wf-f" style="flex:1 1 220px;">
+        <label class="wf-f__l">Người tham gia</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">Một kỳ có một dòng cho mỗi người tham gia đủ điều kiện — cần lọc được để đối chiếu từng người.</p>
       </div>
       <div style="flex:0 0 auto; align-self:flex-start; padding-top:17px;">
         <span class="wf-b wf-b--2">Xem</span>
       </div>
     </div>
-    <p class="wf-f__h" style="margin-top:0;">
-      Bộ lọc theo người tham gia <b>chỉ tồn tại ở API</b> (<code>?participantId=</code>), không có
-      input nào trên màn. Mã yêu cầu điều chỉnh nguồn của dòng delta cũng không hiện.
-    </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Kết quả kỳ — cột phiên bản biểu suất LUÔN hiện (yêu cầu truy vết)</p>
+    <p class="wf-box__t">Kết quả kỳ — cột phiên bản và cột nguyên nhân là bắt buộc</p>
     <div class="wf-scroll">
       <table class="wf-t">
         <thead>
           <tr>
             <th>Kỳ</th><th>Người tham gia</th><th>Số tiền (JPY)</th><th>Loại</th>
-            <th>Phiên bản biểu suất</th><th>Kỳ gốc (nếu là delta)</th>
+            <th>Phiên bản biểu suất · ngày hiệu lực</th><th>Kỳ gốc</th><th>Nguyên nhân</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>2026-09-09</td><td>Người tham gia A</td><td>244 200</td>
-            <td><span class="wf-tag">Bình thường</span></td><td>v3 (2026-09-01)</td><td>—</td>
+            <td><span class="wf-tag">Bình thường</span></td><td>v3 · 2026-09-01</td><td>—</td><td>Thanh toán trong hạn</td>
           </tr>
           <tr>
             <td>2026-09-09</td><td>Người tham gia B</td><td>0</td>
-            <td><span class="wf-tag">Bình thường</span></td><td>v3 (2026-09-01)</td><td>—</td>
+            <td><span class="wf-tag">Bình thường</span></td><td>v3 · 2026-09-01</td><td>—</td><td>Quá hạn thanh toán → 0 theo BR-INC-01</td>
           </tr>
           <tr>
             <td>2026-09-09</td><td>Người tham gia C</td><td>-13 200</td>
-            <td><span class="wf-tag">Chênh lệch (delta)</span></td><td>v2 (2026-08-01)</td><td>2026-09-05</td>
+            <td><span class="wf-tag">Chênh lệch (delta)</span></td><td>v2 · 2026-08-01</td><td>2026-09-05</td><td>Yêu cầu điều chỉnh CR-0007 (SC-21)</td>
           </tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      Cột phiên bản là <b>cột thường, không phải chi tiết bấm mở</b> — mỗi dòng mang đúng phiên bản
-      đã áp dụng cho chính dòng đó kèm ngày hiệu lực, để truy được số tiền sinh ra từ quy tắc nào.
-      Cột này không bao giờ rỗng.<br>
-      Dòng delta lấy phiên bản <b>của kỳ gốc</b>, không phải phiên bản hôm nay — đổi biểu suất hôm
-      nay không rỉ vào kỳ cũ.<br>
-      Dòng 0 JPY là dữ liệu thật, không phải thiếu dữ liệu: trả trễ thì thưởng đúng 0, không chia
-      tỷ lệ. Làm tròn luôn xuống, JPY không có đơn vị nhỏ hơn 1 yên.
+      Cột phiên bản là <b>cột thường của mọi dòng</b>, không phải chi tiết phải bấm mở, và không bao
+      giờ rỗng — FR-AUDIT-03 đòi mở bản ghi là thấy ngay quy tắc nào sinh ra số tiền.<br>
+      Dòng delta mang phiên bản <b>của kỳ gốc</b>, không phải phiên bản hôm nay: đổi biểu suất hôm
+      nay không được rỉ vào kỳ cũ (GOV-RULE-01 — thay đổi không làm biến dạng dữ liệu đã chốt).<br>
+      Cột nguyên nhân của dòng delta trỏ về <b>đúng yêu cầu điều chỉnh</b> đã sinh ra nó —
+      FR-INC-03 đòi "delta có nguyên nhân rõ ràng".
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bất biến thiết kế — FE-032: báo cáo kỳ trước giữ nguyên</p>
+    <p class="wf-f__h" style="margin-top:0;">
+      Kỳ đã chốt <b>không bao giờ bị tính lại</b>. Số của kỳ 2026-09-05 hôm nay đọc ra vẫn đúng bằng
+      số hôm chốt kỳ, kể cả sau khi có điều chỉnh được duyệt. Phần chênh nằm ở kỳ sau dưới dạng dòng
+      delta riêng.<br>
+      Kèm theo đó, truy vết phải <b>đi được hai chiều</b>: từ dòng delta về kỳ gốc bằng cột kỳ gốc,
+      và từ kỳ gốc thấy được "kỳ này đã phát sinh delta ở kỳ nào" — nếu chỉ có một chiều thì người
+      mở kỳ gốc tưởng chưa có điều chỉnh nào.
     </p>
   </div>
 
@@ -71,29 +116,48 @@
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
       <div class="wf-state"><h4>Rỗng</h4><p>"Chưa có kết quả tính thưởng cho kỳ này." Chỉ đổi kỳ được.</p></div>
-      <div class="wf-state"><h4>Đang tải</h4><p>Server Component đang render, khung trang stream dần.</p></div>
-      <div class="wf-state"><h4>Lỗi tải</h4><p>Truy vấn kết quả lỗi — error boundary, có nút tải lại.</p></div>
-      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-SETTLEMENT → trang <b>404</b>; API đọc kết quả cũng 404.</p></div>
-      <div class="wf-state"><h4>Kỳ không hợp lệ</h4><p>Rơi về hôm nay, <b>không có thông báo</b> — người dùng dễ đọc lệch ngày.</p></div>
-      <div class="wf-state"><h4>Ngày chưa lock</h4><p>Rỗng — engine chưa từng chạy cho kỳ đó. Phải lock ngày ở SC-18 trước.</p></div>
-      <div class="wf-state"><h4>Không có phiên bản đang hiệu lực</h4><p>Rỗng. Dấu vết duy nhất là một dòng kiểm toán "bỏ qua vì không có rule". Phải duyệt một phiên bản ở SC-24.</p></div>
-      <div class="wf-state"><h4>Dòng delta không nằm ở kỳ gốc</h4><p>Delta rơi vào kỳ <b>hôm nay</b>, cột kỳ gốc giữ kỳ cũ. Mở kỳ gốc sẽ không thấy dòng delta — kỳ gốc đã lock nên không được sửa. Đúng thiết kế, nhưng dễ đọc lệch.</p></div>
-      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4><p>Không áp dụng — màn không có hành động ghi nào. Mọi dòng kết quả do engine ghi bằng quyền hệ thống trong request lock ngày hoặc request duyệt điều chỉnh.</p></div>
-      <div class="wf-state"><h4>Read-only vì lock (423)</h4><p>Không áp dụng — bảng kết quả không nằm trong 4 bảng mang trigger chặn-sau-lock. Ngược lại: dữ liệu chỉ <b>xuất hiện</b> sau khi lock.</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4><p>Khung trang hiện trước; lỗi truy vấn thì báo kèm nút tải lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Ngoài bộ phận quyết toán thì không vào được màn, cũng không đọc được kết quả qua API.</p></div>
+      <div class="wf-state"><h4>Kỳ không hợp lệ</h4><p>Phải báo rõ kỳ nhập sai — không được âm thầm đổi sang kỳ khác rồi hiện số của kỳ đó.</p></div>
+      <div class="wf-state"><h4>Kỳ chưa chốt</h4><p>Rỗng — thưởng chỉ tính sau khi chốt kỳ ở SC-18.</p></div>
+      <div class="wf-state"><h4>Không có phiên bản đang hiệu lực</h4><p>Không tính được: phải nói rõ "chưa có phiên bản biểu suất hiệu lực" và chỉ đường sang SC-24, chứ không hiện rỗng như không có dữ liệu.</p></div>
+      <div class="wf-state"><h4>Dòng 0 JPY</h4><p>Là kết quả thật của BR-INC-01 khi quá hạn, không phải thiếu dữ liệu — nhãn nguyên nhân phải nói rõ.</p></div>
+      <div class="wf-state"><h4>Chỉ đọc</h4><p>Màn không có thao tác ghi nào. Kết quả do hệ thống ghi khi chốt kỳ hoặc khi duyệt điều chỉnh.</p></div>
+    </div>
+  </div>
+
+  <p class="wf-todo">
+    <b>[CHƯA CHỐT] — căng thẳng giữa RFP và Feature List.</b> BR-INC-01 <b>cố định</b> hệ số 110/100,
+    trong khi FE-031 / FR-INC-02 / CAP-06 đòi "quản lý được công thức, biểu suất và ngày áp dụng" và
+    NFR-OPS-02 đòi đổi được <b>không cần deploy</b>. Vậy <b>phiên bản biểu suất quản lý cái gì</b>?
+    FR-INC-01 nhắc tới "<b>tỷ lệ chi trả</b>" như một yếu tố riêng, tách khỏi hệ số thuế 110/100, mà
+    RFP không cố định giá trị. Cần khách trả lời: phần nào của công thức được phiên bản hoá, và
+    110/100 có nằm trong phần đó không. Không tự quyết ở tầng thiết kế.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th style="width:32%;">Thiết kế đòi</th><th style="width:48%;">Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>Biểu suất đổi được bằng cấu hình có kiểm soát, không cần deploy (NFR-OPS-02, CAP-06).</td><td>Hệ số <b>110/100 là hằng trong code</b>; bảng biểu suất lưu kèm phiên bản chỉ là <b>metadata</b>, engine không đọc. Tạo phiên bản mới <b>không làm số thưởng đổi</b>, chỉ đổi nhãn phiên bản đóng lên dòng kết quả.</td><td>Chưa đạt</td></tr>
+          <tr><td>Từ kỳ gốc thấy được delta đã phát sinh (FE-032).</td><td>Dòng delta rơi vào <b>kỳ hôm nay</b> thay vì gắn với kỳ gốc, nên mở kỳ gốc <b>không thấy delta</b>. Truy vết chỉ đi một chiều: delta → kỳ gốc.</td><td>Chưa đạt</td></tr>
+          <tr><td>Delta có nguyên nhân rõ ràng (FR-INC-03).</td><td>Không hiện mã yêu cầu điều chỉnh nguồn của dòng delta — người đọc không biết delta từ đâu.</td><td>Chưa đạt</td></tr>
+          <tr><td>Phiên bản rule của mỗi dòng luôn thấy được (FR-AUDIT-03).</td><td>Cột phiên bản kèm ngày hiệu lực hiện ở mọi dòng; dòng delta lấy phiên bản của kỳ gốc.</td><td>Khớp</td></tr>
+          <tr><td>Lọc theo người tham gia trên màn.</td><td>Bộ lọc người tham gia <b>chỉ tồn tại ở API</b>, không có ô nhập nào trên màn.</td><td>Hở</td></tr>
+          <tr><td>Kỳ nhập sai phải báo lỗi.</td><td>Kỳ sai định dạng <b>âm thầm rơi về hôm nay</b>, không thông báo — người dùng dễ đọc số của kỳ khác.</td><td>Hở</td></tr>
+          <tr><td>Số tiền tính từ dữ liệu thanh toán thật, khớp test vector Phụ lục C (FR-INC-01).</td><td>Nguồn thanh toán là <b>bảng mock</b> dựng riêng cho prototype; chưa có bộ đối chiếu test vector.</td><td>Chưa đạt</td></tr>
+          <tr><td>Tính thưởng không được kéo theo rủi ro cho việc chốt kỳ.</td><td>Engine chạy <b>đồng bộ trong chính lần chốt kỳ / lần duyệt điều chỉnh</b>, không qua hàng đợi: chốt kỳ chậm thêm theo số người tham gia, và engine lỗi chỉ để lại dòng kiểm toán.</td><td>Hở</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> chỉ ROLE-SETTLEMENT vào được, và chỉ đọc — 6 vai trò còn lại nhận trang
-    <b>404</b>. Mọi vai trò đang hoạt động <b>đọc</b> được bảng kết quả, chặn là ở <b>vào trang</b>;
-    bảng này cố ý <b>không có policy ghi cho người dùng đăng nhập</b>, chỉ quyền hệ thống ghi được.<br>
-    <b>Divergence phải biết:</b> spec gốc mô tả engine là job nền, thi công chạy <b>đồng bộ trong
-    request lock/duyệt</b> — không có queue. Hệ quả: lock ngày chậm thêm theo số người tham gia, và
-    lỗi engine chỉ để lại dòng kiểm toán chứ không làm lock thất bại.<br>
-    <b>Ghi chú:</b> bảng dữ liệu thanh toán là bảng <b>mock</b>, không có trong spec gốc — số tiền
-    trên màn chỉ thật ở mức bảng mock đó thật, đừng đọc như sổ thanh toán thật. Biểu suất 110/100 là
-    hằng trong code, không đọc từ phiên bản; tạo phiên bản mới chỉ đổi dấu phiên bản đóng lên dòng
-    kết quả, không làm số tiền thay đổi.<br>
-    <b>Spec:</b> <a href="../spec/SC-22-ket-qua-tinh-incentive.md">SC-22-ket-qua-tinh-incentive.md</a>
+    <b>Phân quyền:</b> chỉ bộ phận quyết toán vào được, và chỉ đọc. Bảng kết quả không có đường ghi
+    cho người dùng đăng nhập — chỉ hệ thống ghi được.<br>
+    <b>Prototype (as-built):</b>
+    <a href="../spec/SC-22-ket-qua-tinh-incentive.md">SC-22-ket-qua-tinh-incentive.md</a>
   </div>
 </section>

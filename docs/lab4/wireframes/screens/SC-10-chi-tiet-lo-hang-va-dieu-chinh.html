@@ -3,196 +3,197 @@
   <div class="wf-screen__hd">
     <h2>SC-10 · Chi tiết lô hàng và điều chỉnh</h2>
     <p class="wf-screen__meta">
-      <b>SCR009_LotDetail</b> · Detail, composite 4 khối · route <b>/lots/[id]</b> · actor: nhân
-      viên tiếp nhận và bộ phận đối chiếu (đọc) · ROLE-SETTLEMENT (điều chỉnh) ·
-      <b>FE-011, FE-012, FE-013</b> · <span class="wf-tag">Đã dựng</span>
+      <b>FE-011</b> Kiểm soát số lượng khả dụng · <b>FE-012</b> Điều chỉnh thuộc tính lô hàng · <b>FE-013</b> Tra cứu lô hàng và trạng thái · <b>FN-03</b> Quản lý lô hàng · ưu tiên <b>P0 · P1</b> ·
+      yêu cầu <b>FR-LOT-01</b>, <b>FR-LOT-03</b>, <b>FR-LOT-04</b>, <b>BR-LOT-02</b> · Detail
+      nhiều khối · actor: nhân viên tiếp nhận và bộ phận đối chiếu (đọc), bộ phận đối chiếu
+      (điều chỉnh) · <span class="wf-tag">Đã dựng</span><br>
+      Tham chiếu prototype: <code>SCR009_LotDetail</code> · route <code>/lots/[id]</code>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG001_Overview · 3.1 — pipeline + số lượng khả dụng, chỉ đọc, mọi vai trò</p>
-    <p style="font-size:12px; color:var(--g6); margin:0 0 4px;">
-      <b style="font-family:ui-monospace,monospace;">Chi tiết lô hàng: LOT-0001</b> — mặt hàng:
-      Mặt hàng mẫu (field 1–2, ở tiêu đề và mô tả trang).
-    </p>
-    <div class="wf-f">
-      <label class="wf-f__l">Trạng thái · 状態</label>
-      <div class="wf-f__i wf-f__i--ro">
-        Đã tiếp nhận › <b>Đã 目利き / Công bố</b> › Đã giao dịch › Đã giao hàng
-      </div>
-      <p class="wf-f__h">Field 3 · badge + thanh tiến trình. Bước hiện tại và "ai làm tiếp" đều suy
-        từ <code>status</code>, không hardcode. <code>status</code> lạ → "Trạng thái không xác
-        định".</p>
-    </div>
+    <p class="wf-box__t">Tổng quan — FE-013 · tiến trình theo FIG-011, năm trạng thái</p>
+    <p style="font-size:12px; color:var(--g6); margin:0 0 8px;">
+      <b style="font-family:ui-monospace,monospace;">LOT-0001</b> — Mặt hàng mẫu</p>
+    <div class="wf-f"><label class="wf-f__l">Trạng thái · 状態</label>
+      <div class="wf-f__i wf-f__i--ro">Tiếp nhận › <b>Đã 下見</b> › Công bố › Đã chốt › Hoàn tất giao hàng</div>
+      <p class="wf-f__h">Năm bước của FIG-011, bước hiện tại làm nổi, kèm một dòng nói ai làm bước tiếp theo. Giá trị ngoài tập năm trạng thái hiển thị là không xác định, không đoán.</p></div>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Số lượng khả dụng · 利用可能数量</label>
+      <div class="wf-f"><label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09 · <b>đã lock</b></div>
+        <p class="wf-f__h">Phải hiện, kèm cờ đã lock — đó là thứ quyết định điều chỉnh có được
+          phép hay không, người dùng cần biết trước khi nhập.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Số lượng ban đầu · 初期数量</label>
+        <div class="wf-f__i wf-f__i--ro" style="font-size:17px; font-weight:700; color:var(--g7);">150.00</div></div>
+      <div class="wf-f"><label class="wf-f__l">Đã giữ cho giao dịch · 引当済</label>
+        <div class="wf-f__i wf-f__i--ro" style="font-size:17px; font-weight:700; color:var(--g7);">30.00</div></div>
+      <div class="wf-f"><label class="wf-f__l">Số lượng khả dụng · 利用可能数量</label>
         <div class="wf-f__i wf-f__i--ro" style="font-size:17px; font-weight:700; color:var(--g7);">120.00</div>
-        <p class="wf-f__h">Field 4 · <b>không sửa được qua màn này, và đó là chủ đích</b> — cố tình
-          loại khỏi allowlist; chỉ đổi qua <code>reserveLotQty</code>/<code>releaseLotQty</code> có
-          CAS. Đừng sinh task "cho sửa số lượng khả dụng".</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Số lượng ban đầu · 初期数量</label>
-        <div class="wf-f__i wf-f__i--ro" style="font-size:17px; font-weight:700; color:var(--g7);">150.00</div>
-        <p class="wf-f__h">Field 5 · không có trong allowlist PATCH.</p>
-      </div>
+        <p class="wf-f__h">BR-LOT-02: <b>không bao giờ âm</b>, và <b>không sửa trực tiếp</b> — chỉ
+          đổi qua đường giữ / hoàn số lượng của giao dịch và giao hàng.</p></div>
     </div>
-    <p class="wf-f__h">
-      <b>Hai field cố tình vắng, phải khai:</b> <code>package_count</code> <b>không hiển thị ở
-      REG001</b> — chỉ ROLE-SETTLEMENT thấy giá trị hiện tại, và chỉ khi chọn field đó trong
-      REG003. <code>business_date</code> <b>không hiển thị ở đâu trên màn</b>, dù nó là thứ quyết
-      định 423 — task nhỏ giá trị cao: thêm nó + cờ "đã lock" vào khối này.
-    </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG002_Attachments · 3.2 — chứng từ tiếp nhận, chỉ đọc, mọi vai trò</p>
+    <p class="wf-box__t">Truy vết số lượng khả dụng — nửa sau của BR-LOT-02</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead>
-          <tr><th>Tệp · ファイル</th><th>Dung lượng · サイズ</th><th>Thời điểm tải lên · アップロード日時</th></tr>
-        </thead>
+        <thead><tr><th>Thời điểm · 日時</th><th>Việc</th><th>Chứng từ nguồn</th><th>Thay đổi</th><th>Khả dụng sau</th><th>Người thực hiện</th></tr></thead>
         <tbody>
-          <tr><td><u>chung-tu-tiep-nhan-01.pdf</u></td><td>412.5 KB</td><td>2026-09-09 02:41</td></tr>
-          <tr><td><u>anh-lo-hang-01.jpg</u></td><td>1 204.0 KB</td><td>2026-09-09 02:42</td></tr>
+          <tr><td>2026-09-09 04:40 JST</td><td>Giữ cho giao dịch</td><td>TRD-0007</td><td>−30.00</td><td>120.00</td><td>Vận hành A</td></tr>
+          <tr><td>2026-09-09 04:12 JST</td><td>Hoàn lại do hủy giao dịch</td><td>TRD-0005</td><td>+20.00</td><td>150.00</td><td>Vận hành A</td></tr>
+          <tr><td>2026-09-09 03:55 JST</td><td>Giữ cho giao dịch</td><td>TRD-0005</td><td>−20.00</td><td>130.00</td><td>Vận hành A</td></tr>
+          <tr><td>2026-09-09 02:40 JST</td><td>Tiếp nhận lô</td><td>—</td><td>+150.00</td><td>150.00</td><td>Tiếp nhận A</td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      Tên tệp là <code>&lt;a target="_blank" rel="noreferrer"&gt;</code> khi có signed URL; không
-      có URL thì chỉ là text kèm <code>title</code> giải thích. <b>Bucket private</b>, đọc chỉ qua
-      signed URL <b>TTL 300 giây</b> — mở trang rồi đi họp 10 phút thì link chết, chưa có cơ chế
-      làm mới tại chỗ. <b>QĐ-6:</b> <code>file_path</code> không bao giờ render, không vào payload
-      client, không vào CSV. Thời điểm dùng <code>toLocaleString()</code> — <b>không neo JST</b>,
-      đề xuất chuẩn hoá.
-    </p>
-    <p class="wf-f__h">
-      <b>Màn này KHÔNG có ô upload nào</b> — REG002 chỉ là bảng đọc, trong khi SC-08 lại chỉ người
-      dùng sang đây khi đính kèm thất bại. Lệch đã ghi ở spec, không im lặng chọn một bên.
-    </p>
+      BR-LOT-02 đòi hai thứ, không phải một: số lượng khả dụng <b>không âm</b> <i>và</i> <b>truy
+      vết được tới lịch sử điều chỉnh</b>. Nên mỗi lần giữ hay hoàn phải để lại một dòng chỉ được
+      rõ chứng từ nguồn — cộng dồn về đúng giá trị đang hiển thị ở trên.</p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG003_Edit · 3.3 — điều chỉnh thuộc tính, chỉ ROLE-SETTLEMENT</p>
+    <p class="wf-box__t">Kết quả đánh giá — FR-LOT-02, đọc từ chính bản ghi đánh giá</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Trường cần sửa · 修正する項目 <span class="req">*</span></label>
+      <div class="wf-f"><label class="wf-f__l">Kết quả thẩm định · 目利き結果</label>
+        <div class="wf-f__i wf-f__i--ro">Trên A, thân dày, mắt trong</div></div>
+      <div class="wf-f"><label class="wf-f__l">Người xác nhận · 評価担当者</label>
+        <div class="wf-f__i wf-f__i--ro">Người đánh giá A</div></div>
+      <div class="wf-f"><label class="wf-f__l">Thời điểm ghi nhận · 評価日時</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09 03:10 JST</div></div>
+    </div>
+    <p class="wf-f__h">Nghiệm thu FR-LOT-02 đòi "với mỗi kết quả, truy ngược được người ghi và thời điểm" — nên khối này lấy dữ liệu từ bản ghi đánh giá, không suy từ dòng lịch sử.</p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Chứng từ tiếp nhận — FR-LOT-01</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Tệp · ファイル</th><th>Loại chứng từ</th><th>Dung lượng · サイズ</th><th>Thời điểm tải lên · アップロード日時</th></tr></thead>
+        <tbody>
+          <tr><td><u>chung-tu-tiep-nhan-01.pdf</u></td><td>Phiếu tiếp nhận</td><td>412.5 KB</td><td>2026-09-09 02:41 JST</td></tr>
+          <tr><td><u>anh-lo-hang-01.jpg</u></td><td>Ảnh lô hàng</td><td>1 204.0 KB</td><td>2026-09-09 02:42 JST</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:9px 0 0;"><span class="wf-b wf-b--2">Đính kèm thêm chứng từ</span></p>
+    <p class="wf-f__h">
+      Phải có đường đính kèm ở đây, vì SC-08 chỉ người dùng sang màn này khi chứng từ lỗi, và
+      FR-LOT-01 coi chứng từ là bắt buộc. Đường dẫn lưu trữ nội bộ không bao giờ hiển thị và không
+      vào tệp xuất; mở tệp qua liên kết có thời hạn, hết hạn thì lấy lại được tại chỗ.</p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Điều chỉnh thuộc tính — FE-012 · FR-LOT-04</p>
+    <div class="wf-row">
+      <div class="wf-f"><label class="wf-f__l">Trường cần sửa · 修正する項目 <span class="req">*</span></label>
         <div class="wf-f__i">Mặt hàng ▾ · Số kiện</div>
-        <p class="wf-f__h"><code>field</code> · allowlist đúng <b>2</b> giá trị
-          (<code>item</code>, <code>package_count</code>). Đổi lựa chọn thì prefill giá trị hiện
-          tại tương ứng.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Giá trị mới · 新しい値 <span class="req">*</span></label>
-        <div class="wf-f__i">text khi sửa Mặt hàng · number min 1 khi sửa Số kiện</div>
-        <p class="wf-f__h"><code>newValue</code> · <code>type</code> và <code>min</code> đổi theo
-          trường đã chọn. Trần precision / độ dài: chưa có, đề xuất.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Lý do sửa · 修正理由 <span class="req">*</span></label>
+        <p class="wf-f__h">Danh sách trắng hẹp, có chủ đích. Số lượng ban đầu và số lượng khả dụng
+          <b>không</b> nằm trong đây — sửa chúng là đi vòng qua BR-LOT-02.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Giá trị hiện tại · 現在値</label>
+        <div class="wf-f__i wf-f__i--ro">Mặt hàng mẫu</div>
+        <p class="wf-f__h">Hiện trước khi sửa — nửa "before" của cặp before/after.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Giá trị mới · 新しい値 <span class="req">*</span></label>
+        <div class="wf-f__i">Nhập giá trị mới</div>
+        <p class="wf-f__h">Kiểu và ràng buộc đổi theo trường đã chọn, cùng ngưỡng với SC-08.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Lý do sửa · 修正理由 <span class="req">*</span></label>
         <div class="wf-f__i">Nhập lý do sửa</div>
-        <p class="wf-f__h"><code>reason</code> · không lưu vào <code>lot</code>; đi vào
-          <code>audit_log.reason</code>.</p>
-      </div>
+        <p class="wf-f__h">Nghiệm thu FR-LOT-04: bản ghi điều chỉnh phải có reason, chủ thể và
+          before/after.</p></div>
     </div>
     <p style="margin:0;"><span class="wf-b">Lưu điều chỉnh</span></p>
     <p class="wf-f__h">
-      <b>Mỗi lần gửi sửa đúng một field</b> — sửa cả hai là hai request, hai hàng audit, hai lần
-      nhập lý do. Có chủ đích: điều chỉnh có kiểm soát.
-    </p>
+      Mỗi lần gửi sửa <b>đúng một trường</b>, một lý do, một dòng lịch sử — đó là nghĩa của "có
+      kiểm soát". Ngày nghiệp vụ đã lock thì khối này chỉ đọc <b>trước khi nhập</b>, kèm đường
+      sang luồng điều chỉnh sau chốt (SC-20).</p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG004_History · 3.4 — lịch sử điều chỉnh, chỉ đọc, mới nhất trước</p>
+    <p class="wf-box__t">Lịch sử điều chỉnh — FR-LOT-04, mới nhất trước</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead>
-          <tr><th>Hành động · 操作</th><th>Thay đổi · 変更内容</th><th>Lý do · 理由</th><th>Thời điểm · 日時</th></tr>
-        </thead>
+        <thead><tr><th>Việc</th><th>Trường</th><th>Trước · 変更前</th><th>Sau · 変更後</th><th>Lý do · 理由</th><th>Người thực hiện</th><th>Thời điểm · 日時</th></tr></thead>
         <tbody>
-          <tr><td><code>adjust_blocked_locked</code></td><td>Bị chặn — ngày đã khóa · Số kiện → 12</td>
-            <td>Đếm lại kiện sau kiểm đêm</td><td>2026-09-09 10:15</td></tr>
-          <tr><td><code>adjust</code></td><td>Mặt hàng: Mặt hàng cũ → Mặt hàng mẫu</td>
-            <td>Sai mặt hàng lúc tiếp nhận</td><td>2026-09-09 04:22</td></tr>
-          <tr><td><code>publish</code></td><td>Trạng thái: received → published · 目利き: trên A, thân dày</td>
-            <td>—</td><td>2026-09-09 03:10</td></tr>
-          <tr>
-            <td><code>create</code></td><td>Tiếp nhận lô</td><td>—</td><td>2026-09-09 02:40</td>
-          </tr>
+          <tr><td>Bị chặn vì đã lock</td><td>Số kiện</td><td>10</td><td>12</td><td>Đếm lại kiện sau kiểm đêm</td><td>Đối chiếu A</td><td>2026-09-09 10:15 JST</td></tr>
+          <tr><td>Điều chỉnh</td><td>Mặt hàng</td><td>Mặt hàng cũ</td><td>Mặt hàng mẫu</td><td>Sai mặt hàng lúc tiếp nhận</td><td>Đối chiếu A</td><td>2026-09-09 04:22 JST</td></tr>
+          <tr><td>Chuyển trạng thái</td><td>Trạng thái</td><td>Tiếp nhận</td><td>Đã 下見</td><td>—</td><td>Người đánh giá A</td><td>2026-09-09 03:10 JST</td></tr>
+          <tr><td>Tiếp nhận lô</td><td>—</td><td>—</td><td>LOT-0001</td><td>—</td><td>Tiếp nhận A</td><td>2026-09-09 02:40 JST</td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      Nguồn là <code>audit_log</code> lọc <code>entity = 'lot'</code> — <b>không có bảng lịch sử
-      riêng</b>. Diff chỉ liệt kê field <b>thực sự đổi</b>, ẩn cột nội bộ; không field nào đổi →
-      "Không có thay đổi". <code>reason</code> null → <code>—</code>. Kết quả 目利き tới màn này
-      <b>chỉ</b> qua <code>after.grade</code> của hàng audit <code>publish</code> — màn không query
-      <code>mekiki_record</code>, nên mất hàng audit đó là mất kết quả trên màn. <b>Lượt đính kèm
-      không hiện ở đây</b> vì audit của nó mang <code>entity = 'lot_attachment'</code>.
-    </p>
+      Chỉ liệt trường thực sự đổi. <b>Lần thử bị chặn vì lock cũng phải có dòng</b> — BR-CLOSE-01
+      đòi mọi lần thử sửa sau lock đều bị chặn <i>và</i> ghi log. Lượt đính kèm chứng từ cũng
+      thuộc lịch sử của lô này, không đẩy sang trang khác.</p>
   </div>
 
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng</h4>
-        <p>Chứng từ: "Chưa có chứng từ nào được đính kèm." (không có upload). Lịch sử: "Chưa có
-          lịch sử điều chỉnh."</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải / lỗi tải</h4>
-        <p>Chưa có skeleton, chưa có UI lỗi riêng — đề xuất. Ba query chạy song song.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không tìm thấy lô</h4>
-        <p><code>id</code> không tồn tại → <b>404</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền ghi</h4>
-        <p>Vai trò khác ROLE-SETTLEMENT: <b>giữ nguyên card</b> "Sửa thuộc tính lô hàng", thay nội
-          dung bằng <code>HandoffCaption</code>. Gọi thẳng PATCH → <b>404</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>3 input disabled, nút <code>aria-busy</code> + "Đang lưu...".</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p><b>Ba nguyên nhân dùng chung một mã 422</b> (field lạ / giá trị xấu / thiếu lý do) → cùng
-          một câu trên UI.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi thành công</h4>
-        <p>"Đã lưu thay đổi và ghi audit log."; xoá ô lý do, refresh lại màn.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Read-only vì ngày đã lock</h4>
-        <p><b>Không chặn trước ở UI</b> — form vẫn hiện đầy đủ, chỉ báo <b>sau khi submit</b>:
-          "Ngày nghiệp vụ đã lock, không thể sửa trực tiếp — dùng luồng điều chỉnh sau chốt."
-          Đường đi tiếp là SC-20.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Lock — mã lỗi</h4>
-        <p>HTTP <b>423</b> <code>locked_business_date</code>, và <b>ghi audit trước khi trả
-          423</b>: <code>adjust_blocked_locked</code> kèm lý do — nỗ lực bị chặn cũng có dấu vết,
-          hiện ngay ở REG004 (dòng đầu bảng trên).</p>
-      </div>
+      <div class="wf-state"><h4>Rỗng</h4>
+        <p>Chưa có chứng từ, điều chỉnh hay kết quả đánh giá: mỗi khối nói riêng, kèm hành động
+          khả dụng của khối đó.</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải / không tìm thấy</h4>
+        <p>Khung xương theo từng khối, một khối lỗi không làm mất các khối còn lại. Mã lô không
+          tồn tại: nói rõ, kèm đường về danh sách lô.</p></div>
+      <div class="wf-state"><h4>Chỉ đọc vì thiếu quyền</h4>
+        <p>Giữ nguyên khối điều chỉnh, đổi nội dung thành dòng nhắc vai trò phụ trách.</p></div>
+      <div class="wf-state"><h4>Chỉ đọc vì ngày đã lock</h4>
+        <p>Biết trước từ cờ lock ở khối tổng quan, nên <b>chặn trước khi nhập</b> — không để người
+          dùng nhập xong lý do rồi mới báo bị chặn.</p></div>
+      <div class="wf-state"><h4>Xung đột đồng thời</h4>
+        <p>Hai người sửa cùng một trường: người sau bị từ chối vì giá trị "trước" đã đổi, phải xem
+          lại giá trị hiện tại rồi gửi lại.</p></div>
+      <div class="wf-state"><h4>Số lượng không đủ</h4>
+        <p>Không xảy ra ở màn này — màn không đổi số lượng. Chặn oversell nằm ở đường chốt giao
+          dịch và ghi nhận giao hàng (FR-LOT-03).</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Truy vết mọi lần điều chỉnh số lượng khả dụng (BR-LOT-02)</td>
+            <td>Không có lịch sử số lượng. Đường giữ / hoàn chỉ ghi lại giá trị mới vào lô và
+              <b>không sinh dòng lịch sử nào</b> — muốn biết vì sao còn 120 phải đi dò giao dịch và
+              giao hàng ở màn khác</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Kết quả đánh giá hiện ở chi tiết lô, lấy từ bản ghi đánh giá</td>
+            <td>Màn <b>không query bản ghi 目利き</b>; kết quả tới màn chỉ qua <b>một hàng
+              audit</b>. Mất hàng đó là mất kết quả trên màn, và người xác nhận / thời điểm ghi
+              nhận không hiện ở đâu</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr><td>Năm trạng thái FIG-011</td><td>Bốn trạng thái, thiếu "Đã 下見" — tiến trình trên màn cũng chỉ có bốn bước</td><td>khác không chủ đích</td></tr>
+          <tr>
+            <td>Ghi audit đúng cặp before/after (nghiệm thu FR-LOT-04)</td>
+            <td>Không so sánh giá trị cũ khi ghi — hai người sửa cùng lúc thì người sau ghi đè và
+              giá trị "trước" trong lịch sử của người sau có thể sai</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr><td>Ngày nghiệp vụ và cờ lock hiện trên màn</td><td>Không hiển thị ở đâu, dù đó là thứ quyết định điều chỉnh bị chặn hay không — người dùng chỉ biết sau khi gửi</td><td>khác không chủ đích</td></tr>
+          <tr><td>Đính kèm lại chứng từ lỗi từ SC-08</td><td>Màn chỉ có bảng đọc, không có ô đính kèm nào</td><td>khác không chủ đích</td></tr>
+          <tr><td>Danh sách trắng sửa thuộc tính hẹp, số lượng ngoài phạm vi sửa tay</td><td>Đúng như vậy — hai trường, số lượng cố ý bị loại</td><td>khác có chủ đích</td></tr>
+          <tr><td>Lock chặn ở tầng dữ liệu (BR-CLOSE-01)</td><td>Bảng lô cố tình không có trigger lock (QĐ-3), chốt chỉ ở tầng ứng dụng — một đường ghi quên gọi hàm kiểm lock là lọt hoàn toàn</td><td>khác có chủ đích</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> cả 7 vai trò vào được và đọc đủ REG001 + REG002 + REG004; REG003 chỉ
-    ROLE-SETTLEMENT, vai trò khác gọi <code>PATCH /api/lots/[id]</code> → <b>404</b> (không phải
-    403). Mở chứng từ được cho mọi vai trò active qua signed URL, và <b>không có audit cho lượt xem
-    file</b> — đề xuất nếu cần truy vết.<br>
-    <b>Ghi chú:</b> lock trên <code>lot</code> <b>chỉ là chốt tầng ứng dụng</b> — bảng không có
-    <code>trg_block_after_lock</code> (cố tình, QĐ-3), nên ghi thẳng bằng <code>service_role</code>
-    hoặc từ một route quên gọi <code>isBusinessDateLocked</code> là lọt hoàn toàn. <b>Không có
-    CAS</b>: hai ROLE-SETTLEMENT sửa cùng lúc thì người sau ghi đè và <code>before</code> trong
-    audit của người sau có thể <b>sai</b> — đề xuất thêm <code>.eq(field, giá trị cũ)</code>.
-    <code>GET /api/lots/[id]</code> tồn tại song song nhưng trang không dùng.<br>
+    <b>Phân quyền:</b> đọc mở cho các vai trò vận hành; điều chỉnh thuộc tính thuộc bộ phận đối
+    chiếu, chặn ở tầng API. Mở chứng từ nên có dấu vết nếu chủ đầu tư coi ảnh lô hàng là dữ liệu
+    cần truy vết truy cập.<br>
+    <b>Ghi chú:</b> đây là màn tập trung của FN-03 — ba tính năng gặp nhau, và cả ba đều dựa vào
+    một điều: số lượng và thuộc tính lô chỉ đổi qua những đường có ghi vết. Mọi thứ tính theo ngày
+    nghiệp vụ JST.<br>
     <b>Spec:</b> <a href="../spec/SC-10-chi-tiet-lo-hang-va-dieu-chinh.md">SC-10-chi-tiet-lo-hang-va-dieu-chinh.md</a>
   </div>
 </section>

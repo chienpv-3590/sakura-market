@@ -3,197 +3,197 @@
   <div class="wf-screen__hd">
     <h2>SC-14 · Tra cứu bản ghi せり</h2>
     <p class="wf-screen__meta">
-      <b>SCR014_SeriList</b> + <b>SCR015_SeriDetail</b> · List-Detail ·
-      route <b>/seri</b>, <b>/seri/[id]</b> ·
-      actor: ROLE-SETTLEMENT và ROLE-TRADE ·
-      <b>FE-019</b> · <span class="wf-tag">Đã dựng</span> ·
-      <span class="wf-tag">Một mã SC- ứng hai SCR</span>
+      <b>FE-019</b> Tra cứu bản ghi せり và lịch sử sửa · <b>FN-05</b> · ưu tiên <b>P1</b><br>
+      Yêu cầu khách: <b>FR-SERI-03</b> — <i>"tra cứu lại bản ghi せり và lịch sử chỉnh sửa"</i>,
+      nghiệm thu: <b>tra cứu lại được before/after và lý do chỉnh sửa</b> · kế thừa
+      <b>FR-SERI-02</b> (năm trường bắt buộc), <b>FR-AUDIT-01</b>, <b>FR-CORR-03</b><br>
+      actor: Bộ phận đối chiếu (<b>ROLE-SETTLEMENT</b>) và <b>ROLE-TRADE</b><br>
+      Tham chiếu prototype: <code>SCR014_SeriList</code> + <code>SCR015_SeriDetail</code> · List-Detail ·
+      route <code>/seri</code>, <code>/seri/[id]</code> ·
+      <span class="wf-tag">Đã dựng</span> <span class="wf-tag">Một mã SC- ứng hai màn con</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Khung 1 — SCR014_SeriList · /seri</p>
+    <p class="wf-box__t">Khung 1 — Danh sách kết quả せり</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Mã lô hàng · ロット番号</label>
+      <div class="wf-f"><label class="wf-f__l">Mã lô hàng · ロット番号</label>
         <div class="wf-f__i">LOT-0003</div>
-        <p class="wf-f__h">
-          <b>Khớp chính xác</b>, không phải chứa — thiếu một ký tự là ra rỗng, không có gợi ý.
-        </p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <p class="wf-f__h">Tìm được cả khi nhập một phần mã; thiếu một ký tự không nên ra rỗng không
+          lời giải thích.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
         <div class="wf-f__i">2026-09-09</div>
-        <p class="wf-f__h">
-          Chưa validate định dạng — giá trị rác làm PostgREST lỗi → <b>500</b>.
-        </p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Người thắng · 落札者</label>
-        <div class="wf-f__i">tham gia</div>
-        <p class="wf-f__h">
-          <b>Chứa, không phân biệt hoa thường</b> (<code>ilike '%...%'</code>). Không escape
-          <code>%</code> và <code>_</code> → nhập <code>%</code> là khớp tất cả.
-        </p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">&nbsp;</label>
-        <p style="margin:0">
-          <span class="wf-b wf-b--2">Tìm</span> <span class="wf-b">Nhập kết quả せり</span>
-        </p>
-        <p class="wf-f__h">Form <code>method="GET"</code>. Link sang SC-13 chỉ hiện với ROLE-TRADE;
-          ROLE-SETTLEMENT thấy chỉ dẫn thay thế.</p>
-      </div>
+        <p class="wf-f__h">Tiêu chí của bộ phận đối chiếu: bản ghi thuộc kỳ nào
+          (<b>FR-SETTLE-01</b>). Sai định dạng phải báo lỗi nhập, không phải lỗi hệ thống.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Người thắng · 落札者</label>
+        <div class="wf-f__i">Người tham gia B</div>
+        <p class="wf-f__h">Phục vụ RPT-10 (theo người tham gia) và RPT-11 (theo loại giao dịch).</p></div>
+      <div class="wf-f"><label class="wf-f__l">&nbsp;</label>
+        <p style="margin:0"><span class="wf-b wf-b--2">Tìm</span> <span class="wf-b">Nhập kết quả せり</span></p>
+        <p class="wf-f__h">Nút nhập mới dẫn sang SC-13, chỉ hiện với ROLE-TRADE.</p></div>
     </div>
     <div class="wf-scroll">
       <table class="wf-t">
         <thead>
-          <tr>
-            <th>Lô hàng<br>ロット</th>
-            <th>Người thắng<br>落札者</th>
-            <th>Số lượng<br>数量</th>
-            <th>Đơn giá<br>単価</th>
-            <th>Thời điểm quyết định<br>決定時刻</th>
-            <th>Thao tác<br>操作</th>
-          </tr>
+          <tr><th>Lô hàng<br>ロット</th><th>Người thắng<br>落札者</th><th>Số lượng<br>数量</th>
+            <th>Đơn giá<br>単価</th><th>Thời điểm quyết định<br>決定時刻</th>
+            <th>Ngày nghiệp vụ<br>業務日</th><th>Trạng thái<br>状態</th><th>Đã sửa<br>修正</th>
+            <th>Thao tác<br>操作</th></tr>
         </thead>
         <tbody>
-          <tr><td>LOT-0003</td><td>Người tham gia B</td><td>80.00</td><td>2 400</td>
-            <td>2026-09-09 06:35</td><td><span class="wf-b wf-b--2">Xem chi tiết</span></td></tr>
-          <tr><td>LOT-0004</td><td>Người tham gia C</td><td>25.50</td><td>1 150</td>
-            <td>2026-09-09 06:52</td><td><span class="wf-b wf-b--2">Xem chi tiết</span></td></tr>
+          <tr><td>LOT-0003</td><td>Người tham gia B</td><td>80,00</td><td>2 400</td>
+            <td>2026-09-09 06:35</td><td>2026-09-09</td>
+            <td><span class="wf-tag">Đã chốt</span> <span class="wf-tag">[CHƯA CHỐT]</span></td>
+            <td>2 lần</td><td><span class="wf-b wf-b--2">Xem chi tiết</span></td></tr>
+          <tr><td>LOT-0004</td><td>Người tham gia C</td><td>25,50</td><td>1 150</td>
+            <td>2026-09-09 06:52</td><td>2026-09-09</td>
+            <td><span class="wf-tag">Đã chốt</span> <span class="wf-tag">[CHƯA CHỐT]</span></td>
+            <td>—</td><td><span class="wf-b wf-b--2">Xem chi tiết</span></td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      <b>Chưa có:</b> <code>business_date</code> là tiêu chí lọc nhưng <b>không có cột nào trên
-      bảng</b> — người dùng lọc theo ngày mà không thấy ngày trong kết quả. Giới hạn <b>100 dòng</b>,
-      sắp <code>created_at</code> giảm dần, <b>không phân trang</b>. Link "Xem chi tiết" mọi vai đều
-      thấy. Lô có hai bản ghi せり (khe TOCTOU ở SC-13) thì cả hai đều hiện, không có chỗ nào cảnh
-      báo trùng.
+      Cột <b>Ngày nghiệp vụ</b> phải có mặt vì nó là tiêu chí lọc — lọc theo một trường mà không
+      thấy trường đó trong kết quả thì người dùng không tự kiểm được. Cột <b>Trạng thái</b> gắn nhãn
+      <b>[CHƯA CHỐT]</b>: <b>FIG-012</b> phủ cả bản ghi せり (RFP:637) nên vòng đời là dùng chung,
+      nhưng FR-SERI-01/02/03 không nhắc trạng thái nào — cách ánh xạ phải hỏi khách, xem SC-13.
+      Cột <b>Đã sửa</b> là đường vào tự nhiên của FR-SERI-03. Danh sách phải phân trang và
+      <b>không cắt kết quả âm thầm</b>; <b>NFR-PERF-01</b>: p95 ≤ 2 giây.
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Khung 2 — SCR015_SeriDetail · /seri/[id] · ba mục: bản ghi chỉ đọc, form sửa, lịch sử</p>
+    <p class="wf-box__t">Khung 2 — Chi tiết bản ghi, sửa có kiểm soát, và lịch sử</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Lô hàng · ロット</label>
+      <div class="wf-f"><label class="wf-f__l">Lô hàng · ロット</label>
         <div class="wf-f__i wf-f__i--ro">LOT-0003 — Cá C</div>
-        <p class="wf-f__h"><b>Chỉ đọc, không sửa được</b> — form edit không render select lô hàng.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Người thắng · 落札者 <span class="req">*</span></label>
+        <p class="wf-f__h">Lô là cái định danh bản ghi, không sửa được ở đây. Ghi sai lô thì phải
+          hủy bản ghi và nhập lại — đi đường FR-CORR-01 → SC-20.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Người thắng · 落札者 <span class="req">*</span></label>
         <div class="wf-f__i">Người tham gia B ▾</div>
-        <p class="wf-f__h">
-          <b>Lệch client/server thật:</b> select sửa được trên form và client gửi
-          <code>winnerParticipantId</code>, nhưng server <b>KHÔNG ĐỌC</b> field này →
-          <b>đổi người thắng lưu im lặng không có tác dụng</b>, API trả 200 và form báo thành công.
-        </p>
-      </div>
+        <p class="wf-f__h">Là một trong năm trường <b>FR-SERI-02</b> đòi lưu, nên nó cũng nằm trong
+          phạm vi "lịch sử chỉnh sửa" của <b>FR-SERI-03</b>: sửa được, và sửa thì <b>phải có hiệu
+          lực</b> cùng một dòng before/after.</p></div>
     </div>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Số lượng · 数量 <span class="req">*</span></label>
-        <div class="wf-f__i">80.00</div>
-        <p class="wf-f__h">Bằng giá trị cũ thì bị loại khỏi lệnh <code>update</code>.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Đơn giá (JPY) · 単価 (JPY) <span class="req">*</span></label>
-        <div class="wf-f__i">2 400</div>
-      </div>
+      <div class="wf-f"><label class="wf-f__l">Số lượng · 数量 <span class="req">*</span></label>
+        <div class="wf-f__i">80,00</div>
+        <p class="wf-f__h">Sửa số lượng vẫn phải tôn trọng <b>FR-LOT-03</b> · <b>BR-LOT-02</b>: không
+          làm số khả dụng của lô âm.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Đơn giá · 単価 (JPY) <span class="req">*</span></label>
+        <div class="wf-f__i">2 400</div></div>
     </div>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Thời điểm quyết định · 決定時刻 <span class="req">*</span></label>
+      <div class="wf-f"><label class="wf-f__l">Thời điểm quyết định · 決定時刻 <span class="req">*</span></label>
         <div class="wf-f__i">2026-09-09 06:35</div>
-        <p class="wf-f__h">Không chặn tương lai.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Người xác nhận · 確認者 <span class="req">*</span></label>
+        <p class="wf-f__h">Không nhận thời điểm tương lai.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Người xác nhận · 確認者 <span class="req">*</span></label>
         <div class="wf-f__i">Người dùng A ▾</div>
-        <p class="wf-f__h">
-          <b>Chưa có:</b> nhãn diff thiếu key cho <code>confirmed_by</code> → sửa field này thì dòng
-          lịch sử hiện tên cột thô.
-        </p>
-      </div>
+        <p class="wf-f__h">Đổi người xác nhận là đổi người chịu trách nhiệm — dòng lịch sử phải gọi
+          trường bằng <b>tên nghiệp vụ</b>, không phải tên cột kỹ thuật.</p></div>
     </div>
-    <div class="wf-f">
-      <label class="wf-f__l">Lý do chỉnh sửa · 修正理由 <span class="req">*</span></label>
+    <div class="wf-f"><label class="wf-f__l">Lý do chỉnh sửa · 修正理由 <span class="req">*</span></label>
       <div class="wf-f__i">Lệch với sổ tay tại sàn, sửa lại đơn giá</div>
-      <p class="wf-f__h">
-        <b>Bắt buộc tuyệt đối</b> — nút Lưu <code>disabled</code> khi trim rỗng; trim rỗng ở server
-        → 422, không ghi gì. Lý do lưu vào <code>audit_log.reason</code>, không vào
-        <code>seri_result</code>.
-      </p>
-    </div>
+      <p class="wf-f__h">Bắt buộc tuyệt đối. Đây là nửa thứ hai của nghiệm thu <b>FR-SERI-03</b>
+        (<i>"before/after <b>và lý do</b> chỉnh sửa"</i>) và là điều <b>FR-AUDIT-01</b> đòi cho mọi
+        thao tác sửa. Không có lý do thì không ghi gì.</p></div>
     <p style="margin:0 0 13px;">
       <span class="wf-b">Lưu thay đổi</span>
-      <span class="wf-b wf-b--off">Vai ngoài {ROLE-TRADE, ROLE-SETTLEMENT}: form sửa đổi thành chỉ dẫn</span>
+      <span class="wf-b wf-b--off">Vai ngoài {ROLE-TRADE, ROLE-SETTLEMENT}: chỉ tra cứu</span>
     </p>
-    <p class="wf-box__t">Lịch sử chỉnh sửa · 変更履歴</p>
+    <p class="wf-box__t">Lịch sử chỉnh sửa · 変更履歴 — before/after · FR-SERI-03</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead><tr><th>Thời điểm</th><th>Người thực hiện</th><th>Lý do</th><th>Thay đổi</th></tr></thead>
+        <thead><tr><th>Thời điểm</th><th>Người thực hiện</th><th>Trường</th><th>Trước</th><th>Sau</th><th>Lý do</th></tr></thead>
         <tbody>
-          <tr><td>2026-09-09 09:20</td><td>Người dùng B</td><td>Lệch với sổ tay tại sàn</td>
-            <td>unit_price: 2 200 → 2 400</td></tr>
-          <tr><td>2026-09-09 06:40</td><td>Người dùng A</td><td>—</td><td>create</td></tr>
+          <tr><td>2026-09-09 09:24</td><td>Người dùng B</td><td>Người thắng</td>
+            <td>Người tham gia C</td><td>Người tham gia B</td><td>Đọc sai bảng số tại sàn</td></tr>
+          <tr><td>2026-09-09 09:20</td><td>Người dùng B</td><td>Đơn giá</td><td>2 200</td>
+            <td>2 400</td><td>Lệch với sổ tay tại sàn</td></tr>
+          <tr><td>2026-09-09 06:40</td><td>Người dùng A</td><td>— (tạo bản ghi)</td><td>—</td>
+            <td>—</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="wf-f__h">
-      Nguồn <code>audit_log</code> lọc <code>entity='seri_result'</code>, mới nhất trước; diff dùng
-      tên cột snake_case đúng như DB. Rỗng → "Chưa có lịch sử".
-    </p>
+    <p class="wf-f__h">Một dòng cho <b>mỗi trường</b> đã đổi, tên trường bằng tiếng nghiệp vụ, mới
+      nhất trước. Mọi lần thử ghi vào ngày đã lock cũng phải có mặt ở đây — <b>FR-CORR-03</b> nghiệm
+      thu: <i>"Mọi lần thử sửa trực tiếp đều bị chặn và có log"</i>.</p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Trạng thái</p>
+    <p class="wf-box__t">Trạng thái màn</p>
     <div class="wf-states">
-      <div class="wf-state"><h4>Rỗng (danh sách)</h4>
-        <p><code>EmptyState</code> "Chưa có kết quả せり nào." Lọc lại được.</p></div>
-      <div class="wf-state"><h4>Đang tải — chưa có</h4>
-        <p>Không có <code>loading.tsx</code> nào trong cây.</p></div>
-      <div class="wf-state"><h4>Lỗi tải — chưa có</h4>
-        <p>Error boundary mặc định của Next; không có <code>error.tsx</code>.</p></div>
-      <div class="wf-state"><h4>Không tìm thấy (chi tiết)</h4>
-        <p><code>seriResult === null</code> → <b>404</b>.</p></div>
-      <div class="wf-state"><h4>Không có quyền sửa</h4>
-        <p>Vai ngoài {ROLE-TRADE, ROLE-SETTLEMENT} vẫn thấy đủ bản ghi và lịch sử; form sửa đổi
-          thành chỉ dẫn hai vai đó. Gọi <code>PATCH</code> trực tiếp → <b>404</b>.</p></div>
-      <div class="wf-state"><h4>Đang gửi</h4>
-        <p>Mọi field <code>disabled</code>, nút <code>aria-busy</code> + "Đang lưu...".</p></div>
-      <div class="wf-state"><h4>Lưu thành công</h4>
-        <p>"Đã lưu thay đổi và ghi audit log." rồi <code>router.refresh()</code>.</p></div>
+      <div class="wf-state"><h4>Rỗng (danh sách)</h4><p>Nêu rõ bộ lọc đang áp và cho tìm lại.</p></div>
+      <div class="wf-state"><h4>Đang tải · Lỗi tải</h4>
+        <p>Khung chờ cho bảng; lỗi tải phải phân biệt được với "0 kết quả" và có nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không tìm thấy (chi tiết)</h4><p>Bản ghi không tồn tại.</p></div>
+      <div class="wf-state"><h4>Chỉ tra cứu</h4>
+        <p>Vai ngoài {ROLE-TRADE, ROLE-SETTLEMENT} thấy đủ bản ghi và lịch sử; form sửa đổi thành chỉ dẫn.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Khoá form, chặn gửi trùng.</p></div>
+      <div class="wf-state"><h4>Thiếu lý do chỉnh sửa</h4>
+        <p>Chặn ngay tại trường, nói rõ lý do là bắt buộc — không dùng thông báo chung.</p></div>
       <div class="wf-state"><h4>Sửa mà không đổi gì</h4>
-        <p>Trả 200, <b>không ghi gì, không ghi audit</b> — nhưng UI vẫn báo "Đã lưu thay đổi và ghi
-          audit log."</p></div>
-      <div class="wf-state"><h4>Hai người sửa cùng lúc</h4>
-        <p><b>Không CAS, không optimistic lock</b> — ai ghi sau thắng, ghi đè im lặng.
-          <code>before</code> trong audit của người sau là giá trị <i>người đó đã đọc</i>, nên lịch
-          sử có thể đọc lệch.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi</h4>
-        <p><b>Một message duy nhất</b> "Bạn phải nhập lý do trước khi lưu thay đổi." cho <b>mọi</b>
-          mã lỗi. Đề xuất map theo mã như <code>transaction</code> đã làm.</p></div>
-      <div class="wf-state"><h4>Read-only vì ngày đã lock — 423</h4>
-        <p>Trigger bắt UPDATE, raise <code>P0001</code> → route trả <b>423
-          <code>locked_business_date</code></b>. <b>Form sửa vẫn hiện bình thường</b>, lock chỉ lộ
-          sau khi bấm Lưu — và lộ bằng thông báo <b>sai</b> ("bạn phải nhập lý do"), nên người dùng
-          nhập lại lý do và thử mãi. Nhánh 423 ở đây <b>không</b> ghi audit
-          <code>locked_write_attempt</code>, khác <code>transaction</code>. Đường ra: SC-20 / SC-21.</p></div>
+        <p>Nói thẳng "không có thay đổi nào" — không được báo đã lưu và đã ghi lịch sử khi không ghi
+          gì, vì đó là báo sai với người đang kiểm toán.</p></div>
+      <div class="wf-state"><h4>Bản ghi đã bị người khác sửa</h4>
+        <p>Phải phát hiện được và cho người sau đọc lại giá trị mới trước khi ghi — nếu không,
+          <b>before</b> trong lịch sử là giá trị người đó <i>đã đọc</i>, và chuỗi before/after mà
+          FR-SERI-03 dựa vào bị lệch.</p></div>
+      <div class="wf-state"><h4>Sửa bị từ chối theo nghiệp vụ</h4>
+        <p>Người thắng mới hết hiệu lực, hoặc số lượng mới vượt tồn lô: nêu lý do riêng biệt, cùng
+          hai cửa của SC-13.</p></div>
+      <div class="wf-state"><h4>Ngày nghiệp vụ đã lock</h4>
+        <p>FR-CORR-03 · BR-CLOSE-01: không sửa trực tiếp. Thông báo phải nói đúng nguyên nhân là
+          ngày đã lock và chỉ đường SC-20 / SC-21; lần thử phải được ghi log.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>FR-SERI-02 + FR-SERI-03: người thắng là một trong năm trường bắt buộc, sửa được và
+            sửa thì phải có hiệu lực kèm before/after</td>
+            <td>Form cho sửa người thắng và client gửi đi, nhưng <b>server bỏ im lặng trường đó</b>
+              → API trả 200, form báo thành công, <b>dữ liệu không đổi và lịch sử không ghi gì</b></td>
+            <td>Khác không chủ đích — <b>P0</b>, mất thay đổi im lặng ngay trên màn phục vụ kiểm toán</td></tr>
+          <tr><td>FIG-012 phủ cả bản ghi せり — trạng thái thuộc đối tượng kiểm toán, tra cứu và lọc
+            được theo chặng</td>
+            <td>Bảng kết quả せり <b>không có cột trạng thái nào</b>, nên không có gì để hiện hay lọc
+              trên màn tra cứu</td>
+            <td><b>Cần khách chốt</b> (ánh xạ FIG-012 lên せり) + khác không chủ đích</td></tr>
+          <tr><td>FR-SERI-03: before/after đọc được, tên trường hiểu được</td>
+            <td>Có lịch sử, nhưng thiếu nhãn cho một số trường → dòng lịch sử hiện tên cột kỹ thuật
+              dạng snake_case</td>
+            <td>Khác không chủ đích, mức nhỏ</td></tr>
+          <tr><td>FR-SERI-03 + FR-AUDIT-01: sửa xong phải truy được lý do</td>
+            <td>Lịch sử ghi <b>sau</b> khi thay đổi đã commit và không rollback được → ghi lịch sử
+              lỗi thì thay đổi vẫn nằm đó nhưng mất dấu lý do, đúng chỗ FR-SERI-03 quan tâm nhất</td>
+            <td>Khác không chủ đích</td></tr>
+          <tr><td>FR-CORR-03: chặn sửa sau lock, nói rõ nguyên nhân, mọi lần thử có log</td>
+            <td>Chặn được, nhưng màn báo <b>sai nguyên nhân</b> ("bạn phải nhập lý do") nên người
+              dùng nhập lại lý do và thử mãi; lần thử <b>không được ghi log</b></td>
+            <td>Khác không chủ đích</td></tr>
+          <tr><td>Ngày nghiệp vụ là tiêu chí lọc thì phải thấy được trong kết quả</td>
+            <td>Lọc theo ngày nhưng bảng không có cột ngày</td><td>Thiếu, mức nhỏ</td></tr>
+          <tr><td>Mỗi lô đúng một kết quả cuối cùng (FR-SERI-01)</td>
+            <td>Lô có hai bản ghi せり (thiếu ràng buộc duy nhất ở SC-13) thì cả hai đều hiện, không
+              chỗ nào cảnh báo trùng</td>
+            <td>Khác không chủ đích — <b>P0</b>, gốc ở SC-13</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> cả <b>7 vai</b> vào được và thấy đủ dữ liệu (FR-601) — hai trang gọi
-    <code>requireUser()</code>, không <code>requireRole()</code>. <b>Sửa</b> chỉ ROLE-TRADE và
-    ROLE-SETTLEMENT (allowlist 2 vai có chủ đích), <b>theo vai không theo người tạo</b> — ai thuộc
-    hai vai đó cũng sửa được bản ghi của người khác. 5 vai còn lại gọi <code>PATCH</code> →
-    <b>404</b>.<br>
-    <b>Ghi chú:</b> QĐ-1 — dữ liệu đến từ bảng <code>seri_result</code> riêng, không từ
-    <code>transaction</code>. Audit chạy sau khi UPDATE đã commit (QĐ-5) — audit lỗi thì thay đổi
-    vẫn ghi và bản ghi mất dấu lý do sửa, đúng điểm FR-SERI-03 quan tâm nhất.<br>
-    <b>Spec:</b> <a href="../spec/SC-14-tra-cuu-ban-ghi-seri.md">SC-14-tra-cuu-ban-ghi-seri.md</a>
+    <b>Phân quyền:</b> tra cứu mở cho các vai đang hoạt động để đối chiếu chéo; <b>sửa</b> thuộc
+    <b>ROLE-TRADE</b> và <b>ROLE-SETTLEMENT</b> (TBL-ROLE-01 giao vai thứ hai việc đối chiếu và điều
+    chỉnh quyết toán). Quyền theo <b>vai</b>, không theo người tạo bản ghi.<br>
+    <b>Ghi chú:</b> hai màn con dùng chung một mã SC- vì cùng phục vụ FE-019. Sửa trực tiếp ở đây chỉ
+    hợp lệ khi ngày nghiệp vụ <b>chưa lock</b>; sau lock thì FR-CORR-01/02 là đường duy nhất.<br>
+    <b>Prototype (as-built):</b>
+    <a href="../spec/SC-14-tra-cuu-ban-ghi-seri.md">SC-14-tra-cuu-ban-ghi-seri.md</a>
   </div>
 </section>

@@ -3,129 +3,167 @@
   <div class="wf-screen__hd">
     <h2>SC-27 · Quản lý batch xuất dữ liệu kế toán</h2>
     <p class="wf-screen__meta">
-      List · route <b>—</b> (đề xuất <code>/accounting/batches</code>) · actor: bộ phận đối chiếu ·
-      <b>FE-037</b> · <code>FN-11</code> · <code>IF-ACC-01</code> · <code>FR-SETTLE-02</code> ·
+      <b>FE-037</b> Xuất dữ liệu đối chiếu sang kế toán · <code>FN-11</code> Tích hợp hệ thống kế toán ·
+      ưu tiên <b>P0</b> · yêu cầu <code>IF-ACC-01</code> · <code>DR-SETTLE-01</code> ·
+      actor: bộ phận đối chiếu (đề xuất ROLE-SETTLEMENT)<br>
+      Tham chiếu phụ: route đề xuất <b>/accounting/batches</b> ·
       <span class="wf-tag">Chưa thi công</span>
     </p>
   </div>
 
   <p class="wf-todo">
-    <b>Đề xuất thiết kế — màn này chưa tồn tại trong code.</b> Đừng đọc thành "cả tính năng xuất kế
-    toán chưa làm": bảng <code>accounting_export_batch</code>, đường ghi
-    <code>POST /api/accounting/export-batches</code>, xuất CSV từ snapshot <code>lines</code> và audit
-    <code>create_accounting_export_batch</code> <b>đã chạy thật</b> qua SC-26 (mã báo cáo RPT-06) —
-    chỉ có điều RPT-06 liệt batch của <b>đúng một ngày</b>. Thiếu là <b>danh sách xuyên ngày</b> và
-    <b>trạng thái gửi</b>.<br>
-    <b>Điều kiện tiền đề (mục 9 spec):</b> thêm <code>send_status</code>, <code>sent_at</code>,
-    <code>send_error</code> vào bảng — hoặc bảng phụ <code>accounting_export_send_attempt</code>
-    append-only; <code>GET /api/accounting/export-batches</code> lọc xuyên ngày (chưa có, chỉ có
-    <code>POST</code>); kênh gửi thật <code>IF-ACC-01</code> — phương thức kết nối, xác thực và
-    nghiệm thu interface <b>chưa chốt</b>; giám sát lỗi xuất (<code>NFR-OPS-01</code>).
+    <b>Đề xuất thiết kế — màn này chưa dựng.</b> Đừng đọc thành "cả phần tích hợp kế toán chưa làm":
+    việc tạo batch và xem batch của <b>đúng một ngày</b> đã chạy thật qua SC-26 (mã báo cáo RPT-06).
+    Phần thiết kế đòi mà chưa có là <b>tra cứu batch xuyên nhiều ngày</b> và <b>trạng thái bàn
+    giao</b> của từng batch. Chi tiết lệch nằm ở khối đối chiếu cuối màn.
   </p>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Bộ lọc — field #1–#5 theo bảng field spec</p>
+    <p class="wf-box__t">DR-SETTLE-01 · Dữ liệu bàn giao và 6 trường tối thiểu bắt buộc</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>#</th><th>Trường tối thiểu</th><th>Nội dung theo yêu cầu khách</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Ngày nghiệp vụ</b></td><td>Ngày nghiệp vụ <b>đã lock</b>. Chưa lock thì không có gì để bàn giao.</td></tr>
+          <tr><td>2</td><td><b>Người tham gia</b></td><td>Mã của người tham gia, hoặc của nhóm người tham gia được gộp.</td></tr>
+          <tr><td>3</td><td><b>Tổng số tiền</b></td><td>Số tiền dùng để đối chiếu, đã tính cả điều chỉnh sau lock đã được duyệt.</td></tr>
+          <tr><td>4</td><td><b>Thuế</b></td><td>Số thuế tương ứng với tổng số tiền của dòng.</td></tr>
+          <tr><td>5</td><td><b>Trạng thái</b></td><td>Trạng thái dòng: <b>chờ</b> / <b>đã xác nhận</b> / <b>đã điều chỉnh</b> (IF-ACC-01, Phụ lục D.2).</td></tr>
+          <tr><td>6</td><td><b>Batch code</b></td><td>Mã lần xuất cho ngày nghiệp vụ đã chốt. Một ngày có thể có nhiều batch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Bên nhận là <b>hệ thống kế toán hiện hành</b> do bộ phận tài chính vận hành. Ngoài 6 trường
+      trên, mỗi bản xuất phải kèm <b>thời điểm tạo</b> và <b>người khởi tạo</b> (quy tắc chất lượng
+      dữ liệu của yêu cầu khách). Phương thức kết nối, cơ chế xác thực, retry và thủ tục nghiệm thu
+      interface <b>chốt tại buổi làm việc về interface</b> — chưa có ở thời điểm thiết kế này.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Bộ lọc — tra cứu batch xuyên nhiều ngày</p>
     <div class="wf-row">
       <div class="wf-f">
         <label class="wf-f__l">Ngày nghiệp vụ từ</label>
         <div class="wf-f__i">YYYY-MM-DD</div>
-        <p class="wf-f__h">#1 · <code>business_date</code> · phải ≤ đến ngày</p>
+        <p class="wf-f__h">Phải ≤ "đến ngày". Chỉ nhận ngày đã lock.</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Ngày nghiệp vụ đến</label>
         <div class="wf-f__i">YYYY-MM-DD</div>
-        <p class="wf-f__h">#2 · <code>business_date</code> · phải ≥ từ ngày</p>
+        <p class="wf-f__h">Phải ≥ "từ ngày". Khoảng ngày sai thì báo lỗi tại field.</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Batch code</label>
-        <div class="wf-f__i">ACC-YYYYMMDD-NN</div>
-        <p class="wf-f__h">#3 · không khớp dạng → danh sách rỗng, không 4xx</p>
+        <div class="wf-f__i">BATCH-0001</div>
+        <p class="wf-f__h">Tra cứu chính xác một lần xuất.</p>
       </div>
     </div>
     <div class="wf-row">
       <div class="wf-f">
-        <label class="wf-f__l">Loại</label>
+        <label class="wf-f__l">Trạng thái</label>
         <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">#4 · <code>kind</code>: <code>full</code> / <code>re-export</code> — đúng 2 giá trị của CHECK</p>
+        <p class="wf-f__h">Chờ · đã xác nhận · đã điều chỉnh — trường tối thiểu #5.</p>
       </div>
       <div class="wf-f">
-        <label class="wf-f__l">Trạng thái gửi</label>
-        <div class="wf-f__i wf-f__i--ro">Tất cả ▾ (cột chưa có)</div>
-        <p class="wf-f__h">#5 · <code>send_status</code> — <b>cột chưa tồn tại</b>, tập giá trị chưa chốt</p>
+        <label class="wf-f__l">Người tham gia</label>
+        <div class="wf-f__i">Tất cả người tham gia ▾</div>
+        <p class="wf-f__h">Trường tối thiểu #2. Nhãn chỉ hiện tên hiển thị, không hiện email.</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">&nbsp;</label>
-        <p><span class="wf-b">Tra cứu</span> <span class="wf-b wf-b--2">Xoá điều kiện</span></p>
+        <p style="margin:0;"><span class="wf-b">Tra cứu</span> <span class="wf-b wf-b--2">Xoá điều kiện</span></p>
       </div>
     </div>
   </div>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Danh sách batch xuyên ngày — field #6–#16 theo thứ tự spec</p>
+    <p class="wf-box__t">Danh sách batch xuyên ngày</p>
     <div class="wf-scroll">
       <table class="wf-t">
         <thead>
           <tr>
-            <th>Batch code</th><th>Ngày nghiệp vụ</th><th>Số dòng</th><th>Tổng tiền (JPY)</th>
-            <th>Tổng thuế (JPY)</th><th>Thuế suất</th><th>Cơ sở thuế</th><th>Thời điểm tạo</th>
-            <th>Người tạo</th><th>Trạng thái gửi</th><th>Thời điểm gửi</th><th>&nbsp;</th>
+            <th>Batch code</th><th>Ngày nghiệp vụ</th><th>Trạng thái</th><th>Số dòng</th>
+            <th>Tổng tiền (JPY)</th><th>Tổng thuế (JPY)</th><th>Thời điểm tạo</th>
+            <th>Người khởi tạo</th><th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>ACC-YYYYMMDD-NN</td><td>YYYY-MM-DD</td><td>0</td><td>0</td><td>0</td>
-            <td>%</td><td>exclusive</td><td>YYYY-MM-DD hh:mm</td><td>Người tham gia A</td>
-            <td>— (cột chưa có)</td><td>— (cột chưa có)</td>
-            <td><span class="wf-b wf-b--2">Mở snapshot</span> <span class="wf-b wf-b--off">Gửi lại</span></td>
+            <td>BATCH-0002</td><td>2026-09-08</td><td>Chờ</td><td>42</td><td>6 180 400</td>
+            <td>494 432</td><td>2026-09-09 09:40</td><td>Người dùng A</td>
+            <td><span class="wf-b wf-b--2">Xem dòng</span> <span class="wf-b wf-b--2">Gửi lại</span></td>
+          </tr>
+          <tr>
+            <td>BATCH-0001</td><td>2026-09-08</td><td>Đã điều chỉnh</td><td>40</td><td>5 990 200</td>
+            <td>479 216</td><td>2026-09-09 08:05</td><td>Người dùng A</td>
+            <td><span class="wf-b wf-b--2">Xem dòng</span> <span class="wf-b wf-b--off">Gửi lại</span></td>
           </tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      #8–#11 chỉ đọc, dẫn xuất <code>tax_rate_bps / 100</code> cho thuế suất. Không hiện
-      <code>lines</code> (snapshot jsonb) trên danh sách — mở snapshot điều hướng sang RPT-06 kèm
-      <code>batchCode</code>. Người tạo chỉ hiện <code>display_name</code>, <b>không hiện email</b>
-      (cùng quy tắc <code>RPT_08_COLUMNS</code>). "Gửi lại" vô hiệu vì API và cột trạng thái chưa có.
+      Batch là <b>append-only</b>: không sửa, không xoá. Xuất lại cùng một ngày sinh batch mới, và
+      danh sách phải hiện <b>cả</b> batch cũ — batch cũ là bản đã bàn giao kế toán, không phải rác.
+      Batch có 0 dòng cũng phải hiện. "Xem dòng" mở đúng tập dòng đã bàn giao của batch đó, kèm cả 6
+      trường tối thiểu. Thuế suất và cơ sở thuế được <b>đóng dấu lên từng batch</b> để batch cũ vẫn
+      tự giải thích được sau khi rule đổi.
     </p>
   </div>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Trạng thái — mục 4 spec</p>
+    <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng (mặc định người đọc gặp đầu tiên)</h4>
-        <p>Kiểm sống 2026-09-08: bảng có thật, <b>0 batch</b>. "Chưa có batch nào khớp điều kiện".</p>
-      </div>
+      <div class="wf-state"><h4>Rỗng</h4><p>"Chưa có batch nào khớp điều kiện." Trạng thái người đọc gặp đầu tiên khi chưa ngày nào được xuất.</p></div>
       <div class="wf-state"><h4>Đang tải</h4><p>Skeleton bảng, bộ lọc bị vô hiệu.</p></div>
-      <div class="wf-state"><h4>Lỗi tải</h4><p>Khối lỗi + nút thử lại.</p></div>
-      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-SETTLEMENT → trang <b>404</b>, không phải 403.</p></div>
-      <div class="wf-state"><h4>Đang gửi</h4><p>Bấm "Gửi lại", dòng đó vào trạng thái chờ, nút vô hiệu.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi</h4><p>Lỗi trên đúng dòng, giữ nguyên <code>send_status</code> cũ.</p></div>
-      <div class="wf-state">
-        <h4>Không có "read-only vì lock"</h4>
-        <p>Bảng được <b>miễn</b> trigger khoá ngày có chủ đích — nó ghi <i>về</i> một ngày đã lock.
-        Lock là <b>tiền đề</b> để xuất. Màn này không bao giờ trả <b>423</b>.</p>
-      </div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Khối lỗi kèm nút thử lại; không rơi về danh sách rỗng.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò không thuộc bộ phận đối chiếu không vào được màn — đây là dữ liệu tiền đã bàn giao ra ngoài.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Bấm "Gửi lại": đúng dòng đó vào trạng thái chờ, nút vô hiệu, không cho bấm hai lần.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Lỗi hiện trên đúng dòng, giữ nguyên trạng thái cũ — không được ghi thành "đã xác nhận" khi bên nhận chưa nhận.</p></div>
+      <div class="wf-state"><h4>Read-only vì lock</h4><p><b>Ngược lại là đúng:</b> lock là <b>tiền đề</b> để xuất. Màn này ghi <i>về</i> một ngày đã lock nên không bao giờ bị khoá vì lock.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>Màn quản lý batch riêng, tra cứu xuyên nhiều ngày (FE-037)</td>
+            <td>Chưa dựng. Chức năng xuất kế toán đang chạy trong <a href="#SC-26">SC-26</a> (RPT-06) và chỉ liệt batch của <b>đúng một ngày</b>; chưa có đường đọc theo khoảng ngày, chỉ có đường ghi khi tạo batch</td>
+            <td>Chưa thi công</td></tr>
+          <tr><td><b>Trạng thái</b> là 1 trong 6 trường tối thiểu bắt buộc của FE-037 / DR-SETTLE-01, ở mức batch bàn giao</td>
+            <td>Bảng batch xuất kế toán <b>không có cột trạng thái nào</b> — không lọc được, không hiện được, không gửi lại được. Cột này phải thêm mới trước khi dựng màn</td>
+            <td><b>Thiếu trường bắt buộc</b></td></tr>
+          <tr><td>Trạng thái dòng theo IF-ACC-01: <b>chờ / đã xác nhận / đã điều chỉnh</b></td>
+            <td>Dòng trong bản xuất chỉ sinh 2 giá trị: "đã chốt" và "đã điều chỉnh" — không bao giờ có "chờ", và "đã chốt" bị dùng thay cho "đã xác nhận" của yêu cầu khách</td>
+            <td><b>Khác không chủ đích</b> — lệch tập giá trị</td></tr>
+          <tr><td>Kênh gửi thật sang hệ thống kế toán hiện hành (IF-ACC-01)</td>
+            <td>Chưa có. Yêu cầu khách <b>hoãn</b> phương thức kết nối, xác thực, retry và nghiệm thu interface sang buổi làm việc về interface</td>
+            <td>Chờ khách chốt — không phải nợ kỹ thuật</td></tr>
+          <tr><td>Định dạng batch code do hai bên thống nhất</td>
+            <td>Prototype tự đặt dạng <code>ACC-YYYYMMDD-NN</code> làm giả định làm việc; số đếm tăng theo <b>lần xuất</b> của ngày đó</td>
+            <td>Giả định chưa chốt</td></tr>
+          <tr><td>Bản xuất kèm thời điểm tạo, ngày nghiệp vụ, người khởi tạo và batch code</td>
+            <td>Có đủ 4. Người khởi tạo chỉ hiện tên hiển thị, không hiện email — <b>ngược với RPT-06 của SC-26</b>, nơi tên rỗng rơi về email nội bộ</td>
+            <td>Đúng thiết kế</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> đề xuất chỉ <b>ROLE-SETTLEMENT</b> — cùng vai trò đang sở hữu đường ghi và
-    cùng vai trò gác <code>/corrections</code>, <code>/incentive</code>. 6 vai trò còn lại nhận
-    <b>404</b>. Lưu ý: RLS cho mọi vai trò đang hoạt động <b>đọc được</b> bảng này (FR-601, có chủ
-    đích) — chặn ở đây là chặn <i>vào trang</i>, không phải chặn đọc bảng.<br>
-    <b>Lệch với RFP cần ghi vào biên bản:</b> DDL 13 cột của <code>accounting_export_batch</code>
-    <b>không có cột trạng thái nào</b>, dù RFP §08-03 liệt "trạng thái" là trường tối thiểu bắt buộc.
-    Field #5/#15/#16 của wireframe này vẽ một cột chưa tồn tại.<br>
-    <b>Giả định cần chốt:</b> (1) tập giá trị <code>send_status</code> — RFP đòi "trạng thái" nhưng
-    không liệt tập giá trị; (2) số lần thử gửi tối đa — con số retry 3 lần của RFP chỉ dành cho
-    email thông báo, spec này <b>không vay</b>; (3) bên nhận xử lý batch trùng ngày theo kiểu thay
-    thế hay cộng dồn — với bên nhận cộng dồn, "Gửi lại" nghĩa là <b>nhân đôi số tiền</b> phía kế
-    toán, nên phải CAS trên <code>send_status</code>, người thua nhận 409; (4) thời hạn giữ snapshot
-    <code>lines</code> theo <code>DR-RET-01</code>.<br>
-    <b>Ghi chú:</b> xuất lại cùng một ngày làm <code>seq</code> tăng và <code>kind</code> chuyển
-    <code>full</code> → <code>re-export</code>. Danh sách phải hiện <b>cả</b> batch cũ — batch cũ là
-    bản đã gửi kế toán, không phải rác. Batch có <code>row_count = 0</code> cũng phải hiện.<br>
-    <b>Spec:</b> <a href="../spec/SC-27-quan-ly-batch-xuat-du-lieu-ke-toan.md">SC-27-quan-ly-batch-xuat-du-lieu-ke-toan.md</a>
+    <b>Phân quyền:</b> đề xuất chỉ <b>ROLE-SETTLEMENT</b> — cùng vai trò đang sở hữu đường tạo batch
+    và cùng vai trò gác điều chỉnh sau lock, tiền thưởng. Đây là dữ liệu tiền đã bàn giao ra ngoài tổ
+    chức, nên chặn ở mức vào trang, không chỉ chặn hành động.<br>
+    <b>Giả định cần chốt với khách:</b> (1) trạng thái bàn giao ở mức batch dùng chung tập giá trị với
+    trạng thái dòng, hay là một tập riêng; (2) số lần thử gửi tối đa — con số retry 3 lần của yêu cầu
+    khách chỉ dành cho thông báo (FN-12), màn này <b>không vay</b>; (3) bên nhận xử lý batch trùng
+    ngày theo kiểu thay thế hay cộng dồn — với bên nhận cộng dồn thì "Gửi lại" nghĩa là <b>nhân đôi
+    số tiền</b> phía kế toán, nên hai lần gửi cùng lúc phải để một bên thắng, bên kia bị từ chối;
+    (4) thời hạn giữ tập dòng đã bàn giao theo policy lưu trữ.<br>
+    <b>Spec (as-built):</b> <a href="../spec/SC-27-quan-ly-batch-xuat-du-lieu-ke-toan.md">SC-27-quan-ly-batch-xuat-du-lieu-ke-toan.md</a>
   </div>
 </section>

@@ -3,143 +3,161 @@
   <div class="wf-screen__hd">
     <h2>SC-09 · Ghi nhận kết quả 目利き</h2>
     <p class="wf-screen__meta">
-      <b>SCR008_MekikiEntry</b> · Form · route <b>/lots/[id]/mekiki</b> · actor: người đánh giá —
-      ROLE-JUDGE · <b>FE-010</b> · <span class="wf-tag">Đã dựng</span>
+      <b>FE-010</b> Ghi nhận kết quả 目利き · <b>FN-03</b> Quản lý lô hàng · ưu tiên <b>P0</b> ·
+      yêu cầu <b>FR-LOT-02</b>, <b>SCOPE-OUT-01</b> · Form · actor: người đánh giá ·
+      <span class="wf-tag">Đã dựng</span><br>
+      Tham chiếu prototype: <code>SCR008_MekikiEntry</code> · route
+      <code>/lots/[id]/mekiki</code>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">3 · Ngữ cảnh chỉ đọc (field 6–7) — nằm ở phần mô tả trang</p>
+    <p class="wf-box__t">Ranh giới phán đoán của con người — SCOPE-OUT-01 · FIG-008</p>
+    <p class="wf-f__h" style="margin:0;">
+      SCOPE-OUT-01 loại hẳn khỏi phạm vi việc đánh giá tự động độ tươi, chất lượng và phân loại
+      loài. FIG-008 vẽ rõ: hệ thống đưa thông tin tham khảo vào, <b>người quyết định</b>, hệ thống
+      đăng ký kết quả phán định. Nên màn này <b>chỉ ghi nhận</b> — không chấm điểm, không gợi ý
+      hạng, không xếp loại tự động, và không được có ô nào mang nghĩa "hệ thống đánh giá".
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Ngữ cảnh lô hàng — chỉ đọc</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Mã lô · ロット番号</label>
-        <div class="wf-f__i wf-f__i--ro" style="font-family:ui-monospace,monospace;">LOT-0001</div>
-        <p class="wf-f__h"><code>lot_code</code> · font mono, chỉ đọc.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Mặt hàng · 品目</label>
-        <div class="wf-f__i wf-f__i--ro">Mặt hàng mẫu</div>
-        <p class="wf-f__h"><code>item</code> · chỉ đọc.</p>
-      </div>
+      <div class="wf-f"><label class="wf-f__l">Mã lô · ロット番号</label>
+        <div class="wf-f__i wf-f__i--ro" style="font-family:ui-monospace,monospace;">LOT-0001</div></div>
+      <div class="wf-f"><label class="wf-f__l">Mặt hàng · 品目</label>
+        <div class="wf-f__i wf-f__i--ro">Mặt hàng mẫu</div></div>
+      <div class="wf-f"><label class="wf-f__l">Trạng thái hiện tại · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">Tiếp nhận — bước 1/5 của FIG-011</div>
+        <p class="wf-f__h">Chỉ lô ở bước 1 mới chờ ghi kết quả.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Ngày nghiệp vụ của lô · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+        <p class="wf-f__h">Hiện ra để người ghi biết bản ghi rơi vào kỳ nào.</p></div>
     </div>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">3 · Field nhập (field 1) — một field duy nhất</p>
+    <p class="wf-box__t">Kết quả đánh giá bằng mắt — FR-LOT-02</p>
     <div class="wf-f">
-      <label class="wf-f__l">Kết quả thẩm định (目利き) · 目利き結果 <span class="req">*</span></label>
-      <div class="wf-f__i">Nhập nhận định của bạn, ví dụ: trên A, thân dày, mắt trong &nbsp;·&nbsp; tabIndex 1</div>
+      <label class="wf-f__l">Kết quả thẩm định · 目利き結果 <span class="req">*</span></label>
+      <div class="wf-f__i wf-f__i--ta">Nhận định của người đánh giá — ví dụ: trên A, thân dày, mắt trong</div>
       <p class="wf-f__h">
-        <code>grade</code> · <b>văn bản tự do</b>, không phải enum, không có chấm điểm tự động —
-        <code>SCOPE-OUT-01</code> loại hẳn auto-grading khỏi phạm vi. Rỗng sau trim → <b>422</b>,
-        câu lỗi "Vui lòng nhập kết quả thẩm định." <b>Không có trần độ dài</b> ở cả client và
-        server: dán 2MB văn bản vào là lưu được — đề xuất thêm trần.
+        Văn bản tự do, <b>không phải danh sách hạng cố định</b>: nhận định của người có kinh nghiệm
+        không nén được vào một enum, và đóng khung nó lại chính là bước đầu của tự động hoá mà
+        SCOPE-OUT-01 cấm. Bắt buộc, có trần độ dài, hiển thị số ký tự còn lại.
       </p>
     </div>
-    <p style="margin:0;">
-      <span class="wf-b">Lưu kết quả</span>
-      <span class="wf-f__h">tabIndex 2 · Enter ở field text cũng submit (NFR-USE-01)</span>
-    </p>
+    <p style="margin:0;"><span class="wf-b">Lưu kết quả</span> <span class="wf-f__h">Enter cũng lưu — NFR-USE-01</span></p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">3 · Field dẫn xuất (field 2–5) — client không gửi được giá trị nào</p>
+    <p class="wf-box__t">Truy vết bắt buộc — nghiệm thu FR-LOT-02: "truy ngược được người ghi và thời điểm"</p>
     <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Người xác nhận · 評価担当者</label>
-        <div class="wf-f__i wf-f__i--ro">Lấy từ phiên đăng nhập</div>
-        <p class="wf-f__h"><code>assessor_id</code> · <b>key i18n có nhưng form chưa render field
-          này</b> — người đánh giá không thấy tên mình được ghi vào đâu. Task nhỏ: render ô chỉ
-          đọc, hoặc bỏ key. Cột nullable ở DB nhưng đường ghi hiện có luôn đặt.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Thời điểm đánh giá</label>
-        <div class="wf-f__i wf-f__i--ro">Postgres đặt (default now())</div>
-        <p class="wf-f__h"><code>assessed_at</code> · <b>chưa có key i18n</b> cả VI và JA.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
-        <div class="wf-f__i wf-f__i--ro">Copy từ lot.business_date</div>
-        <p class="wf-f__h"><code>business_date</code> · <b>không phải hôm nay</b>. Lô nhận ngày N,
-          đánh giá ngày N+1 thì bản ghi mang ngày <b>N</b> — đúng ý QĐ-2 nhưng báo cáo sẽ quy công
-          việc của N+1 về N.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái lô · 状態</label>
-        <div class="wf-f__i wf-f__i--ro">received → published</div>
-        <p class="wf-f__h"><code>lot.status</code> · CAS
-          <code>WHERE status = 'received'</code> là <b>điểm serialize</b> — chỉ request nào lật
-          được trạng thái mới đi tiếp. Đây là cửa <b>duy nhất</b> đưa lô vào giao dịch.</p>
-      </div>
+      <div class="wf-f"><label class="wf-f__l">Người xác nhận · 評価担当者</label>
+        <div class="wf-f__i wf-f__i--ro">Người đánh giá A (phiên đang đăng nhập)</div>
+        <p class="wf-f__h"><b>Phải hiện trên màn</b>, không chỉ lưu ngầm. Người đánh giá đang ký
+          tên vào một phán đoán nghiệp vụ, họ có quyền thấy tên mình được ghi vào đâu.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Thời điểm ghi nhận · 評価日時</label>
+        <div class="wf-f__i wf-f__i--ro">Hệ thống đặt, neo JST</div>
+        <p class="wf-f__h">Thời điểm thực của việc ghi, không phải ngày nghiệp vụ.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Ngày nghiệp vụ của bản ghi · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">Kế thừa từ lô hàng</div>
+        <p class="wf-f__h">Lô nhận ngày N, đánh giá ngày N+1 thì bản ghi vẫn thuộc kỳ <b>N</b> —
+          gắn kết quả với lô, không với người ghi. Hệ quả: báo cáo quy công việc của N+1 về N.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Trạng thái lô sau khi lưu · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">Tiếp nhận → Đã 下見 (bước 2/5)</div>
+        <p class="wf-f__h">Theo FIG-011, ghi kết quả đưa lô sang bước 2, <b>không</b> nhảy thẳng
+          sang "Công bố" — công bố là một quyết định bán riêng ở SC-10.</p></div>
     </div>
+    <p class="wf-f__h">
+      <span class="wf-tag">CHƯA CHỐT</span> Tên màn hiện là "Ghi nhận kết quả 目利き", nhưng FIG-011
+      gọi cạnh này là "đăng ký <b>下見</b>". RFP tách hai thuật ngữ trong bảng thuật ngữ (目利き là
+      thẩm định bằng kinh nghiệm, 下見 là xem hàng trước khi giao dịch) nhưng lại định nghĩa 目利き
+      là "下見 bằng mắt" ở §05 và viết hai từ cạnh nhau ở FIG-008. Nếu là <b>hai</b> nghiệp vụ thì
+      FIG-011 cần hai bước và màn này chỉ phụ trách một; nếu là <b>một</b> việc hai tên thì phải
+      chốt gọi tên nào. Ảnh hưởng trực tiếp tới tên màn, tên trạng thái và số cạnh của FIG-011.
+    </p>
   </div>
 
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng (sẵn sàng nhập)</h4>
-        <p>ROLE-JUDGE <b>và</b> <code>status === "received"</code>: form một field, con trỏ tự vào
-          field đầu.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải / lỗi tải</h4>
-        <p>Chưa có <code>loading.tsx</code>, chưa có UI lỗi riêng — đề xuất cả hai.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không tìm thấy lô</h4>
-        <p><code>id</code> không tồn tại → <b>404</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Sai vai trò</h4>
-        <p><b>Vẫn vào được trang</b>: thấy mã lô + mặt hàng, form thay bằng một dòng "Chỉ Người
-          đánh giá (ROLE-JUDGE) mới ghi được 目利き cho lô hàng này."</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đã 目利き rồi</h4>
-        <p>ROLE-JUDGE nhưng <code>status !== "received"</code>: "Lô hàng này đã qua bước 目利き."
-          Chỉ còn đường quay lại SC-10.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>Input disabled, nút <code>aria-busy</code> + "Đang lưu...".</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p>Mất CAS → <b>409</b> "Lô hàng không ở trạng thái chờ 目利き (đã ghi trước đó hoặc đã vào
-          giao dịch)." Hai người cùng bấm thì người thứ hai nhận 409, <b>không</b> tạo bản ghi
-          trùng.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Thành công</h4>
-        <p>Thay form bằng "Đã lưu kết quả 目利き, lô hàng chuyển sang Đã 目利き / Công bố."</p>
-      </div>
-      <div class="wf-state">
-        <h4>Read-only vì ngày đã lock</h4>
-        <p><b>CHƯA CÓ — màn không kiểm lock.</b> Form vẫn hiện, submit vẫn <b>201</b>: trigger chỉ
-          <code>BEFORE UPDATE OR DELETE</code>, không chặn INSERT; policy insert không mang điều
-          kiện lock; route không gọi <code>isBusinessDateLocked</code>. Số liệu ngày đã chốt vẫn
-          đổi được bằng cách <b>thêm</b> hàng. Lỗ hổng, không phải quyết định.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Lock — mã lỗi</h4>
-        <p>Nếu có UPDATE/DELETE thì trigger raise <code>P0001</code>, hợp đồng chung là map sang
-          <b>423</b>. <b>Chưa có mapping ở route này</b> — đề xuất, theo mẫu ba chỗ đã làm đúng.</p>
-      </div>
+      <div class="wf-state"><h4>Sẵn sàng nhập</h4>
+        <p>Đúng vai trò và lô còn ở bước 1: một trường nhập, con trỏ đã ở trong đó.</p></div>
+      <div class="wf-state"><h4>Không tìm thấy lô</h4>
+        <p>Mã lô không tồn tại: nói rõ, kèm đường về danh sách lô.</p></div>
+      <div class="wf-state"><h4>Sai vai trò</h4>
+        <p>Vẫn xem được ngữ cảnh lô, form đổi thành dòng nói rõ chỉ người đánh giá mới ghi được
+          kết quả cho lô này.</p></div>
+      <div class="wf-state"><h4>Đã có kết quả</h4>
+        <p>Lô đã qua bước đánh giá: hiện kết quả đã ghi kèm người và thời điểm, không hiện form
+          nhập mới. Sửa kết quả đi qua luồng điều chỉnh có kiểm soát.</p></div>
+      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4>
+        <p>Trường vô hiệu, nút báo đang lưu. Lỗi thì giữ nguyên nội dung đã nhập.</p></div>
+      <div class="wf-state"><h4>Xung đột đồng thời</h4>
+        <p>Hai người đánh giá bấm cùng lúc: người sau bị từ chối vì lô đã rời bước 1, <b>không</b>
+          tạo bản ghi thứ hai cho cùng một lô.</p></div>
+      <div class="wf-state"><h4>Ngày nghiệp vụ đã lock</h4>
+        <p>Ngày nghiệp vụ của lô đã lock thì <b>không được ghi thêm</b> kết quả vào kỳ đó — phải
+          từ chối trước khi ghi và chỉ dẫn sang luồng điều chỉnh sau chốt (SC-20).</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Lock ngày nghiệp vụ chặn mọi đường làm đổi số liệu của kỳ đã chốt (BR-CLOSE-01)</td>
+            <td>Lock <b>không chặn INSERT</b> — trigger chỉ <code>before update or delete</code>,
+              và bản ghi 目利き <b>kế thừa ngày nghiệp vụ của lô</b>. Ghi kết quả muộn là
+              backdate được vào một ngày quá khứ đã lock, bằng giao diện bình thường, không cần
+              quyền đặc biệt. Đây là chỗ nặng nhất của nhóm màn này</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Người xác nhận hiện trên màn (nghiệm thu FR-LOT-02)</td>
+            <td>Có sẵn nhãn đa ngữ nhưng form <b>không render trường này</b> — người đánh giá không
+              thấy tên mình được ghi vào đâu</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Ghi kết quả đưa lô sang "Đã 下見" (bước 2/5 FIG-011)</td>
+            <td>Đưa thẳng sang "Công bố" — vì prototype không có trạng thái "Đã 下見", nên việc
+              đánh giá và quyết định bán bị gộp thành một</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Một lô có tối đa một kết quả đánh giá</td>
+            <td>Không có ràng buộc duy nhất theo lô ở tầng dữ liệu; chống trùng chỉ dựa vào việc
+              lật được trạng thái lô. Ghi trạng thái và ghi bản ghi không nằm trong một transaction
+              — lỗi giữa hai bước để lại lô đã công bố mà không có kết quả nào</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Kết quả đánh giá có trần độ dài</td>
+            <td>Không có trần ở cả giao diện và tầng API</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>下見 và 目利き là một việc hay hai</td>
+            <td>Chỉ có 目利き; không có bước 下見 nào trong luồng</td>
+            <td>cần khách chốt</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> cả 7 vai trò <b>vào được trang</b> (chỉ <code>requireUser()</code>); quyền
-    ghi giữ ở tầng API — gọi <code>POST /api/lots/[id]/mekiki</code> khi không phải ROLE-JUDGE →
-    <b>404</b>, không phải 403. Đọc thì mọi vai trò active đọc được <code>lot</code> và
-    <code>mekiki_record</code> (FR-601).<br>
-    <b>Ghi chú:</b> thứ tự ghi có ý nghĩa — CAS <code>lot.status</code> trước, rồi insert
-    <code>mekiki_record</code>; không có transaction xuyên bảng nên bù trừ là best-effort: nếu cả
-    lệnh bù trừ cũng lỗi thì lô nằm ở <code>published</code> mà <b>không có bản ghi 目利き nào</b>.
-    Audit ghi <code>publish</code> trên entity <b><code>lot</code></b>, nên vết này hiện ở lịch sử
-    của SC-10, không có hàng audit riêng cho <code>mekiki_record</code>. DB <b>chưa có</b>
-    <code>unique (lot_id)</code> — đề xuất.<br>
+    <b>Phân quyền:</b> ghi thuộc vai trò người đánh giá, chặn ở tầng API và tầng dữ liệu. Đọc kết
+    quả mở cho các vai trò vận hành — kết quả đánh giá là căn cứ định giá của cả chuỗi phía sau.<br>
+    <b>Ghi chú:</b> kết quả đánh giá phải xem lại được ở chi tiết lô (SC-10) và ở báo cáo lịch sử
+    lô hàng (RPT-02), lấy từ chính bản ghi đánh giá — không phải suy từ một dòng audit. Việc sửa
+    kết quả đã ghi đi qua FR-LOT-04 / FR-CORR-01, không sửa tại chỗ.<br>
     <b>Spec:</b> <a href="../spec/SC-09-ghi-nhan-ket-qua-mekiki.md">SC-09-ghi-nhan-ket-qua-mekiki.md</a>
   </div>
 </section>

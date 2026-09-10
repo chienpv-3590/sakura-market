@@ -3,62 +3,82 @@
   <div class="wf-screen__hd">
     <h2>SC-31 · Quản lý file đính kèm</h2>
     <p class="wf-screen__meta">
-      List/Detail · route <b>—</b> (đề xuất <code>/attachments</code>, <code>/attachments/[id]</code>) ·
-      actor: bộ phận đối chiếu · <b>FE-044</b> · <code>TBL-ATTACH-01</code> · <code>DR-RET-01</code> ·
-      <code>DR-IMAGE-01</code> · RFP §08-04, §09-06 · <span class="wf-tag">Chưa thi công</span>
+      <b>FE-044</b> Quản lý file đính kèm · <b>FN-14</b> Quản trị vận hành và tài liệu đính kèm ·
+      ưu tiên <b>P1</b> · <code>TBL-ATTACH-01</code> · <code>DR-RET-01</code> ·
+      <code>DR-IMAGE-01</code> · RFP §08-04, §08-07, §09-06 ·
+      List/Detail · route đề xuất <code>/attachments</code>, <code>/attachments/[id]</code> ·
+      actor: bộ phận đối chiếu · <span class="wf-tag">Chưa thi công</span>
     </p>
   </div>
 
   <p class="wf-todo">
-    <b>Đề xuất thiết kế — màn này chưa tồn tại trong code.</b> Bảng <code>lot_attachment</code>,
-    bucket private, upload thật (5MB, 4 loại MIME, kiểm ở <b>server</b>) và đọc lại qua signed URL
-    ngắn hạn thì <b>đã chạy thật</b> (QĐ-6); đường thứ hai
-    <code>correction_request.evidence_path</code> với bucket riêng cũng vậy. Thiếu là danh sách
-    <b>xuyên lô hàng và xuyên loại chứng từ</b>, <b>phân loại tài liệu</b> để thi hành
-    <code>DR-RET-01</code>, và <b>vòng đời lưu trữ</b>.<br>
-    <b>Điều kiện tiền đề (mục 9 spec):</b> thêm <code>doc_type</code>, <code>storage_tier</code>,
-    <code>archived_at</code> vào <code>lot_attachment</code> — không có <code>doc_type</code> thì
-    <b>không phân biệt được nhóm 7 năm với nhóm 3 năm</b> mà RFP §08-04 chia, tức không thi hành được
-    <code>DR-RET-01</code>; một policy <b>update hẹp đúng 2 cột</b> (bảng hiện append-only tuyệt đối);
-    quyết định gom một kho hay hai; <b>tầng lưu trữ nguội và đường phục hồi</b> (RFP đòi phục hồi
-    trong tối đa 2 ngày làm việc — chưa có tầng nào ngoài bucket hiện tại); <b>job định kỳ</b> đánh
-    dấu file tới hạn (repo không có job/cron nào); <code>GET /api/attachments</code> (chưa có).
+    <b>Chưa thi công.</b> Wireframe vẽ <b>cái thiết kế đòi</b>; hiện trạng code dồn xuống khối
+    <b>ĐỐI CHIẾU PROTOTYPE</b> cuối trang.<br>
+    <code>TBL-ATTACH-01</code> (§08-04) — <b>upload, lưu trữ và tra cứu chứng từ</b> theo policy lưu
+    trữ chia theo <b>loại tài liệu</b>. <code>DR-RET-01</code> — "dữ liệu nghiệp vụ tra cứu online lưu
+    <b>7 năm</b>; hình ảnh/chứng từ phụ trợ lưu online <b>3 năm</b> rồi chuyển sang <b>cold
+    storage</b>". Nghiệm thu: <b>kiểm tra policy lưu trữ và diễn tập restore từ lưu trữ</b>.<br>
+    <code>DR-IMAGE-01</code> (§08-07) — hình ảnh/chứng từ làm bằng chứng cho <b>ngoại lệ giao hàng,
+    tranh chấp hoặc đối chiếu</b>. Chủ đầu tư <b>không yêu cầu</b> AI tự phán định chất lượng từ ảnh
+    trong phạm vi cơ bản; nếu có gán nhãn hay gom nhóm thì phải tách option riêng và <b>giữ yêu cầu
+    con người xác nhận</b>. Vì vậy màn này <b>không có</b> phân loại tự động: <code>doc_type</code> do
+    người đặt và người xác nhận.
   </p>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Bộ lọc — field #1–#6 theo thứ tự spec</p>
+    <p class="wf-box__t">Policy lưu trữ hai tầng — nguyên văn <code>TBL-ATTACH-01</code> §08-04, là nguồn của field #3, #4, #11, #12</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Loại tài liệu</th><th>Thời gian lưu online</th><th>Sau đó</th><th>Trong phạm vi màn này</th></tr></thead>
+        <tbody>
+          <tr><td>Phiếu tiếp nhận, phiếu giao dịch, bảng đối chiếu</td><td><b>7 năm</b></td><td>Theo policy lưu trữ của Chủ đầu tư</td><td>Có — nhóm 7 năm</td></tr>
+          <tr><td>Hình ảnh/chứng từ phụ trợ về tranh chấp hoặc giao hàng</td><td><b>3 năm</b></td><td><b>Cold archive</b>, phục hồi trong tối đa <b>2 ngày làm việc</b></td><td>Có — nhóm 3 năm</td></tr>
+          <tr><td>Tài liệu rehearsal migration và hồ sơ nghiệm thu</td><td>Theo vòng đời dự án</td><td>Theo phương châm lưu trữ của dự án</td><td><b>Không</b> — hồ sơ dự án, không phải dữ liệu chạy trong hệ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Hai tầng này là <b>lý do màn tồn tại</b>: không phân loại được tài liệu thì không biết file nào
+      thuộc nhóm 7 năm, file nào nhóm 3 năm, tức <b>không thi hành được <code>DR-RET-01</code></b>.
+      Xếp sai nhóm là hoặc chuyển cold <b>sớm 4 năm — mất bằng chứng không lấy lại được</b>, hoặc giữ
+      online quá hạn.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Bộ lọc — field #1–#6</p>
     <div class="wf-row">
       <div class="wf-f">
         <label class="wf-f__l">Ngày tải lên từ</label>
         <div class="wf-f__i">YYYY-MM-DD</div>
-        <p class="wf-f__h">#1 · <code>created_at</code> · phải ≤ đến ngày</p>
+        <p class="wf-f__h">#1 · phải ≤ đến ngày</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Ngày tải lên đến</label>
         <div class="wf-f__i">YYYY-MM-DD</div>
-        <p class="wf-f__h">#2 · <code>created_at</code> · phải ≥ từ ngày</p>
+        <p class="wf-f__h">#2 · phải ≥ từ ngày</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Loại tài liệu</label>
-        <div class="wf-f__i wf-f__i--ro">Tất cả ▾ (cột chưa có)</div>
-        <p class="wf-f__h">#3 · <code>doc_type</code> — <b>cột chưa tồn tại</b>, tập giá trị chưa chốt</p>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">#3 · tập giá trị lấy từ <b>cột 1 của bảng §08-04</b>, do người đặt — <b>không phán định tự động</b> (<code>DR-IMAGE-01</code>)</p>
       </div>
     </div>
     <div class="wf-row">
       <div class="wf-f">
         <label class="wf-f__l">Nhóm lưu trữ</label>
-        <div class="wf-f__i wf-f__i--ro">Tất cả ▾ (dẫn xuất)</div>
-        <p class="wf-f__h">#4 · dẫn xuất từ <code>doc_type</code> theo bảng <code>DR-RET-01</code> — phụ thuộc #3</p>
+        <div class="wf-f__i">Tất cả ▾ · 7 năm / 3 năm</div>
+        <p class="wf-f__h">#4 · <b>dẫn xuất từ #3</b> theo bảng §08-04 — không nhập tay, để hai giá trị không lệch nhau</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Lô hàng</label>
         <div class="wf-f__i">LOT-0001 ▾</div>
-        <p class="wf-f__h">#5 · <code>lot_id</code> → <code>lot</code> · id không tồn tại → danh sách rỗng</p>
+        <p class="wf-f__h">#5 · id không tồn tại → danh sách rỗng</p>
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Người tải lên</label>
         <div class="wf-f__i">Chọn ▾</div>
-        <p class="wf-f__h">#6 · <code>uploaded_by</code> → <code>display_name</code>; NULL thì hiện "không rõ", không ẩn dòng</p>
+        <p class="wf-f__h">#6 · hiện <b>tên hiển thị</b>, không hiện email (§09-06) · rỗng thì hiện "không rõ", không ẩn dòng</p>
       </div>
     </div>
     <p style="margin:0;">
@@ -73,101 +93,107 @@
       <table class="wf-t">
         <thead>
           <tr>
-            <th>Tên file</th><th>Loại MIME</th><th>Dung lượng</th><th>Ngày tải lên</th>
-            <th>Hết hạn lưu online</th><th>Tầng lưu trữ</th><th>Xem file</th><th>&nbsp;</th>
+            <th>Tên file</th><th>Loại tài liệu</th><th>Nhóm lưu trữ</th><th>Loại MIME</th><th>Dung lượng</th>
+            <th>Ngày tải lên</th><th>Hết hạn lưu online</th><th>Tầng lưu trữ</th><th>Thời gian truy xuất</th><th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>&lt;file_name&gt;</td><td>&lt;mime_type&gt;</td><td>&lt;byte&gt;</td>
+            <td>&lt;file_name&gt;</td><td>phiếu tiếp nhận</td><td>7 năm</td><td>&lt;mime_type&gt;</td><td>&lt;byte&gt;</td>
             <td>YYYY-MM-DD hh:mm</td><td>YYYY-MM-DD (dẫn xuất)</td>
-            <td><span class="wf-tag">online</span></td>
+            <td><span class="wf-tag">online</span></td><td>ngay</td>
             <td><span class="wf-b wf-b--2">Xem file</span></td>
-            <td><span class="wf-b wf-b--off">Đánh dấu chuyển cold</span></td>
           </tr>
           <tr>
-            <td>&lt;file_name&gt;</td><td>&lt;mime_type&gt;</td><td>&lt;byte&gt;</td>
-            <td>YYYY-MM-DD hh:mm</td><td>YYYY-MM-DD (dẫn xuất)</td>
-            <td><span class="wf-tag">cold</span></td>
-            <td><span class="wf-b wf-b--off">Đã chuyển lưu trữ nguội</span></td>
+            <td>&lt;file_name&gt;</td><td>ảnh ngoại lệ giao hàng</td><td>3 năm</td><td>&lt;mime_type&gt;</td><td>&lt;byte&gt;</td>
+            <td>YYYY-MM-DD hh:mm</td><td>YYYY-MM-DD <span class="wf-tag">quá hạn, chưa chuyển</span></td>
+            <td><span class="wf-tag">online</span></td><td>ngay</td>
+            <td><span class="wf-b">Đánh dấu chuyển cold</span></td>
+          </tr>
+          <tr>
+            <td>&lt;file_name&gt;</td><td>ảnh chứng từ tranh chấp</td><td>3 năm</td><td>&lt;mime_type&gt;</td><td>&lt;byte&gt;</td>
+            <td>YYYY-MM-DD hh:mm</td><td>YYYY-MM-DD</td>
+            <td><span class="wf-tag">cold</span></td><td><b>tối đa 2 ngày làm việc</b></td>
             <td><span class="wf-b wf-b--2">Yêu cầu phục hồi</span></td>
           </tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      #9 <code>file_size</code> theo byte, CHECK <code>&gt; 0</code>. #11 dẫn xuất từ
-      <code>created_at</code> + hạn của nhóm lưu trữ. #12 <code>storage_tier</code> —
-      <b>cột chưa tồn tại</b>. #13 <b>signed URL do server sinh, TTL ngắn</b>; bucket là private,
-      không bao giờ URL công khai.
+      <b>Tầng lưu trữ là thuộc tính thấy được của file, không phải chi tiết hạ tầng</b> — vì nó đổi
+      hẳn thời gian truy xuất: online là mở ngay, cold là <b>tối đa 2 ngày làm việc</b>
+      (<code>TBL-ATTACH-01</code>). Người đối chiếu cần biết trước khi bấm, không sau. #11 hết hạn
+      online dẫn xuất từ ngày tải lên + hạn của nhóm lưu trữ. #9 dung lượng theo byte, phải > 0.
+      #13 mọi đường xem file đi qua <b>signed URL do server sinh, TTL ngắn</b>.
     </p>
   </div>
 
   <div class="wf-box wf-box--todo">
     <p class="wf-box__t">Ba quy tắc cứng về đường dẫn file — không thương lượng</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>1 · Đường dẫn không bao giờ ra ngoài</h4>
-        <p><code>file_path</code> và <code>evidence_path</code> <b>không bao giờ hiện lên UI và không
-        bao giờ ra CSV</b> — quy tắc đã có ở RPT-08, giữ y nguyên. Không có cột nào cho chúng trong
-        bảng trên, và đó là cố ý.</p>
-      </div>
-      <div class="wf-state">
-        <h4>2 · Mọi đường xem file đi qua signed URL</h4>
-        <p>Server sinh, TTL ngắn. TTL ngắn là biện pháp <b>duy nhất</b> đang có chống chia sẻ lại
-        link. Không nới TTL cho tiện — đó là đánh đổi bảo mật, không phải UX.</p>
-      </div>
-      <div class="wf-state">
-        <h4>3 · Một link hỏng không được làm sập cả trang</h4>
-        <p>Dòng đó vẫn hiện tên / dung lượng / ngày, chỉ mất link. Và phải phân biệt "chưa sinh được
-        link" với "file không còn".</p>
-      </div>
+      <div class="wf-state"><h4>1 · Đường dẫn không bao giờ ra ngoài</h4><p>Đường dẫn lưu trữ của file <b>không bao giờ hiện lên UI và không bao giờ ra CSV</b> — quy tắc đã áp ở RPT-08, giữ y nguyên. Bảng trên <b>cố ý</b> không có cột nào cho nó.</p></div>
+      <div class="wf-state"><h4>2 · Mọi đường xem file đi qua signed URL</h4><p>Server sinh, TTL ngắn, bucket private. TTL ngắn là biện pháp <b>duy nhất</b> đang có chống chia sẻ lại link — không nới cho tiện.</p></div>
+      <div class="wf-state"><h4>3 · Một link hỏng không làm sập cả trang</h4><p>Dòng vẫn hiện tên · loại · dung lượng · ngày, chỉ mất link. Và phải phân biệt "chưa sinh được link" với "file không còn".</p></div>
     </div>
   </div>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Trạng thái — mục 4 spec</p>
+    <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
       <div class="wf-state"><h4>Rỗng</h4><p>"Không có file đính kèm nào khớp điều kiện".</p></div>
-      <div class="wf-state"><h4>Đang tải</h4><p>Skeleton bảng.</p></div>
-      <div class="wf-state"><h4>Lỗi tải</h4><p>Khối lỗi + nút thử lại.</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4><p>Skeleton bảng; lỗi thì khối lỗi + nút thử lại.</p></div>
       <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò không được vào → trang <b>404</b>, không phải 403.</p></div>
-      <div class="wf-state"><h4>Đang gửi</h4><p>Bấm hành động vòng đời (đánh dấu cold): dòng đó vào trạng thái chờ.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi</h4><p>Lỗi trên đúng dòng, không đổi trạng thái.</p></div>
+      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4><p>Bấm hành động vòng đời: dòng đó vào trạng thái chờ; lỗi báo trên đúng dòng và không đổi trạng thái.</p></div>
+      <div class="wf-state"><h4>Chưa phân loại</h4><p><code>doc_type</code> rỗng: <b>không suy ra nhóm lưu trữ</b>, không tính hạn — hiện nhãn "cần phân loại" và chặn hành động vòng đời.</p></div>
+      <div class="wf-state"><h4>Quá hạn online, chưa chuyển cold</h4><p>Nhóm 3 năm đã hết hạn mà chưa ai đánh dấu: nhãn riêng, gom được thành danh sách. Không hiện được nhóm này thì <code>DR-RET-01</code> chỉ là chữ trên giấy.</p></div>
+      <div class="wf-state"><h4>Đã chuyển cold / đang chờ phục hồi</h4><p>Không link xem trực tiếp, chỉ còn "yêu cầu phục hồi" kèm mốc <b>tối đa 2 ngày làm việc</b>. Đã yêu cầu rồi thì hiện thời điểm yêu cầu và hạn dự kiến, không cho yêu cầu trùng.</p></div>
       <div class="wf-state"><h4>Link hết hạn</h4><p>Quá TTL hoặc sinh lỗi: dòng vẫn hiện, link thay bằng nút "tạo lại link".</p></div>
-      <div class="wf-state"><h4>Đã chuyển cold</h4><p>Nhãn "đã chuyển lưu trữ nguội", không link xem trực tiếp, chỉ còn "yêu cầu phục hồi".</p></div>
-      <div class="wf-state"><h4>Không có "read-only vì lock"</h4><p><code>lot_attachment</code> được <b>miễn</b> trigger khoá ngày có chủ đích: một lô nhận vào ngày đã lock vẫn bán ngày sau. Không bao giờ trả <b>423</b>.</p></div>
+      <div class="wf-state"><h4>Không có "read-only vì lock"</h4><p>Đính kèm được miễn khoá ngày có chủ đích: một lô nhận vào ngày đã lock vẫn bán ngày sau. Không bao giờ trả <b>423</b>.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>Upload · lưu trữ · đọc lại chứng từ (<code>TBL-ATTACH-01</code>)</td><td><b>Đã chạy thật:</b> bảng <code>lot_attachment</code> (tên file, MIME, dung lượng CHECK &gt; 0, người tải lên, thời điểm), bucket <b>private</b>, trần 5MB và danh sách MIME kiểm ở <b>server</b>, đọc lại bằng signed URL TTL ngắn. Đường thứ hai cho evidence điều chỉnh cũng vậy, bucket riêng</td><td><span class="wf-tag">đã đủ</span></td></tr>
+          <tr><td>Đường dẫn file không ra UI và không ra CSV</td><td><b>Đang giữ đúng:</b> không cột nào phơi đường dẫn ra UI, và RPT-08 đã loại nó khỏi CSV</td><td><span class="wf-tag">đã đủ</span></td></tr>
+          <tr><td>Không phán định chất lượng ảnh tự động (<code>DR-IMAGE-01</code>)</td><td><b>Đang giữ đúng:</b> không có AI hay tự động gán nhãn ở bất kỳ đâu</td><td><span class="wf-tag">đã đủ</span></td></tr>
+          <tr><td>Màn quản lý <b>xuyên lô hàng và xuyên loại chứng từ</b> + endpoint danh sách</td><td>Chưa có. Hiện chỉ đọc được đính kèm của <b>một</b> lô hàng, từ trang chi tiết lô</td><td><span class="wf-tag">chưa có</span></td></tr>
+          <tr><td><b>Phân loại tài liệu</b> để chia nhóm 7 năm / 3 năm</td><td><b>Không có cột <code>doc_type</code></b> — nên hiện <b>không phân biệt được</b> nhóm 7 năm với nhóm 3 năm mà §08-04 chia, tức chưa thi hành được <code>DR-RET-01</code></td><td><span class="wf-tag">chưa có</span></td></tr>
+          <tr><td>Tầng lưu trữ online / cold thấy được trên từng file</td><td>Không có cột tầng lưu trữ, không có mốc chuyển tầng</td><td><span class="wf-tag">chưa có</span></td></tr>
+          <tr><td>Chuyển cold sau 3 năm, phục hồi ≤ 2 ngày làm việc</td><td>Chỉ có <b>một tầng</b> là bucket hiện tại — không có lưu trữ nguội, không có đường phục hồi, và <b>không có job/cron nào</b> đánh dấu file tới hạn</td><td><span class="wf-tag">chưa có</span></td></tr>
+          <tr><td>Hành động vòng đời ghi được vào bản ghi file</td><td>Cả hai kho <b>append-only tuyệt đối</b>: không policy update/delete ở bất kỳ đâu. Cần thêm <b>một policy update hẹp đúng 2 cột</b> — cố ý hẹp, không mở update chung</td><td><span class="wf-tag">chưa có</span></td></tr>
+          <tr><td>Policy lưu trữ phủ <b>toàn bộ</b> chứng từ</td><td>Chứng từ nằm ở <b>hai kho tách nhau</b>. Quản một kho thì policy phủ nửa, và evidence tranh chấp — đúng nhóm 3 năm §08-04 gọi tên — lại ở nửa không được quản</td><td><span class="wf-tag">một phần</span></td></tr>
+          <tr><td>Kiểm soát truy cập chứng từ theo vai trò (§09-06, APPI)</td><td>Đọc mở cho mọi vai trò đang hoạt động, ở <b>cả metadata và cả nội dung file</b> — có chủ đích khi dựng prototype</td><td><span class="wf-tag">xung đột</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> đề xuất <b>ROLE-SETTLEMENT</b> (actor chính) và <b>ROLE-SYS-ADMIN</b> (vận hành
-    policy lưu trữ, thêm hành động vòng đời). <b>ROLE-INTAKE không vào được</b> — nó là vai trò
-    <i>ghi</i> đính kèm lô hàng, không phải vai trò quản lý lưu trữ; vẫn upload được qua SC-08. 4 vai
-    trò còn lại nhận <b>404</b>.<br>
-    <b>Đánh đổi cần ADR — chung một ADR với SC-30:</b> RLS đọc rộng theo FR-601 (có chủ đích) đã cho
-    mọi vai trò đang hoạt động đọc <b>metadata và cả nội dung file</b> (policy đọc trên
-    <code>storage.objects</code> của bucket cũng mở). Gác màn này chỉ bỏ đi giao diện duyệt hàng loạt.
-    §09-06 (APPI) đòi kiểm soát truy cập theo vai trò cho thông tin cá nhân — chứng từ tiếp nhận và
-    evidence tranh chấp có thể chứa thông tin cá nhân của người tham gia.<br>
-    <b>Không đề xuất xoá file:</b> cả hai kho đều append-only, <b>không có policy update/delete ở bất
-    kỳ đâu</b>. Chứng từ là bằng chứng nghiệp vụ; hết hạn online thì <b>chuyển tầng lưu trữ</b>, không
-    xoá. "Đánh dấu chuyển cold" là lý do duy nhất cần một policy update hẹp.<br>
-    <b>Giả định cần chốt:</b> (1) tập giá trị <code>doc_type</code> và cách ánh xạ sang nhóm lưu trữ
-    — RFP §08-04 chia 3 nhóm nhưng <b>không cho tập giá trị dữ liệu</b>, và nhóm thứ ba (tài liệu
-    rehearsal/nghiệm thu) không phải dữ liệu nghiệp vụ chạy trong hệ này; xếp sai nhóm là hoặc chuyển
-    cold sớm 4 năm — <b>mất bằng chứng không lấy lại được</b> — hoặc giữ online quá hạn; (2) màn quản
-    lý <b>một kho hay hai</b> — chọn một kho thì policy lưu trữ chỉ phủ một nửa chứng từ, và evidence
-    tranh chấp (đúng nhóm 3 năm RFP gọi tên) lại nằm ở nửa không được quản lý; (3) ai được duyệt toàn
-    bộ chứng từ và có siết đọc hay không; (4) có ghi audit cho hành vi <b>mở/tạo lại link</b> hay
-    không — hiện chỉ upload được ghi audit, việc <b>đọc</b> không được ghi ở đâu; ghi thì
-    <code>audit_log</code> phình vì mỗi lần render danh sách sinh N dòng; (5) TTL của signed URL trên
-    màn quản lý — <b>không nới TTL hiện có của SC-10</b> để tiện cho màn này.<br>
+    <b>Phân quyền:</b> đề xuất <b>ROLE-SETTLEMENT</b> (actor chính, bộ phận đối chiếu) và
+    <b>ROLE-SYS-ADMIN</b> (vận hành policy lưu trữ, hành động vòng đời). <b>ROLE-INTAKE không vào
+    được</b> — nó là vai trò <i>ghi</i> đính kèm lô hàng, không phải vai trò quản lý lưu trữ; vẫn
+    upload được qua SC-08. Các vai trò còn lại nhận <b>404</b>.<br>
+    <b>Đánh đổi cần ADR — chung một ADR với SC-30.</b> Chứng từ tiếp nhận và evidence tranh chấp có
+    thể chứa thông tin cá nhân của người tham gia, nên §09-06 đòi kiểm soát truy cập theo vai trò và
+    đòi <b>nhất quán với chính policy <code>DR-RET-01</code></b>. Gác màn này chỉ bỏ đi giao diện
+    duyệt hàng loạt, không làm file thành bí mật ở tầng dữ liệu.<br>
+    <b>Không đề xuất xoá file:</b> chứng từ là bằng chứng nghiệp vụ. Hết hạn online thì
+    <b>chuyển tầng lưu trữ</b> theo <code>DR-RET-01</code>, không xoá — nên "đánh dấu chuyển cold" là
+    lý do <b>duy nhất</b> cần một policy update hẹp.<br>
+    <b>Giả định cần chốt:</b> (1) tập giá trị <code>doc_type</code> — §08-04 chia 3 nhóm nhưng
+    <b>không cho tập giá trị dữ liệu</b>, và nhóm thứ ba (rehearsal/nghiệm thu) không phải dữ liệu
+    chạy trong hệ này; (2) màn quản <b>một kho hay hai</b>; (3) ai được duyệt toàn bộ chứng từ và có
+    siết đọc hay không; (4) có ghi audit cho hành vi <b>mở/tạo lại link</b> hay không — ghi cả việc
+    đọc thì bảng audit phình vì mỗi lần render danh sách sinh N dòng; (5) TTL của signed URL —
+    <b>không nới TTL hiện có của SC-10</b> cho tiện màn này; (6) "2 ngày làm việc" theo lịch nào.<br>
     <b>Ghi chú:</b> phải phân trang từ đầu — số file tăng theo số lô nhân số chứng từ mỗi lô. Đối
-    chiếu storage với DB nên là một chức năng của màn: đây là nơi <b>duy nhất</b> phát hiện được file
-    mồ côi (ghi bù xoá file khi insert thất bại có thể thất bại tiếp và code chỉ log lại). File tới
-    hạn 3 năm mà chưa ai đánh dấu cold thì không có job nào làm — màn phải hiện được nhóm "quá hạn
-    online mà chưa chuyển", nếu không <code>DR-RET-01</code> chỉ là chữ trên giấy.<br>
+    chiếu kho lưu trữ với cơ sở dữ liệu nên là một chức năng của màn: đây là nơi <b>duy nhất</b> phát
+    hiện được file mồ côi. Màn chạm dữ liệu nhạy — wireframe <b>chỉ vẽ khung và nhãn</b>.<br>
     <b>Spec:</b> <a href="../spec/SC-31-quan-ly-file-dinh-kem.md">SC-31-quan-ly-file-dinh-kem.md</a>
   </div>
 </section>

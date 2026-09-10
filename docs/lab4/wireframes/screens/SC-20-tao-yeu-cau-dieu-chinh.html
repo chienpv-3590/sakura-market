@@ -3,19 +3,35 @@
   <div class="wf-screen__hd">
     <h2>SC-20 · Tạo yêu cầu điều chỉnh</h2>
     <p class="wf-screen__meta">
-      <b>SCR019_CorrectionRequest</b> · Form · route <b>/corrections/new</b> ·
-      actor: bộ phận quyết toán (ROLE-SETTLEMENT) · <b>FE-028</b> ·
+      <b>FE-028</b> Yêu cầu điều chỉnh sau khi chốt · <b>FN-08</b> Điều chỉnh sau khi chốt ·
+      ưu tiên <b>P0</b> · yêu cầu <b>FR-CORR-01</b> (ràng buộc kèm: <b>FR-CORR-03</b>,
+      <b>BR-CLOSE-01</b>, <b>FR-AUDIT-01</b>) · actor: bộ phận quyết toán<br>
+      Tham chiếu phụ: <b>SCR019_CorrectionRequest</b> · Form · route <b>/corrections/new</b> ·
       <span class="wf-tag">Đã dựng</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Bước 1 — tra mã giao dịch (form GET về chính trang)</p>
+    <p class="wf-box__t">Thiết kế đòi — cột "Nghiệm thu" của yêu cầu khách</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Yêu cầu</th><th>Phải thấy được trên màn</th></tr></thead>
+        <tbody>
+          <tr><td>FR-CORR-01</td><td>Có <b>bản ghi yêu cầu điều chỉnh riêng</b> kèm lý do, bằng chứng đính kèm và trạng thái phê duyệt; <b>giao dịch gốc không bị thay đổi</b> trước khi được phê duyệt.</td></tr>
+          <tr><td>FR-CORR-03 · BR-CLOSE-01</td><td>Sau khi chốt kỳ không còn đường sửa trực tiếp; yêu cầu điều chỉnh là <b>đường ghi hợp lệ duy nhất</b>.</td></tr>
+          <tr><td>FR-AUDIT-01</td><td>Thao tác tạo truy được chủ thể, thời điểm, <b>lý do</b> và bằng chứng.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bước 1 — chọn giao dịch đã chốt</p>
     <div class="wf-row">
       <div class="wf-f" style="flex:1 1 260px;">
         <label class="wf-f__l">Mã giao dịch <span class="req">*</span></label>
         <div class="wf-f__i">TXN-0001</div>
-        <p class="wf-f__h">Không tìm thấy → lỗi inline "Không tìm thấy giao dịch với mã này." / 「この取引番号は見つかりません。」</p>
+        <p class="wf-f__h">Không khớp bản ghi nào → lỗi ngay tại chỗ: "Không tìm thấy giao dịch với mã này." / 「この取引番号は見つかりません。」</p>
       </div>
       <div style="flex:0 0 auto; align-self:flex-start; padding-top:17px;">
         <span class="wf-b wf-b--2">Tra mã</span>
@@ -24,7 +40,7 @@
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Bước 2 — giao dịch đích (chỉ đọc, lấy từ bản ghi tìm được)</p>
+    <p class="wf-box__t">Bước 2 — giao dịch đích, chỉ đọc (FR-CORR-01: gốc không đổi)</p>
     <div class="wf-row">
       <div class="wf-f">
         <label class="wf-f__l">Số lượng gốc</label>
@@ -36,14 +52,13 @@
       </div>
       <div class="wf-f">
         <label class="wf-f__l">Ngày nghiệp vụ</label>
-        <div class="wf-f__i wf-f__i--ro">2026-09-05 · đã lock</div>
-        <p class="wf-f__h">Ngày phải <b>đã lock</b> mới gửi được yêu cầu — xem khối trạng thái.</p>
+        <div class="wf-f__i wf-f__i--ro">2026-09-05 · đã chốt kỳ</div>
+        <p class="wf-f__h">Chỉ giao dịch của ngày <b>đã chốt</b> đi qua màn này. Ngày chưa chốt thì sửa thẳng ở màn giao dịch.</p>
       </div>
     </div>
     <p class="wf-f__h" style="margin-top:0;">
-      Mã giao dịch nội bộ (<code>targetTxnId</code>), <code>status</code>,
-      <code>requested_by</code> và <code>evidence_path</code> <b>không hiện trên màn</b> — server
-      gán hoặc truyền qua prop, người dùng không sửa được.
+      Khối này chỉ đọc, không có ô nào ghi vào giao dịch gốc — thiết kế cấm sửa âm thầm, kể cả
+      trước khi yêu cầu được duyệt.
     </p>
   </div>
 
@@ -52,50 +67,79 @@
     <div class="wf-f">
       <label class="wf-f__l">Lý do <span class="req">*</span></label>
       <div class="wf-f__i wf-f__i--ta">Số lượng nhận thực tế thiếu 12kg so với phiếu, đã đối chiếu với bộ phận giao hàng.</div>
-      <p class="wf-f__h">Trim rỗng → nút gửi vẫn tắt ở client; server rỗng sau trim → <b>422</b>.</p>
+      <p class="wf-f__h">Bắt buộc — đúng trường lý do mà FR-AUDIT-01 đòi lưu cùng dấu vết kiểm toán. Trắng hoặc chỉ khoảng trắng thì không gửi được.</p>
     </div>
     <div class="wf-f">
-      <label class="wf-f__l">Bằng chứng đính kèm (ảnh hoặc PDF, tối đa 5MB) <span class="req">*</span></label>
+      <label class="wf-f__l">Bằng chứng đính kèm (ảnh hoặc PDF) <span class="req">*</span></label>
       <div class="wf-f__i wf-f__i--ro">[ Chọn tệp ] — chưa chọn tệp nào</div>
-      <p class="wf-f__h">
-        Bắt buộc — nút gửi chỉ bật khi có lý do <b>và</b> có tệp. Server kiểm MIME 4 loại
-        (JPEG/PNG/WEBP/PDF) → 422 · kiểm 5MB → 422. <code>accept</code> của client bỏ qua được,
-        không phải hàng rào.
-      </p>
+      <p class="wf-f__h">Bắt buộc theo FR-CORR-01. Kiểm định dạng và dung lượng ở phía server; giới hạn của trình duyệt chỉ là gợi ý, không phải hàng rào.</p>
+    </div>
+    <div class="wf-f">
+      <label class="wf-f__l">Trạng thái phê duyệt khi tạo</label>
+      <div class="wf-f__i wf-f__i--ro">Chờ duyệt — hệ thống đặt, người tạo không chọn</div>
+      <p class="wf-f__h">Vòng đời: chờ duyệt → đã duyệt / bị từ chối. Quyết định thuộc SC-21.</p>
     </div>
     <p style="margin:13px 0 0;">
       <span class="wf-b">Gửi yêu cầu</span>
-      <span class="wf-b wf-b--off">Gửi yêu cầu (khi thiếu lý do hoặc thiếu tệp)</span>
+      <span class="wf-b wf-b--off">Gửi yêu cầu (khi thiếu lý do hoặc thiếu bằng chứng)</span>
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bất biến thiết kế — vẽ rõ để không ai cài ngược</p>
+    <p class="wf-f__h" style="margin-top:0;">
+      Yêu cầu điều chỉnh và giao dịch gốc là <b>hai bản ghi tách rời</b>. Yêu cầu chỉ mô tả "muốn
+      đổi thành gì"; giao dịch gốc giữ giá trị cũ cho tới khi có người duyệt, và sau khi duyệt cũng
+      không bị ghi đè — SC-21 sinh bản ghi đảo ngược hoặc phần chênh lệch.<br>
+      Cả hai bảng <b>chỉ thêm, không sửa</b>: một yêu cầu đã gửi thì không sửa lại, muốn đổi thì gửi
+      yêu cầu mới. Đường dẫn tệp bằng chứng không bao giờ ra file xuất; xem tệp chỉ qua liên kết có
+      hạn giờ ở SC-21.
     </p>
   </div>
 
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state"><h4>Rỗng</h4><p>Chưa nhập mã giao dịch — chỉ hiện form tra mã, chưa có form gửi.</p></div>
-      <div class="wf-state"><h4>Đang tải</h4><p>Server Component đang render, khung trang stream dần.</p></div>
-      <div class="wf-state"><h4>Lỗi tải</h4><p>Query giao dịch lỗi — error boundary, có nút tải lại.</p></div>
-      <div class="wf-state"><h4>Không có quyền</h4><p>Vai trò khác ROLE-SETTLEMENT → trang <b>404</b>. <code>POST /api/corrections</code> cũng 404.</p></div>
-      <div class="wf-state"><h4>Không tìm thấy giao dịch</h4><p>Mã có nhưng không khớp bản ghi nào — lỗi inline, sửa mã rồi tra lại.</p></div>
-      <div class="wf-state"><h4>Ngày đã lock — điều kiện BẮT BUỘC</h4><p>Ngày nghiệp vụ của giao dịch đã có dòng lock → form gửi yêu cầu hiện ra bình thường. Đây là đường ghi hợp lệ <b>duy nhất</b> sau lock.</p></div>
-      <div class="wf-state"><h4>Ngày CHƯA lock → 409</h4><p>Server trả <b>409 <code>NOT_LOCKED</code></b>. Điều kiện <b>đảo ngược</b> so với các màn sửa trực tiếp: ở đây chưa lock mới là lỗi. Chưa lock thì về màn giao dịch sửa thẳng.</p></div>
-      <div class="wf-state"><h4>423 là của màn khác</h4><p>Cùng ngày đó, sửa trực tiếp giao dịch / せり / mekiki / giao hàng trả <b>423 <code>LOCKED_BUSINESS_DATE</code></b> và chỉ đường về SC-20. Hai bảng ghi của màn này cố ý không mang trigger chặn-sau-lock, nên SC-20 <b>không bao giờ</b> trả 423.</p></div>
-      <div class="wf-state"><h4>Đang gửi</h4><p>Nút vô hiệu kèm <code>aria-busy</code>, không cho gửi lần hai.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi</h4><p>Thông báo <code>role="alert"</code> theo mã lỗi. Hiện trạng: 422 thiếu lý do / thiếu tệp rơi về thông báo chung "Có lỗi xảy ra, vui lòng thử lại." — lệch hợp đồng lỗi, spec § 7 đã khai.</p></div>
-      <div class="wf-state"><h4>Đã gửi</h4><p>"Đã gửi yêu cầu điều chỉnh, đang chờ duyệt." Form bị thay thế, không gửi tiếp được.</p></div>
-      <div class="wf-state"><h4>Nhiều yêu cầu cùng một giao dịch</h4><p>Không bị chặn — không có ràng buộc unique nào. Người duyệt ở SC-21 tự lọc.</p></div>
+      <div class="wf-state"><h4>Rỗng</h4><p>Chưa tra mã giao dịch — chỉ hiện khối tra mã, chưa có form nội dung.</p></div>
+      <div class="wf-state"><h4>Đang tải</h4><p>Đang lấy giao dịch đích; khung trang hiện trước, dữ liệu vào sau.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4><p>Không lấy được giao dịch — thông báo kèm nút tải lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Ngoài bộ phận quyết toán thì không vào được màn, cũng không gửi được yêu cầu qua đường API.</p></div>
+      <div class="wf-state"><h4>Không tìm thấy giao dịch</h4><p>Mã sai — lỗi ngay tại ô nhập, sửa mã rồi tra lại.</p></div>
+      <div class="wf-state"><h4>Ngày đã chốt — điều kiện bắt buộc</h4><p>Form nội dung hiện đủ. Đây là đường ghi hợp lệ duy nhất sau khi chốt kỳ.</p></div>
+      <div class="wf-state"><h4>Ngày chưa chốt — từ chối</h4><p>Không nhận yêu cầu, chỉ đường về màn giao dịch để sửa trực tiếp. <b>Điều kiện đảo ngược</b> so với các màn sửa thẳng.</p></div>
+      <div class="wf-state"><h4>Đang gửi</h4><p>Nút vô hiệu, không cho gửi trùng.</p></div>
+      <div class="wf-state"><h4>Gửi lỗi</h4><p>Thông báo nói rõ trường nào chưa đạt: thiếu lý do, thiếu bằng chứng, tệp sai định dạng hoặc quá dung lượng.</p></div>
+      <div class="wf-state"><h4>Đã gửi</h4><p>"Đã gửi yêu cầu điều chỉnh, đang chờ duyệt." Form đóng lại, không gửi tiếp.</p></div>
+    </div>
+  </div>
+
+  <p class="wf-todo">
+    <b>[CHƯA CHỐT]</b> (1) Một giao dịch được phép có <b>bao nhiêu yêu cầu chờ duyệt cùng lúc</b>?
+    RFP không nói. Nếu là một thì phải chặn ngay ở màn này; nếu nhiều thì SC-21 cần cách gộp.
+    (2) Định dạng và dung lượng tối đa của tệp bằng chứng do khách chốt — TBL-ATTACH-01 và
+    DR-IMAGE-01 chỉ quy định thời hạn lưu, không quy định ngưỡng nhận tệp.
+  </p>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th style="width:32%;">Thiết kế đòi</th><th style="width:48%;">Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>Chỉ nhận yêu cầu cho giao dịch của ngày <b>đã chốt</b> (FR-CORR-03).</td><td>Đường điều chỉnh trả <b>409 khi ngày CHƯA lock</b> — điều kiện <b>đảo ngược</b> so với các màn sửa trực tiếp (423 khi đã lock). Đây là <b>đúng thiết kế</b>; ghi lại để không ai "sửa" ngược điều kiện.</td><td>Khớp</td></tr>
+          <tr><td>Giao dịch gốc không đổi trước khi duyệt (FR-CORR-01).</td><td>Hai bảng ghi chỉ thêm; không đường nào sửa giao dịch gốc.</td><td>Khớp</td></tr>
+          <tr><td>Thông báo lỗi nói rõ trường nào chưa đạt.</td><td>Thiếu lý do hoặc thiếu tệp rơi về một thông báo chung "Có lỗi xảy ra, vui lòng thử lại." — người dùng không biết sửa gì.</td><td>Chưa đạt</td></tr>
+          <tr><td>Ngưỡng nhận tệp là quy tắc của khách.</td><td>Prototype tự chọn 5MB và 4 định dạng (JPEG/PNG/WEBP/PDF); chưa ai chốt.</td><td>Chưa chốt</td></tr>
+          <tr><td>Không để lại rác khi thao tác thất bại.</td><td>Tải tệp xong mà ghi bản ghi lỗi thì tệp nằm lại trong kho, chưa có bước dọn.</td><td>Hở</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> chỉ ROLE-SETTLEMENT vào được; 6 vai trò còn lại nhận trang <b>404</b> (không
-    phải 403 — cố ý không lộ sự tồn tại tài nguyên). Mọi vai trò đang hoạt động <b>đọc</b> được hai
-    bảng này, chặn là ở <b>ghi</b> và ở <b>vào trang</b>. Riêng file bằng chứng thì chặn cả đọc:
-    bucket private, policy chỉ cho ROLE-SETTLEMENT.<br>
-    <b>Ghi chú:</b> bản ghi giao dịch gốc không bao giờ bị sửa — mọi thay đổi đi qua yêu cầu điều
-    chỉnh cộng dòng điều chỉnh, cả hai append-only. <b>Đường dẫn file bằng chứng không bao giờ ra
-    CSV</b> — RPT-08 cố ý không khai cột này; xem file chỉ qua signed URL 300 giây ở SC-21. Upload
-    thành công mà INSERT lỗi thì file rác nằm lại trong bucket, chưa có bước dọn.<br>
-    <b>Spec:</b> <a href="../spec/SC-20-tao-yeu-cau-dieu-chinh.md">SC-20-tao-yeu-cau-dieu-chinh.md</a>
+    <b>Phân quyền:</b> chỉ bộ phận quyết toán vào được màn và gửi được yêu cầu; vai trò khác không
+    thấy màn. Tệp bằng chứng chặn cả đường đọc — chỉ bộ phận quyết toán mở được.<br>
+    <b>Prototype (as-built):</b>
+    <a href="../spec/SC-20-tao-yeu-cau-dieu-chinh.md">SC-20-tao-yeu-cau-dieu-chinh.md</a>
   </div>
 </section>

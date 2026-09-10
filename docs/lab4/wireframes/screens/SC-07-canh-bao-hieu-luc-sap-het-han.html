@@ -3,195 +3,196 @@
   <div class="wf-screen__hd">
     <h2>SC-07 · Cảnh báo hiệu lực sắp hết hạn</h2>
     <p class="wf-screen__meta">
-      <b>— (chưa dựng)</b> · List · route đề xuất <b>/participants/expiring</b> · actor: nhân viên
-      vận hành chợ · <b>FE-008</b> · <span class="wf-tag">Chưa thi công</span>
+      <b>FE-008</b> Cảnh báo profile sắp hết hiệu lực · <b>FN-02</b> Quản lý người tham gia và
+      hiệu lực 許可/承認 · ưu tiên <b>P1</b> · yêu cầu <b>FR-PARTY-03</b> · List · actor: quản lý
+      người tham gia · <span class="wf-tag">Chưa thi công</span><br>
+      Tham chiếu prototype: chưa có màn · route đề xuất <code>/participants/expiring</code>
     </p>
   </div>
 
   <p class="wf-todo">
-    <b>CHƯA THI CÔNG.</b> Đề xuất thiết kế. <b>Không phải một danh sách phẳng:</b> RFP §02-08 cấm
-    gộp hai căn cứ 許可 (giấy phép) và 承認 (chấp thuận) thành một quy tắc chung — thủ tục gia hạn
-    khác nhau, nên màn tách <b>hai khối, hai bộ hành động, hai ngưỡng cảnh báo độc lập</b>. Bảng
-    cấu hình ngưỡng chưa tồn tại; hiện chỉ có hằng số <code>EXPIRY_WARNING_DAYS = 30</code> dùng
-    chung mọi loại, là giả định do RPT-03 tự đặt.
+    <b>Nghiệm thu FR-PARTY-03:</b> "các profile đúng nằm trong khoảng cảnh báo <b>cấu hình
+    được</b> sẽ hiện trong danh sách cảnh báo". Hai chữ đó quyết định màn: ngưỡng là <b>dữ liệu
+    cấu hình</b> có người sửa và có lịch sử sửa, không phải hằng số trong mã. Và RFP §02-08 cấm gộp
+    許可 với 承認 thành một quy tắc chung — thủ tục gia hạn khác nhau, nên ngưỡng và hành động tách
+    theo <b>căn cứ tham gia</b>, không phải một danh sách phẳng.
   </p>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">3 · Bộ lọc chung (field 1–3)</p>
-    <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Căn cứ tham gia · 参加根拠</label>
-        <div class="wf-f__i">Cả hai đường ▾ · 許可 · 承認</div>
-        <p class="wf-f__h">Tab/select, chỉ 3 giá trị của <code>CATEGORY_LICENSE_TYPE</code>. Ngoài
-          tập → 422.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Loại người tham gia · 区分</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">Chỉ loại thuộc căn cứ đang chọn; cặp (loại, căn cứ) sai → 422, dùng lại
-          <code>isValidCategoryLicensePair</code>.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">Dùng lại <code>PARTICIPANT_STATUSES</code> (4 giá trị).</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Đường 許可 — giấy phép · 仲卸 · gia hạn giấy phép, có cơ quan cấp</p>
-    <div class="wf-row">
-      <div class="wf-f" style="flex:0 0 240px;">
-        <label class="wf-f__l">Ngưỡng cảnh báo (giấy phép)</label>
-        <div class="wf-f__i">30 ngày</div>
-        <p class="wf-f__h">Field #8 · int &gt; 0. <b>Cột/bảng chưa có</b> — đề xuất
-          <code>participant_expiry_warning_config</code>, khoá theo <code>license_type</code>.</p>
-      </div>
-      <div class="wf-f" style="flex:0 0 240px;">
-        <label class="wf-f__l">Đã nộp hồ sơ gia hạn</label>
-        <div class="wf-f__i">☐ Đã khởi động gia hạn giấy phép</div>
-        <p class="wf-f__h">Field #9 · bool. <b>Cột/bảng chưa có</b> — chỉ dựng nếu khách xác nhận
-          muốn theo dõi hồ sơ (<code>FR-PARTY-03</code> chỉ đòi cảnh báo).</p>
-      </div>
-    </div>
+    <p class="wf-box__t">Cấu hình ngưỡng cảnh báo — thứ FR-PARTY-03 đòi phải cấu hình được</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead>
-          <tr>
-            <th>Còn lại (ngày)</th><th>Tên · 名称</th><th>Ngày hết hiệu lực · 有効終了日</th>
-            <th>Thay đổi gần nhất</th><th>Đã nộp hồ sơ</th><th>Hành động 許可</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Căn cứ tham gia · 参加根拠</th><th>Phân loại áp dụng</th><th>Ngưỡng cảnh báo</th><th>Người sửa gần nhất</th><th>Thời điểm sửa</th></tr></thead>
         <tbody>
-          <tr>
-            <td>12</td><td>Người tham gia A</td><td>2026-09-21</td>
-            <td>Cấp giấy phép · 2026-04-01</td><td>☐</td>
-            <td><span class="wf-b wf-b--2">Ghi nhận đã nộp hồ sơ</span></td>
-          </tr>
-          <tr>
-            <td><b>−3 · quá hạn</b></td><td>Người tham gia E</td><td>2026-09-06</td>
-            <td>Cấp giấy phép · 2025-09-07</td><td>☑</td>
-            <td><span class="wf-b">Đánh dấu hết hạn</span></td>
-          </tr>
+          <tr><td>Giấy phép (許可)</td><td>仲卸</td><td>30 ngày</td><td>Quản trị A</td><td>2026-04-01 09:00 JST</td></tr>
+          <tr><td>Chấp thuận (承認)</td><td>売買参加者</td><td>45 ngày</td><td>Quản trị A</td><td>2026-04-01 09:05 JST</td></tr>
+          <tr><td>Đăng ký chợ</td><td>卸売業者 · 買出人</td><td>14 ngày</td><td>Quản trị A</td><td>2026-04-01 09:07 JST</td></tr>
         </tbody>
       </table>
     </div>
+    <div class="wf-row" style="margin-top:11px;">
+      <div class="wf-f" style="flex:0 0 240px;"><label class="wf-f__l">Ngưỡng (số ngày) <span class="req">*</span></label>
+        <div class="wf-f__i">30</div>
+        <p class="wf-f__h">Số nguyên dương. Mỗi căn cứ một giá trị riêng.</p></div>
+      <div class="wf-f" style="flex:0 0 240px;"><label class="wf-f__l">Lý do đổi ngưỡng <span class="req">*</span></label>
+        <div class="wf-f__i">Nhập lý do</div>
+        <p class="wf-f__h">Đổi ngưỡng là đổi quy tắc vận hành — vào logical audit (FR-AUDIT-01).</p></div>
+      <div style="flex:0 0 auto;"><p style="margin:16px 0 0;"><span class="wf-b">Lưu ngưỡng</span></p></div>
+    </div>
     <p class="wf-f__h">
-      Gỡ tạm ngừng của 仲卸 là <b>"có điều kiện"</b> theo FIG-004 — RFP không định nghĩa điều kiện
-      đó, nên <b>không</b> vẽ nút gỡ ở đây. Vẽ nút gỡ chung là gộp hai căn cứ, đúng điều §02-08 cấm.
+      Ba ngưỡng độc lập là <b>đề xuất</b>. Câu hỏi <span class="wf-tag">CHƯA CHỐT</span> quan trọng
+      nhất của màn: chủ đầu tư muốn một ngưỡng dùng chung, một ngưỡng theo căn cứ, hay theo từng
+      phân loại? RFP không nói, chỉ nói phải cấu hình được và không được gộp 許可 với 承認.
     </p>
   </div>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Đường 承認 — chấp thuận · 売買参加者 · quyết định của đơn vị vận hành chợ</p>
+    <p class="wf-box__t">Bộ lọc</p>
     <div class="wf-row">
-      <div class="wf-f" style="flex:0 0 240px;">
-        <label class="wf-f__l">Ngưỡng cảnh báo (chấp thuận)</label>
-        <div class="wf-f__i">30 ngày</div>
-        <p class="wf-f__h">Field #10 · int &gt; 0, <b>cấu hình độc lập</b> với đường 許可. Hai
-          đường dùng chung một ngưỡng hay hai ngưỡng là câu hỏi quan trọng nhất của màn — RFP không
-          nói.</p>
-      </div>
-      <div class="wf-f" style="flex:0 0 240px;">
-        <label class="wf-f__l">Đã nộp đơn xét lại · 再審査申請</label>
-        <div class="wf-f__i wf-f__i--ro">☑ Có bản ghi to_status = 'xét lại'</div>
-        <p class="wf-f__h">Field #11 · bool <b>dẫn xuất</b> từ
-          <code>participant_status_history</code>, không phải cột mới.</p>
-      </div>
+      <div class="wf-f"><label class="wf-f__l">Căn cứ tham gia · 参加根拠</label>
+        <div class="wf-f__i">Tất cả ▾ · 許可 · 承認 · Đăng ký</div>
+        <p class="wf-f__h">Ba đường, không có giá trị gộp.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Phân loại · 区分</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">Chỉ những phân loại thuộc căn cứ đang chọn.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">Bốn trạng thái của FIG-010.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Bao gồm đã quá hạn</label>
+        <div class="wf-f__i">☑ Hiện cả dòng đã qua ngày hết hiệu lực</div>
+        <p class="wf-f__h">Mặc định bật — đó là nhóm sẽ bị từ chối giao dịch ngay hôm nay.</p></div>
     </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đường 許可 — giấy phép · 仲卸 · ngưỡng 30 ngày</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead>
-          <tr>
-            <th>Còn lại (ngày)</th><th>Tên · 名称</th><th>Ngày hết hiệu lực · 有効終了日</th>
-            <th>Thay đổi gần nhất</th><th>Đã nộp đơn xét lại</th><th>Hành động 承認</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Còn lại (ngày)</th><th>Tên · 名称</th><th>Phân loại</th><th>Ngày hết hiệu lực · 有効終了日</th><th>Trạng thái · 状態</th><th>Hành động</th></tr></thead>
         <tbody>
-          <tr>
-            <td>25</td><td>Người tham gia B</td><td>2026-10-04</td>
-            <td>Chấp thuận · 2026-04-01</td><td>☐</td>
-            <td><span class="wf-b wf-b--2">Nộp đơn xét lại</span></td>
-          </tr>
-          <tr>
-            <td>0</td><td>Người tham gia F</td><td>2026-09-09</td>
-            <td>Nộp đơn xét lại · 2026-09-02</td><td>☑</td>
-            <td><span class="wf-b">Chấp thuận lại</span></td>
-          </tr>
+          <tr><td>12</td><td>Người tham gia A</td><td>仲卸</td><td>2026-09-21</td><td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-b wf-b--2">Ghi nhận đã nộp hồ sơ gia hạn</span></td></tr>
+          <tr><td><b>−3 · quá hạn</b></td><td>Người tham gia E</td><td>仲卸</td><td>2026-09-06</td><td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-b">Chuyển sang mất hiệu lực</span></td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      Gỡ tạm ngừng của 売買参加者 phải đi <b>qua xét lại</b> (FIG-004), không phải một cạnh
-      <code>go</code> đơn thuần. Máy trạng thái hiện chỉ có <b>một</b> cạnh <code>go</code> dùng
-      chung cho cả 4 loại — ràng buộc này <b>chưa được mã hoá</b>, là điều kiện tiền đề, không phải
-      việc màn tự bù bằng UI.
+      Gia hạn giấy phép có cơ quan cấp bên ngoài, nên hành động của đường này là <b>theo dõi hồ
+      sơ</b>. Gỡ tạm ngừng của 仲卸 là "có điều kiện" theo FIG-004 mà RFP không định nghĩa điều
+      kiện đó, nên <b>màn không vẽ nút gỡ</b> — vẽ một nút gỡ dùng chung là đúng điều §02-08 cấm.
     </p>
   </div>
 
   <div class="wf-box wf-box--todo">
-    <p class="wf-box__t">Khối thứ ba — không xác định được căn cứ</p>
-    <p style="font-size:11.5px; color:var(--g5); margin:0;">
-      Dòng có cặp (loại, căn cứ) lệch — do dữ liệu cũ hoặc seed tay, vì
-      <code>license_type</code> là <code>text</code> không CHECK — phải rơi vào khối này, <b>không
-      được nhét vào một trong hai đường</b>. Cột "Còn lại", "Tên", "Ngày hết hiệu lực" như trên,
-      không có hành động nào ngoài mở chi tiết.
+    <p class="wf-box__t">Đường 承認 — chấp thuận · 売買参加者 · ngưỡng 45 ngày</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Còn lại (ngày)</th><th>Tên · 名称</th><th>Phân loại</th><th>Ngày hết hiệu lực · 有効終了日</th><th>Trạng thái · 状態</th><th>Hành động</th></tr></thead>
+        <tbody>
+          <tr><td>25</td><td>Người tham gia B</td><td>売買参加者</td><td>2026-10-04</td><td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-b wf-b--2">Nộp đơn xét lại</span></td></tr>
+          <tr><td>0</td><td>Người tham gia F</td><td>売買参加者</td><td>2026-09-09</td><td><span class="wf-tag">Xét lại</span></td><td><span class="wf-b">Chấp thuận lại</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Chấp thuận là quyết định của đơn vị vận hành chợ, nên hành động nằm trong hệ thống: nộp đơn
+      xét lại rồi chấp thuận lại — đúng hai cạnh cuối của FIG-010. Cả hai đi qua SC-06, màn này chỉ
+      là đường vào nhanh.
+    </p>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đường đăng ký chợ — 卸売業者 · 買出人 · ngưỡng 14 ngày</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Còn lại (ngày)</th><th>Tên · 名称</th><th>Phân loại</th><th>Ngày hết hiệu lực · 有効終了日</th><th>Trạng thái · 状態</th><th>Hành động</th></tr></thead>
+        <tbody>
+          <tr><td>9</td><td>Người tham gia G</td><td>卸売業者</td><td>2026-09-18</td><td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-b wf-b--2">Ghi nhận đã đăng ký lại</span></td></tr>
+          <tr><td>4</td><td>Người tham gia D</td><td>買出人</td><td>2026-09-13</td><td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-tag">CHƯA CHỐT</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      <b>買出人 không có dòng nào trong FIG-004</b> — không biết căn cứ tham gia là gì, nên cũng
+      không biết thủ tục gia hạn nào áp dụng. Dòng của 買出人 vẫn <b>phải hiện</b> để không bỏ sót
+      cảnh báo, nhưng ô hành động để trống chờ chủ đầu tư chốt, không suy ra từ 卸売業者.
     </p>
   </div>
 
   <div class="wf-box wf-box--todo">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng</h4>
-        <p>Không ai vào khoảng cảnh báo: thông báo hiện <b>riêng cho từng đường</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Rỗng một đường</h4>
-        <p>許可 rỗng nhưng 承認 có dòng (hoặc ngược lại): khối rỗng <b>vẫn hiện tiêu đề và ngưỡng
-          của nó</b>, không ẩn cả khối.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải</h4>
-        <p>Skeleton cho <b>cả hai</b> khối.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Lỗi tải</h4>
-        <p>Khối lỗi + nút thử lại.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền</h4>
-        <p>Vai trò không được vào → <b>404</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>Chỉ nút của <b>đúng dòng đó</b> bị vô hiệu, không khoá cả bảng.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p>Lỗi hiện trên đúng dòng, giữ trạng thái cũ. Nút của danh sách cũ có thể trỏ vào cạnh đã
-          hết hợp lệ — API phải từ chối 422, không tin nút.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Quá hạn mà trạng thái chưa đổi</h4>
-        <p><code>valid_to &lt; hôm nay</code> nhưng <code>status</code> vẫn "có hiệu lực" —
-          <b>đang tồn tại thật</b>, không có cron nào flip. Nhãn cảnh báo nặng hơn; đây chính là
-          nhóm sẽ bị từ chối giao dịch tại hiện trường.</p>
-      </div>
+      <div class="wf-state"><h4>Rỗng</h4>
+        <p>Không ai vào khoảng cảnh báo: thông báo hiện <b>riêng từng đường</b>, kèm ngưỡng đang
+          áp dụng để người đọc biết mình đang xem cửa sổ bao nhiêu ngày.</p></div>
+      <div class="wf-state"><h4>Rỗng một đường</h4>
+        <p>Khối rỗng vẫn giữ tiêu đề và ngưỡng của nó, không ẩn cả khối — ẩn đi là mất thông tin
+          "đường này đã kiểm và sạch".</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4>
+        <p>Khung xương cho cả ba đường; lỗi tải có nút thử lại, giữ bộ lọc.</p></div>
+      <div class="wf-state"><h4>Quá hạn mà trạng thái chưa đổi</h4>
+        <p>Đã qua ngày hết hiệu lực nhưng trạng thái vẫn "có hiệu lực": nhãn cảnh báo nặng hơn.
+          Đây là nhóm sẽ bị FR-PARTY-02 từ chối ngay tại quầy.</p></div>
+      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4>
+        <p>Chỉ nút của đúng dòng đó bị vô hiệu, không khoá cả bảng. Lỗi hiện trên đúng dòng, giữ
+          nguyên trạng thái cũ. Nút dựng từ danh sách cũ có thể trỏ vào cạnh không còn hợp lệ —
+          tầng API phải từ chối, không tin nút.</p></div>
+      <div class="wf-state"><h4>Không xác định được căn cứ</h4>
+        <p>Dòng có cặp (phân loại, căn cứ) lệch: xếp riêng, không nhét vào đường nào, không có
+          hành động nào ngoài mở chi tiết.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Ngưỡng cảnh báo <b>cấu hình được</b> (nghiệm thu FR-PARTY-03)</td>
+            <td>Hằng số cứng <code>EXPIRY_WARNING_DAYS = 30</code> nằm trong mã của một báo cáo
+              (RPT-03). Không có bảng cấu hình, không có UI sửa, không có lịch sử đổi ngưỡng —
+              <b>hằng số không đáp ứng "cấu hình được"</b></td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Ngưỡng tách theo căn cứ tham gia (§02-08)</td>
+            <td>Một hằng số duy nhất dùng chung cho cả bốn phân loại — gộp 許可 với 承認 vào một
+              quy tắc</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Màn cảnh báo riêng cho quản lý người tham gia (FE-008)</td>
+            <td>Chưa thi công. Cảnh báo chỉ tồn tại như một cột dẫn xuất của báo cáo RPT-03, không
+              có hành động xử lý nào</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Chỉ xếp dòng vào đường khi cặp (phân loại, căn cứ) hợp lệ</td>
+            <td><code>participant.license_type</code> là <code>text</code> không có CHECK, nên có
+              thể tồn tại dòng lệch không thuộc đường nào</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Hành động gia hạn / xét lại có chỗ ghi nhận</td>
+            <td>Không có nơi lưu "đã nộp hồ sơ gia hạn"; việc nộp đơn xét lại chỉ suy được từ lịch
+              sử trạng thái</td>
+            <td>cần khách chốt</td>
+          </tr>
+          <tr><td>Gửi thông báo cho người phụ trách khi vào khoảng cảnh báo</td><td>Thuộc FE-038 / FE-040 (SC-28, SC-29), chưa nối với luồng cảnh báo hiệu lực</td><td>cần khách chốt</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> đề xuất <b>ROLE-SYS-ADMIN</b> — đúng vai trò đang được phép ghi
-    <code>participant</code>. ROLE-TRADE là vai trò bị ảnh hưởng trực tiếp khi giao dịch bị từ
-    chối, cần quyết định cấp đọc hay không; 5 vai trò còn lại <b>404</b>. Actor "nhân viên vận hành
-    chợ" của FE-008 không khớp trực tiếp vai trò nào trong 7 vai trò hiện có.<br>
-    <b>Ghi chú:</b> <code>valid_to IS NULL</code> là vô hạn hạn, <b>không bao giờ</b> vào màn này —
-    đừng coi NULL là "hết hạn hôm nay". Mọi phép tính ngày đi qua <code>todayJst()</code>, "còn 0
-    ngày" hiểu theo JST. Màn <b>không</b> chạm bảng bị lock ngày → không có trạng thái read-only vì
-    lock, không bao giờ 423. Gửi thông báo cho người tham gia thuộc SC-28/SC-29, không thuộc màn
-    này.<br>
+    <b>Phân quyền:</b> đề xuất vai trò quản trị người tham gia — cùng vai trò được ghi profile.
+    Vai trò vận hành giao dịch là bên chịu hậu quả khi giao dịch bị từ chối, nên cần chủ đầu tư
+    chốt có cấp quyền đọc hay không. Actor "quản lý người tham gia" của FE-008 chưa khớp trực tiếp
+    vai trò nào đang có.<br>
+    <b>Ghi chú:</b> ngày hết hiệu lực để trống là vô hạn hạn, <b>không bao giờ</b> vào màn này —
+    đừng coi giá trị trống là "hết hạn hôm nay". Mọi phép tính ngày neo JST, "còn 0 ngày" nghĩa là
+    hết hiệu lực trong ngày nghiệp vụ hôm nay. Màn không chạm dữ liệu thuộc phạm vi lock kỳ.<br>
     <b>Spec:</b> <a href="../spec/SC-07-canh-bao-hieu-luc-sap-het-han.md">SC-07-canh-bao-hieu-luc-sap-het-han.md</a>
   </div>
 </section>

@@ -3,103 +3,94 @@
   <div class="wf-screen__hd">
     <h2>SC-05 · Danh sách người tham gia</h2>
     <p class="wf-screen__meta">
-      <b>SCR003_ParticipantList</b> · List · route <b>/participants</b> · actor: nhân viên vận hành
-      chợ (đọc) · ROLE-SYS-ADMIN (tạo mới) · <b>FE-005</b> · <span class="wf-tag">Đã dựng</span>
+      <b>FE-005</b> Quản lý profile người tham gia · <b>FN-02</b> Quản lý người tham gia và hiệu
+      lực 許可/承認 · ưu tiên <b>P0</b> · yêu cầu <b>FR-PARTY-01</b> · List · actor: nhân viên vận
+      hành chợ (đọc), quản trị người tham gia (ghi) · <span class="wf-tag">Đã dựng</span><br>
+      Tham chiếu prototype: <code>SCR003_ParticipantList</code> · route <code>/participants</code>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">3 · Bộ lọc (field 1–2) — ghi vào query string, server component đọc lại</p>
-    <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Phân loại · 区分</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h"><code>?category=</code> · 4 giá trị: 卸売業者 · 仲卸 · 売買参加者 ·
-          買出人. Giá trị lạ ở <b>trang</b> thì bỏ qua im lặng; cùng giá trị đó vào
-          <code>GET /api/participants</code> thì <b>400</b>.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h"><code>?status=</code> · 4 giá trị: có hiệu lực · tạm ngừng · mất hiệu
-          lực · xét lại. Cùng độ lệch trang / API như trên.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="wf-box">
-    <p class="wf-box__t">3 · Bảng danh sách (field 3–8) — chỉ đọc, 6 cột</p>
+    <p class="wf-box__t">Bốn phân loại là bốn ranh giới — FR-PARTY-01 · FIG-004 · RFP §02-08</p>
     <div class="wf-scroll">
       <table class="wf-t">
         <thead>
-          <tr>
-            <th>Tên · 名称</th>
-            <th>Phân loại · 区分</th>
-            <th>Căn cứ tham gia · 参加根拠</th>
-            <th>Trạng thái · 状態</th>
-            <th>Hiệu lực từ · 有効開始日</th>
-            <th>Hiệu lực đến · 有効終了日</th>
-          </tr>
+          <tr><th>Phân loại · 区分</th><th>Điều kiện tham gia</th><th>Thực hiện giao dịch</th><th>Gỡ tạm ngừng</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Người tham gia A</td>
-            <td>仲卸</td>
-            <td>Giấy phép (許可)</td>
-            <td><span class="wf-tag">Có hiệu lực</span></td>
-            <td>2026-04-01</td>
-            <td>2027-03-31</td>
-          </tr>
-          <tr>
-            <td>Người tham gia B</td>
-            <td>売買参加者</td>
-            <td>Chấp thuận (承認)</td>
-            <td><span class="wf-tag">Tạm ngừng</span></td>
-            <td>2026-04-01</td>
-            <td>2026-09-30</td>
-          </tr>
-          <tr>
-            <td>Người tham gia C</td>
-            <td>卸売業者</td>
-            <td>Đăng ký</td>
-            <td><span class="wf-tag">Có hiệu lực</span></td>
-            <td>2025-10-01</td>
-            <td>Không giới hạn</td>
-          </tr>
-          <tr>
-            <td>Người tham gia D</td>
-            <td>買出人</td>
-            <td>Đăng ký</td>
-            <td><span class="wf-tag">Mất hiệu lực</span></td>
-            <td>2025-04-01</td>
-            <td>2026-03-31</td>
-          </tr>
+          <tr><td>卸売業者</td><td>Đăng ký chợ</td><td>Chấp thuận</td><td>Chấp thuận</td></tr>
+          <tr><td>仲卸</td><td>Giấy phép (許可)</td><td>Chấp thuận</td><td>Có điều kiện</td></tr>
+          <tr><td>売買参加者</td><td>Chấp thuận (承認)</td><td>Chấp thuận</td><td>Xét lại</td></tr>
+          <tr><td>買出人</td><td><span class="wf-tag">CHƯA CHỐT</span></td><td><span class="wf-tag">CHƯA CHỐT</span></td><td><span class="wf-tag">CHƯA CHỐT</span></td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      Cột <b>Tên</b> là link sang SC-06. <code>valid_to</code> null hiển thị "Không giới hạn" /
-      無期限. Mapping cố định phân loại → căn cứ: 卸売業者 → đăng ký · 仲卸 → giấy phép (許可) ·
-      売買参加者 → chấp thuận (承認) · 買出人 → đăng ký.
-    </p>
-    <p class="wf-f__h">
-      Sắp xếp <code>created_at</code> giảm dần, <b>trần 50 hàng, không có phân trang</b> — quá 50
-      là mất dữ liệu khỏi màn mà không có dấu hiệu nào. Gap thật, không phải quyết định.
+      <b>FIG-004 không có dòng nào cho 買出人</b> — chỉ 卸売業者, 仲卸, 売買参加者 và đơn vị vận
+      hành chợ. Căn cứ tham gia của 買出人 phải hỏi chủ đầu tư, <b>không suy ra</b> từ dòng gần
+      giống. RFP §02-08 cấm gộp 許可 và 承認 thành một quy tắc chung, nên màn không có lựa chọn lọc
+      kiểu "tất cả loại đối tác" — bốn phân loại luôn đứng riêng.
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Hành động — đổi theo vai trò</p>
+    <p class="wf-box__t">Bộ lọc</p>
+    <div class="wf-row">
+      <div class="wf-f"><label class="wf-f__l">Phân loại · 区分</label>
+        <div class="wf-f__i">Tất cả ▾ · 卸売業者 · 仲卸 · 売買参加者 · 買出人</div>
+        <p class="wf-f__h">Bốn giá trị rời, chọn được nhiều. Không có giá trị gộp.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">Bốn trạng thái của FIG-010: có hiệu lực · tạm ngừng · mất hiệu lực ·
+          xét lại.</p></div>
+      <div class="wf-f"><label class="wf-f__l">Tên · 名称</label>
+        <div class="wf-f__i">Tìm theo tên</div>
+        <p class="wf-f__h">Khớp một phần, không phân biệt hoa thường.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bảng danh sách — nghiệm thu FR-PARTY-01: thấy được loại và trạng thái hiệu lực</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead>
+          <tr><th>Tên · 名称</th><th>Phân loại · 区分</th><th>Căn cứ tham gia · 参加根拠</th><th>Trạng thái · 状態</th><th>Hiệu lực từ · 有効開始日</th><th>Hiệu lực đến · 有効終了日</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Người tham gia A</td><td>仲卸</td><td>Giấy phép (許可)</td><td><span class="wf-tag">Có hiệu lực</span></td><td>2026-04-01</td><td>2027-03-31</td></tr>
+          <tr><td>Người tham gia B</td><td>売買参加者</td><td>Chấp thuận (承認)</td><td><span class="wf-tag">Tạm ngừng</span></td><td>2026-04-01</td><td>2026-09-30</td></tr>
+          <tr><td>Người tham gia C</td><td>卸売業者</td><td>Đăng ký chợ</td><td><span class="wf-tag">Có hiệu lực</span></td><td>2025-10-01</td><td>Không giới hạn</td></tr>
+          <tr><td>Người tham gia D</td><td>買出人</td><td><span class="wf-tag">CHƯA CHỐT</span></td><td><span class="wf-tag">Mất hiệu lực</span></td><td>2025-04-01</td><td>2026-03-31</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Tên là link sang SC-06. Ngày hết hiệu lực để trống nghĩa là vô hạn hạn, hiển thị "Không giới
+      hạn" / 無期限. Cột <b>Căn cứ tham gia</b> luôn suy từ phân loại theo bảng FIG-004 ở trên,
+      không nhập tự do. Danh sách <b>phân trang</b> và đếm tổng số dòng khớp bộ lọc — không cắt
+      trần im lặng.
+    </p>
+    <p class="wf-f__h">
+      Badge trạng thái là giá trị đã lưu của profile, <b>không</b> phải kết luận "hôm nay giao dịch
+      được hay không". Hiệu lực dùng để chốt giao dịch được tính lại tại đúng thời điểm chốt — việc
+      của FE-007 / FR-PARTY-02 ở SC-11.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Hành động — FE-005 đòi CRUD đủ bốn phép</p>
     <div class="wf-row">
       <div>
-        <p style="margin:0 0 6px;"><span class="wf-b">Tạo mới</span></p>
-        <p class="wf-f__h">Chỉ ROLE-SYS-ADMIN thấy nút này; dẫn sang <code>/participants/new</code>.</p>
+        <p style="margin:0 0 6px;"><span class="wf-b">Tạo mới</span> <span class="wf-b wf-b--2">Mở chi tiết / sửa</span></p>
+        <p class="wf-f__h">Tạo và sửa thuộc quyền quản trị người tham gia; sửa mở sang SC-06. Vai
+          trò chỉ đọc thấy một dòng nói rõ ai làm được việc đó — không ẩn im lặng, không hiện nút
+          chết.</p>
       </div>
-      <div class="wf-box" style="margin:0;">
-        <p class="wf-box__t">6 vai trò còn lại</p>
+      <div class="wf-box wf-box--todo" style="margin:0;">
+        <p class="wf-box__t">Xoá profile <span class="wf-tag">CHƯA CHỐT</span></p>
         <p style="font-size:11.5px; color:var(--g5); margin:0;">
-          Nút bị thay bằng <code>HandoffCaption</code> — một dòng nói rõ hành động tạo người tham
-          gia thuộc ROLE-SYS-ADMIN. Không ẩn im lặng, không disable nút.
+          FE-005 ghi "CRUD", nhưng người tham gia đã có giao dịch mà xoá đi là mất truy vết, trái
+          FR-AUDIT-01. Chủ đầu tư phải chốt: xoá thật, hay chỉ chuyển sang "mất hiệu lực"?
         </p>
       </div>
     </div>
@@ -108,51 +99,69 @@
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng</h4>
-        <p>Bảng rỗng hoặc bộ lọc không khớp: "Không có người tham gia nào phù hợp với bộ lọc."
-          ROLE-SYS-ADMIN vẫn còn nút "Tạo mới".</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải</h4>
-        <p>Đổi query param. <b>Chưa có <code>loading.tsx</code></b> cho route này — skeleton là đề
-          xuất.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Lỗi tải</h4>
-        <p>Query Supabase trả error → error boundary của Next. <b>Chưa có UI riêng</b>, đề xuất.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền</h4>
-        <p>Không xảy ra ở màn này — cả 7 vai trò active đều vào được.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không phải ROLE-SYS-ADMIN</h4>
-        <p>Thay nút "Tạo mới" bằng dòng nhắc ai là người làm việc đó. Chỉ đọc và lọc.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi / gửi lỗi</h4>
-        <p>Không áp dụng — màn không có form ghi nào.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Read-only vì ngày đã lock</h4>
-        <p>Không áp dụng: <code>participant</code> <b>không</b> thuộc 4 bảng có
-          <code>trg_block_after_lock</code>. Màn này không bao giờ 423.</p>
-      </div>
+      <div class="wf-state"><h4>Rỗng</h4>
+        <p>Chưa có profile nào, hoặc bộ lọc không khớp — nói rõ là do bộ lọc, kèm đường xoá lọc.
+          Quyền ghi vẫn thấy "Tạo mới".</p></div>
+      <div class="wf-state"><h4>Đang tải</h4>
+        <p>Khung xương giữ đúng số cột, không nhảy bố cục khi dữ liệu về.</p></div>
+      <div class="wf-state"><h4>Lỗi tải</h4>
+        <p>Khối lỗi kèm nút thử lại, giữ nguyên bộ lọc đang chọn.</p></div>
+      <div class="wf-state"><h4>Chỉ đọc</h4>
+        <p>Không có quyền ghi: bảng và bộ lọc đầy đủ, hai hành động ghi đổi thành dòng nhắc vai
+          trò phụ trách.</p></div>
+      <div class="wf-state"><h4>Dòng có căn cứ lệch</h4>
+        <p>Cặp (phân loại, căn cứ) không khớp FIG-004: đánh dấu là dữ liệu cần đối chiếu, không tự
+          sửa và không xếp bừa vào một loại.</p></div>
+      <div class="wf-state"><h4>Ngày nghiệp vụ đã lock</h4>
+        <p>Không liên quan — profile người tham gia trải nhiều ngày nghiệp vụ, không thuộc phạm vi
+          lock kỳ của FR-SETTLE-02.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cặp (phân loại, căn cứ tham gia) là ranh giới pháp lý, phải chặn ở tầng dữ liệu</td>
+            <td><code>participant.license_type</code> là <code>text</code> <b>không có CHECK</b> —
+              cặp chỉ chặn ở tầng ứng dụng; gọi thẳng cơ sở dữ liệu là ghi được cặp sai</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Phân loại bất biến sau khi tạo</td>
+            <td>Chỉ chặn ở tầng ứng dụng, cơ sở dữ liệu không có ràng buộc nào</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>CRUD đủ bốn phép (FE-005)</td>
+            <td>Chỉ tạo, đọc, sửa — không có đường xoá</td>
+            <td>cần khách chốt</td>
+          </tr>
+          <tr>
+            <td>Căn cứ tham gia của 買出人 lấy từ FIG-004</td>
+            <td>Gán "đăng ký" giống 卸売業者, trong khi FIG-004 không có dòng nào cho 買出人</td>
+            <td>cần khách chốt</td>
+          </tr>
+          <tr>
+            <td>Xem được toàn bộ danh sách khớp bộ lọc</td>
+            <td>Trần 50 dòng, không phân trang, không đếm tổng — quá 50 là mất dữ liệu khỏi màn mà
+              không có dấu hiệu nào</td>
+            <td>khác không chủ đích</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> cả 7 vai trò vào được (trang chỉ <code>requireUser()</code>, không
-    <code>requireRole</code>); không cột nào bị ẩn theo vai trò. Chặn là ở <b>ghi</b> và ở
-    <b>vào trang</b> <code>/participants/new</code> → <b>404</b> cho vai trò khác. Không session →
-    <b>307</b> về <code>/login?reason=unauthenticated</code>; <code>is_active = false</code> →
-    <b>307</b> <code>?reason=inactive</code>.<br>
-    <b>Ghi chú:</b> badge <b>Trạng thái</b> là ảnh của cột <code>status</code>, <b>không</b> phải
-    kết luận "hôm nay được giao dịch hay không" — không có cron nào flip trạng thái khi qua
-    <code>valid_to</code>; hiệu lực thật tính lại mỗi lần dùng ở
-    <code>checkParticipantEligibility()</code>. <code>license_type</code> chỉ bị chặn ở tầng app,
-    cột DB là <code>text</code> không CHECK.<br>
+    <b>Phân quyền:</b> đọc mở cho các vai trò vận hành; tạo và sửa thuộc vai trò quản trị người
+    tham gia. Chặn phải nằm ở tầng API, không chỉ ở việc ẩn nút.<br>
+    <b>Ghi chú:</b> mọi lần tạo và sửa profile ghi logical audit theo FR-AUDIT-01 — chủ thể, thời
+    điểm, before/after và lý do; lịch sử hiện ở SC-06. Cảnh báo sắp hết hiệu lực là màn riêng
+    (SC-07), không nhồi vào bảng này.<br>
     <b>Spec:</b> <a href="../spec/SC-05-danh-sach-nguoi-tham-gia.md">SC-05-danh-sach-nguoi-tham-gia.md</a>
   </div>
 </section>

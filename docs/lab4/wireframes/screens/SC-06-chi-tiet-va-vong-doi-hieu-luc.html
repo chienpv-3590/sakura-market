@@ -3,196 +3,196 @@
   <div class="wf-screen__hd">
     <h2>SC-06 · Chi tiết và vòng đời hiệu lực người tham gia</h2>
     <p class="wf-screen__meta">
-      <b>SCR005_ParticipantDetail</b> · Detail, composite 4 khối · route
-      <b>/participants/[id]</b> · actor: nhân viên vận hành chợ (đọc) · ROLE-SYS-ADMIN (sửa +
-      chuyển trạng thái) · <b>FE-005, FE-006</b> · <span class="wf-tag">Đã dựng</span>
+      <b>FE-005</b> Quản lý profile người tham gia · <b>FE-006</b> Vòng đời hiệu lực tham gia ·
+      <b>FN-02</b> Quản lý người tham gia và hiệu lực 許可/承認 · ưu tiên <b>P0</b> · yêu cầu
+      <b>FR-PARTY-01</b> · Detail 4 khối · actor: nhân viên vận hành chợ (đọc), quản trị người
+      tham gia (sửa + chuyển trạng thái) · <span class="wf-tag">Đã dựng</span><br>
+      Tham chiếu prototype: <code>SCR005_ParticipantDetail</code> · route
+      <code>/participants/[id]</code>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG001_Profile · 3.1 — chỉ đọc, mọi vai trò (field 1–5)</p>
-    <p style="font-size:12px; color:var(--g6); margin:0 0 10px;">
-      <b>Người tham gia A</b> — <code>name</code> là tiêu đề trang, không nằm trong khối field.</p>
+    <p class="wf-box__t">Profile — chỉ đọc, mọi vai trò vận hành</p>
+    <p style="font-size:12px; color:var(--g6); margin:0 0 10px;"><b>Người tham gia A</b> — tên là tiêu đề trang.</p>
     <div class="wf-row">
       <div>
-        <div class="wf-f">
-          <label class="wf-f__l">Phân loại · 区分</label>
-          <div class="wf-f__i wf-f__i--ro">仲卸</div>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Căn cứ tham gia · 参加根拠</label>
+        <div class="wf-f"><label class="wf-f__l">Phân loại · 区分</label>
+          <div class="wf-f__i wf-f__i--ro">仲卸</div></div>
+        <div class="wf-f"><label class="wf-f__l">Căn cứ tham gia · 参加根拠</label>
           <div class="wf-f__i wf-f__i--ro">Giấy phép (許可)</div>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
-          <div class="wf-f__i wf-f__i--ro">Có hiệu lực</div>
-        </div>
+          <p class="wf-f__h">Suy từ phân loại theo FIG-004, không nhập tự do.</p></div>
       </div>
       <div>
-        <div class="wf-f">
-          <label class="wf-f__l">Hiệu lực từ · 有効開始日</label>
-          <div class="wf-f__i wf-f__i--ro">2026-04-01</div>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Hiệu lực đến · 有効終了日</label>
-          <div class="wf-f__i wf-f__i--ro">2027-03-31</div>
-          <p class="wf-f__h">Null → "Không giới hạn" / 無期限.</p>
-        </div>
+        <div class="wf-f"><label class="wf-f__l">Trạng thái hiệu lực · 有効状態</label>
+          <div class="wf-f__i wf-f__i--ro">Có hiệu lực</div></div>
+        <div class="wf-f"><label class="wf-f__l">Khoảng hiệu lực · 有効期間</label>
+          <div class="wf-f__i wf-f__i--ro">2026-04-01 → 2027-03-31</div>
+          <p class="wf-f__h">Ngày kết thúc để trống nghĩa là vô hạn hạn / 無期限.</p></div>
       </div>
     </div>
-    <p class="wf-f__h"><code>category</code> hoặc <code>status</code> rơi ngoài tập hợp lệ →
-      <code>notFound()</code>, tức <b>404</b>, không render nửa vời.</p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG002_Edit · 3.2 — form sửa, chỉ ROLE-SYS-ADMIN (field 1–6)</p>
+    <p class="wf-box__t">Sửa profile — FE-005, quyền quản trị người tham gia</p>
     <div class="wf-row">
       <div>
-        <div class="wf-f">
-          <label class="wf-f__l">Phân loại · 区分</label>
-          <div class="wf-f__i wf-f__i--ro">仲卸 — khoá</div>
-          <p class="wf-f__h">Không thể đổi sau khi tạo. Request <b>mang key
-            <code>category</code></b> là bị từ chối luôn → <b>422</b> <code>category_immutable</code>.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Căn cứ tham gia · 参加根拠</label>
-          <div class="wf-f__i wf-f__i--ro">Giấy phép (許可)</div>
-          <p class="wf-f__h">Suy tự động từ phân loại, không nhập tự do. Cặp sai → <b>422</b>
-            <code>category_license_mismatch</code>.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Tên · 名称 <span class="req">*</span></label>
-          <div class="wf-f__i">Người tham gia A</div>
-          <p class="wf-f__h">Client <code>required</code>; server <b>bỏ qua im lặng chuỗi rỗng</b>,
-            không 422 — field duy nhất thì rơi vào <code>no_fields_to_update</code>.</p>
-        </div>
+        <div class="wf-f"><label class="wf-f__l">Phân loại · 区分</label>
+          <div class="wf-f__i wf-f__i--ro">仲卸 — khoá, bất biến</div>
+          <p class="wf-f__h">Đổi phân loại là đổi ranh giới pháp lý, không phải sửa dữ liệu. Muốn
+            đổi thì lập profile mới; RFP §02-08 cấm gộp các loại.</p></div>
+        <div class="wf-f"><label class="wf-f__l">Tên · 名称 <span class="req">*</span></label>
+          <div class="wf-f__i">Người tham gia A</div></div>
       </div>
       <div>
-        <div class="wf-f">
-          <label class="wf-f__l">Hiệu lực từ · 有効開始日 <span class="req">*</span></label>
-          <div class="wf-f__i">2026-04-01</div>
-          <p class="wf-f__h">Regex <code>YYYY-MM-DD</code> → <b>422</b>
-            <code>invalid_valid_from</code>.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Hiệu lực đến · 有効終了日</label>
+        <div class="wf-f"><label class="wf-f__l">Hiệu lực từ · 有効開始日 <span class="req">*</span></label>
+          <div class="wf-f__i">2026-04-01</div></div>
+        <div class="wf-f"><label class="wf-f__l">Hiệu lực đến · 有効終了日</label>
           <div class="wf-f__i">2027-03-31</div>
-          <p class="wf-f__h">Rỗng gửi <code>null</code>, hợp lệ. <b>Không tầng nào kiểm <code>valid_to &gt;= valid_from</code></b> — đề xuất.</p>
-        </div>
-        <div class="wf-f">
-          <label class="wf-f__l">Lý do cập nhật · 更新理由 <span class="req">*</span></label>
-          <div class="wf-f__i">Nhập lý do thay đổi (bắt buộc)</div>
-          <p class="wf-f__h">Không vào <code>participant</code>; vào <code>audit_log.reason</code>. Rỗng → <b>422</b> <code>reason_required</code>.</p>
-        </div>
+          <p class="wf-f__h">Để trống là vô hạn hạn. Có giá trị thì phải <b>không nhỏ hơn</b> ngày
+            bắt đầu — từ chối kèm lý do rõ ràng.</p></div>
+        <div class="wf-f"><label class="wf-f__l">Lý do cập nhật · 更新理由 <span class="req">*</span></label>
+          <div class="wf-f__i">Nhập lý do thay đổi</div>
+          <p class="wf-f__h">Không thuộc profile — đi vào logical audit cùng before/after
+            (FR-AUDIT-01).</p></div>
       </div>
     </div>
     <p style="margin:0;"><span class="wf-b">Lưu thay đổi</span></p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">REG003_Transition · 3.3 — chuyển trạng thái FIG-010, chỉ ROLE-SYS-ADMIN</p>
-    <div class="wf-f">
-      <label class="wf-f__l">Lý do chuyển trạng thái · 変更理由 <span class="req">*</span></label>
-      <div class="wf-f__i wf-f__i--ta">Chặn ngay ở client nếu rỗng; server cũng 422 reason_required</div>
-    </div>
-    <p style="margin:0 0 8px;">
-      <span class="wf-b">Vi phạm → Tạm ngừng</span>
-      <span class="wf-b">Hết hạn → Mất hiệu lực</span>
-      <span class="wf-b wf-b--off">Gỡ tạm ngừng → Có hiệu lực</span>
-      <span class="wf-b wf-b--off">Nộp đơn xét lại → Xét lại</span>
-      <span class="wf-b wf-b--off">Chấp thuận → Có hiệu lực</span>
-    </p>
-    <p class="wf-f__h">
-      Chỉ render đúng các nút <code>allowedEvents(status)</code> trả về — <b>không</b> render cả 5
-      rồi disable. Ba nút mờ ở trên là để thấy đủ 5 cạnh của máy trạng thái, không phải trạng thái
-      thật của UI. Cạnh ngoài tập → <b>422</b> <code>illegal_transition</code>; event lạ →
-      <b>422</b> <code>invalid_event</code>.
-    </p>
-    <p class="wf-f__h">
-      <b>Năm cạnh hợp lệ</b>, mọi cặp ngoài đây bị từ chối: có hiệu lực <code>vi_pham</code>→ tạm
-      ngừng · tạm ngừng <code>go</code>→ có hiệu lực · có hiệu lực <code>het_han</code>→ mất hiệu
-      lực · mất hiệu lực <code>nop_don</code>→ xét lại · xét lại <code>chap_thuan</code>→ có hiệu
-      lực.
-    </p>
-  </div>
-
-  <div class="wf-box">
-    <p class="wf-box__t">REG004_History · 3.4 — chỉ đọc, mọi vai trò (5 cột, cũ nhất trước)</p>
+    <p class="wf-box__t">Vòng đời hiệu lực — FE-006 · FIG-010, đúng năm cạnh</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead>
-          <tr>
-            <th>Từ · 変更前</th><th>Đến · 変更後</th><th>Lý do · 理由</th>
-            <th>Người thực hiện · 実施者</th><th>Thời điểm · 日時</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Từ · 変更前</th><th>Sự kiện</th><th>Đến · 変更後</th><th>Cổng kiểm theo phân loại</th></tr></thead>
         <tbody>
-          <tr>
-            <td>—</td><td><span class="wf-tag">Có hiệu lực</span></td><td>Cấp giấy phép lần đầu</td>
-            <td>Quản trị A</td><td>2026-04-01 09:00</td>
-          </tr>
-          <tr>
-            <td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-tag">Tạm ngừng</span></td>
-            <td>Vi phạm quy định đấu giá</td><td>Quản trị A</td><td>2026-07-12 14:20</td></tr>
+          <tr><td>Có hiệu lực</td><td>Vi phạm</td><td>Tạm ngừng</td><td>—</td></tr>
+          <tr><td>Tạm ngừng</td><td>Gỡ tạm ngừng</td><td>Có hiệu lực</td><td><b>Có</b> — thủ tục khác nhau theo loại, xem bảng dưới</td></tr>
+          <tr><td>Có hiệu lực</td><td>Hết hạn</td><td>Mất hiệu lực</td><td>—</td></tr>
+          <tr><td>Mất hiệu lực</td><td>Nộp đơn</td><td>Xét lại</td><td>—</td></tr>
+          <tr><td>Xét lại</td><td>Chấp thuận</td><td>Có hiệu lực</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      <code>from_status</code> null hiển thị <code>—</code>. Cột "Người thực hiện" fallback sang
-      <b>email</b> khi <code>display_name</code> null — dữ liệu cá nhân hiện ra ở chỗ chỉ cần một
-      cái tên; đề xuất fallback <code>—</code>. Thời điểm dùng <code>toLocaleString()</code>,
-      <b>không neo timezone</b> — đề xuất chuẩn hoá JST.</p>
+      FIG-010 chỉ có <b>MỘT</b> cạnh "Tạm ngừng → Có hiệu lực", không phải ba. Cái khác nhau theo
+      loại người tham gia là <b>thủ tục và căn cứ</b> để đi qua cạnh đó (FIG-004, cột "Gỡ tạm
+      ngừng") — tức một cạnh có <b>cổng kiểm</b>, không phải ba cạnh song song. Mọi cặp (từ, đến)
+      ngoài năm dòng trên đều bị từ chối, kể cả "Mất hiệu lực → Có hiệu lực" bỏ qua "Xét lại".
+    </p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Phân loại · 区分</th><th>Thủ tục gỡ tạm ngừng (FIG-004)</th><th>Ai quyết định</th><th>Điều kiện tiền đề</th></tr></thead>
+        <tbody>
+          <tr><td>卸売業者</td><td>Chấp thuận</td><td>Đơn vị vận hành chợ</td><td>Quyết định chấp thuận có hiệu lực</td></tr>
+          <tr><td>仲卸</td><td>Có điều kiện</td><td>Đơn vị vận hành chợ</td><td><span class="wf-tag">CHƯA CHỐT</span> RFP không định nghĩa "điều kiện" là gì</td></tr>
+          <tr><td>売買参加者</td><td>Xét lại</td><td>Hội đồng xét lại</td><td>Phải đi qua bước xét lại, không gỡ trực tiếp</td></tr>
+          <tr><td>買出人</td><td><span class="wf-tag">CHƯA CHỐT</span></td><td><span class="wf-tag">CHƯA CHỐT</span></td><td>FIG-004 <b>không có dòng nào</b> cho 買出人 — không suy ra</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="wf-f" style="margin:11px 0 0;">
+      <label class="wf-f__l">Lý do chuyển trạng thái · 変更理由 <span class="req">*</span></label>
+      <div class="wf-f__i wf-f__i--ta">Bắt buộc với mọi cạnh, vào logical audit</div>
+    </div>
+    <p style="margin:0;"><span class="wf-b">Vi phạm → Tạm ngừng</span> <span class="wf-b">Hết hạn → Mất hiệu lực</span></p>
+    <p class="wf-f__h">
+      Chỉ hiện đúng những cạnh hợp lệ từ trạng thái hiện tại — không hiện cả năm rồi vô hiệu bớt.
+      Với cạnh "Gỡ tạm ngừng", nút phải mang đúng tên thủ tục của phân loại đó (Chấp thuận / Có
+      điều kiện / Xét lại), vì đó là ba việc nghiệp vụ khác nhau.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Lịch sử vòng đời — chỉ đọc, cũ nhất trước</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Từ · 変更前</th><th>Đến · 変更後</th><th>Thủ tục áp dụng</th><th>Lý do · 理由</th><th>Người thực hiện · 実施者</th><th>Thời điểm · 日時</th></tr></thead>
+        <tbody>
+          <tr><td>—</td><td><span class="wf-tag">Có hiệu lực</span></td><td>Cấp giấy phép</td><td>Cấp giấy phép lần đầu</td><td>Quản trị A</td><td>2026-04-01 09:00 JST</td></tr>
+          <tr><td><span class="wf-tag">Có hiệu lực</span></td><td><span class="wf-tag">Tạm ngừng</span></td><td>Vi phạm</td><td>Vi phạm quy định đấu giá</td><td>Quản trị A</td><td>2026-07-12 14:20 JST</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-f__h">
+      Trạng thái đầu tiên có "Từ" trống. Cột <b>Thủ tục áp dụng</b> là thứ FIG-004 đòi truy được:
+      cùng một cạnh nhưng khác thủ tục thì phải phân biệt được trong lịch sử. Người thực hiện hiển
+      thị bằng tên, <b>không</b> hiển thị email. Thời điểm neo JST.
+    </p>
   </div>
 
   <div class="wf-box">
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
-      <div class="wf-state">
-        <h4>Rỗng</h4>
-        <p>Lịch sử: "Chưa có lần chuyển trạng thái nào." Transition: "Không có transition nào khả
-          dụng" — nhánh phòng xa, cả 4 trạng thái đều có ít nhất 1 cạnh.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang tải / lỗi tải</h4>
-        <p>Chưa có skeleton và chưa có UI lỗi riêng — đề xuất cả hai.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không tìm thấy</h4>
-        <p><code>id</code> không tồn tại, hoặc <code>status</code>/<code>category</code> rơi ngoài
-          tập → <b>404</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền ghi</h4>
-        <p>Vai trò khác ROLE-SYS-ADMIN: giữ nguyên 2 card ghi, thay nội dung bằng
-          <code>HandoffCaption</code>. Gọi thẳng API → <b>404</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>Mọi input disabled, nút <code>aria-busy</code> + "Đang lưu...".</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p><b>Sáu mã 422 hiện chung một câu</b> "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin."</p>
-      </div>
-      <div class="wf-state">
-        <h4>Read-only vì ngày đã lock</h4>
-        <p>Không áp dụng: <code>participant</code> và <code>participant_status_history</code>
-          <b>không</b> thuộc 4 bảng bị lock. Vòng đời hiệu lực trải nhiều ngày nghiệp vụ.</p>
-      </div>
+      <div class="wf-state"><h4>Rỗng</h4>
+        <p>Chưa có lần chuyển nào: chỉ hiện dòng cấp ban đầu. Cả bốn trạng thái đều có ít nhất một
+          cạnh, nên không bao giờ hết hành động.</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4>
+        <p>Khung xương theo từng khối; lỗi tải giữ khối lỗi riêng, không làm trắng trang.</p></div>
+      <div class="wf-state"><h4>Không tìm thấy</h4>
+        <p>Profile không tồn tại, hoặc phân loại / trạng thái rơi ngoài tập hợp lệ.</p></div>
+      <div class="wf-state"><h4>Chỉ đọc</h4>
+        <p>Không có quyền ghi: giữ nguyên hai khối ghi, đổi nội dung thành dòng nhắc vai trò phụ
+          trách.</p></div>
+      <div class="wf-state"><h4>Xung đột đồng thời</h4>
+        <p>Hai người chuyển trạng thái cùng lúc: người sau bị từ chối vì trạng thái nguồn đã đổi,
+          không được ghi đè.</p></div>
+      <div class="wf-state"><h4>Cổng kiểm chưa đạt</h4>
+        <p>Bấm gỡ tạm ngừng khi thủ tục của loại đó chưa hoàn tất: từ chối kèm nói rõ còn thiếu
+          bước nào. Ngày nghiệp vụ đã lock không liên quan — vòng đời trải nhiều ngày.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cạnh "Gỡ tạm ngừng" có cổng kiểm theo phân loại (FIG-004 · §02-08)</td>
+            <td><code>resolveTarget(from, event)</code> <b>không nhận phân loại</b> — một cạnh dùng
+              chung cho cả bốn loại, nên <b>không thể</b> phân biệt Chấp thuận / Có điều kiện / Xét
+              lại. Thiếu đúng cái cổng kiểm, không phải thiếu hai cạnh</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Lịch sử ghi được thủ tục đã áp dụng</td>
+            <td>Chỉ lưu từ / đến / lý do — không có chỗ nào ghi thủ tục nào đã dùng</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Cặp (phân loại, căn cứ) và tính bất biến của phân loại chặn ở tầng dữ liệu</td>
+            <td><code>participant.license_type</code> là <code>text</code> <b>không có CHECK</b>;
+              cả cặp lẫn tính bất biến của phân loại chỉ chặn ở tầng ứng dụng</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr>
+            <td>Chuyển trạng thái là một hành vi nguyên tử, có chống ghi đè</td>
+            <td>Ba lệnh tuần tự, không transaction và không so sánh trạng thái nguồn — hai người
+              bấm cùng lúc thì "Từ" của dòng lịch sử thứ hai đã sai</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr><td>Ngày hết hiệu lực không nhỏ hơn ngày bắt đầu</td><td>Không tầng nào kiểm</td><td>khác không chủ đích</td></tr>
+          <tr>
+            <td>Người thực hiện hiển thị bằng tên</td>
+            <td>Thiếu tên hiển thị thì rơi về email — dữ liệu cá nhân hiện ra ở chỗ chỉ cần một
+              cái tên</td>
+            <td>khác không chủ đích</td>
+          </tr>
+          <tr><td>Thủ tục "Có điều kiện" của 仲卸, và thủ tục gỡ của 買出人</td><td>Dùng chung một cạnh gỡ, coi bốn loại như nhau</td><td>cần khách chốt</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> cả 7 vai trò vào được và đọc đủ 4 khối; hai khối ghi thuộc ROLE-SYS-ADMIN,
-    vai trò khác gọi <code>PATCH</code>/<code>transition</code> → <b>404</b> (không phải 403).<br>
-    <b>Divergence FIG-004 — spec khai thẳng:</b> máy trạng thái hiện có <b>đúng một cạnh
-    <code>go</code></b> gỡ tạm ngừng dùng chung cho cả 4 phân loại, trong khi RFP FIG-004 đòi ba
-    đường khác nhau (卸売業者 → Chấp thuận, 仲卸 → Có điều kiện, 売買参加者 → Xét lại) và §02-08
-    <b>cấm gộp</b>. Wireframe vẽ đúng hiện trạng code (một nút), không vẽ ba đường chưa tồn tại —
-    xem SC-07 cho hệ quả nghiệp vụ.<br>
-    <b>Ghi chú:</b> chuyển trạng thái <b>không nguyên tử</b> (ba lệnh tuần tự, không transaction)
-    và <b>không có CAS</b> — hai admin bấm cùng lúc thì <code>from_status</code> của dòng lịch sử
-    thứ hai đã sai.<br>
+    <b>Phân quyền:</b> đọc đủ bốn khối cho các vai trò vận hành; sửa profile và chuyển trạng thái
+    thuộc vai trò quản trị người tham gia, chặn ở tầng API.<br>
+    <b>Ghi chú:</b> trạng thái lưu ở profile <b>không</b> tự đổi khi qua ngày hết hiệu lực — đúng
+    thiết kế, vì FR-PARTY-02 đòi kiểm hiệu lực <b>tại thời điểm chốt giao dịch</b> (SC-11). Hệ quả
+    phải hiển thị được: một profile có thể mang badge "Có hiệu lực" mà vẫn bị từ chối giao dịch,
+    và SC-07 là màn bắt nhóm đó trước khi tới hiện trường.<br>
     <b>Spec:</b> <a href="../spec/SC-06-chi-tiet-va-vong-doi-hieu-luc.md">SC-06-chi-tiet-va-vong-doi-hieu-luc.md</a>
   </div>
 </section>

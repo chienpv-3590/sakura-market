@@ -3,73 +3,80 @@
   <div class="wf-screen__hd">
     <h2>SC-26 · Xem và xuất báo cáo</h2>
     <p class="wf-screen__meta">
-      <b>SCR026_ReportViewer</b> (composite) · Detail: bộ lọc + bảng kết quả + xuất CSV + khối batch
-      kế toán riêng RPT-06 · route <b>/reports/[reportCode]</b> · actor: cả 7 vai trò; tạo batch chỉ
-      ROLE-SETTLEMENT · <b>FE-034</b>, <b>FE-035</b>, <b>FE-036</b> ·
+      <b>FE-034</b> nhóm ngày RPT-01..05 · <b>FE-035</b> nhóm kế toán RPT-06..09 ·
+      <b>FE-036</b> nhóm tháng RPT-10..12 · <code>FN-10</code> Báo cáo và xuất dữ liệu ·
+      ưu tiên <b>P0</b> (FE-034, FE-035) · <b>P1</b> (FE-036) ·
+      yêu cầu <code>FR-RPT-01</code> · <code>FR-RPT-02</code> · <code>TBL-REPORT-01</code> ·
+      actor: cả 7 vai trò; tạo batch xuất kế toán chỉ ROLE-SETTLEMENT<br>
+      Tham chiếu phụ: <b>SCR026_ReportViewer</b> · route <b>/reports/[reportCode]</b> ·
       <span class="wf-tag">Đã dựng</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Bộ lọc — một form chung cho cả 12 mã, chỉ hiện field mà mã đó khai</p>
-    <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Ngày nghiệp vụ <span class="req">*</span></label>
-        <div class="wf-f__i">2026-09-08</div>
-        <p class="wf-f__h">RPT-01 · 05 · 06 · 08. Đánh dấu bắt buộc trong registry nhưng input <b>không</b> đặt <code>required</code>, không giới hạn min/max.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Kỳ <span class="req">*</span></label>
-        <div class="wf-f__i">2026-09-09</div>
-        <p class="wf-f__h">Chỉ RPT-07.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Người tham gia</label>
-        <div class="wf-f__i">Tất cả người tham gia ▾</div>
-        <p class="wf-f__h">RPT-03 · 07.</p>
-      </div>
+    <p class="wf-box__t">Ba nhóm báo cáo và bộ lọc bắt buộc theo TBL-REPORT-01</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Nhóm FE</th><th>Mã</th><th>Nội dung</th><th>Bộ lọc bắt buộc</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="5">FE-034 · P0<br>Báo cáo ngày</td><td>RPT-01</td><td>Tổng hợp giao dịch theo ngày nghiệp vụ</td><td>Ngày nghiệp vụ</td></tr>
+          <tr><td>RPT-02</td><td>Lịch sử lô hàng và log trạng thái giao dịch</td><td>Lô hàng, trạng thái giao dịch</td></tr>
+          <tr><td>RPT-03</td><td>Người tham gia đã hoặc sắp mất hiệu lực</td><td>Người tham gia, trạng thái hiệu lực</td></tr>
+          <tr><td>RPT-04</td><td>Giao hàng ùn tắc và ngoại lệ giao hàng</td><td>Ngày nghiệp vụ, loại ngoại lệ</td></tr>
+          <tr><td>RPT-05</td><td>Bảng đối chiếu ngày</td><td>Ngày nghiệp vụ</td></tr>
+          <tr><td rowspan="4">FE-035 · P0<br>Kế toán, thưởng,<br>điều chỉnh, tranh chấp</td><td>RPT-06</td><td>Bảng xuất dữ liệu để đối chiếu kế toán</td><td>Ngày nghiệp vụ, batch code</td></tr>
+          <tr><td>RPT-07</td><td>Kết quả tính 完納奨励金 theo kỳ</td><td>Kỳ đối tượng, người tham gia</td></tr>
+          <tr><td>RPT-08</td><td>Log điều chỉnh sau khi lock</td><td>Ngày nghiệp vụ, chủ thể thực hiện</td></tr>
+          <tr><td>RPT-09</td><td>Tổng hợp tranh chấp và SLA xử lý</td><td>Trạng thái tranh chấp</td></tr>
+          <tr><td rowspan="3">FE-036 · P1<br>Báo cáo tháng</td><td>RPT-10</td><td>Báo cáo tháng theo từng người tham gia</td><td>Người tham gia, tháng</td></tr>
+          <tr><td>RPT-11</td><td>Báo cáo tháng theo loại giao dịch</td><td>Loại giao dịch, tháng</td></tr>
+          <tr><td>RPT-12</td><td>Báo cáo thay đổi rule và version áp dụng</td><td>Phiên bản rule, ngày hiệu lực</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Lô hàng</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">Chỉ RPT-02.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái giao dịch</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">Chỉ RPT-02. Enum tĩnh, không đọc cơ sở dữ liệu.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái hiệu lực</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">Chỉ RPT-03. 4 trạng thái hiệu lực, enum tĩnh.</p>
-      </div>
-    </div>
-    <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Chủ thể thực hiện</label>
-        <div class="wf-f__i">Tất cả ▾</div>
-        <p class="wf-f__h">Chỉ RPT-08. "Chủ thể" là người <b>duyệt</b> điều chỉnh, không phải người yêu cầu.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Batch code</label>
-        <div class="wf-f__i">ACC-20260908-01</div>
-        <p class="wf-f__h">Chỉ RPT-06, tối đa 40 ký tự. Khi xuất CSV: thiếu → <b>422</b>; sai định dạng hoặc không khớp ngày của batch → <b>404</b>.</p>
-      </div>
-      <div style="flex:0 0 auto; align-self:flex-start; padding-top:17px;">
-        <span class="wf-b wf-b--2">Lọc</span>
-      </div>
-    </div>
-    <p class="wf-f__h" style="margin-top:0;">
-      Số trang đi qua URL, không có nhãn; giá trị lạ về trang 1. <b>Ngày sai âm thầm rơi về hôm
-      nay</b> — không báo lỗi, người dùng dễ đọc lệch ngày. Id lạ trong dropdown không được kiểm định
-      dạng, chỉ trả 0 dòng.
+    <p class="wf-f__h">
+      <b>FR-RPT-02:</b> nhóm tháng phải tổng hợp đúng theo <b>ngày nghiệp vụ</b> và <b>phiên bản
+      rule</b> — số tháng không được trộn hai version biểu suất mà không nói rõ. RPT-12 hiện thẳng
+      version và ngày hiệu lực; RPT-10 và RPT-11 phải ghi version đã dùng cho kỳ tổng hợp.
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Bảng kết quả — cột lấy từ registry của từng mã, 50 dòng/trang cố định</p>
+    <p class="wf-box__t">Bộ lọc — một form chung, chỉ hiện field mà mã đang xem khai</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ <span class="req">*</span></label>
+        <div class="wf-f__i">2026-09-08</div>
+        <p class="wf-f__h">RPT-01 · 04 · 05 · 06 · 08. Bắt buộc; giá trị sai định dạng phải báo lỗi ngay tại field.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Kỳ đối tượng / Tháng <span class="req">*</span></label>
+        <div class="wf-f__i">2026-09</div>
+        <p class="wf-f__h">Kỳ tính 完納奨励金 (RPT-07) · tháng tổng hợp (RPT-10 · 11). Không phải ngày nghiệp vụ.</p>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Người tham gia</label>
+        <div class="wf-f__i">Tất cả người tham gia ▾</div>
+        <p class="wf-f__h">RPT-03 · 07 · 10. Nhãn chỉ hiện tên hiển thị, không hiện email.</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Bộ lọc riêng của mã</label>
+        <div class="wf-f__i">Tất cả ▾</div>
+        <p class="wf-f__h">Lô hàng và trạng thái giao dịch (RPT-02) · trạng thái hiệu lực (RPT-03) · loại ngoại lệ (RPT-04) · chủ thể thực hiện điều chỉnh (RPT-08) · trạng thái tranh chấp (RPT-09) · loại giao dịch (RPT-11) · phiên bản rule và ngày hiệu lực (RPT-12).</p>
+      </div>
+      <div class="wf-f">
+        <label class="wf-f__l">Batch code</label>
+        <div class="wf-f__i">BATCH-0001</div>
+        <p class="wf-f__h">Chỉ RPT-06. Không có batch code là chế độ xem trước, không xuất được CSV.</p>
+      </div>
+    </div>
+    <p style="margin:0;"><span class="wf-b wf-b--2">Lọc</span> <span class="wf-b wf-b--2">Xoá điều kiện</span></p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Bảng kết quả và xuất CSV — FE-033 khung dùng chung</p>
     <div class="wf-scroll">
       <table class="wf-t">
         <thead>
@@ -87,44 +94,35 @@
       <span class="wf-tag">Trang 1 / 3</span>
       <span class="wf-b wf-b--2">Trang sau ›</span>
       &nbsp;&nbsp;<span class="wf-b">Xuất CSV</span>
-      <span class="wf-b wf-b--off">Xuất CSV (mã mẫu — bị chặn)</span>
     </p>
     <p class="wf-f__h">
-      RPT-06 có 13 cột, RPT-08 có 15 cột, mã mẫu có 0 cột và 0 dòng.
-      <b>Xuất CSV lấy toàn bộ tập đã lọc</b>, không giới hạn theo trang.
-      RPT-08 <b>cố ý không có cột đường dẫn bằng chứng</b> — đúng yêu cầu bảo mật của SC-20.
+      Tập cột do từng mã báo cáo quy định — mọi mã đi qua cùng một khung bảng, cùng một cơ chế phân
+      trang. <b>Xuất CSV lấy toàn bộ tập đã lọc</b>, không giới hạn theo trang. RPT-08 <b>không</b>
+      mang cột đường dẫn bằng chứng và không mang email — bằng chứng điều chỉnh chỉ xem trong SC-20.
+      Mọi lần xuất là một lần <b>công bố dữ liệu đối chiếu</b>, phải để lại dấu vết kiểm toán: ai
+      tải, mã báo cáo nào, bộ lọc nào, thời điểm nào.
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Khối batch kế toán — CHỈ RPT-06, kiêm luôn chức năng của SC-27</p>
+    <p class="wf-box__t">RPT-06 · Bàn giao kế toán (FE-035, IF-ACC-01)</p>
     <p style="font-size:11.5px; color:var(--g6); margin:0 0 11px;">
-      Xem trước: "Đang xem trước — số liệu hiện tại, chưa gửi kế toán." → nút xuất CSV vô hiệu.<br>
-      Xem batch: "Đang xem batch đã tạo — số liệu đã gửi kế toán." → link xuất CSV hoạt động.<br>
-      Cảnh báo luôn hiện: thuế 8% (軽減税率) là <b>giả định chờ khách xác nhận</b>, RFP không nêu
-      thuế suất và cũng không nói đơn giá là 税込 hay 税抜.
+      Dữ liệu bàn giao là bảng đối chiếu ngày <b>sau khi đã lock</b> — chưa lock thì không tạo được
+      batch. Mỗi dòng mang đủ <b>6 trường tối thiểu</b> của IF-ACC-01: ngày nghiệp vụ · người tham
+      gia · tổng số tiền · thuế · <b>trạng thái</b> · batch code. Trạng thái dòng theo RFP là
+      <b>chờ / đã xác nhận / đã điều chỉnh</b>.<br>
+      <b>Xem trước</b> (không có batch code): số liệu hiện tại, chưa gửi kế toán — không xuất CSV.
+      <b>Xem batch</b> (có batch code): số liệu đã gửi, xuất CSV theo ảnh chụp bất biến của batch.
     </p>
     <p style="margin:0 0 11px;">
       <span class="wf-b">Tạo batch xuất kế toán</span>
-      <span class="wf-b wf-b--off">Tạo batch (vai trò khác ROLE-SETTLEMENT — nút không render)</span>
+      <span class="wf-b wf-b--off">Chỉ ROLE-SETTLEMENT</span>
+      &nbsp;<a href="#SC-27">Quản lý batch xuyên ngày → SC-27</a>
     </p>
-    <div class="wf-scroll">
-      <table class="wf-t">
-        <thead>
-          <tr><th>Batch code</th><th>Ngày nghiệp vụ</th><th>Loại</th><th>Thuế suất</th><th>Người tạo</th><th>Số dòng</th><th>Tổng tiền (JPY)</th><th>Tổng thuế (JPY)</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><a href="#SC-26">ACC-20260908-02</a></td><td>2026-09-08</td><td>Xuất lại</td><td>800 bps</td><td>Người dùng A</td><td>42</td><td>6 180 400</td><td>494 432</td></tr>
-          <tr><td><a href="#SC-26">ACC-20260908-01</a></td><td>2026-09-08</td><td>Lần đầu</td><td>800 bps</td><td>Người dùng A</td><td>40</td><td>5 990 200</td><td>479 216</td></tr>
-        </tbody>
-      </table>
-    </div>
     <p class="wf-f__h">
-      Batch code do server sinh theo dạng <code>ACC-YYYYMMDD-NN</code>, <code>NN</code> đếm
-      <b>theo lần xuất</b> chứ không theo ngày lịch. Loại suy ra từ số lần: lần 1 là "Lần đầu", từ
-      lần 2 là "Xuất lại". Thuế suất được <b>đóng dấu lên từng batch</b> nên batch cũ vẫn tự giải
-      thích được khi đổi hằng số. Batch là <b>append-only</b>: không có đường sửa hay xoá, batch đã
-      gửi kế toán chỉ được thay bằng batch mới.
+      Batch là <b>append-only</b>: không sửa, không xoá; batch đã gửi kế toán chỉ được thay bằng một
+      batch mới của cùng ngày. Thuế suất và cơ sở thuế được <b>đóng dấu lên từng batch</b> để batch
+      cũ vẫn tự giải thích được sau khi rule đổi.
     </p>
   </div>
 
@@ -132,37 +130,59 @@
     <p class="wf-box__t">Trạng thái</p>
     <div class="wf-states">
       <div class="wf-state"><h4>Rỗng</h4><p>"Không có dữ liệu khớp với bộ lọc đã chọn." Vẫn xuất CSV được — file chỉ có dòng header.</p></div>
-      <div class="wf-state"><h4>Báo cáo mẫu</h4><p>Badge mẫu + "Báo cáo này đang ở dạng mẫu, chưa có dữ liệu thật." Nút xuất vô hiệu, và server cũng chặn <b>403 <code>MOCK_REPORT</code></b> — chặn data-driven, cả 7 vai trò như nhau.</p></div>
-      <div class="wf-state"><h4>RPT-06 chế độ xem trước</h4><p>Không có batch code: số liệu hiện tại, chưa gửi kế toán. Nút xuất vô hiệu; chỉ tạo batch được (nếu ROLE-SETTLEMENT).</p></div>
-      <div class="wf-state"><h4>RPT-06 chế độ xem batch</h4><p>Có batch code: số liệu đã gửi kế toán, xuất CSV hoạt động. Dòng lấy từ ảnh chụp bất biến của batch.</p></div>
-      <div class="wf-state"><h4>Mã báo cáo không tồn tại</h4><p>Trang <b>404</b>; API tương ứng trả 404.</p></div>
-      <div class="wf-state"><h4>Đang tải / lỗi tải</h4><p>Khung trang stream dần; query lỗi rơi vào error boundary, có nút tải lại.</p></div>
-      <div class="wf-state"><h4>Không có quyền</h4><p>Không áp dụng khi <b>vào màn</b> — cả 7 vai trò vào được. Chỉ nút Tạo batch bị ẩn khi vai trò khác ROLE-SETTLEMENT; khối batch vẫn hiện danh sách, chỉ thiếu nút. Gọi endpoint tạo batch → <b>404</b>.</p></div>
-      <div class="wf-state"><h4>Đang gửi</h4><p>Tạo batch: nút vô hiệu kèm <code>aria-busy</code>.</p></div>
-      <div class="wf-state"><h4>Gửi lỗi khi tạo batch</h4><p>422 "Ngày nghiệp vụ không hợp lệ." · <b>409</b> "Ngày nghiệp vụ chưa lock, không thể tạo batch." · <b>409</b> "Có nhiều yêu cầu tạo batch cùng lúc, hãy thử lại."</p></div>
-      <div class="wf-state"><h4>Read-only vì lock (423)</h4><p>Không áp dụng — có chủ đích. Bảng batch chỉ nhận thêm dòng và cố ý không mang trigger chặn-sau-lock. <b>Ngược lại</b>: tạo batch <b>bắt buộc</b> ngày đã lock, chưa lock thì 409.</p></div>
-      <div class="wf-state"><h4>Ba mã lỗi RPT-06 chưa có bản dịch</h4><p>Thiếu batch code, không tìm thấy batch, và báo cáo mẫu trả JSON trần. Đường xuất là một link, nên người dùng nhìn thẳng vào JSON thay vì thông báo tiếng Việt.</p></div>
+      <div class="wf-state"><h4>Bộ lọc thiếu hoặc sai</h4><p>Báo lỗi tại field và <b>không</b> âm thầm thay bằng giá trị mặc định — đọc lệch ngày là sai số liệu đối chiếu.</p></div>
+      <div class="wf-state"><h4>RPT-06 xem trước / xem batch</h4><p>Chưa có batch code: xem được số liệu, nút xuất vô hiệu, chỉ tạo batch được nếu là ROLE-SETTLEMENT.<br>Có batch code: dòng lấy từ ảnh chụp của batch, xuất CSV hoạt động.</p></div>
+      <div class="wf-state"><h4>Mã báo cáo không tồn tại</h4><p>Trang 404 — catalog chỉ có 12 mã, không có đường tự tạo mã mới (FR-RPT-03).</p></div>
+      <div class="wf-state"><h4>Đang tải / lỗi tải</h4><p>Khung trang stream dần; lỗi truy vấn rơi vào khối lỗi kèm nút tải lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền</h4><p>Không áp dụng khi vào màn — cả 7 vai trò xem, lọc, phân trang, xuất CSV được. Chỉ hành động tạo batch bị chặn theo vai trò.</p></div>
+      <div class="wf-state"><h4>Đang gửi / gửi lỗi</h4><p>Tạo batch: nút vô hiệu khi đang gửi. Lỗi phải nói rõ lý do — ngày chưa lock, hoặc có yêu cầu tạo batch cùng lúc.</p></div>
+      <div class="wf-state"><h4>Read-only vì lock</h4><p>Ngược lại là đúng: lock là <b>tiền đề</b> để tạo batch. Màn này không bao giờ khoá vì lock.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>Cả 12 mã chạy thật, có bộ lọc và xuất được CSV (FR-RPT-01, FR-RPT-02)</td>
+            <td><b>7 mã chạy thật</b>: RPT-01 · 02 · 03 · 05 · 06 · 07 · 08. <b>5 mã dữ liệu mẫu</b>: RPT-04 · 09 · 10 · 11 · 12 — 0 dòng, 0 cột, không bộ lọc, xuất CSV bị server chặn</td>
+            <td>Thiếu — 5/12</td></tr>
+          <tr><td>Bản xuất kế toán chỉ mang tên hiển thị của người thực hiện, không bao giờ mang email nội bộ</td>
+            <td>Ở RPT-06, khi tên hiển thị rỗng thì cột người thực hiện <b>rơi về email nội bộ</b> và email đó đi thẳng vào file CSV gửi ra bộ phận kế toán. RPT-08 cùng bộ báo cáo làm đúng: rơi về id, không bao giờ về email</td>
+            <td><b>Khác không chủ đích</b> — rò dữ liệu ra ngoài tổ chức</td></tr>
+          <tr><td>Xuất CSV là "công bố dữ liệu đối chiếu" — RFP xếp vào nhóm thao tác nhạy cảm cần dấu vết kiểm toán (FR-AUDIT-01)</td>
+            <td>Đường xuất CSV <b>không ghi audit</b> — không truy được ai đã tải dữ liệu kế toán ra ngoài, tải lúc nào, với bộ lọc nào</td>
+            <td>Thiếu — vi phạm nghĩa vụ truy vết</td></tr>
+          <tr><td>Bộ lọc sai hoặc thiếu thì báo lỗi tại field</td>
+            <td>Ngày nghiệp vụ sai <b>âm thầm rơi về hôm nay</b>, không báo lỗi — người đọc dễ tưởng đang xem ngày mình chọn</td>
+            <td>Khác không chủ đích</td></tr>
+          <tr><td>RPT-09 tổng hợp tranh chấp và SLA xử lý (FE-035)</td>
+            <td>Phụ thuộc <a href="#SC-19">SC-19</a> quản lý tranh chấp, chưa dựng: không bảng tranh chấp, không mốc SLA</td>
+            <td>Chưa thi công — chặn bởi SC-19</td></tr>
+          <tr><td>Thuế theo thuế suất và cơ sở thuế do Chủ đầu tư chốt</td>
+            <td>RFP không nêu thuế suất, cũng không nói đơn giá là 税込 hay 税抜. Prototype dùng 8% (軽減税率) và cơ sở 税抜 làm <b>giả định</b>, hiện cảnh báo thường trực</td>
+            <td>Giả định chưa chốt với khách</td></tr>
+          <tr><td>Quản lý batch xuyên ngày là màn riêng SC-27 (FE-037)</td>
+            <td>Chức năng tạo batch và danh sách batch đang nằm trong màn này, chỉ liệt batch của <b>đúng một ngày</b></td>
+            <td>Lệch phạm vi màn</td></tr>
+          <tr><td>Ghi chú nội bộ khai đúng số mã còn dùng dữ liệu mẫu</td>
+            <td>Một comment cũ trong màn này còn khai "8/12 mock", số thật là 5/12</td>
+            <td>Lệch tài liệu nội bộ</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
     <b>Phân quyền:</b> chỉ cần đăng nhập, <b>không</b> gác vai trò khi vào màn — cả 7 vai trò lọc,
-    phân trang, xuất CSV được. Thêm nút <b>Tạo batch xuất kế toán</b> chỉ với ROLE-SETTLEMENT; 6 vai
-    trò còn lại gọi endpoint đó nhận <b>404</b>. Không session hoặc tài khoản bị vô hiệu → <b>307</b>.
-    Mọi vai trò đang hoạt động đọc được bảng batch; chặn là ở <b>hành động</b>, không ở vào trang.<br>
+    phân trang và xuất CSV được. Riêng <b>tạo batch xuất kế toán</b> chỉ ROLE-SETTLEMENT; 6 vai trò
+    còn lại không thấy hành động đó và gọi trực tiếp cũng bị chặn. Chặn là ở <b>hành động</b>, không
+    ở việc vào trang.<br>
     <b>Định dạng CSV:</b> UTF-8 <b>có BOM</b>, phân tách dấu phẩy, quoting RFC 4180, kết dòng
-    <b>CRLF</b> — chở được cả chữ Nhật và tiếng Việt có dấu; Shift-JIS bị loại vì không biểu diễn
-    được dấu tiếng Việt. Tên file <code>{mã}-{ngày}.csv</code>, riêng RPT-06 dựng từ batch code
-    <b>đã xác nhận trong cơ sở dữ liệu</b>, không phải từ query string — lớp chống header injection
-    thứ hai sau kiểm định dạng.<br>
-    <b>SC-27 chưa dựng:</b> chức năng "xuất được dữ liệu kế toán" đã xong và nằm ngay trong RPT-06
-    (tạo batch, danh sách batch theo ngày). Nhưng <b>màn quản lý batch riêng</b> — theo dõi batch
-    code, trạng thái gửi, xuyên nhiều ngày — là SC-27 và chưa dựng. LAB-5 phải tách hai task này,
-    đừng gộp.<br>
-    <b>Ghi chú:</b> <b>xuất CSV không được ghi dấu vết kiểm toán</b> — không truy được ai đã tải dữ
-    liệu kế toán ra ngoài. Tên người rơi về <b>email</b> ở RPT-06 (email nội bộ ra được cột người tạo
-    của CSV gửi kế toán) nhưng rơi về id ở RPT-08 — đã ghi là điểm cần sửa. Xuất lại một ngày đã xuất
-    là hành động bình thường: ngày đã lock vẫn đổi được qua điều chỉnh của SC-20/SC-21.<br>
-    <b>Spec:</b> <a href="../spec/SC-26-xem-va-xuat-bao-cao.md">SC-26-xem-va-xuat-bao-cao.md</a>
+    <b>CRLF</b> — chở được cả chữ Nhật và tiếng Việt có dấu. Tên file <code>{mã}-{ngày}.csv</code>,
+    riêng RPT-06 dựng từ batch code <b>đã xác nhận trong cơ sở dữ liệu</b>, không lấy từ tham số URL.<br>
+    <b>Spec (as-built):</b> <a href="../spec/SC-26-xem-va-xuat-bao-cao.md">SC-26-xem-va-xuat-bao-cao.md</a>
   </div>
 </section>

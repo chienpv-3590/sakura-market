@@ -3,197 +3,177 @@
   <div class="wf-screen__hd">
     <h2>SC-18 · Bảng đối chiếu ngày và lock kỳ</h2>
     <p class="wf-screen__meta">
-      <b>SCR018_ReconcileAndLock</b> · Detail · route <b>/reconciliation</b> ·
-      actor: Bộ phận đối chiếu (ROLE-SETTLEMENT) ·
-      <b>FE-024, FE-025, FE-026</b> · <span class="wf-tag">Đã dựng</span> ·
-      <span class="wf-tag">Trung tâm hệ thống · lock một chiều</span>
+      <b>FE-025</b> Bảng đối chiếu ngày · <b>FE-026</b> Lock ngày nghiệp vụ ·
+      <b>FE-024</b> Liên kết quyết toán ↔ giao hàng · <b>FN-07</b> Đối chiếu và chốt kỳ ·
+      <b>FN-06</b> · ưu tiên <b>P0 · P1</b><br>
+      Yêu cầu: <b>FR-SETTLE-01, FR-SETTLE-02, FR-CORR-03, FR-DEL-04, BR-CLOSE-01</b> ·
+      miền dữ liệu <b>D-SETTLE · D-TRADE · D-DELIVERY</b> · sơ đồ <b>FIG-013</b> · báo cáo <b>RPT-05</b><br>
+      Tham chiếu phụ: <b>SCR018_ReconcileAndLock</b> · route <b>/reconciliation</b> ·
+      actor Bộ phận đối chiếu · <span class="wf-tag">Đã dựng</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Khối 3.A — chọn ngày và trạng thái lock</p>
+    <p class="wf-box__t">1 · Chọn ngày nghiệp vụ và trạng thái kỳ</p>
     <div class="wf-row">
       <div class="wf-f">
-        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日 <span class="req">*</span></label>
         <div class="wf-f__i">2026-09-09</div>
-        <p class="wf-f__h">Mặc định <code>todayJst()</code>. <code>max={todayJst()}</code> chặn chọn ngày
-          tương lai qua widget. Server kiểm định dạng + là ngày thật + <code>&lt;= todayJst()</code>.
-          <b>Ở trang: sai thì âm thầm rơi về hôm nay</b> (người dùng không biết mình bị đổi ngày — chưa có);
-          ở API: sai thì <b>400 <code>invalid_business_date</code></b>.</p>
+        <p class="wf-f__h">Neo JST, không nhận ngày tương lai. Nhập sai phải báo lỗi rõ, không
+          được âm thầm đổi sang hôm nay.</p>
       </div>
       <div class="wf-f">
-        <label class="wf-f__l">Trạng thái lock · ロック済み / 未ロック</label>
-        <div class="wf-f__i wf-f__i--ro">Chưa lock</div>
-        <p class="wf-f__h"><code>business_day_lock</code> có hàng cho ngày này hay không.</p>
+        <label class="wf-f__l">Trạng thái kỳ · ロック状態</label>
+        <div class="wf-f__i wf-f__i--ro">Chưa lock · 未ロック</div>
       </div>
       <div class="wf-f">
-        <label class="wf-f__l">Thời điểm lock</label>
-        <div class="wf-f__i wf-f__i--ro">— (nối sau nhãn "Đã lock")</div>
-        <p class="wf-f__h"><code>locked_at</code>, render <code>toLocaleString()</code> — theo múi giờ <b>của
-          trình duyệt</b>, không phải JST, trong khi mọi ngày nghiệp vụ neo vào JST. Đề xuất hiện kèm JST.</p>
+        <label class="wf-f__l">Thời điểm lock · ロック日時</label>
+        <div class="wf-f__i wf-f__i--ro">— (hiện kèm JST khi đã lock)</div>
       </div>
       <div class="wf-f">
-        <label class="wf-f__l">locked_by — chưa có</label>
-        <div class="wf-f__i wf-f__i--ro">API trả về, UI không hiển thị</div>
-        <p class="wf-f__h">Chưa có nhãn VI, chưa có key JA.</p>
+        <label class="wf-f__l">Người lock · 実施者</label>
+        <div class="wf-f__i wf-f__i--ro">— (tên hiển thị, không hiện email)</div>
+        <p class="wf-f__h">FR-AUDIT-01 đòi truy được chủ thể của thao tác lock, nên trường này phải
+          hiện trên màn chứ không chỉ nằm trong log.</p>
       </div>
     </div>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Khối 3.B — bảng đối chiếu, 5 cột chỉ đọc, nguồn là view reconciliation_line</p>
+    <p class="wf-box__t">2 · Bảng đối chiếu ngày (FE-025 · FR-SETTLE-01) — gom 3 nguồn</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead>
-          <tr>
-            <th>Nguồn<br>区分</th><th>Số lượng<br>数量</th><th>Thành tiền (JPY)<br>金額 (JPY)</th>
-            <th>Chênh lệch<br>差異</th><th>Truy vết<br>配送を見る</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Nguồn<br>区分</th><th>Chứng từ</th><th>Người tham gia<br>買出人</th>
+          <th>Số lượng<br>数量</th><th>Thành tiền (JPY)<br>金額</th><th>Đã giao<br>配送済み</th>
+          <th>Chênh lệch<br>差異</th><th>Truy vết<br>配送を見る</th></tr></thead>
         <tbody>
-          <tr><td>相対取引 (Thỏa thuận)</td><td>120.00</td><td>216 000</td><td>60.00</td>
-            <td><span class="wf-b wf-b--2">Xem giao hàng</span></td></tr>
-          <tr><td>相対取引 (Thỏa thuận)</td><td>40.00</td><td>88 000</td><td>0.00</td>
-            <td><span class="wf-b wf-b--2">Xem giao hàng</span></td></tr>
-          <tr><td>せり (Đấu giá)</td><td>80.00</td><td>192 000</td><td>—</td><td>—</td></tr>
-          <tr><td>Giao hàng</td><td>60.00</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>相対取引 · Thỏa thuận</td><td>TXN-0001</td><td>Người tham gia B</td><td>120.00</td><td>216 000</td><td>60.00</td><td>−60.00</td><td><span class="wf-b wf-b--2">Xem 2 lần giao</span></td></tr>
+          <tr><td>相対取引 · Thỏa thuận</td><td>TXN-0004</td><td>Người tham gia A</td><td>40.00</td><td>88 000</td><td>0.00</td><td>−40.00</td><td><span class="wf-b wf-b--2">Chưa có lần giao</span></td></tr>
+          <tr><td>せり · Đấu giá</td><td>SERI-0001</td><td>Người tham gia C</td><td>80.00</td><td>192 000</td><td>80.00</td><td>0.00</td><td><span class="wf-b wf-b--2">Xem 1 lần giao</span></td></tr>
+          <tr><td>Ngoại lệ giao hàng</td><td>SHP-0002 · giao thiếu</td><td>Người tham gia B</td><td>8.00</td><td>—</td><td>—</td><td>đã xác nhận</td><td><span class="wf-b wf-b--2">Xem ngoại lệ</span></td></tr>
+          <tr><td><b>Tổng đủ điều kiện</b></td><td>3 giao dịch · 1 ngoại lệ</td><td>—</td><td><b>240.00</b></td><td><b>496 000</b></td><td><b>140.00</b></td><td><b>−100.00</b></td><td>—</td></tr>
         </tbody>
       </table>
     </div>
     <p class="wf-f__h">
-      <b>Chênh lệch chỉ có nghĩa cho nhánh <code>aitai</code></b>: số lượng đặt trừ lũy kế đã giao.
-      Nhánh <code>seri</code> và <code>delivery</code> trả <code>null</code> → hiện <code>—</code>,
-      dễ đọc thành "không lệch" thay vì "không tính được" (chưa có — đề xuất phân biệt trên UI).
-      Nút truy vết chỉ render cho <code>aitai</code>; mở ra hàng phụ liệt kê các lần giao.<br>
-      <b>Về view:</b> <code>reconciliation_line</code> là <b>view tính khi gọi, không phải bảng vật
-      lý</b> — <code>union all</code> 3 nhánh, dựng với <code>security_invoker = true</code> nên
-      chạy bằng RLS <b>của người gọi</b>. Nhánh <code>aitai</code> loại giao dịch
-      <code>status='cancelled'</code>; hai nhánh kia không có điều kiện loại nào — hủy trước lock là
-      dòng <b>mất hẳn</b>, không thành dòng gạch.
+      <b>FE-024 · FR-DEL-04:</b> mỗi dòng phải truy được sang các lần giao liên quan — kể cả nhánh
+      せり và kể cả khi <b>chưa</b> có lần giao nào; "chưa có lần giao" là một câu trả lời, không
+      phải ô trống.<br>
+      <b>Chênh lệch</b> chỉ điền được khi có cả hai phía để so. Không so được thì ghi
+      <b>"không áp dụng"</b>, tuyệt đối không hiện <code>0</code> hay dấu gạch — người đọc sẽ hiểu
+      thành "không lệch".
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Khối 3.C — hộp xác nhận lock · HÀNH ĐỘNG KHÔNG THỂ HOÀN TÁC</p>
-    <p style="margin:0 0 13px;">
-      <span class="wf-b wf-b--danger">Lock ngày nghiệp vụ · 業務日をロック</span>
-      <span class="wf-tag">chỉ render khi vai = ROLE-SETTLEMENT và ngày chưa lock</span>
-    </p>
+    <p class="wf-box__t">3 · "Đủ điều kiện" gồm những gì — FR-SETTLE-01</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Giao dịch 相対取引</h4><p>Đã chốt và thuộc ngày nghiệp vụ này. Giao dịch đã hủy vẫn hiện thành dòng đã gạch kèm lý do — biến mất khỏi bảng là mất dấu vết.</p></div>
+      <div class="wf-state"><h4>Bản ghi せり</h4><p>Kết quả cuối cùng đã ghi nhận của ngày, kèm người xác nhận (FR-SERI-02).</p></div>
+      <div class="wf-state"><h4>Giao hàng</h4><p>Lần giao có <b>ngày nghiệp vụ của chính nó</b> bằng ngày này — không lấy theo ngày của giao dịch mẹ, vì một giao dịch trải nhiều ngày.</p></div>
+      <div class="wf-state"><h4>Ngoại lệ giao hàng</h4><p>Ngoại lệ đã xác nhận của ngày này (FE-023). Đây là thành phần thứ ba FR-SETTLE-01 đòi, ngang hàng với giao dịch và giao hàng.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">4 · Lock ngày nghiệp vụ (FE-026 · FR-SETTLE-02) — không hoàn tác được</p>
+    <p style="margin:0 0 11px;"><span class="wf-b wf-b--danger">Lock ngày nghiệp vụ · 業務日をロック</span>
+      <span class="wf-tag">chỉ bộ phận đối chiếu, chỉ khi ngày chưa lock</span></p>
     <div class="wf-box wf-box--todo" style="margin:0;">
-      <p class="wf-box__t">Hộp xác nhận (mở ra khi bấm nút trên — chưa gọi API)</p>
-      <p style="font-size:11.5px; color:var(--warn); margin:0 0 11px; font-weight:600;">
-        Hành động này không thể hoàn tác
+      <p class="wf-box__t">Xác nhận rõ ràng — bước bắt buộc, kiểm ở cả giao diện và hệ thống</p>
+      <p style="font-size:11.5px; color:var(--warn); margin:0 0 9px; font-weight:600;">
+        Hành động này không thể hoàn tác · ロック解除の方法はありません
       </p>
       <p style="font-size:11.5px; color:var(--g6); margin:0 0 11px;">
-        Sau khi lock, mọi bản ghi thuộc ngày nghiệp vụ này chỉ có thể sửa qua yêu cầu điều chỉnh.
-        <b>Không có cách nào để mở lock lại.</b><br>
-        <span style="color:var(--g5)">
-          ロック後、この業務日の記録は修正依頼を通じてのみ変更できます。ロック解除の方法はありません。
-        </span>
+        Sau khi lock, mọi bản ghi thuộc ngày nghiệp vụ này chỉ còn sửa được qua yêu cầu điều chỉnh
+        có phê duyệt (SC-20 · SC-21).
       </p>
       <div class="wf-f">
-        <label class="wf-f__l">
-          Gõ lại "2026-09-09" để xác nhận · 確認のため「2026-09-09」を再入力してください
-          <span class="req">*</span>
-        </label>
+        <label class="wf-f__l">Gõ lại ngày để xác nhận · 確認のため業務日を再入力 <span class="req">*</span></label>
         <div class="wf-f__i">2026-09-09</div>
-        <p class="wf-f__h"><code>typed.trim() === businessDate</code> mới bật nút xác nhận — bước xác nhận
-          tách rời khỏi thao tác xem bảng, đúng FR-401. <b>Chưa có:</b> server <b>không</b> nhận và không
-          kiểm chuỗi gõ lại — ai gọi thẳng <code>POST /api/reconciliation/{date}/lock</code> là lock được
-          bằng một request. Đề xuất buộc body mang lại <code>business_date</code> để server kiểm.</p>
+        <p class="wf-f__h">Chuỗi gõ lại phải được <b>gửi lên và kiểm ở phía hệ thống</b>. Xác nhận
+          chỉ nằm ở giao diện thì một lệnh gọi trực tiếp là lock được — với một hành động không
+          hoàn tác được như lock của FR-SETTLE-02, thế không đủ gọi là xác nhận.</p>
       </div>
-      <p style="margin:0;"><span class="wf-b wf-b--danger">Xác nhận lock · ロックを確定</span>
-        <span class="wf-b wf-b--2">Hủy · キャンセル</span></p>
-      <p class="wf-f__h">Nút xác nhận <code>disabled</code> khi <code>pending</code> hoặc gõ chưa đúng, có
-        <code>aria-busy</code>. Nút Hủy đóng hộp, không gọi API.</p>
+      <p style="margin:0;"><span class="wf-b wf-b--danger">Xác nhận lock</span>
+        <span class="wf-b wf-b--2">Hủy</span></p>
     </div>
+    <p class="wf-f__h">Lock xong kéo theo: chốt số của ngày, mở đường xuất kế toán (SC-27 ·
+      IF-ACC-01) và tính 完納奨励金 theo FIG-013 (SC-22). Lock là hành động chính — thất bại của
+      bước tính thưởng không được làm lock mất tác dụng, nhưng <b>phải hiện ra</b> cho người vận hành.</p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Một cú bấm lock kéo theo những gì</p>
+    <p class="wf-box__t">5 · Sau khi lock — BR-CLOSE-01 · FR-CORR-03 · FE-026</p>
     <div class="wf-scroll">
       <table class="wf-t">
-        <thead><tr><th>Bước</th><th>Ghi vào</th><th>Nếu lỗi</th></tr></thead>
+        <thead><tr><th>Đường vào</th><th>Sau khi lock</th><th>Ghi log</th></tr></thead>
         <tbody>
-          <tr><td>1 · INSERT <code>business_day_lock</code></td><td>1 hàng, insert-only</td>
-            <td>Trùng khoá chính <code>23505</code> → <b>409 ALREADY_LOCKED</b></td></tr>
-          <tr><td>2 · Ghi audit <code>lock_business_day</code></td><td><code>audit_log</code></td>
-            <td>Chạy <b>sau</b> khi lock commit → audit lỗi trả 500 trong khi ngày <b>đã lock thật</b></td></tr>
-          <tr><td>3 · Engine 完納奨励金 <code>runIncentiveForPeriod()</code> — <b>đồng bộ ngay</b></td>
-            <td><code>incentive_result</code> qua <code>service_role</code></td>
-            <td><b>Không mã lỗi nào</b> — engine lỗi bị nuốt, lock vẫn trả 200. Ghi audit
-              <code>incentive_skipped_no_rule</code> hoặc <code>incentive_engine_error</code></td></tr>
+          <tr><td>Sửa bản ghi của ngày đã lock</td><td>Bị chặn</td><td><b>Có</b> — một dòng cho mỗi lần thử</td></tr>
+          <tr><td>Xoá bản ghi của ngày đã lock</td><td>Bị chặn</td><td><b>Có</b></td></tr>
+          <tr><td><b>Tạo mới</b> bản ghi mang ngày đã lock</td><td>Bị chặn</td><td><b>Có</b> — tạo mới cũng làm số của ngày đã chốt đổi</td></tr>
+          <tr><td>Mở lock</td><td>Không tồn tại đường nào</td><td>—</td></tr>
+          <tr><td>Yêu cầu điều chỉnh có phê duyệt</td><td><b>Đường duy nhất còn lại</b></td><td>Sinh bản ghi reverse/delta, không ghi đè lịch sử (FR-CORR-02)</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="wf-f__h">
-      <b>Vì sao đồng bộ:</b> QĐ-5 — stack không có queue, nên "background job" của spec thành lệnh gọi trực
-      tiếp trong request lock. Lock là hành động chính, phải thành công bất kể engine.<br>
-      <b>Vì sao lock đặt ở trigger chứ không ở RLS (QĐ-4):</b> điều kiện lock trong <code>USING</code> của RLS
-      thì RLS lọc hàng ra khỏi lệnh UPDATE <b>trước khi</b> trigger chạy, nên client nhận <code>200 []</code>
-      — không phân biệt được "ngày đã lock" với "không có hàng" hay "sai vai trò". Bản sửa bỏ hẳn điều kiện
-      lock khỏi RLS và để trigger độc quyền, nên <code>P0001</code> phát ra cho <b>mọi</b> người gọi:
-      <code>authenticated</code>, <code>service_role</code> (có BYPASSRLS), và cả <code>psql</code> trực tiếp.
-    </p>
+    <p class="wf-f__h">Nghiệm thu FR-CORR-03 là <b>hai điều kiện cùng lúc</b>: mọi lần thử sửa trực
+      tiếp <b>đều bị chặn</b> <i>và</i> <b>đều có log</b>. Log mỗi lần thử phải mang: chủ thể, thời
+      điểm, đối tượng bị nhắm, đường vào, và kết quả bị chặn. Lock chặn <b>ghi</b>, không chặn
+      <b>đọc</b> — bảng đối chiếu và báo cáo RPT-05 vẫn xem được đầy đủ.</p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Trạng thái</p>
+    <p class="wf-box__t">6 · Trạng thái màn</p>
     <div class="wf-states">
-      <div class="wf-state"><h4>Chưa lock, có dữ liệu</h4>
-        <p>Bảng + dòng "Chưa lock" + nút lock (nếu đúng vai). Đổi ngày · truy vết · lock.</p></div>
-      <div class="wf-state"><h4>Chưa lock, rỗng</h4>
-        <p><code>EmptyState</code> "Chưa có giao dịch nào cho ngày nghiệp vụ này." — <b>nút lock VẪN hiện</b>.
-          Lock một ngày trắng là khoá vĩnh viễn một ngày trắng. Đề xuất cảnh báo trước.</p></div>
-      <div class="wf-state"><h4>Đã lock — read-only vì ngày đã lock</h4>
-        <p>Dòng "Đã lock — {thời điểm}". Nút lock và chỉ dẫn vai <b>cùng biến mất</b>. Bảng vẫn hiện
-          đủ (đọc không bị chặn — FR-601). Mọi ghi vào <code>transaction</code> /
-          <code>seri_result</code> / <code>mekiki_record</code> / <code>delivery_shipment</code> của
-          ngày đó bị chặn <code>P0001</code> → <b>423</b>. Đường sửa duy nhất còn lại:
-          <code>correction_request</code> + maker-checker (SC-20/SC-21).</p></div>
-      <div class="wf-state"><h4>Đang mở hộp xác nhận</h4>
-        <p>Hộp cảnh báo + input gõ lại ngày. Xác nhận (khi gõ đúng) · hủy.</p></div>
-      <div class="wf-state"><h4>Đang gửi lock</h4>
-        <p>Hai nút <code>disabled</code>, <code>aria-busy</code>, input <code>disabled</code>. Không hành động nào khả dụng.</p></div>
-      <div class="wf-state"><h4>Gửi lock lỗi</h4>
-        <p><code>role="alert"</code> "Có lỗi xảy ra, vui lòng thử lại." — <b>một thông báo duy nhất
-          cho mọi mã</b>: 400 (ngày sai) · 409 (đã lock) · 404 (mất quyền) · 500 (engine/audit) hiện
-          y như nhau. Đề xuất map <code>reason</code> → key riêng.</p></div>
-      <div class="wf-state"><h4>Lock hai lần đồng thời</h4>
-        <p>Điểm tuần tự hoá là <b>khoá chính trên <code>business_date</code></b>: Postgres nhận đúng
-          một, người thua nhận <code>23505</code> → <b>409 ALREADY_LOCKED</b>. Không cần khoá ứng
-          dụng.</p></div>
-      <div class="wf-state"><h4>Đang tải · Lỗi tải bảng — chưa có</h4>
-        <p>Không có <code>loading.tsx</code>, không có <code>error.tsx</code>; API trả
-          <code>500 internal_error</code>.</p></div>
-      <div class="wf-state"><h4>Truy vết rỗng / lỗi</h4>
-        <p>Hàng phụ hiện "Chưa có lần giao nào cho giao dịch này." — <b>lỗi mạng và không có dữ liệu hiện giống nhau</b>.</p></div>
-      <div class="wf-state"><h4>Không có quyền lock</h4>
-        <p>Vai khác ROLE-SETTLEMENT và ngày chưa lock: chỉ dẫn nói rõ hành động thuộc ROLE-SETTLEMENT. Gọi thẳng route lock → <b>404</b>.</p></div>
-      <div class="wf-state"><h4>Số của ngày đã lock vẫn có thể đổi</h4>
-        <p>Trigger chỉ BEFORE UPDATE OR DELETE, không bắt INSERT. ROLE-DELIVERY ghi lần giao mới sau
-          08:00 vẫn vào được với <code>business_date</code> đã lock (xem SC-16). Chưa có — đề xuất.</p></div>
-      <div class="wf-state"><h4>Ngoài khung giờ 08:00–10:00 — chưa có</h4>
-        <p>Không có kiểm khung giờ nào trong code. RFP §02-07 là ràng buộc vận hành thật nhưng chưa
-          thành ràng buộc kỹ thuật — lock được bất kỳ giờ nào.</p></div>
-      <div class="wf-state"><h4>Không có biểu suất phủ ngày đó</h4>
-        <p>Engine dừng, ghi audit <code>incentive_skipped_no_rule</code>, không đoán số. Lock vẫn
-          thành công, nhưng ngày đó <b>không có</b> <code>incentive_result</code> — và vì không
-          unlock được, chỉ chạy lại engine bằng đường riêng.</p></div>
+      <div class="wf-state"><h4>Chưa lock, có dữ liệu</h4><p>Bảng đầy đủ + nút lock cho đúng vai. Đổi ngày · truy vết · lock.</p></div>
+      <div class="wf-state"><h4>Chưa lock, rỗng</h4><p>Không có gì đủ điều kiện. Lock một ngày trắng là khoá vĩnh viễn một ngày trắng — phải cảnh báo riêng trước khi cho lock.</p></div>
+      <div class="wf-state"><h4>Đã lock — chỉ đọc</h4><p>Nút lock biến mất, bảng vẫn hiện đủ, kèm thời điểm và người lock. Chỉ dẫn sang SC-20 cho mọi nhu cầu sửa.</p></div>
+      <div class="wf-state"><h4>Đang gửi · Gửi lỗi</h4><p>Nút vô hiệu khi đang gửi. Lỗi phải <b>phân biệt được lý do</b>: ngày sai · đã lock rồi · không đủ quyền · lỗi hệ thống.</p></div>
+      <div class="wf-state"><h4>Hai người lock cùng lúc</h4><p>Chỉ một lần lock có hiệu lực; người sau nhận thông báo "ngày đã được lock", không tạo kỳ thứ hai.</p></div>
+      <div class="wf-state"><h4>Khung giờ chốt 08:00–10:00</h4><p>RFP §02-07 đặt chốt kỳ vào đoạn này; đoạn 05:00–08:00 dùng cùng màn ở chế độ đối chiếu tạm. Có biến khung giờ thành ràng buộc kỹ thuật hay không là câu hỏi còn mở.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">ĐỐI CHIẾU PROTOTYPE</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td><b>FE-026</b>: chặn <b>mọi</b> đường sửa trực tiếp sau lock</td>
+            <td>Khoá chỉ chặn <b>sửa và xoá</b>, <b>không chặn tạo mới</b> — trên ngày đã lock vẫn tạo được giao dịch, bản ghi せり, lần giao và bản ghi 目利き. Nên số của ngày đã chốt vẫn đổi được sau khi chốt</td>
+            <td><b>Khác không chủ đích</b> — hệ quả chưa lường của việc dồn kiểm khoá vào một tầng chưa bao giờ phủ đường tạo mới</td></tr>
+          <tr><td><b>FE-026</b>: mọi lần thử đều bị chặn <b>và ghi log</b></td>
+            <td>Đường hủy giao dịch bị khoá thì <b>ghi</b> một dòng log lần thử; đường chốt giao dịch bị khoá thì <b>không ghi</b> — cùng một yêu cầu, hai hành vi khác nhau tuỳ đường vào</td>
+            <td><b>Khác không chủ đích</b> — nghiệm thu FR-CORR-03 chỉ đạt một nửa</td></tr>
+          <tr><td><b>FR-SETTLE-02</b>: lock là không hoàn tác được, nên phải có bước xác nhận rõ ràng — suy ra từ tính một chiều của lock, RFP không nói thành chữ</td>
+            <td>Bước gõ lại ngày <b>chỉ tồn tại ở giao diện</b> — hệ thống không nhận và không kiểm chuỗi đó, nên gọi trực tiếp là lock được bằng một lệnh</td>
+            <td><b>Khác không chủ đích</b></td></tr>
+          <tr><td><b>FR-SETTLE-01</b>: gom giao dịch, giao hàng <b>và ngoại lệ</b> đủ điều kiện</td>
+            <td>Bảng chỉ gom giao dịch, せり và giao hàng; không có nguồn ngoại lệ nào để gom (SC-17 chưa dựng)</td>
+            <td>Khác không chủ đích — thiếu một trong ba thành phần</td></tr>
+          <tr><td><b>FE-024</b>: truy được từ quyết toán sang các lần giao, mọi nhánh</td>
+            <td>Nút truy vết chỉ có ở nhánh 相対取引; nhánh せり và giao hàng để trống. Chênh lệch của hai nhánh đó hiện dấu gạch, dễ đọc thành "không lệch" thay vì "không tính được"</td>
+            <td>Khác không chủ đích</td></tr>
+          <tr><td>Lock chốt số; các bước hệ quả không được làm hỏng lock, nhưng phải hiện ra</td>
+            <td>Tính 完納奨励金 chạy đồng bộ ngay trong lệnh lock (stack không có hàng đợi) và lỗi của nó <b>bị nuốt</b> — lock vẫn báo thành công trong khi ngày đó không có kết quả thưởng, mà lại không mở lock lại được</td>
+            <td>Khác có chủ đích ở cách chạy, <b>khác không chủ đích</b> ở chỗ không báo cho người vận hành</td></tr>
+          <tr><td>Định nghĩa "đủ điều kiện"; lock ngày trắng; khung giờ 08:00–10:00</td>
+            <td>Chưa có định nghĩa "đủ điều kiện" nào ngoài "chưa hủy"; lock ngày trắng vẫn cho phép không cảnh báo; không kiểm khung giờ</td>
+            <td><b>Cần khách chốt</b> — RFP không liệt điều kiện, không cho ngưỡng, và §02-07 chỉ là ràng buộc vận hành</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="wf-note">
-    <b>Phân quyền:</b> cả <b>7 vai</b> vào được (trang không gọi <code>requireRole()</code>) —
-    FR-601 cho vai khác xem bảng ở chế độ chỉ đọc. Chặn nằm ở <b>nút lock</b>, không ở cửa:
-    chỉ <b>ROLE-SETTLEMENT</b> lock được, 6 vai còn lại gọi thẳng route lock nhận <b>404</b>.<br>
-    <b>Lock là MỘT CHIỀU:</b> không endpoint, không hàm, không migration nào xoá hàng
-    <code>business_day_lock</code>; bảng chỉ có policy INSERT — không UPDATE, không DELETE, kể cả cho
-    ROLE-SYS-ADMIN và <code>service_role</code>. <b>Lock sai ngày là hỏng thật</b>, chỉ còn đường
-    <code>correction_request</code>.<br>
-    <b>Ghi chú:</b> theo khung giờ RFP §02-07 đây là màn của đoạn <b>08:00–10:00</b> (chốt và xuất);
-    đoạn 05:00–08:00 dùng nó ở chế độ đối chiếu tạm.<br>
-    <b>Spec:</b>
+    <b>Phân quyền:</b> đọc mở cho mọi vai đang hoạt động (các vai khác cần xem số trước khi chốt);
+    <b>lock</b> chỉ thuộc bộ phận đối chiếu.<br>
+    <b>Lock là một chiều:</b> không có đường mở lock ở bất kỳ tầng nào, kể cả cho quản trị hệ thống.
+    Lock sai ngày là hỏng thật — chỉ còn đường yêu cầu điều chỉnh. Đây là lý do bước xác nhận phải
+    được kiểm ở hệ thống, không chỉ ở giao diện.<br>
+    <b>Spec as-built:</b>
     <a href="../spec/SC-18-bang-doi-chieu-ngay-va-lock-ky.md">SC-18-bang-doi-chieu-ngay-va-lock-ky.md</a>
   </div>
 </section>

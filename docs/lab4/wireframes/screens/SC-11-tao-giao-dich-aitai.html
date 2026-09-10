@@ -3,193 +3,197 @@
   <div class="wf-screen__hd">
     <h2>SC-11 · Tạo giao dịch 相対取引</h2>
     <p class="wf-screen__meta">
-      <b>SCR010_AitaiCreate</b> · Form · route <b>/transactions/new</b> ·
-      actor: Vận hành giao dịch (ROLE-TRADE) ·
-      <b>FE-014, FE-015, FE-007</b> · <span class="wf-tag">Đã dựng</span> ·
-      <span class="wf-tag">Màn quan trọng nhất hệ thống</span>
+      <b>FE-014</b> Tạo giao dịch 相対取引 · <b>FE-015</b> Từ chối chốt giao dịch không hợp lệ ·
+      <b>FE-007</b> Chặn giao dịch khi hiệu lực đã hết · <b>FN-04</b> (và <b>FN-02</b>) · ưu tiên <b>P0</b><br>
+      Yêu cầu khách: <b>FR-AITAI-01</b>, <b>FR-AITAI-02</b>, <b>FR-PARTY-02</b>, <b>BR-PERM-01</b>,
+      <b>BR-LOT-02</b>, <b>FR-LOT-03</b>, <b>NFR-PERF-02</b> ·
+      actor: Vận hành giao dịch (<b>ROLE-TRADE</b>)<br>
+      Tham chiếu prototype: <code>SCR010_AitaiCreate</code> · Form · route <code>/transactions/new</code> ·
+      <span class="wf-tag">Đã dựng</span>
+      <span class="wf-tag">FN-04 gánh ~90% giá trị giao dịch của chợ</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Form nhập — 4 field người dùng điền (thứ tự đúng theo spec mục 3)</p>
+    <p class="wf-box__t">Form nhập — các trường FR-AITAI-01 đòi</p>
     <div class="wf-row">
       <div class="wf-f">
         <label class="wf-f__l">Lô hàng · ロット <span class="req">*</span></label>
         <div class="wf-f__i">LOT-0001 — Cá A ▾</div>
-        <p class="wf-f__h">
-          Option lọc <code>status='published'</code> AND <code>available_qty &gt; 0</code>.
-          Preselect phần tử đầu, nên select không bao giờ rỗng.
-        </p>
+        <p class="wf-f__h">Lô đang ở chặng bán được của FIG-011 và còn số lượng khả dụng. Ràng buộc
+          số lượng (<b>BR-LOT-02</b>) đánh giá ở bước chốt, không ở bước nhập.</p>
       </div>
       <div class="wf-f">
-        <label class="wf-f__l">Người mua (買出人) <span class="req">*</span></label>
+        <label class="wf-f__l">Người mua · 買出人 <span class="req">*</span></label>
         <div class="wf-f__i">Người tham gia A ▾</div>
-        <p class="wf-f__h">
-          Danh sách <b>KHÔNG lọc hiệu lực</b> — người đã hết hiệu lực vẫn hiện. Có chủ đích:
-          cửa hiệu lực đặt ở bước Chốt, không ở bước nhập nháp.
-        </p>
+        <p class="wf-f__h">Đúng phân loại <b>買出人</b> của FR-PARTY-01, không gộp với ba loại còn
+          lại. Danh sách không lọc hiệu lực: <b>BR-PERM-01</b> đòi kiểm 許可/承認 <b>tại thời điểm
+          giao dịch</b>, nên cửa hiệu lực đặt ở bước chốt.</p>
       </div>
     </div>
     <div class="wf-row">
       <div class="wf-f">
         <label class="wf-f__l">Số lượng · 数量 <span class="req">*</span></label>
-        <div class="wf-f__i">120.00</div>
-        <p class="wf-f__h">
-          numeric(12,2) · <code>min=0.01</code> <code>step=0.01</code>.
-          <b>Không so với <code>available_qty</code></b> — bước tạo không trừ số lượng (FR-AITAI-01).
-        </p>
+        <div class="wf-f__i">120,00</div>
+        <p class="wf-f__h">Cùng đơn vị với số lượng ban đầu của lô (FR-LOT-01). Không được làm số
+          khả dụng của lô bị âm — <b>BR-LOT-02</b>, kiểm ở bước chốt.</p>
       </div>
       <div class="wf-f">
-        <label class="wf-f__l">Đơn giá (JPY) · 単価 (JPY) <span class="req">*</span></label>
+        <label class="wf-f__l">Đơn giá · 単価 (JPY) <span class="req">*</span></label>
         <div class="wf-f__i">1 800</div>
-        <p class="wf-f__h">integer · <code>min=1</code> <code>step=1</code>. JPY không thập phân.</p>
+        <p class="wf-f__h">JPY, không phần thập phân. Giá đã thống nhất giữa hai bên.</p>
       </div>
     </div>
-    <p style="margin:13px 0 0;"><span class="wf-b">Tạo nháp</span></p>
-  </div>
-
-  <div class="wf-box">
-    <p class="wf-box__t">Server sinh — không có trên form (field 5–8)</p>
-    <div class="wf-row">
-      <div class="wf-f">
-        <label class="wf-f__l">Mã giao dịch · 取引番号</label>
-        <div class="wf-f__i wf-f__i--ro">TXN-20260909-001</div>
-        <p class="wf-f__h">
-          <code>TXN-{YYYYMMDD}-{NNN}</code>, NNN = số giao dịch trong ngày + 1. Trùng
-          <code>23505</code> → retry đúng 1 lần, lần 2 vẫn trùng → 500.
-        </p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
-        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
-        <p class="wf-f__h"><code>todayJst()</code> — không bao giờ nhận từ client.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Trạng thái · 下書き</label>
-        <div class="wf-f__i wf-f__i--ro">draft</div>
-        <p class="wf-f__h">enum <code>draft / confirmed / cancelled</code>.</p>
-      </div>
-      <div class="wf-f">
-        <label class="wf-f__l">Loại</label>
-        <div class="wf-f__i wf-f__i--ro">aitai</div>
-        <p class="wf-f__h">
-          Cột chết: <code>check (type='aitai')</code>. QĐ-1 — せり đi bảng
-          <code>seri_result</code> riêng.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="wf-box">
-    <p class="wf-box__t">Chốt và Huỷ — nút đặt ở SC-12, quy tắc CAS hai tầng thuộc màn này</p>
-    <div class="wf-scroll">
-      <table class="wf-t">
-        <thead>
-          <tr><th>Cửa</th><th>Điều kiện</th><th>Thắng race</th><th>Thua race</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Tầng 1 — CAS <code>transaction.status</code></td>
-            <td><code>WHERE id=:id AND status='draft'</code></td>
-            <td>1 dòng → đi tiếp hai cửa dưới</td>
-            <td>0 dòng → <b>409 NOT_DRAFT</b>, không chạm tới <code>lot</code> lần nào</td>
-          </tr>
-          <tr>
-            <td>Cửa hiệu lực người mua</td>
-            <td>Đánh giá theo <code>todayJst()</code> — thời điểm CHỐT, không phải <code>business_date</code></td>
-            <td>Đi tiếp tầng 2</td>
-            <td><b>422 INELIGIBLE_PARTY</b> → <code>revertToDraft()</code> đưa về nháp</td>
-          </tr>
-          <tr>
-            <td>Tầng 2 — CAS <code>lot.available_qty</code></td>
-            <td><code>WHERE id=:lot AND available_qty=:current</code></td>
-            <td>Trừ số lượng, đổi <code>lot.status='traded'</code></td>
-            <td>0 dòng → đọc lại và thử lại, tối đa 25 lần; thiếu số → <b>422 INSUFFICIENT_QTY</b>; hết 25 lần → 500</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="wf-note" style="margin-top:11px">
-      <b>Vì sao CAS đứng TRƯỚC hai cửa:</b> chạy cửa trước rồi CAS sau thì hai request đồng thời
-      cùng qua cửa trước khi bên nào kịp đổi status — đúng lỗi trừ hai lần.
+    <p style="margin:13px 0 0;">
+      <span class="wf-b">Tạo nháp</span>
+      <span class="wf-b wf-b--2">Tạo nháp và gửi xác nhận</span>
+      <span class="wf-tag">nút thứ hai phụ thuộc mục [CHƯA CHỐT] ở khối vòng đời</span>
     </p>
   </div>
 
   <div class="wf-box">
-    <p class="wf-box__t">Trạng thái</p>
-    <div class="wf-states">
-      <div class="wf-state">
-        <h4>Mặc định</h4>
-        <p>4 field có sẵn giá trị đầu, nút bật.</p>
+    <p class="wf-box__t">Hệ thống gán — không nhập tay</p>
+    <div class="wf-row">
+      <div class="wf-f">
+        <label class="wf-f__l">Mã giao dịch · 取引番号</label>
+        <div class="wf-f__i wf-f__i--ro">TXN-0001</div>
+        <p class="wf-f__h"><b>FR-AITAI-01</b> nghiệm thu: <i>"giao dịch có mã duy nhất"</i>. Định
+          dạng mã và cách cấp là việc của spec BE, không phải của màn.</p>
       </div>
-      <div class="wf-state">
-        <h4>Rỗng — không có lô hàng</h4>
-        <p>Không còn lô <code>published</code> còn số lượng, hoặc không có người tham gia nào:
-          <code>EmptyState</code> "Không có lô hàng đã công bố nào còn số lượng khả dụng để tạo
-          giao dịch." <b>Form biến mất hoàn toàn.</b></p>
+      <div class="wf-f">
+        <label class="wf-f__l">Ngày nghiệp vụ · 業務日</label>
+        <div class="wf-f__i wf-f__i--ro">2026-09-09</div>
+        <p class="wf-f__h">Ngày nghiệp vụ đang mở. <b>[CHƯA CHỐT]</b> — thiết kế không nói có được
+          nhập bù cho ngày khác không; câu trả lời đổi kỳ đối chiếu (FR-SETTLE-01) và cách lock ứng
+          xử (FR-CORR-03).</p>
       </div>
-      <div class="wf-state">
-        <h4>Đang tải — chưa có</h4>
-        <p>Không có <code>loading.tsx</code>; Server Component render đồng bộ nên người dùng thấy
-          trang trắng khi chờ. Đề xuất Suspense + skeleton.</p>
+      <div class="wf-f">
+        <label class="wf-f__l">Trạng thái · 状態</label>
+        <div class="wf-f__i wf-f__i--ro">Nháp · 下書き</div>
+        <p class="wf-f__h">Giá trị đầu của vòng đời <b>FIG-012</b>, xem khối dưới.</p>
       </div>
-      <div class="wf-state">
-        <h4>Lỗi tải — chưa có</h4>
-        <p>Query bỏ <code>error</code> → lỗi DB hiện y như "rỗng". Không phân biệt được
-          "hết lô hàng" với "DB lỗi".</p>
-      </div>
-      <div class="wf-state">
-        <h4>Không có quyền</h4>
-        <p>Vai khác ROLE-TRADE → trang <b>404</b> (<code>notFound()</code>, cố ý không dùng 403).</p>
-      </div>
-      <div class="wf-state">
-        <h4>Đang gửi</h4>
-        <p>Mọi input/select <code>disabled</code>, nút <code>aria-busy</code> + "Đang tạo...".
-          Guard chặn gửi lần hai.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi</h4>
-        <p>Một message duy nhất "Dữ liệu không hợp lệ, vui lòng kiểm tra lại các trường."
-          — 422 <code>lot_not_available</code>, 422 <code>invalid_request</code>,
-          400 <code>invalid_json</code> và 500 <b>mất phân biệt</b>.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Gửi lỗi mạng</h4>
-        <p>"Có lỗi xảy ra, vui lòng thử lại." Gửi lại được.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Chốt thua race — 409 NOT_DRAFT</h4>
-        <p>Hai người bấm Chốt cùng lúc, hoặc double-click: đúng một request thắng CAS tầng 1,
-          còn lại nhận 409 và số lượng không bị trừ hai lần.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Chốt thiếu số — 422 INSUFFICIENT_QTY</h4>
-        <p>Tổng qty của các request vượt số khả dụng: chỉ những request vừa số lượng chốt được.
-          <code>available_qty</code> không bao giờ âm.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Người mua hết hiệu lực — 422 INELIGIBLE_PARTY</h4>
-        <p>Còn hiệu lực lúc tạo nháp, hết hiệu lực lúc bấm Chốt. Giao dịch bị đưa về
-          <code>draft</code>, không bị trừ số lượng.</p>
-      </div>
-      <div class="wf-state">
-        <h4>Read-only vì ngày đã lock — 423</h4>
-        <p><b>Màn này KHÔNG chặn.</b> Trigger chỉ <code>before update or delete</code>, không bắt
-          INSERT → vẫn tạo được nháp trên ngày đã lock. <b>423 LOCKED_BUSINESS_DATE</b> chỉ nổ ở
-          bước Chốt và Huỷ, sinh ra nháp mồ côi. Đề xuất chặn ngay đầu route.</p>
+      <div class="wf-f">
+        <label class="wf-f__l">Kênh · 取引区分</label>
+        <div class="wf-f__i wf-f__i--ro">相対取引</div>
+        <p class="wf-f__h">Kênh せり ghi ở SC-13. FIG-012 phủ cả hai kênh nên vòng đời dùng chung.</p>
       </div>
     </div>
   </div>
 
+  <div class="wf-box">
+    <p class="wf-box__t">Vòng đời bản ghi giao dịch — FIG-012 (RFP:637)</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Từ trạng thái</th><th>Sự kiện</th><th>Tới trạng thái</th><th>Ghi chú thiết kế</th></tr></thead>
+        <tbody>
+          <tr><td>Nháp · 下書き</td><td>gửi</td>
+            <td><b>Chờ xác nhận</b> <span class="wf-tag">[CHƯA CHỐT]</span></td>
+            <td>FIG-012 có bước này. <b>FR-AITAI-01</b> (RFP:650), <b>FR-AITAI-02</b> (RFP:651),
+              <b>FE-014</b> và <b>FE-015</b> <b>không nhắc bước phê duyệt nào</b></td></tr>
+          <tr><td><b>Chờ xác nhận</b> <span class="wf-tag">[CHƯA CHỐT]</span></td><td>phê duyệt</td>
+            <td>Đã chốt</td>
+            <td>Không yêu cầu nào định nghĩa <b>ai duyệt</b>, <b>quyền duyệt</b> hay <b>SLA duyệt</b></td></tr>
+          <tr><td><b>Chờ xác nhận</b> <span class="wf-tag">[CHƯA CHỐT]</span></td><td>từ chối</td>
+            <td>Nháp</td><td>Cạnh <code>↑ (từ chối)</code> của FIG-012 — quay lại nháp để sửa</td></tr>
+          <tr><td>Đã chốt</td><td>đề nghị đính chính</td><td>Hủy / Đính chính</td>
+            <td>FR-CORR-01 · yêu cầu điều chỉnh ở SC-20, bản ghi gốc không đổi trước khi duyệt</td></tr>
+          <tr><td>Hủy / Đính chính</td><td>chốt lại</td><td>Đã chốt</td>
+            <td>FR-CORR-02 · sinh reverse/delta ở SC-21, không ghi đè lịch sử</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-note" style="margin-top:11px">
+      <b>[CHƯA CHỐT] — tài liệu khách tự chống nhau:</b> sơ đồ FIG-012 nói có bước phê duyệt, bảng
+      yêu cầu của chính luồng này nói không. FR-AITAI-02 chỉ đòi <b>từ chối tự động theo điều
+      kiện</b>, không phải người duyệt. <b>Phải hỏi trước khi thiết kế API</b>, vì luồng này gánh
+      ~90% giá trị giao dịch: có bước duyệt thì cần hàng đợi việc chờ duyệt, vai được duyệt
+      (TBL-ROLE-01 chưa có vai nào ghi trách nhiệm này), SLA duyệt và maker-checker. Cũng chưa rõ
+      hai cửa kiểm ở khối dưới đánh giá lúc <b>gửi</b>, lúc <b>phê duyệt</b>, hay <b>cả hai lần</b>.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Hai cửa kiểm khi chốt — FE-015 · FR-AITAI-02</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Cửa kiểm</th><th>Yêu cầu nguồn</th><th>Thời điểm đánh giá</th><th>Màn phải hiển thị khi không thoả</th></tr></thead>
+        <tbody>
+          <tr><td>Hiệu lực 許可/承認 của 買出人</td>
+            <td>FR-PARTY-02 (P0) · BR-PERM-01 · FE-007</td>
+            <td><i>"tại thời điểm chốt giao dịch"</i> — không phải lúc tạo nháp, không phải ngày nghiệp vụ</td>
+            <td>Từ chối chốt, lý do đọc được: <i>"Người tham gia A đã mất hiệu lực từ 2026-09-01,
+              không thể chốt giao dịch."</i> Giao dịch không được chốt</td></tr>
+          <tr><td>Số lượng khả dụng của lô</td>
+            <td>FR-AITAI-02 · FR-LOT-03 (P0) · BR-LOT-02</td>
+            <td>Trước khi cho phép chốt</td>
+            <td>Từ chối chốt, lý do đọc được: <i>"LOT-0001 chỉ còn 80,00 khả dụng, giao dịch cần
+              120,00."</i> Số lượng khả dụng không bao giờ âm</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="wf-note" style="margin-top:11px">
+      <b>FR-AITAI-02</b> nghiệm thu: <i>"Hệ thống hiển thị lý do từ chối và không tạo giao dịch"</i>
+      — hai lý do phải <b>phân biệt được trên màn</b>, viết bằng tiếng người; một thông báo chung cho
+      cả hai là không thoả. Cơ chế đồng thời nào bảo đảm không trừ hai lần thuộc <b>spec BE</b>.
+      <b>NFR-PERF-02</b> · FIG-LOAD-01: cao điểm 1.200 giao dịch/ngày, 600 lô/ngày, 60 phiên đồng
+      thời — hai cửa này nằm trên đường nóng nhất của hệ thống.
+    </p>
+  </div>
+
+  <div class="wf-box">
+    <p class="wf-box__t">Trạng thái màn</p>
+    <div class="wf-states">
+      <div class="wf-state"><h4>Mặc định</h4><p>Bốn trường trống hoặc có giá trị đầu, nút bật.</p></div>
+      <div class="wf-state"><h4>Rỗng — không có lô bán được</h4>
+        <p>Nêu rõ lý do và đường đi tiếp (SC-08 tiếp nhận, SC-10 công bố), không để form vô nghĩa.</p></div>
+      <div class="wf-state"><h4>Đang tải · Lỗi tải</h4>
+        <p>Khung chờ cho danh sách lô và người tham gia. Lỗi tải phải phân biệt được với trạng thái
+          rỗng, và có nút thử lại.</p></div>
+      <div class="wf-state"><h4>Không có quyền · Đang gửi</h4>
+        <p>Ngoài ROLE-TRADE thì không vào được (TBL-ROLE-01). Khi gửi: khoá form, chặn gửi trùng.</p></div>
+      <div class="wf-state"><h4>Từ chối — người mua hết hiệu lực</h4>
+        <p>Còn hiệu lực lúc tạo nháp, hết lúc chốt. Nêu tên và ngày mất hiệu lực. Không trừ số
+          lượng, giao dịch giữ ở Nháp.</p></div>
+      <div class="wf-state"><h4>Từ chối — lô không đủ số lượng</h4>
+        <p>Nêu số còn khả dụng và số đang cần. Không trừ số lượng.</p></div>
+      <div class="wf-state"><h4>Ngày nghiệp vụ đã lock</h4>
+        <p>FR-CORR-03 · BR-CLOSE-01: không sửa trực tiếp bản ghi của ngày đã lock, mọi lần thử đều
+          bị chặn và <b>có log</b>. Đường ra duy nhất: SC-20 / SC-21.</p></div>
+    </div>
+  </div>
+
+  <div class="wf-box wf-box--todo">
+    <p class="wf-box__t">Đối chiếu prototype</p>
+    <div class="wf-scroll">
+      <table class="wf-t">
+        <thead><tr><th>Thiết kế đòi</th><th>Prototype làm</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td>FIG-012 có trạng thái <b>Chờ xác nhận</b> giữa Nháp và Đã chốt, kèm cạnh từ chối</td>
+            <td>Trạng thái giao dịch chỉ có Nháp / Đã chốt / Đã hủy — bấm Chốt là chuyển thẳng,
+              không ai duyệt, không có cạnh từ chối</td>
+            <td><b>Cần khách chốt</b> — FIG-012 và bảng FR-AITAI-01/02 chống nhau</td></tr>
+          <tr><td>FR-AITAI-02: hiển thị <b>lý do</b> từ chối, hai lý do phân biệt được</td>
+            <td>Mọi lỗi gửi form về một câu chung <i>"Dữ liệu không hợp lệ, vui lòng kiểm tra lại
+              các trường"</i></td>
+            <td>Khác không chủ đích — <b>P0</b></td></tr>
+          <tr><td>FR-CORR-03 · BR-CLOSE-01: ngày đã lock thì không ghi được bản ghi mới</td>
+            <td>Lock không chặn INSERT → vẫn tạo được giao dịch trên ngày đã lock; chặn chỉ nổ ở
+              bước chốt/hủy, để lại nháp mồ côi</td>
+            <td>Khác không chủ đích — <b>P0</b></td></tr>
+          <tr><td>FR-PARTY-02 · BR-LOT-02: hai cửa kiểm tại thời điểm chốt</td>
+            <td>Nhánh 相対取引 kiểm đủ cả hai cửa — nhánh せり thì không, xem SC-13</td><td>Khớp</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="wf-note">
-    <b>Phân quyền:</b> chỉ <b>ROLE-TRADE</b> vào được; 6 vai còn lại nhận <b>404</b> ở cả trang và
-    API. Đọc thì mở cho mọi vai đang hoạt động (FR-601) — chặn nằm ở <b>ghi</b> và ở
-    <b>vào trang</b>.<br>
-    <b>Ghi chú:</b> 相対取引 gánh ~90% giá trị giao dịch của chợ; <code>/transactions</code> là
-    landing page của ROLE-TRADE. Audit chạy <b>sau</b> khi nghiệp vụ đã commit và không rollback
-    được (QĐ-5) — audit lỗi thì dữ liệu vẫn đã ghi dù route trả 500.<br>
-    <b>Lệch với LAB-3:</b> <code>technical-spec.md</code> khai INELIGIBLE_PARTY và
-    INSUFFICIENT_QTY là 409; code trả <b>422</b>. Tin code.<br>
-    <b>Spec:</b> <a href="../spec/SC-11-tao-giao-dich-aitai.md">SC-11-tao-giao-dich-aitai.md</a>
+    <b>Phân quyền:</b> hành động ghi thuộc <b>ROLE-TRADE</b> (TBL-ROLE-01). Quyền đọc mở rộng cho
+    các vai đang hoạt động để đối chiếu chéo — riêng các bảng có thông tin cá nhân thì đá với
+    §09-06 (APPI), đã ghi ở ADR-014.<br>
+    <b>Ghi chú:</b> tạo và chốt đều phải để lại logical audit theo <b>FR-AUDIT-01</b> (FE-041):
+    chủ thể, timestamp, before/after, lý do.<br>
+    <b>Prototype (as-built):</b>
+    <a href="../spec/SC-11-tao-giao-dich-aitai.md">SC-11-tao-giao-dich-aitai.md</a>
   </div>
 </section>
