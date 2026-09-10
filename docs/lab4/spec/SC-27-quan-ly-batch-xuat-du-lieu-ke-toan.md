@@ -21,7 +21,9 @@ lại ở LAB-5:
 | | Hiện trạng |
 |---|---|
 | **Đã có — đừng ước lượng lại** | Bảng `accounting_export_batch` thật; đường ghi `POST /api/accounting/export-batches`; danh sách batch **theo đúng một ngày** ngay trên màn RPT-06; xuất CSV từ snapshot `lines`; audit `create_accounting_export_batch` |
-| **Còn thiếu — task riêng của LAB-5** | Danh sách batch **xuyên ngày** (lọc khoảng ngày, batch code, trạng thái); **trạng thái gửi** — `accounting_export_batch` không có cột nào cho nó, dù RFP §08-03 liệt "trạng thái" là trường tối thiểu bắt buộc |
+| **Còn thiếu — task riêng của LAB-5** | Danh sách batch **xuyên ngày** (lọc khoảng ngày, batch code, trạng thái). **Trạng thái gửi ở mức batch:** `accounting_export_batch` không có cột nào cho nó — nhưng **RFP không đòi trường này**, xem ô dưới |
+| **Đính chính — "trạng thái" của RFP là mức DÒNG, không phải mức batch** | RFP §08-03 liệt "trạng thái" trong 6 trường tối thiểu, và **Phụ lục D.2 (RFP:1399) nói rõ đó là `Trạng thái dòng`** với tập giá trị **chờ / đã xác nhận / đã điều chỉnh**. Prototype **đã có** cột đó ở mức dòng (`src/lib/reports/registry-columns.ts:98`), nên 6 trường tối thiểu **đã đủ**. Trạng thái gửi ở mức batch là **đề xuất thiết kế cho màn quản lý batch**, không phải yêu cầu khách — §08-03 dòng 767 để ngỏ phương thức kết nối, retry và nghiệm thu cho buổi làm việc về interface, nên đây là giả định phải chốt ở buổi đó |
+| **Lệch thật, và nặng hơn: sai TẬP GIÁ TRỊ ở mức dòng** | RFP Phụ lục D.2 đòi `chờ / đã xác nhận / đã điều chỉnh`. Prototype sinh `"đã chốt" \| "đã điều chỉnh"` (`src/lib/accounting/build-accounting-lines.ts:7`) — **không bao giờ sinh "chờ"**, và dùng "đã chốt" ở chỗ RFP viết "đã xác nhận". Đây là lệch tập giá trị với yêu cầu khách, không phải chuyện đặt tên: hệ kế toán bên nhận map theo giá trị |
 
 Kiểm sống 2026-09-08: bảng tồn tại, **0 batch** — chưa ai xuất lần nào trong môi trường demo, nên
 `rỗng` là trạng thái mặc định người đọc spec sẽ gặp đầu tiên.

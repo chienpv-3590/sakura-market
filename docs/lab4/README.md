@@ -11,11 +11,18 @@ Bộ nộp của bài LAB-4, phát triển từ prototype chạy thật LAB-3. �
 | # | Sản phẩm | Nơi xem |
 |---|---|---|
 | 1 | **Wireframe chi tiết 32 màn** | [`wireframes/index.html`](./wireframes/index.html) — mở trực tiếp bằng browser, không cần server |
-| 2 | **Architecture design** | [`20-architecture-design.md`](./20-architecture-design.md) |
-| 3 | **Screen spec / detail design** | [`spec/`](./spec/README.md) — 32 file, một file mỗi màn |
-| 4 | **ADR** | [`adr/`](./adr/README.md) |
-| 5 | **Database diagram** | [`10-database-diagram.md`](./10-database-diagram.md) |
+| 2 | **Architecture design** | [`20-architecture-design.md`](./20-architecture-design.md) — gồm § 4 với 5 state machine của RFP |
+| 3a | **Đặc tả UI/FE** — 22 cột theo component | `../../.momorph/specs/*.csv` — **1.252 item** / 32 màn, kèm bbox JSON và ảnh chú thích đánh số |
+| 3b | **Đặc tả BE** — API · dữ liệu · trạng thái · quy tắc · phân quyền · audit | [`spec-be/`](./spec-be/README.md) — 32 file, 11 mục mỗi file |
+| 4 | **ADR** | [`adr/`](./adr/README.md) — 15 bản |
+| 5 | **Database diagram** | [`10-database-diagram.md`](./10-database-diagram.md) — § 4 có 21 hàng đối chiếu |
+| + | **Câu hỏi cho chủ đầu tư** | [`92-cau-hoi-cho-chu-dau-tu.md`](./92-cau-hoi-cho-chu-dau-tu.md) — 200 câu gom thành **12 quyết định** |
 | + | **Số giờ thật đã dùng** | [`90-so-gio.md`](./90-so-gio.md) |
+| ref | **Bản as-built** — prototype LAB-3 hiện làm gì | [`spec/`](./spec/README.md) — 32 file. **Không phải đặc tả để dựng theo** |
+
+> **Nguồn chân lý của bộ thiết kế:** RFP (tài liệu khách) → Function List / Feature List → rồi mới
+> đến prototype. Prototype là **đối tượng đối chiếu**, không phải nguồn. Xem
+> [`spec-be/README.md`](./spec-be/README.md) § "Ba tầng tài liệu" để không đọc lẫn vai của ba tầng.
 
 ## Thứ tự đọc
 

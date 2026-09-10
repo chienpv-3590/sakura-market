@@ -29,8 +29,10 @@ khác nhau, nên cảnh báo phải tách **hai đường xử lý riêng** — 
 | **承認 — chấp thuận** | 売買参加者 | `chấp thuận` | Xin **chấp thuận** lại — quyết định của đơn vị vận hành chợ | **Xét lại** |
 | Đăng ký (tham chiếu) | 卸売業者, 買出人 | `đăng ký` | Đăng ký chợ | 卸売業者 → **Chấp thuận**; 買出人 không có trong FIG-004 |
 
-Ba đường "Gỡ tạm ngừng" ở bảng trên chép đúng FIG-004 (RFP dòng 288-294) và là ba đường khác nhau —
-không được rút thành một nút "gỡ" chung. Ánh xạ loại ↔ căn cứ đã có thật trong code:
+Cột "Gỡ tạm ngừng" ở bảng trên chép đúng FIG-004 (RFP dòng 288-294). Đó là **ba thủ tục khác nhau
+trên cùng một cạnh trạng thái**, không phải ba cạnh: `FIG-010` (RFP:609) chỉ có một cạnh
+`Tạm ngừng → Có hiệu lực`. Nên cái phải mã hoá là **cổng kiểm theo phân loại** trên cạnh đó, chứ
+không phải thêm transition. Ánh xạ loại ↔ căn cứ đã có thật trong code:
 `src/lib/participants/category-rules.ts:20-25`.
 
 ## 2. Điều kiện vào màn
@@ -111,10 +113,12 @@ Hai đường có hành động khác nhau — đây là chỗ ràng buộc §02
 | **承認** | Gỡ tạm ngừng — **xét lại** (FIG-004) | Không phải một cạnh `go` đơn thuần: FIG-004 đòi đi qua xét lại | như trên | `status_change` | 404, 422 |
 | Chung | Gửi thông báo cho người tham gia | **Không thuộc màn này** — `FR-NOTIFY-01` (dòng 686) liệt "profile sắp hết hiệu lực" là event thông báo, thuộc SC-28/SC-29, cần hạ tầng email/queue | — | — | — |
 
-**Điểm nứt phải khai thẳng:** máy trạng thái hiện có **đúng 5 cạnh dùng chung cho cả 4 loại**
-(`state-machine.ts:35-41`) — `go` là một cạnh duy nhất, không phân biệt 卸売業者 (chấp thuận) /
-仲卸 (có điều kiện) / 売買参加者 (xét lại), trong khi FIG-004 đòi ba đường. Ràng buộc đó hiện **chưa
-được mã hoá**; đây là điều kiện tiền đề, không phải việc màn này tự bù bằng UI.
+**Điểm nứt phải khai thẳng:** máy trạng thái có **đúng 5 cạnh** (`state-machine.ts:35-41`) và
+**số cạnh đó đúng theo `FIG-010`** — đừng thêm cạnh. Cái thiếu là cạnh `go` không mang **cổng
+kiểm theo phân loại**, nên không phân biệt 卸売業者 (chấp thuận) / 仲卸 (có điều kiện) /
+売買参加者 (xét lại) như `FIG-004` đòi. Ràng buộc đó hiện **chưa được mã hoá** — và không thể mã
+hoá ở tầng màn, vì `resolveTarget(from, event)` không nhận `category`. Đây là điều kiện tiền đề,
+không phải việc màn này tự bù bằng UI.
 
 ## 7. Edge case
 
@@ -161,7 +165,7 @@ Hai đường có hành động khác nhau — đây là chỗ ràng buộc §02
 | Loại | Cần gì | Ghi chú |
 |---|---|---|
 | Bảng/cột | Bảng cấu hình ngưỡng cảnh báo — đề xuất `participant_expiry_warning_config` (khoá theo `license_type` hoặc `category`, giá trị số ngày, người sửa, thời điểm sửa) | `FR-PARTY-03` (dòng 631) đòi "khoảng cảnh báo **cấu hình được**". Hiện chỉ có một hằng số cứng trong code, dùng chung mọi loại — **không** đạt yêu cầu này. Ghi vào `../10-database-diagram.md` § bảng cần thêm |
-| Bảng/cột | Mã hoá ba đường "Gỡ tạm ngừng" của FIG-004 vào máy trạng thái | `TRANSITIONS` hiện có một cạnh `go` chung cho cả 4 loại. Cần hoặc cạnh theo loại, hoặc điều kiện gắn vào cạnh — đây là thay đổi ở `state-machine.ts`, không phải ở màn |
+| Bảng/cột | Mã hoá **cổng kiểm theo phân loại** của FIG-004 lên cạnh `go` | `TRANSITIONS` giữ đúng 5 cạnh theo FIG-010; cần thêm điều kiện tiền đề + thẩm quyền gắn vào cạnh `go`, **không** thêm cạnh mới. Thay đổi ở `state-machine.ts` và ở chỗ route phải `select` thêm `category`, không phải ở màn |
 | Bảng/cột | (Tuỳ phạm vi) Bảng theo dõi thủ tục gia hạn — đề xuất `participant_renewal` (loại căn cứ, ngày nộp, trạng thái hồ sơ, người phụ trách) | Chỉ cần nếu khách muốn theo dõi tiến độ hồ sơ. `FR-PARTY-03` **chỉ đòi cảnh báo**, không đòi theo dõi hồ sơ — đừng dựng nếu khách không xác nhận. Xem giả định #3 |
 | Hạ tầng | Không cần gì cho bản đọc trong màn. Email/queue **chỉ** cần nếu muốn cảnh báo chủ động ngoài màn | `FR-NOTIFY-01` liệt event "profile sắp hết hiệu lực"; hạ tầng đó thuộc SC-28/SC-29, đang ngoài phạm vi |
 | Màn/API phụ thuộc | `GET /api/participants/expiring` (chưa có); SC-05/SC-06 đã dựng cho điều hướng và chuyển trạng thái | Logic lọc đã có ở RPT-03 nhưng gộp mọi loại vào một danh sách — không dùng lại nguyên trạng được. `POST /api/participants/{id}/transition` dùng lại được |

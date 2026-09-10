@@ -81,3 +81,49 @@ phát hiện. Chi phí phối hợp là thật và đã tính vào: bốn lần 
 phải sửa sau khi tác vụ báo lại — SC-10 không đọc `mekiki_record`, nguồn `business_date` không
 đến từ payload, một policy RLS đã bị drop, và số vai trò là 7 chứ không 9. Cả bốn đều do tác vụ
 bắt được nhờ ràng buộc "tin code, dẫn `file:dòng`", không phải do người điều phối tự soát ra.
+
+---
+
+## Cập nhật sau vòng regrounding
+
+Sau khi làm rõ nguồn chân lý (tài liệu khách, không phải prototype), bộ nộp được **làm lại trên
+nền mới** và bổ sung hai sản phẩm. Ước lượng 16,5h ở trên là cho **bản đầu**; vòng regrounding là
+công phát sinh, chưa nằm trong bảng đó.
+
+### Sản lượng cuối
+
+| Sản phẩm | Quy mô |
+|---|---|
+| Đặc tả **UI/FE** — CSV 22 cột + bbox JSON + ảnh chú thích | **1.252 item** / 32 màn / 96 file |
+| Đặc tả **BE** — 11 mục mỗi màn | **7.754 dòng** / 32 file |
+| Bản **as-built** (prototype hiện làm gì) | 5.159 dòng / 32 file |
+| Wireframe 32 màn, vẽ lại theo nền thiết kế | 5.781 dòng nguồn → `index.html` self-contained |
+| Architecture design (thêm § 4 với 5 state machine) | 1.353 dòng |
+| Database diagram (§ 4 lên 21 hàng) | 1.433 dòng |
+| ADR | **15 bản** / 1.423 dòng |
+| **Câu hỏi cho chủ đầu tư** (mới) | 244 dòng — 200 câu gom thành 12 quyết định |
+| **Tổng** | `docs/lab4/` 123 file · 2,9M · `.momorph/` 388 file · 21M |
+
+**2.080 lần dẫn RFP theo số dòng** và **2.831 tham chiếu `file:dòng`** trong toàn bộ bộ nộp.
+
+### Công phát sinh của vòng regrounding — nguyên nhân, không phải cái cớ
+
+Ba việc, xếp theo giờ tiêu:
+
+1. **Làm lại 32 wireframe + 32 CSV trên nền thiết kế.** Bản đầu đặc tả prototype; 21 CSV đã sinh
+   phải bỏ. Nguyên nhân gốc: quy tắc *"tin code, dẫn `file:dòng`"* là **đúng cho bản audit as-built
+   và sai cho bản spec thiết kế** — và không ai đặt tên đang làm cái nào cho tới khi được hỏi.
+2. **Thêm một tầng tài liệu chưa có trong đề.** Đề LAB-4 liệt 5 sản phẩm; mục đích "phục vụ phát
+   triển FE và BE thật" đòi thêm **đặc tả BE** (API · dữ liệu · trạng thái · quy tắc · phân quyền ·
+   audit) vì CSV 22 cột là đặc tả UI, không có ô nào cho endpoint hay payload.
+3. **Sửa ba lỗi trong chính bộ nộp** (xem `91-tu-soat-tieu-chi.md`): `FR-601` trình bày như mã
+   khách · `FIG-004` bị khai là "đòi ba đường" · `spec/SC-32` khai một lớp bảo vệ không tồn tại.
+   Riêng lỗi thứ hai đã lan ra 5 tài liệu trước khi bị bắt.
+
+### Nếu phải ước lượng lại từ đầu
+
+Bài học đáng mang sang LAB-5: **hỏi "nguồn chân lý là gì" trước khi ước lượng, không phải sau.**
+Câu đó đổi khối lượng gấp đôi ở LAB-4, và nó chỉ mất một câu để hỏi.
+
+> **Dòng giờ thật ở đầu tài liệu này vẫn để trống** — kể cả sau vòng regrounding. Con số phải là
+> của bạn, không phải của công cụ.

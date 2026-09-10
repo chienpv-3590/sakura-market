@@ -1,7 +1,32 @@
-# Screen spec 32 màn — template và index
+# Screen spec 32 màn — bản AS-BUILT
+
+> ## ⚠️ Đọc dòng này trước khi dùng thư mục này để dựng code
+>
+> Thư mục này là **bản as-built**: prototype LAB-3 **hiện đang làm gì**, mọi khẳng định dẫn
+> `file:dòng`. Nó **không phải** đặc tả để dựng theo.
+>
+> Prototype dựng trong ~18h, và nó có cả chỗ **cố ý đơn giản hoá** lẫn chỗ **thiếu ngoài chủ
+> đích**. Dựng theo thư mục này là dựng lại nguyên những chỗ đó.
+>
+> **Đặc tả để dựng nằm ở hai chỗ khác:**
+>
+> | Cần gì | Đọc ở đâu | Nguồn chân lý |
+> |---|---|---|
+> | Đặc tả UI/FE theo component (22 cột) | `.momorph/specs/{màn}.csv` | Function List + Feature List + RFP |
+> | Đặc tả BE: API · dữ liệu · trạng thái · quy tắc · phân quyền | `../spec-be/SC-XX-*.md` | Function List + Feature List + RFP |
+> | Prototype hiện làm gì, và lệch thiết kế ở đâu | **thư mục này** | Code thật |
+>
+> Chỗ lệch giữa thiết kế và prototype được gom ở `../10-database-diagram.md` § 4 (21 hàng) và
+> ở khối `ĐỐI CHIẾU PROTOTYPE` của từng wireframe.
+
+## Template
 
 Template dùng chung cho cả 20 màn đã dựng và 12 màn chưa dựng. **Một template duy nhất** — đừng
 tạo bản thứ hai. Màn chưa dựng dùng thêm mục 9; màn đã dựng bỏ mục 9.
+
+Lưu ý về 12 màn chưa dựng: chúng không có gì "as-built", nên nội dung của chúng trong thư mục này
+là **đề xuất thiết kế ban đầu** (bám RFP, có banner riêng trong từng file). Bản thiết kế chính
+thức của chúng vẫn là CSV 22 cột + spec BE như bảng trên.
 
 ## Template
 
@@ -62,8 +87,17 @@ ROLE-SETTLEMENT · ROLE-RULE-ADMIN · ROLE-SYS-ADMIN (CHECK ở
 `settlement`/`settlement-lead` dùng chung ROLE-SETTLEMENT, `ruleadmin`/`rulechecker` dùng chung
 ROLE-RULE-ADMIN, để người duyệt khác người tạo. Liệt vai trò nào liên quan, không cần đủ 7 dòng.
 
-**Lưu ý về đọc:** RLS cho **mọi vai trò đang hoạt động đọc được mọi bảng** (FR-601, có chủ đích).
-Đừng viết spec như thể đọc cũng bị chặn theo vai trò. Chặn là ở **ghi** và ở **vào trang**.
+**Lưu ý về đọc:** RLS cho **mọi vai trò đang hoạt động đọc được mọi bảng**, có chủ đích. Đừng viết
+spec như thể đọc cũng bị chặn theo vai trò. Chặn là ở **ghi** và ở **vào trang**.
+
+> **⚠️ `FR-601` là mã nội bộ của LAB-3, KHÔNG phải mã yêu cầu của khách.** Grep toàn văn RFP: **0
+> hit**. Vì nó mang tiền tố `FR-` giống mã thật (`FR-IAM-01`, `FR-PARTY-02`…) nên rất dễ bị đọc
+> thành yêu cầu khách — và đã bị chính bộ tài liệu này đọc sai một lần.
+> Trong thư mục **as-built** này thì dẫn `FR-601` là **hợp lệ**: nó ghi lại điều LAB-3 đã tin và
+> đã cài. Nhưng nó **không** được dùng làm căn cứ trong đặc tả thiết kế (`../spec-be/`).
+> Căn cứ khách thật về phân quyền là **RFP:311** (§02-08): *"Đơn vị dự thầu phải **đề xuất** cơ chế
+> phân tách quyền và truy vết"* — tức RFP giao việc này cho bên dự thầu, không bắt đọc rộng.
+> Xem `../adr/ADR-014-siet-quyen-doc-du-lieu-nhay.md`.
 
 ## 6. Hành động và hậu quả
 

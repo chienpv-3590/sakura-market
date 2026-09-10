@@ -123,17 +123,27 @@ Sắp xếp `changed_at` tăng dần — cũ nhất trước (`page.tsx:49`).
 
 ## 7. Edge case
 
-- **DIVERGENCE FIG-004 — một transition gỡ tạm ngừng dùng chung cho cả 4 phân loại.**
+- **DIVERGENCE — cạnh gỡ tạm ngừng thiếu cổng kiểm theo phân loại.**
   `src/lib/participants/state-machine.ts:37` khai đúng một cạnh
-  `{ from: "tạm ngừng", event: "go", to: "có hiệu lực" }`. RFP **FIG-004** đòi ba đường khác nhau
-  tuỳ phân loại — 卸売業者 → Chấp thuận, 仲卸 → Có điều kiện, 売買参加者 → Xét lại — và RFP §02-08
-  dòng 309 **cấm gộp** ba đường này. Code hiện tại gộp. Hệ quả: một 仲卸 bị tạm ngừng được gỡ bằng
-  đúng một cú bấm, không qua bước "có điều kiện" nào; ba nhóm pháp lý khác nhau đi cùng một đường.
+  `{ from: "tạm ngừng", event: "go", to: "có hiệu lực" }`. **Một cạnh là ĐÚNG** —
+  `FIG-010` (RFP:609), state machine chính thức, cũng chỉ có một cạnh `Tạm ngừng → Có hiệu lực`.
+  Đừng thêm transition nào vào máy trạng thái.
+  Chỗ thiếu là **cổng kiểm trên cạnh đó**: `FIG-004` (RFP:288-294) cột "Gỡ tạm ngừng" cho
+  **thủ tục và thẩm quyền** khác nhau tuỳ phân loại — 卸売業者 → Chấp thuận, 仲卸 → Có điều kiện,
+  売買参加者 → Xét lại — và RFP §02-08 dòng 309 cấm gộp hai **căn cứ tham gia** thành một quy tắc
+  chung. Code không thể phân biệt: `resolveTarget(from, event)` (`state-machine.ts:65-71`) không
+  nhận `category`, và route transition chỉ `.select("status")` nên không có `category` trong tay.
+  Hệ quả: một 仲卸 bị tạm ngừng được gỡ bằng đúng một cú bấm, không qua bước "có điều kiện" nào.
+  Xem `../adr/ADR-007-cong-kiem-theo-loai-tren-canh-go-tam-ngung.md`.
   *Trạng thái dẫn chứng*: cạnh trong code kiểm được tại `state-machine.ts:37`; hai ID RFP (FIG-004,
   §02-08 dòng 309) **không có trong repo này** — `grep -rn "FIG-004" docs/` không ra kết quả, tài
   liệu RFP nằm ngoài repo. Ai xác nhận lại thì đối chiếu bản RFP gốc, đừng tìm trong `docs/`.
-  Đây là task LAB-5 cỡ trung bình: tách `go` thành 3 event theo `category`, sửa cả `TRANSITIONS`,
-  `allowedEvents()`, nhãn i18n `event.*`, và test cho từng phân loại.
+  Đây là task LAB-5 cỡ trung bình, nhưng **không phải tách `go` thành 3 event** — `FIG-010`
+  (RFP:609) chỉ có **một** cạnh `tạm ngừng → có hiệu lực`, nên `TRANSITIONS` giữ đúng 5 cạnh.
+  Việc phải làm là **thêm cổng kiểm theo `category` lên cạnh `go`**: `resolveTarget()` và
+  `allowedEvents()` nhận thêm `category`, route `select` thêm cột đó, cộng điều kiện tiền đề và
+  thẩm quyền theo ba thủ tục của `FIG-004`, và test cho từng phân loại.
+  Xem `../adr/ADR-007-cong-kiem-theo-loai-tren-canh-go-tam-ngung.md`.
 - **Chuyển trạng thái không nguyên tử.** Ba lệnh ghi tuần tự (`participant.status` → history →
   audit) mà không có transaction — lý do ghi ở `transition/route.ts:14-18`: PostgREST không cho
   BEGIN/COMMIT nhiều bảng, muốn nguyên tử thật phải viết một RPC trong migration. Nếu insert history

@@ -79,7 +79,15 @@ Không có field nhập. Toàn bộ là dẫn xuất, đọc từ hàng đợi c
 | mất kết nối | Ping server thất bại | Badge "Mất kết nối" + banner trên màn có ghi dữ liệu | Tuỳ phương án ở mục 9 |
 | đang gửi | Đang replay hàng đợi | Badge "Đang đồng bộ" + tiến độ | — |
 | gửi lỗi | Replay bị server từ chối | Badge đỏ + danh sách thao tác thất bại | Xem lý do, nhập lại tay, bỏ thao tác |
-| **read-only vì ngày đã lock** | Replay chạm `transaction` / `seri_result` / `mekiki_record` / `delivery_shipment` của một ngày đã lock | Nêu rõ: thao tác **không** vào được, phải đi đường điều chỉnh SC-20 | Mở SC-20 (tạo yêu cầu điều chỉnh) — mã **423** |
+| **~~read-only vì ngày đã lock~~ — KHAI SAI, đã đính chính** | Replay chạm `transaction` / `seri_result` / `mekiki_record` / `delivery_shipment` của một ngày đã lock | **Bản trước của dòng này khai rằng thao tác "không vào được" và trả mã 423. SAI — và sai theo hướng nguy hiểm: nó khai một lớp bảo vệ KHÔNG tồn tại.** Trigger `trg_block_after_lock` là `before update **or delete**` (`20260904090500_business_day_lock.sql:61-75`) — **không phủ INSERT** — và policy `insert` của cả bốn bảng không kiểm khoá ngày (`20260904091000_rls_ops.sql:7-8,15-16,36-38`). Replay một thao tác nhập offline **là một INSERT**, nên nó **ghi vào thành công, im lặng**: không 423, không xung đột, không dấu hiệu nào | Không có hành động nào được kích hoạt, vì không có lỗi nào phát sinh. **Cổng chặn phải được dựng mới** — đừng dựa vào DB |
+
+> **Ca xấu nhất của màn này, ghép từ hai sự thật trên:** một thao tác nhập lúc 09:55 hôm trước,
+> đồng bộ lại hôm sau, sẽ ghi thành công vào **ngày hôm sau** — vì `business_date` được đóng dấu
+> bằng `todayJst()` **lúc ghi**, và hợp đồng route hiện **cấm client truyền ngày**
+> (`src/app/api/transactions/route.ts:63-65`). Kết quả: bảng đối chiếu của **cả hai ngày** đều
+> sai, mà mỗi ngày đọc lên đều tự nhất quán nên không ai phát hiện.
+> Nên field "ngày nghiệp vụ lúc nhập" của SC-32 **không phải thêm một tham số** — nó là **đổi hợp
+> đồng** của cả ba đường ghi ở màn gốc. Xem `../92-cau-hoi-cho-chu-dau-tu.md` § B1.
 
 ## 5. Phân quyền hiển thị
 

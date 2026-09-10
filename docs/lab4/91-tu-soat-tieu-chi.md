@@ -8,10 +8,10 @@ Chưa đạt — không có "cơ bản đạt".
 
 | # | Tiêu chí đề | Phép kiểm | Kết quả | Dẫn chứng |
 |---|---|---|---|---|
-| 1 | Kiến trúc phản ánh đúng ràng buộc nghiệp vụ đặc thù, không tổng quát hoá | Đếm ID yêu cầu RFP được dẫn trong `20-architecture-design.md` (ngưỡng tự đặt: ≥ 6) · có đủ 4 mục điểm phân nhánh · có phân biệt trạng thái thi công | **Đạt** | **57 ID riêng biệt** · 4 mục nhánh ở § 4.1 許可/承認 · § 4.2 相対取引/せり · § 4.3 trước/sau lock · § 4.4 maker-checker · 3 nhãn dùng 35 lần (8 `[ĐÃ THI CÔNG]`, 16 `[LAB-5]`, 11 `[CHƯA CHỐT]`) |
+| 1 | Kiến trúc phản ánh đúng ràng buộc nghiệp vụ đặc thù, không tổng quát hoá | Đếm ID yêu cầu RFP được dẫn trong `20-architecture-design.md` (ngưỡng tự đặt: ≥ 6) · có đủ 4 mục điểm phân nhánh · có 5 state machine của RFP · có phân biệt trạng thái thi công | **Đạt** | 4 mục nhánh ở **§ 5.1** 許可/承認 · **§ 5.2** 相対取引/せり · **§ 5.3** trước/sau lock · **§ 5.4** maker-checker; cộng **§ 4** với 5 state machine (`FIG-010/011/012/014/029`) kèm đối chiếu prototype. 3 nhãn phân biệt trạng thái thi công. Đếm cuối: **2.080 lần dẫn RFP theo số dòng** và **2.831 tham chiếu `file:dòng`** trên toàn bộ `docs/lab4/` |
 | 2 | Screen spec đủ chi tiết để break task ở LAB-5 mà không cần hỏi lại tác giả | **Làm thật**: lấy 2 màn, thử viết task chỉ đọc file spec đó, không mở file khác | **Đạt** | Xem § "Phép kiểm tiêu chí 2" bên dưới — 6 task từ SC-11, 5 task từ SC-17, mỗi task có file · dòng · nguyên nhân · tiêu chí xong |
-| 3 | ADR có đủ 4 phần cho từng quyết định | Script kiểm 6 tiêu đề mục trong từng file `adr/ADR-*.md` | **Đạt** | **14/14 bản** có Bối cảnh · Lựa chọn · Phương án đã bỏ · Hệ quả · "Phải chịu" không rỗng · Dẫn chứng. 9 `Đã áp dụng` / 5 `Đề xuất` |
-| 4 | Database diagram đối chiếu đúng bảng thật ở LAB-3, không chỉ vẽ lý thuyết | Đếm entity trong `erDiagram` so với `create table` trong migration · đếm hàng đối chiếu · parse ERD bằng mermaid thật | **Đạt** | ERD **19 entity** = 18 bảng + 1 view; migration có **18** `create table` → khớp · § 4 có **18 hàng**, cả 18 đều dẫn `file:dòng` · ERD parse bằng **mermaid 11.17.2** thật: 19 entity, 34 relationship, entity duy nhất không PK là `reconciliation_line` (đúng vì nó là view) · 18 bảng + 1 view **đếm sống** trên database đang chạy qua endpoint gốc PostgREST |
+| 3 | ADR có đủ 4 phần cho từng quyết định | Script kiểm 6 tiêu đề mục trong từng file `adr/ADR-*.md` | **Đạt** | **15/15 bản** có Bối cảnh · Lựa chọn · Phương án đã bỏ · Hệ quả · "Phải chịu" không rỗng · Dẫn chứng. 9 `Đã áp dụng` / 6 `Đề xuất` |
+| 4 | Database diagram đối chiếu đúng bảng thật ở LAB-3, không chỉ vẽ lý thuyết | Đếm entity trong `erDiagram` so với `create table` trong migration · đếm hàng đối chiếu · parse ERD bằng mermaid thật | **Đạt** | ERD **19 entity** = 18 bảng + 1 view; migration có **18** `create table` → khớp · § 4 có **21 hàng**, cả 21 đều dẫn `file:dòng`, và thang mức độ có 4 bậc (khớp · khác có chủ đích · khác không chủ đích · **cần khách chốt**) · ERD parse bằng **mermaid 11.17.2** thật: 19 entity, 34 relationship, entity duy nhất không PK là `reconciliation_line` (đúng vì nó là view) · 18 bảng + 1 view **đếm sống** trên database đang chạy qua endpoint gốc PostgREST |
 
 ## Phép kiểm tiêu chí 2 — làm thật, không suy luận
 
@@ -79,3 +79,64 @@ tài liệu. Đã ghi vào ADR và bảng đối chiếu; LAB-5 nên tách task 
 | 2 | **Lock không chặn INSERT trên cả 4 bảng bị lock** — hệ quả chưa lường của quyết định dồn lock vào trigger (ADR-004): RLS đã bỏ hết kiểm lock, trigger chỉ `before update or delete`, route không tra. Ca nặng nhất là `mekiki_record` vì nó thừa hưởng `lot.business_date` nên **backdate được vào ngày quá khứ đã lock bằng UI bình thường** | P0 |
 | 3 | **Email lọt vào CSV gửi kế toán** — `rpt-06-accounting-export.ts` chủ động select `email` rồi rơi về nó khi `display_name` rỗng; RPT-08 làm đúng (rơi về `id`). Cộng với **xuất CSV không ghi audit** nên không truy được ai tải | P0 |
 | 4 | **せり không có đường giao nhận** — `delivery` chỉ có FK tới `transaction`, nên `variance` của mọi dòng seri là NULL *vì không có dữ liệu*, không phải vì khớp. Rủi ro là người đối chiếu đọc sai | P1 |
+
+---
+
+## Cập nhật sau vòng regrounding — đổi NỀN của bộ nộp
+
+Bốn tiêu chí trên vẫn Đạt, nhưng bộ nộp đã đổi **nguồn chân lý** sau khi làm rõ một điều đề bài
+LAB-4 không nói: *"Từ prototype chạy thật LAB-3 … phát triển thành bộ thiết kế đầy đủ hơn"* đọc
+theo nghĩa hiển nhiên nhất sẽ dẫn tới **đặc tả prototype**. Lượt đầu đã làm đúng như vậy và phải
+bỏ 21 CSV.
+
+**Nguồn chân lý hiện tại:** RFP (tài liệu khách) → Function List / Feature List → *rồi mới* đến
+prototype, và prototype chỉ là **đối tượng đối chiếu**, không phải nguồn của thiết kế.
+
+### Ba tầng tài liệu — vai khác nhau, đừng đọc lẫn
+
+| Tài liệu | Vai | Quy mô |
+|---|---|---|
+| `.momorph/specs/*.csv` | Đặc tả **UI/FE** theo component, 22 cột | **1.252 item** / 32 file, kèm bbox JSON + ảnh chú thích |
+| `spec-be/SC-*.md` | Đặc tả **BE**: API · dữ liệu · trạng thái · quy tắc · phân quyền · audit | **7.754 dòng** / 32 file |
+| `spec/SC-*.md` | **Bản as-built** — prototype hiện làm gì | 5.159 dòng / 32 file |
+
+### Kiểm đã chạy trên sản phẩm mới
+
+| Phép kiểm | Kết quả |
+|---|---|
+| Hợp đồng CSV 22 cột trên cả 32 file (header khớp từng ký tự · mọi dòng đúng 22 ô · `No` khớp `itemNo` từng phần tử · không bbox ngược) | **Đạt** — 32/32, 1.252 item, 0 lỗi |
+| Toạ độ bbox lấy từ `getBoundingClientRect()` thật, không ước lượng | **Đạt** — ảnh và toạ độ dùng chung một khung (rộng 1280, `deviceScaleFactor=1`) |
+| `spec-be` mục 1–9 sạch dấu vết prototype (`src/`, `supabase/`) | **Đạt** — kiểm bằng script |
+| Wireframe self-contained | **Đạt** — 0 tham chiếu ngoài trong `index.html` |
+| Soát bảo mật 6 mẫu trên `docs/lab4/` + `.momorph/` | **Đạt** — 0 hit |
+
+### Ba lỗi trong bộ nộp đã tự phát hiện và sửa
+
+Ghi ra vì chúng là bài học, không phải để tự khen:
+
+1. **`FR-601` trình bày như mã yêu cầu của khách** — grep RFP: **0 hit**, nó là mã nội bộ LAB-3.
+   Vì mang tiền tố `FR-` giống mã thật nên đã bị chính bộ tài liệu này đọc sai. Căn cứ khách thật
+   là **RFP:311** (§02-08): RFP *giao cho bên dự thầu **đề xuất*** cơ chế phân quyền. Hệ quả:
+   `ADR-014` đã đóng khung lại từ "hai yêu cầu khách chống nhau, khách phải chọn" thành
+   "**đề xuất của ta chống một yêu cầu khách bằng chữ, ta phải sửa**".
+2. **`FIG-004` bị khai là "đòi ba đường gỡ tạm ngừng"** — sai. `FIG-010` (RFP:609) chỉ có **một**
+   cạnh; `FIG-004` cho **thủ tục và thẩm quyền trên cạnh đó**. Cách khai sai đã lan ra 5 tài liệu
+   trước khi bị bắt, và nếu để nguyên thì BE dev sẽ dựng ba transition thừa. `ADR-007` đã viết lại
+   và **đổi tên file**, vì tên file là thứ người ta đọc khi quét cây thư mục.
+3. **`spec/SC-32` khai một lớp bảo vệ KHÔNG tồn tại** — nó nói replay hàng đợi offline bị chặn với
+   mã 423. Thực tế trigger khoá ngày là `before update **or delete**`, không phủ INSERT, nên replay
+   **ghi vào im lặng**. Đây là loại lỗi tài liệu nguy hiểm nhất: dev đọc rồi không dựng cổng chặn
+   vì tin DB đã chặn.
+
+### Đóng góp lớn nhất của vòng này
+
+**200 câu hỏi cho chủ đầu tư gom thành 12 quyết định** — `92-cau-hoi-cho-chu-dau-tu.md`. Việc gom
+lộ ra rằng phần lớn là **một câu lặp trên nhiều màn**: *"vai nào được đọc dữ liệu này?"* ở **17
+màn**, *"ngày nghiệp vụ bám vào đâu?"* ở **8 màn**. Và một lỗ hổng chưa ai gọi tên: RFP mô tả chủ
+thể bằng **tên tổ chức** ("bộ phận hành chính", "Đơn vị vận hành chợ", "Hội đồng xét lại"), hệ
+thống chỉ có **7 vai kỹ thuật**, và **không chủ thể nào trong đó khớp vai nào** — nó chặn ma trận
+phân quyền của gần như toàn bộ 32 màn.
+
+Tài liệu đó cũng tách riêng **hai thứ không phải câu hỏi cho khách mà là lỗi trong gói đề xuất của
+ta**: ưu tiên đảo ngược (`FE-025` P0 phụ thuộc `FE-023` P1; `RPT-09` trong nhóm P0 phụ thuộc
+`FE-027` P1), và chính chuyện `FR-601`.
