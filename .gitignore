@@ -49,3 +49,10 @@ graphify-out/
 
 # artifact trung gian cua agent, khong thuoc san pham
 plans/
+
+# Anh chup wireframe + toa do DOM: dung lai duoc bang mot cau lenh, khong can vao repo.
+#   node scripts/capture-wireframe-shots.mjs
+# Con .momorph/specs/ va .momorph/contexts/ thi VAO repo -- do la san pham nop theo
+# hop dong cua skill tkm:generate-ui-specs (CSV 22 cot + bbox JSON + anh chu thich).
+.momorph/shots/
+.momorph/.tmp-shots/

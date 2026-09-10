@@ -9,3 +9,6 @@
 *.png binary
 *.jpg binary
 *.ico binary
+
+# Anh chu thich va anh chup wireframe: binary, khong dung line ending
+*.webp binary
