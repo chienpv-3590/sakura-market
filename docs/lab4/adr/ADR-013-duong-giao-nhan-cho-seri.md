@@ -34,8 +34,8 @@ dịch theo từng lần thực hiện; `FR-DEL-04` (RFP dòng 684, P1) đòi th
 giữa bản ghi giao hàng và giao dịch/quyết toán. Cả hai chưa đạt cho phần khối lượng
 đi qua せり — tỷ trọng 90/10 theo FIG-009 (RFP dòng 363) và Phụ lục C.5 (dòng 1360).
 
-Phát hiện này đã được khai ở `docs/lab4/20-architecture-design.md` § 4.2 (dòng
-444–465), kèm hai lựa chọn và một khuyến nghị. ADR này chốt lựa chọn đó — tài liệu
+Phát hiện này đã được khai ở `docs/lab4/20-architecture-design.md` **§ 5.2**
+(相対取引 vs せり), kèm hai lựa chọn và một khuyến nghị. ADR này chốt lựa chọn đó — tài liệu
 kiến trúc nói thẳng "phải chốt bằng ADR chứ không chọn im lặng".
 
 ## Lựa chọn
@@ -101,4 +101,4 @@ dùng lại nguyên vẹn — không thêm bảng nào.
 - RFP dòng 681 — `FR-DEL-01` (P0): theo dõi trạng thái giao hàng từng giao dịch, theo từng lần thực hiện
 - RFP dòng 684 — `FR-DEL-04` (P1): thể hiện quan hệ giữa bản ghi giao hàng và giao dịch/quyết toán
 - RFP dòng 363 (FIG-009) và dòng 1360 (Phụ lục C.5) — tỷ trọng 90/10
-- `docs/lab4/20-architecture-design.md:444-465` — phát hiện gốc, hai phương án (a)/(b) và khuyến nghị (a)
+- `docs/lab4/20-architecture-design.md` § 5.2 (相対取引 vs せり) — phát hiện gốc, hai phương án (a)/(b) và khuyến nghị (a). Dẫn theo **số mục**, không theo số dòng: tài liệu đó đã được chèn thêm § 4 (vòng đời trạng thái) nên mọi số dòng cũ đều lệch

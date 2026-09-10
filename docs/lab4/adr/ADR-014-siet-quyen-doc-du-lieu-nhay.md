@@ -1,4 +1,4 @@
-# ADR-014 — Siết quyền đọc dữ liệu nhạy: `FR-601` đá với §09-06 (APPI)
+# ADR-014 — Siết quyền đọc dữ liệu nhạy: đề xuất đọc rộng của ta đá với §09-06 (APPI)
 
 | | |
 |---|---|
@@ -11,14 +11,22 @@
 Bốn spec màn chưa dựng đụng **cùng một xung đột**, mỗi bên để ngỏ một quyết định kiến
 trúc và cùng đề nghị gộp về một ADR. Đây là bản đó.
 
-**Xung đột giữa hai yêu cầu đều thật của khách:**
+**Xung đột KHÔNG phải giữa hai yêu cầu khách — đây là chỗ bản ADR đầu đã đóng khung sai
+và đã sửa lại.** Một phía là **đề xuất của bên dự thầu**, phía kia là yêu cầu khách bằng
+chữ. Ai chịu trách nhiệm vì thế đảo hẳn: không phải việc khách phải chọn, mà là việc **ta
+phải giải trình hoặc sửa**.
 
-- **`FR-601`** — mọi vai trò đang hoạt động đọc được mọi bảng. Không phải sơ suất:
-  `rls_core.sql:28-30` ghi thẳng lý do — "FR-601 (F007) requires other roles to at
-  least have read-only visibility, and the LAB-7 reviewer accounts need to see the
-  whole system end to end". Hiện có **16 policy `read_all_active_users` trong
-  `rls_core.sql`**, cộng `lot_attachment` và `accounting_export_batch` — 18 bảng dùng
-  chung một khuôn.
+- **Đọc rộng — đề xuất thiết kế của LAB-3, KHÔNG phải yêu cầu khách.** `rls_core.sql:28-30`
+  ghi lý do là "FR-601 (F007) requires other roles to at least have read-only visibility,
+  and the LAB-7 reviewer accounts need to see the whole system end to end". Nhưng
+  **`FR-601` không tồn tại trong RFP** — grep toàn văn: **0 hit**. Đó là mã nội bộ của
+  LAB-3, và vì mang tiền tố `FR-` giống mã thật (`FR-IAM-01`, `FR-PARTY-02`…) nên đã bị
+  chính bộ tài liệu này đọc thành yêu cầu khách.
+  Căn cứ khách thật về phân quyền là **RFP:311 (§02-08)**: *"Đơn vị dự thầu phải **đề xuất**
+  cơ chế phân tách quyền và truy vết tương ứng với các vai trò nêu trên."* — RFP **giao
+  việc thiết kế phân quyền cho bên dự thầu**, không hề bắt đọc rộng.
+  Hiện có **16 policy `read_all_active_users` trong `rls_core.sql`**, cộng `lot_attachment`
+  và `accounting_export_batch` — 18 bảng dùng chung một khuôn.
 - **RFP §09-06 (dòng 881–888, APPI)** — dòng 886 đòi *"Cơ chế mã hóa, **kiểm soát truy
   cập theo vai trò (RBAC)** và log truy cập áp dụng cho thông tin cá nhân"*. Dòng 883
   định nghĩa phạm vi gồm thông tin đăng ký, hiệu lực 許可/承認, và lịch sử giao dịch gắn
@@ -41,10 +49,15 @@ lớp chắn dữ liệu, và ai đọc ADR-009 rồi tưởng dữ liệu đã 
 
 ## Lựa chọn
 
-**Siết theo bảng, chỉ cho ba mặt nhạy; giữ `FR-601` nguyên cho các bảng nghiệp vụ.**
+**Siết theo bảng, chỉ cho ba mặt nhạy; giữ đọc rộng cho các bảng nghiệp vụ.**
 `lot`, `transaction`, `seri_result`, `delivery`, `mekiki_record`… vẫn đọc rộng — chúng
-là dữ liệu nghiệp vụ của chợ, không phải thông tin cá nhân theo nghĩa dòng 883, và
-`FR-601` phục vụ đúng nhu cầu đối chiếu chéo ở đó.
+là dữ liệu nghiệp vụ của chợ, không phải thông tin cá nhân theo nghĩa dòng 883, và ở đó
+đề xuất đọc rộng phục vụ đúng nhu cầu đối chiếu chéo giữa các vai trò.
+
+Nói cách khác: **RFP:311 giao ta thiết kế cơ chế phân quyền, và đây là bản thiết kế đó** —
+đọc rộng cho dữ liệu nghiệp vụ, RBAC cho thông tin cá nhân. Bản đề xuất trước (đọc rộng
+toàn bộ 18 bảng) không thoả §09-06 nên phải sửa; đây không phải nhượng bộ một yêu cầu
+khách để đổi lấy yêu cầu khác.
 
 Ba việc cụ thể:
 
@@ -76,17 +89,21 @@ ADR-007 khai `[CHƯA CHỐT]` cho đường gỡ tạm ngừng của 買出人.
 ## Hệ quả
 
 **Chấp nhận được:** §09-06 dòng 886 được đáp ứng ở đúng ba mặt mang thông tin cá nhân,
-mà không phá `FR-601` ở nơi nó có ích. Bốn spec màn (SC-03, SC-04, SC-30, SC-31) có một
+mà không mất đọc rộng ở nơi nó có ích. Bốn spec màn (SC-03, SC-04, SC-30, SC-31) có một
 chỗ chung để dẫn tới thay vì mỗi bản để ngỏ một nửa. Và bảng lịch sử quyền mới được
 chặn trước khi nó kịp thừa hưởng khuôn sai.
 
 **Phải chịu:**
 
-- **Siết đọc là đổi hành vi đã hứa với khách.** `FR-601` là một yêu cầu có thật, không
-  phải sơ suất, và các vai trò khác đang dựa vào việc nhìn được dữ liệu ở mức chỉ-đọc
-  để đối chiếu chéo. Nên đây là **đánh đổi giữa hai yêu cầu khách chống nhau**, không
-  phải sửa lỗi — phải trình bày cho chủ đầu tư như một câu hỏi, không phải một bản vá
-  lặng lẽ.
+- **Đây là ta sửa đề xuất của ta, không phải khách đổi ý.** Bản trước cho đọc rộng cả 18
+  bảng và không thoả §09-06 — một yêu cầu khách **bằng chữ**. Nên khi trình bày, đây là
+  **bản vá cho một thiếu sót của bên dự thầu**, không phải một đánh đổi để khách chọn.
+  Cái duy nhất thật sự cần khách quyết là câu hẹp hơn ở mục Phương án đã bỏ: **vai trò nào
+  được đọc** audit và chứng từ — vì `FR-AUDIT-02` nêu "bộ phận hành chính / kiểm toán nội
+  bộ", hai chủ thể không có trong `TBL-ROLE-01`.
+- **Các vai trò khác đang dựa vào việc nhìn thấy dữ liệu ở mức chỉ-đọc** để đối chiếu chéo.
+  Siết ba mặt nhạy làm mất một phần khả năng đó. Đây là chi phí thật của việc sửa, và phải
+  nói ra thay vì để người đọc phát hiện lúc nghiệm thu.
 - **Đường review LAB-7 vỡ.** `rls_core.sql:30` nói thẳng tài khoản review cần thấy toàn
   hệ thống end-to-end. Siết là tài khoản đó không xem được hết nữa — phải cấp một vai
   trò review riêng, hoặc chấp nhận review hẹp hơn. Chưa quyết cái nào.

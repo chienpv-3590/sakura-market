@@ -47,9 +47,20 @@ thống có discriminator và đi tìm nhánh `type = 'seri'` không tồn tại
 Và prototype lệch khỏi spec gốc F004 ở đúng chỗ này: `DISC-001` khai một
 discriminator mà thi công không có — spec F004 chưa được sửa lại theo.
 
+Nặng hơn cột chết, và ADR gốc chưa nói: **tách bảng rồi thì mất luôn vòng đời dùng
+chung mà FIG-012 đòi.** `FIG-012 – Trạng thái giao dịch` (RFP dòng 637) ghi ngay trong
+tiêu đề *"trạng thái của bản ghi 相対取引 **và** せり"* — thiết kế coi hai kênh đi cùng
+một vòng đời. Nhưng `seri_result` **không có cột trạng thái nào**: khối
+`create table public.seri_result` (`transaction.sql:31-41`) chỉ có `qty`, `unit_price`,
+`decided_at`, `confirmed_by`, `business_date` — không `status`. Bản ghi せり insert xong
+là xong: không nháp, không chờ xác nhận, không hủy, không đính chính. Quyết định tách
+bảng bảo vệ được ở tầng **lưu trữ**, nhưng nó không tự bù lại phần vòng đời — đó là
+hai việc khác nhau, và ADR này chỉ biện minh việc thứ nhất. Xem **ADR-015**.
+
 ## Dẫn chứng
 
 - `supabase/migrations/20260904090300_transaction.sql:2-6` — lý do 3-vs-1 ghi ngay trong migration
 - `supabase/migrations/20260904090300_transaction.sql:10` — `type text not null default 'aitai' check (type = 'aitai')`
 - `supabase/migrations/20260904090300_transaction.sql:31-47` — `seri_result` là bảng riêng; cột `winner_participant_id`, `decided_at` không có ở `transaction`
 - `docs/pham-vi-va-phan-mock.md:190-194` — QĐ-1, bản văn xuôi gốc
+- RFP dòng 637 — `FIG-012 – Trạng thái giao dịch`, tiêu đề nói rõ "trạng thái của bản ghi 相対取引 **và** せり"; `transaction.sql:31-41` — `seri_result` không có cột `status`
