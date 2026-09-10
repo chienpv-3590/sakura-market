@@ -1,0 +1,128 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Đầu trang màn tiếp nhận lô hàng","ロット受付ヘッダー","Lot intake page header","others","page_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-009 và FE-013 → FN-03 → FR-LOT-01 và NFR-USE-01
+Thành phần hiển thị: tiêu đề màn; dòng meta yêu cầu; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-08 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết và nêu rõ một yêu cầu phi chức năng cũng là yêu cầu nghiệm thu của màn
+Thành phần hiển thị: mã FE-009 và FE-013; nhóm FN-03; ưu tiên P0; hai yêu cầu; loại màn Form; actor
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn đã có bản thi công để đối chiếu; không phải trạng thái nghiệp vụ
+Thành phần hiển thị: một nhãn chữ ngắn
+Chức năng và logic: tĩnh — không đổi theo dữ liệu",,,,,,
+"2","img-005","Khối yêu cầu dùng được bằng bàn phím","キーボード操作要件ブロック","Keyboard operability requirement block","label","requirement_note",,,,,,,,,"Mục đích và ngữ cảnh: NFR-USE-01 đòi luồng nhập lô hàng dùng được bằng bàn phím; thao tác diễn ra 02:00-03:00 sáng tại quầy nên người nhập không rời tay khỏi bàn phím
+Thành phần hiển thị: tiêu đề khối và một đoạn diễn giải các ràng buộc cụ thể
+Chức năng và logic: ba ràng buộc phải nghiệm thu được — con trỏ tự vào trường đầu khi mở màn; thứ tự chuyển trường khai tường minh theo thứ tự nghiệp vụ chứ không theo thứ tự dựng phần tử; và phím xác nhận ở bất kỳ trường văn bản nào cũng lưu",,,,,,"- Trường chọn tệp có được cướp phím xác nhận không? Nếu có thì đúng cái trường cần bàn phím nhất lại không mở được hộp chọn tệp."
+"3","img-006","Khối trường nhập","入力項目ブロック","Input field block","others","form_block",,,,,,,,,"Mục đích và ngữ cảnh: bốn trường mà FR-LOT-01 đòi lưu khi lô hàng đến quầy — mặt hàng; kiện hàng; số lượng ban đầu; chứng từ tiếp nhận
+Thành phần hiển thị: bốn trường nhập kèm nhãn song ngữ; số thứ tự chuyển trường; dòng gợi ý cho từng trường — cộng nút lưu
+Chức năng và logic: thứ tự chuyển trường từ một tới năm theo thứ tự nghiệp vụ; toàn bộ khối dùng được bằng bàn phím",,,,,,
+"3.1","img-007","Trường mặt hàng","品目","Item name","text_form","text_input",,"string","true",,"1","100",,"Điều kiện: mặt hàng rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Vui lòng nhập tên mặt hàng.""","Mục đích và ngữ cảnh: mặt hàng của lô; là một trong bốn dữ liệu FR-LOT-01 đòi lưu khi tiếp nhận
+Thành phần hiển thị: nhãn song ngữ Mặt hàng · 品目 kèm dấu bắt buộc; ô nhập có chữ gợi ý và số thứ tự chuyển trường một
+Chức năng và logic: bắt buộc; cắt khoảng trắng hai đầu trước khi lưu; thông báo lỗi hiện trên đúng trường này",,,"lot","item","Prototype có cột không rỗng cho mặt hàng và kiểm rỗng ở tầng ứng dụng.","- Mặt hàng là chữ tự do hay chọn từ danh mục mặt hàng? Nhập tự do ở quầy 02:00 sẽ sinh nhiều biến thể tên cho cùng một loài."
+"3.2","img-008","Trường số kiện","梱数","Package count","text_form","number_input",,"integer","true","số nguyên lớn hơn hoặc bằng 1",,,,"Điều kiện: giá trị không phải số nguyên
+Lỗi: ""Số kiện phải là số nguyên.""
+Điều kiện: giá trị nhỏ hơn 1
+Lỗi: ""Số kiện phải lớn hơn hoặc bằng 1.""","Mục đích và ngữ cảnh: thông tin kiện hàng mà FR-LOT-01 đòi lưu; một lô luôn có ít nhất một kiện
+Thành phần hiển thị: nhãn song ngữ Số kiện · 梱数 kèm dấu bắt buộc; ô nhập số với số thứ tự chuyển trường hai
+Chức năng và logic: bắt buộc; số nguyên lớn hơn hoặc bằng một; cùng một ngưỡng phải khai một chỗ và áp dụng nhất quán ở cả tầng nhập và tầng dữ liệu",,,"lot","package_count","Prototype có ràng buộc lớn hơn không ở tầng dữ liệu; tầng nhập đặt tối thiểu một nên hai tầng lệch nhau một giá trị.",
+"3.3","img-009","Trường số lượng ban đầu","初期数量","Initial quantity","text_form","number_input",,"integer","true","số dương với tối đa hai chữ số thập phân",,,,"Điều kiện: giá trị không phải số hữu hạn
+Lỗi: ""Số lượng ban đầu phải là số.""
+Điều kiện: giá trị nhỏ hơn hoặc bằng ngưỡng nhỏ nhất mà hai chữ số thập phân biểu diễn được
+Lỗi: ""Số lượng ban đầu phải lớn hơn 0 và có tối đa hai chữ số thập phân.""
+Điều kiện: giá trị vượt trần độ chính xác của trường số lượng
+Lỗi: ""Số lượng ban đầu vượt giới hạn cho phép.""","Mục đích và ngữ cảnh: số lượng ban đầu của lô; là gốc của số lượng khả dụng mà BR-LOT-02 khoá không âm
+Thành phần hiển thị: nhãn song ngữ Số lượng ban đầu · 初期数量 kèm dấu bắt buộc; ô nhập số với số thứ tự chuyển trường ba; dòng gợi ý về ngưỡng duy nhất
+Chức năng và logic: một ngưỡng duy nhất khai ở một chỗ và áp dụng ở cả tầng nhập; tầng dịch vụ; tầng dữ liệu — nhập sai phải ra lỗi nhập kèm tên trường chứ không trở thành lỗi hệ thống",,,"lot","initial_qty","Prototype dùng số có hai chữ số thập phân với ràng buộc lớn hơn không; ba tầng lệch nhau nên một giá trị nhỏ hơn ngưỡng biểu diễn được sẽ vỡ ràng buộc và thành lỗi hệ thống.",
+"3.4","img-010","Trường chứng từ tiếp nhận","受付証憑","Intake documents","file_or_image","multi_file_upload",,"string","true","ảnh hoặc PDF",,,,"Điều kiện: không chọn tệp nào
+Lỗi: ""Vui lòng đính kèm chứng từ tiếp nhận.""
+Điều kiện: loại tệp nằm ngoài danh sách cho phép
+Lỗi: ""Chứng từ phải là ảnh hoặc PDF.""
+Điều kiện: một tệp vượt trần dung lượng
+Lỗi: ""Chứng từ vượt quá dung lượng cho phép.""
+Điều kiện: số tệp vượt trần cho một lô
+Lỗi: ""Vượt số tệp cho phép cho một lô hàng.""","Mục đích và ngữ cảnh: tiêu chí nghiệm thu của FR-LOT-01 ghi lưu được các chứng từ bắt buộc; nên chứng từ là trường bắt buộc chứ không phải tuỳ chọn
+Thành phần hiển thị: nhãn song ngữ Chứng từ tiếp nhận · 受付証憑 kèm dấu bắt buộc; ô chọn tệp cho nhiều tệp với số thứ tự chuyển trường bốn; dòng gợi ý về loại tệp và trần dung lượng kèm một nhãn chưa chốt
+Chức năng và logic: kiểm mọi tệp trước khi tạo lô để một tệp xấu không để lại lô mồ côi; loại tệp kiểm bằng nội dung tệp chứ không tin lời khai của trình duyệt",,,"lot_attachment","file_path; file_name; mime_type; file_size","Prototype có thực thể đính kèm và bốn cột này; trần dung lượng và danh sách loại tệp chỉ được kiểm ở tầng ứng dụng; trần số tệp thì không có.","- Loại chứng từ nào là bắt buộc theo nghiệp vụ — phiếu tiếp nhận; phiếu giao hàng; hay cả hai? Yêu cầu khách viết chứng từ bắt buộc nhưng không liệt loại nào."
+"3.5","img-011","Nút lưu lô hàng","ロットを保存","Save lot","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: chốt lần tiếp nhận; là thao tác ghi duy nhất của màn
+Thành phần hiển thị: một nút chữ với số thứ tự chuyển trường năm
+Chức năng và logic: phím xác nhận ở bất kỳ trường văn bản nào cũng gọi được nút này; chặn gửi trùng khi đang gửi; giữ nguyên dữ liệu đã nhập khi lỗi vì nhập lại từ đầu lúc 02:00 là không chấp nhận được","on_click","Ở lại màn; đổi khối trường nhập thành thẻ kết quả mang mã lô vừa tạo",,,,
+"4","img-012","Khối trường hệ thống sinh","システム生成項目ブロック","System-generated field block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: bốn giá trị do tầng dịch vụ tự quyết; khai riêng để không ai tưởng chúng nhận được từ phía người dùng
+Thành phần hiển thị: bốn trường chỉ đọc gồm mã lô hàng; ngày nghiệp vụ; số lượng khả dụng; trạng thái — mỗi trường kèm một dòng gợi ý
+Chức năng và logic: không nhập được và không nhận từ phía người dùng; đây là ranh giới để chống việc gán tay ngày nghiệp vụ hoặc số lượng khả dụng",,,,,,
+"4.1","img-013","Trường mã lô hàng","ロット番号","Lot code","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: mã lô là nền tảng truy vết của cả hệ thống; tiêu chí nghiệm thu FR-LOT-01 đòi mỗi lô một mã duy nhất
+Thành phần hiển thị: nhãn song ngữ Mã lô hàng · ロット番号; ô chỉ đọc mang mã mẫu; dòng gợi ý về tính duy nhất kèm một nhãn chưa chốt về công thức mã
+Chức năng và logic: tầng dịch vụ sinh mã; tính duy nhất phải là ràng buộc ở tầng dữ liệu chứ không dựa vào việc thử lại — hai người tiếp nhận cùng lúc thì đúng một người ghi được",,,"lot","lot_code","Prototype có ràng buộc duy nhất ở tầng dữ liệu; nhưng cách sinh mã là đếm số lô trong ngày rồi cộng một nên hai người cùng giây vẫn đụng nhau và chỉ thử lại một lần.","- Công thức mã lô của chợ là gì — có cần nhúng ngày; mã chợ; hay loại hàng vào mã không? Yêu cầu khách chỉ đòi mã duy nhất và không cho quy ước nào."
+"4.2","img-014","Trường ngày nghiệp vụ","業務日","Business date","label","readonly_field",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: ngày nghiệp vụ quyết định lô thuộc kỳ đối chiếu nào; nên nó là dữ liệu quyết toán chứ không phải một nhãn hiển thị
+Thành phần hiển thị: nhãn song ngữ Ngày nghiệp vụ · 業務日; ô chỉ đọc; dòng gợi ý dẫn yêu cầu bảng đối chiếu ngày
+Chức năng và logic: tầng dịch vụ gán theo ngày nghiệp vụ hiện hành ở múi giờ Nhật; không có trường ngày trên form nên không nhập ngày quá khứ được",,,"lot","business_date","Prototype gán ngày dương lịch hiện tại ở múi giờ Nhật; ngày nghiệp vụ bắt đầu 02:00 theo RFP §02-07 nên lô nhận trước 02:00 có thể rơi sai kỳ.","- Ngày nghiệp vụ bắt đầu lúc 00:00 hay lúc 02:00 theo múi giờ Nhật? Xe về 23:50 mà nhập 00:10 thì hai cách cho hai kỳ đối chiếu khác nhau."
+"4.3","img-015","Trường số lượng khả dụng","利用可能数量","Available quantity","label","readonly_field",,"integer",,,,,,,"Mục đích và ngữ cảnh: số lượng khả dụng là thuộc tính chịu lực của BR-LOT-02 — không được âm và phải truy được tới lịch sử điều chỉnh
+Thành phần hiển thị: nhãn song ngữ Số lượng khả dụng · 利用可能数量; ô chỉ đọc ghi bằng số lượng ban đầu; dòng gợi ý về đường đổi duy nhất
+Chức năng và logic: khởi tạo bằng số lượng ban đầu; từ đó chỉ đổi qua đường giữ và hoàn số lượng chứ không bao giờ sửa trực tiếp — đó là cách giữ ràng buộc không âm",,,"lot","available_qty","Prototype có ràng buộc lớn hơn hoặc bằng không ở tầng dữ liệu và một vòng so-rồi-ghi ở tầng ứng dụng; cột này bị loại khỏi mọi đường sửa tự do.",
+"4.4","img-016","Trường trạng thái lô","状態","Lot status","label","readonly_field",,"string",,"một trong năm trạng thái của FIG-011",,,,,"Mục đích và ngữ cảnh: trạng thái khởi tạo của lô là bước một trên năm của FIG-011; FE-013 đòi trạng thái đi theo đúng máy trạng thái đó
+Thành phần hiển thị: nhãn song ngữ Trạng thái · 状態; ô chỉ đọc ghi trạng thái kèm vị trí bước trên tổng số bước
+Chức năng và logic: tầng dịch vụ gán trạng thái tiếp nhận; ghi rõ trên năm bước để người đọc thấy ngay máy trạng thái có năm giá trị chứ không phải bốn",,,"lot","status","Prototype có ràng buộc bốn giá trị trên cột này và thiếu giá trị cho trạng thái Đã 下見 của FIG-011.",
+"5","img-017","Khối máy trạng thái FIG-011","FIG-011 状態ブロック","FIG-011 state block","others","state_machine_block",,,,,,,,,"Mục đích và ngữ cảnh: FE-013 đòi danh sách và chi tiết lô hàng theo máy trạng thái FIG-011; nên số trạng thái là một yêu cầu nghiệm thu chứ không phải chi tiết
+Thành phần hiển thị: bảng năm cột và năm dòng trạng thái; hai đoạn ghi chú trong đó một đoạn mang nhãn chưa chốt
+Chức năng và logic: chỉ đọc; cột màn cho biết trạng thái nào được đặt ở màn nào để không có hai màn cùng đặt một trạng thái",,,,,,
+"5.1","img-018","Bảng năm trạng thái của FIG-011","状態一覧","State table","table","state_transition_table",,,,,,,,,"Mục đích và ngữ cảnh: chép đúng năm trạng thái và bốn cạnh một chiều của FIG-011; đây là chỗ thiếu trạng thái Đã 下見 trở nên nhìn thấy được
+Thành phần hiển thị: năm cột gồm số thứ tự; trạng thái; sự kiện vào; ai làm; màn — và năm dòng trạng thái
+Chức năng và logic: chỉ đọc; đi một chiều nên không có cạnh quay lại; mỗi trạng thái có đúng một sự kiện vào và một màn chịu trách nhiệm",,,"lot","status","Prototype thiếu giá trị cho trạng thái thứ hai nên không phân biệt được lô đã tiếp nhận nhưng chưa ai xem hàng với lô đã xem xong chờ công bố.",
+"5.1.1","img-019","Dòng trạng thái (đại diện cho năm dòng)","状態行","State row","label","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một trạng thái của FIG-011 và ai đặt nó ở màn nào; năm dòng cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: số thứ tự bước; tên trạng thái; sự kiện đưa lô vào trạng thái đó; vai nghiệp vụ thực hiện; mã màn
+Chức năng và logic: chỉ đọc; dòng đầu là trạng thái mà chính màn này đặt khi lưu lô",,,,,,
+"5.2","img-020","Ghi chú năm trạng thái và bốn cạnh","状態数の注記","State count note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ hệ quả vận hành của việc gộp hai trạng thái — lúc 03:00 không trả lời được còn bao nhiêu lô chờ người đánh giá
+Thành phần hiển thị: một đoạn ghi chú dưới bảng trạng thái
+Chức năng và logic: tĩnh; gộp hai trạng thái là mất khả năng điều phối nhân sự ở đúng giờ cao điểm của FIG-002",,,,,,
+"5.3","img-021","Ghi chú chưa chốt về 下見 và 目利き","下見と目利きの未確定事項","Open question on pre-inspection vs appraisal","label","open_question",,,,,,,,,"Mục đích và ngữ cảnh: tài liệu khách dùng hai thuật ngữ ở hai chỗ khác nhau; bảng thuật ngữ định nghĩa chúng là hai việc nhưng có chỗ khác lại nối bằng gạch chéo
+Thành phần hiển thị: một đoạn ghi chú có nhãn chưa chốt dưới khối trạng thái
+Chức năng và logic: tĩnh; nêu rõ hai kịch bản chênh nhau rất nhiều — một việc gọi hai tên thì chỉ cần thêm một giá trị trạng thái; hai việc khác nhau thì thiếu cả một chỗ ghi và một màn",,,,,,"- 下見 và 目利き là hai việc khác nhau hay một việc gọi hai tên? Câu trả lời quyết định trạng thái thứ hai của FIG-011 vào bằng sự kiện nào và ai làm."
+"6","img-022","Khối kết quả sau khi lưu","保存結果ブロック","Post-save result block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: mã lô vừa tạo phải dán được lên lô ngay tại quầy; một thông báo nổi trôi qua vài giây là không dùng được
+Thành phần hiển thị: trường mã lô vừa tạo cỡ lớn; hai nút đường tiếp; một dòng gợi ý về nhịp làm việc
+Chức năng và logic: thay hẳn khối trường nhập chứ không hiện thông báo nổi; giữ mã trên màn tới khi người dùng chọn một trong hai đường tiếp",,,,,,
+"6.1","img-023","Trường mã lô hàng vừa tạo","発行済ロット番号","Newly created lot code","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: mã để ghi lên kiện hàng; phải đọc được từ xa ở quầy trong điều kiện ánh sáng kém lúc sáng sớm
+Thành phần hiển thị: nhãn Mã lô hàng vừa tạo và một ô chỉ đọc mang mã ở cỡ chữ lớn
+Chức năng và logic: chỉ đọc; tự nhận con trỏ để sao chép được bằng bàn phím ngay mà không cần chuột",,,"lot","lot_code","Cùng cột mã lô ở khối trường hệ thống sinh; đây là giá trị thật vừa ghi chứ không phải mã mẫu.",
+"6.2","img-024","Nút ghi kết quả đánh giá","評価結果を記録","Record appraisal result","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: đường đi tiếp theo FIG-011 — từ trạng thái tiếp nhận sang bước đăng ký kết quả xem hàng
+Thành phần hiển thị: một nút chữ nổi bật trong thẻ kết quả
+Chức năng và logic: mang mã lô vừa tạo sang màn kế nên người dùng không phải nhớ hay nhập lại mã","on_click","Mở SC-09 để ghi kết quả đánh giá cho đúng lô vừa tạo",,,,
+"6.3","img-025","Nút tiếp nhận lô khác","別ロットを受付","Intake another lot","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: nhịp làm việc thật ở quầy là nhiều lô liên tiếp; nên đường quay lại form phải là một phím chứ không phải điều hướng lại
+Thành phần hiển thị: một nút chữ phụ cạnh nút sang màn kế
+Chức năng và logic: xoá trắng bốn trường nhập và đưa con trỏ về trường đầu để nhập lô kế tiếp ngay","on_click","Ở lại màn; xoá trắng bốn trường và đưa con trỏ về trường đầu",,,,
+"6.4","img-026","Ghi chú hai đường tiếp","次工程の注記","Next step note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: giải thích vì sao thẻ kết quả có đúng hai nút và không có nút nào thứ ba
+Thành phần hiển thị: một đoạn ghi chú dưới hai nút
+Chức năng và logic: tĩnh; hai đường ứng đúng hai nhịp làm việc ở quầy",,,,,,
+"7","img-027","Khối trạng thái màn","画面状態ブロック","Screen state block","others","state_matrix",,,,,,,,,"Mục đích và ngữ cảnh: liệt bảy trạng thái màn phải xử lý; trạng thái cuối là một quyết định thiết kế phải khai rõ để không bị hiểu là lỗi
+Thành phần hiển thị: bảy ô trạng thái; mỗi ô có tên và mô tả hành vi mong đợi
+Chức năng và logic: tĩnh trên wireframe nhưng là hợp đồng hành vi cho tầng hiển thị",,,,,,
+"7.1","img-028","Trạng thái mặc định","初期状態","Default state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: trạng thái mở màn; con trỏ tự vào trường đầu là một phần của NFR-USE-01 chứ không phải tiện ích
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: bốn trường trống và con trỏ ở trường đầu ngay khi màn mở",,,,,,
+"7.2","img-029","Trạng thái lỗi nhập","入力エラー","Input error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: NFR-USE-01 đòi thông báo lỗi dễ hiểu; một câu chung cho mọi lỗi làm người nhập không biết sửa trường nào
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: báo trên đúng trường sai và nói rõ sai thế nào; giữ nguyên dữ liệu đã nhập vì nhập lại từ đầu lúc 02:00 là không chấp nhận được",,,,,,
+"7.3","img-030","Trạng thái đang gửi","送信中","Submitting state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: chặn gửi trùng — hai lần gửi cùng một lô sinh hai mã lô cho một kiện hàng thật
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: các trường vô hiệu; nút báo đang lưu; không cho gửi lần hai",,,,,,
+"7.4","img-031","Trạng thái thành công","成功","Success state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: kết quả phải nằm lại trên màn để người dùng ghi mã lên kiện hàng
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: đổi hẳn sang thẻ kết quả và hiện mã lô cỡ lớn",,,,,,
+"7.5","img-032","Trạng thái thành công nhưng chứng từ lỗi","証憑失敗","Attachment failure state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: chứng từ là trường bắt buộc nên mất chứng từ mà lô vẫn tạo là một trạng thái không hợp lệ về nghiệp vụ
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: nói rõ chứng từ nào chưa lên được và phải có đường đính kèm lại thật — ở màn này hoặc ở màn chi tiết lô; không được để chứng từ bắt buộc mất im lặng",,,,,,
+"7.6","img-033","Trạng thái không có quyền","権限なし","No permission state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: màn này là màn ghi thuần nên vai không có quyền không có gì để đọc; nhưng vẫn phải biết nhờ ai
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: không hiện form; nói rõ vai nào làm được việc này; chặn phải ở cả tầng vào trang và tầng dịch vụ chứ không chỉ ẩn form",,,,,,
+"7.7","img-034","Trạng thái ngày nghiệp vụ đã lock","業務日ロック","Locked business day state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ một quyết định dễ bị hiểu là lỗi — tiếp nhận lô vào ngày đã lock là hợp lệ
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: màn không trả lỗi khoá kỳ; cái bị chặn sau lock là sửa thuộc tính lô ở màn chi tiết chứ không phải việc tiếp nhận",,,,,,
+"8","img-035","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_block",,,,,,,,,"Mục đích và ngữ cảnh: đặt cạnh nhau thiết kế đòi gì và bản thi công hiện làm gì để phần đọc spec không lẫn hai chuyện
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột
+Chức năng và logic: chỉ đọc; là phần đối chiếu chứ không phải phần thiết kế",,,,,,
+"8.1","img-036","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","comparison_table",,,,,,,,,"Mục đích và ngữ cảnh: bảy hạng mục lệch; nặng nhất là thiếu một trạng thái của FIG-011 và việc chứng từ tiếp nhận không bắt buộc
+Thành phần hiển thị: ba cột Thiết kế đòi; Prototype làm; Mức — và bảy dòng hạng mục
+Chức năng và logic: chỉ đọc; dòng cuối mang mức khác có chủ đích nên không sinh việc sửa; hai dòng mang mức cần khách chốt",,,,,,
+"9","img-037","Ghi chú chân màn về phân quyền và mã lô","フッター注記","Footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ba điều dễ trôi — ẩn form không phải chặn; tính duy nhất của mã lô là quyết định thiết kế; và loại tệp phải kiểm bằng nội dung
+Thành phần hiển thị: hai dòng ghi chú và một đường dẫn tới file spec của màn
+Chức năng và logic: tĩnh; nêu rõ đọc lô hàng mở cho các vai vận hành trong khi ghi chỉ thuộc vai tiếp nhận — đọc và ghi là hai trục khác nhau",,,,,,"- Kiểm loại tệp bằng nội dung tệp cần chặn những loại nào ngoài ảnh và PDF? Thiết kế nói không tin lời khai của trình duyệt nhưng chưa liệt danh sách chặn."

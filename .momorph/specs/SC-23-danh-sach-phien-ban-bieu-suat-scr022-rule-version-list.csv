@@ -1,0 +1,106 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn danh sách phiên bản biểu suất","画面ヘッダー","Screen header block","others","khối đầu trang",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn SC-23 — nơi quản trị rule đọc toàn bộ vòng đời các phiên bản biểu suất 完納奨励金.
+Thành phần hiển thị: Tiêu đề màn ở dòng trên; dưới là dòng metadata gồm mã FE; mã FN; mức ưu tiên; danh sách yêu cầu khách; actor và thẻ trạng thái dựng.
+Chức năng và logic: Thuần hiển thị; không có tương tác. Cả vai người lập và vai người duyệt dùng chung màn này; tách nhau ở SC-24 theo người tạo từng phiên bản.",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","tiêu đề trang",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết đang ở màn danh sách phiên bản; không phải màn tạo hay duyệt phiên bản.
+Thành phần hiển thị: Một dòng chữ gồm mã màn SC-23 và tên màn Danh sách phiên bản biểu suất.
+Chức năng và logic: Tĩnh; không đổi theo bộ lọc trạng thái đang chọn.",,,,,,
+"1.2","img-003","Dòng metadata màn","画面メタ情報","Screen metadata line","label","dòng metadata",,,,,,,,,"Mục đích và ngữ cảnh: Truy được từ màn về đúng tính năng và đúng yêu cầu khách mà màn phải thoả.
+Thành phần hiển thị: Chuỗi phân tách bằng dấu · gồm mã FE-031; mã FN-09; mức ưu tiên P0; bốn mã yêu cầu khách kèm baseline TBL-RATE-01 và năng lực CAP-06; actor quản trị rule; mã thi công SCR022_RuleVersionList; loại List; route /incentive/rules và thẻ trạng thái.
+Chức năng và logic: Tĩnh. Dòng này khai rõ actor gồm cả vai người lập và vai người duyệt — điều kiện tách hai vai không nằm ở vai trò mà ở người tạo từng phiên bản.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn","実装状況タグ","Build status tag","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn đã có bản thi công để đối chiếu; không phải cam kết rằng thiết kế đã đạt.
+Thành phần hiển thị: Một thẻ chữ nhỏ nằm cuối dòng metadata.
+Chức năng và logic: Tĩnh. Mức đạt hay chưa đạt của từng yêu cầu nằm ở khối đối chiếu prototype cuối màn.",,,,,,
+"2","img-005","Khối yêu cầu khách phải thấy trên màn","受入条件ブロック","Acceptance criteria block","others","khối tài liệu yêu cầu",,,,,,,,,"Mục đích và ngữ cảnh: Ghi lại đúng phần Nghiệm thu của bốn yêu cầu khách mà màn này phải chứng minh.
+Thành phần hiển thị: Tiêu đề khối và một bảng hai cột: mã yêu cầu và điều phải thấy được trên màn.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là chuẩn nghiệm thu cho chính màn này; mọi cột bảng bên dưới phải truy về được một dòng ở đây.",,,,,,
+"2.1","img-006","Bảng yêu cầu và điểm nghiệm thu","要求・受入条件テーブル","Requirement and acceptance table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Bốn dòng yêu cầu mà màn phải thoả; mỗi dòng nói rõ điều gì phải nhìn thấy được.
+Thành phần hiển thị: Bốn dòng: FR-RULE-01 (mọi phiên bản ghi đủ người tạo; người phê duyệt; ngày hiệu lực và trạng thái); FR-INC-02 với TBL-RATE-01 (bản nháp chưa có hiệu lực cho tới khi được phê duyệt và rollback được theo từng version); GOV-RULE-01 (thay đổi tối đa 4 lần mỗi năm kèm maker-checker; ngày hiệu lực và rollback); NFR-OPS-02 với CAP-06 (biểu suất cập nhật bằng thay đổi cấu hình có kiểm soát; nghiệm thu bằng demo đổi rule bằng version mới).
+Chức năng và logic: Bảng tĩnh; không lọc; không sắp xếp. Bốn dòng là cố định theo Feature List của màn.",,,,,,
+"3","img-007","Khối hạn mức thay đổi trong năm","年間変更上限ブロック","Annual change quota block","others","khối chỉ số chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Đưa hạn mức 4 lần đổi rule mỗi năm của GOV-RULE-01 lên bề mặt màn; hạn mức không thấy được thì không ai giữ được.
+Thành phần hiển thị: Tiêu đề khối và hai ô hiển thị chỉ đọc đặt cạnh nhau: số lần đổi rule đã dùng và phiên bản đang có hiệu lực.
+Chức năng và logic: Chỉ đọc; không nhận nhập. Hết hạn mức thì nút tạo phiên bản phải tắt ngay tại màn kèm lý do; không để người lập gửi rồi mới bị từ chối.",,,,,,
+"3.1","img-008","Ô hiển thị Số lần đổi rule đã dùng","年間ルール変更回数","Annual rule change count","label","ô hiển thị chỉ đọc",,"integer",,"<đã dùng> / 4 lần — còn <còn lại> lần",,,"3 / 4 lần — còn 1 lần",,"Mục đích và ngữ cảnh: Cho quản trị rule biết còn được đổi rule mấy lần trong năm theo GOV-RULE-01.
+Thành phần hiển thị: Nhãn Số lần đổi rule đã dùng; một ô chữ chỉ đọc mang giá trị 3 / 4 lần — còn 1 lần; dòng gợi ý nói đếm theo phiên bản đã được phê duyệt trong năm.
+Chức năng và logic: Đếm theo phiên bản đã được phê duyệt; bản nháp chờ duyệt không tính. Khi đã dùng 4 trên 4 thì nút tạo phiên bản mới ở khối bộ lọc phải tắt kèm lý do.",,,,,"Thiết kế đòi một chỉ số đếm số phiên bản đã được phê duyệt trong năm; hiện chưa có thực thể hay cột nào giữ mốc năm và số đếm này nên phần mapping để trống. Prototype không đếm và không chặn.","- Mốc năm của hạn mức là năm dương lịch hay năm tài chính Nhật; vì hai cách cho hai thời điểm đặt lại khác nhau?
+- Rollback có bị tính là một lần đổi trong hạn mức không?
+- Khi đã hết hạn mức mà khách cần đổi rule gấp thì màn cho đường ngoại lệ nào; hay chặn tuyệt đối?"
+"3.2","img-009","Ô hiển thị Phiên bản đang có hiệu lực","有効中バージョン","Active rule version","label","ô hiển thị chỉ đọc",,"string",,"v<số phiên bản> · hiệu lực từ YYYY-MM-DD",,,"v3 · hiệu lực từ 2026-09-01",,"Mục đích và ngữ cảnh: Cho biết phiên bản nào đang chi phối cách tính thưởng ở SC-22 ngay lúc này.
+Thành phần hiển thị: Nhãn Phiên bản đang có hiệu lực; một ô chữ chỉ đọc mang giá trị v3 · hiệu lực từ 2026-09-01; dòng gợi ý nói luôn có đúng một phiên bản đang chi phối cách tính ở SC-22.
+Chức năng và logic: Thiết kế đòi đúng một phiên bản đang hiệu lực tại mỗi thời điểm. Nếu không có phiên bản nào thì màn phải cảnh báo vì SC-22 sẽ không tính được thưởng.",,,"incentive_rule_version","effective_from","Phiên bản đang chi phối cách tính là phiên bản đã duyệt có ngày hiệu lực gần nhất đã tới. Prototype có bảng và cột này; nhưng nhiều dòng cùng mang trạng thái đang hiệu lực và việc chọn một dòng chỉ xảy ra lúc đọc.",
+"4","img-010","Khối bộ lọc trạng thái","絞り込みブロック","Filter block","others","khối bộ lọc",,,,,,,,,"Mục đích và ngữ cảnh: Thu hẹp danh sách phiên bản theo trạng thái vòng đời; và là chỗ đặt đường sang màn tạo phiên bản.
+Thành phần hiển thị: Tiêu đề khối; ô chọn Lọc theo trạng thái; nút Lọc và nút Tạo phiên bản mới đặt cùng một hàng.
+Chức năng và logic: Gửi bằng phương thức GET về chính màn; không ghi dữ liệu. Nút tạo phiên bản chỉ điều hướng; việc tạo nằm ở SC-24.",,,,,,
+"4.1","img-011","Ô chọn Lọc theo trạng thái","状態で絞り込み","Status filter select","dropdown","ô chọn lọc",,"string","false","Tất cả | Chờ duyệt | Đã duyệt; chờ tới ngày hiệu lực | Đang hiệu lực | Đã bị thay thế | Đã rollback",,,"Tất cả",,"Mục đích và ngữ cảnh: Tìm nhanh nhóm phiên bản cần xem: bản còn chờ duyệt; bản đang chi phối cách tính; hay bản đã bị thay thế.
+Thành phần hiển thị: Nhãn Lọc theo trạng thái; ô chọn mang giá trị mặc định Tất cả; dòng gợi ý liệt kê đủ 5 trạng thái của vòng đời.
+Chức năng và logic: Thiết kế đòi lọc được cả 5 trạng thái; kể cả hai trạng thái phụ thuộc thời điểm là Đã duyệt chờ tới ngày hiệu lực và Đã bị thay thế.",,"Không điều hướng; nạp lại chính màn SC-23 theo trạng thái đã chọn.","incentive_rule_version","status","Lọc theo trạng thái vòng đời của phiên bản. Prototype chỉ lưu ba giá trị trong cột này; hai trạng thái Đã bị thay thế và Đã duyệt chờ tới ngày hiệu lực được tính lúc đọc nên không lọc được.","- Khi lọc bằng một giá trị không nằm trong 5 trạng thái thì màn bỏ lọc và hiện tất cả; hay báo lỗi tại field?
+- Đường trên trang và đường qua API phải cho cùng một kết quả với cùng một giá trị lọc — chọn hành vi nào làm chuẩn?"
+"4.2","img-012","Nút Lọc","絞り込みボタン","Filter button","button","nút phụ trong hàng lọc","text_only",,,,,,,,"Mục đích và ngữ cảnh: Áp dụng trạng thái đã chọn cho danh sách phiên bản.
+Thành phần hiển thị: Một nút chữ đặt sau ô chọn trạng thái; ngang hàng với ô chọn.
+Chức năng và logic: Gửi biểu mẫu bằng phương thức GET; không ghi dữ liệu và không có trạng thái đang gửi vì màn chỉ đọc.","on_click","Nạp lại chính màn SC-23 với trạng thái đã chọn; không sang màn khác.",,,,
+"4.3","img-013","Nút Tạo phiên bản mới","新規バージョン作成ボタン","Create new version button","button","nút chính điều hướng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường vào thao tác tạo bản nháp phiên bản biểu suất; đặt ngay cạnh bộ lọc để người lập không phải tìm.
+Thành phần hiển thị: Một nút chữ nhấn mạnh đặt cuối hàng bộ lọc.
+Chức năng và logic: Chỉ điều hướng; không ghi dữ liệu ở màn này. Khi đã dùng hết hạn mức 4 lần trong năm thì nút phải tắt kèm lý do GOV-RULE-01.","on_click","Sang SC-24 khung SCR023 tạo phiên bản; route /incentive/rules/new.",,,,"- Nút ở trạng thái tắt vì hết hạn mức trình bày lý do ở đâu: chú thích cạnh nút; hay một khối cảnh báo riêng phía trên danh sách?"
+"5","img-014","Khối danh sách phiên bản","バージョン一覧ブロック","Version list block","others","khối danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Nơi đọc toàn bộ vòng đời các phiên bản biểu suất; kèm đủ dữ kiện để kiểm soát thay đổi.
+Thành phần hiển thị: Tiêu đề khối; bảng danh sách sáu cột và một ghi chú ba đoạn ở dưới bảng.
+Chức năng và logic: Chỉ đọc; sắp mới nhất lên trước. Mọi thao tác tạo; duyệt và rollback nằm ở SC-24.",,,,,,
+"5.1","img-015","Bảng danh sách phiên bản","バージョン一覧テーブル","Version list table","table","bảng danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Toàn bộ phiên bản biểu suất theo thứ tự mới nhất lên trước; mỗi dòng là một phiên bản.
+Thành phần hiển thị: Sáu cột: Phiên bản; Nội dung biểu suất; Ngày hiệu lực; Trạng thái; Người lập; Người duyệt. Bốn dòng mẫu cho bốn trạng thái: chờ duyệt; đang hiệu lực; đã bị thay thế và đã rollback.
+Chức năng và logic: Chỉ đọc; không phân trang. Số phiên bản là liên kết mở màn SC-24 cho phiên bản đó. Phiên bản đã bị thay thế hoặc đã rollback không bị xoá vì kết quả thưởng cũ ở SC-22 còn trỏ về chúng.",,,"incentive_rule_version",,"Một dòng bảng là một phiên bản biểu suất. Prototype có bảng incentive_rule_version thật với đủ các cột tương ứng; số phiên bản có ràng buộc duy nhất.","- Trần 4 lần đổi mỗi năm giữ danh sách nhỏ; nhưng sau nhiều năm thì màn có cần phân trang hoặc lọc theo năm không?"
+"5.1.1","img-016","Cột Phiên bản","バージョン","Version column","label","cột bảng có liên kết",,"integer",,"v<số nguyên>",,,,,"Mục đích và ngữ cảnh: Định danh phiên bản và là đường vào màn duyệt hoặc rollback của chính phiên bản đó.
+Thành phần hiển thị: Ô chữ chỉ đọc dạng v4; v3; v2; v1 và là liên kết.
+Chức năng và logic: Do hệ thống tự đặt khi tạo bản nháp; người lập không nhập được. Số phiên bản không bị dùng lại kể cả sau rollback.",,"Bấm số phiên bản mở SC-24 chi tiết phiên bản đó; route /incentive/rules/[id].","incentive_rule_version","version_no","Số phiên bản; duy nhất trên toàn bảng và do server tự sinh. Prototype có đúng cột này kèm chỉ mục duy nhất.",
+"5.1.2","img-017","Cột Nội dung biểu suất","料率内容","Rate table content column","label","cột bảng chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Cho quản trị rule đọc được phiên bản này khác phiên bản trước ở chỗ nào; đây là điểm nghiệm thu của NFR-OPS-02.
+Thành phần hiển thị: Ô chữ chỉ đọc; giá trị mẫu Hệ số 110/100 · tỷ lệ chi trả; riêng dòng chờ duyệt có thêm chú thích xem [CHƯA CHỐT].
+Chức năng và logic: Cột này là bắt buộc theo thiết kế: không đọc được nội dung thì không nghiệm thu được việc đổi rule bằng version mới. Tập tham số cụ thể còn chờ khách chốt.",,,"incentive_rule_version","rate_table","Nội dung biểu suất của phiên bản. Prototype có cột này nhưng chỉ ghi vào như dữ liệu mô tả; engine tính thưởng không đọc nó và màn cũng không hiện nội dung.","- Cột này hiện đầy đủ nội dung biểu suất; hay chỉ hiện phần khác so với phiên bản trước và mở chi tiết ở SC-24?"
+"5.1.3","img-018","Cột Ngày hiệu lực","発効日","Effective date column","label","cột bảng chỉ đọc",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: Cho biết từ ngày nào phiên bản bắt đầu chi phối cách tính thưởng ở SC-22.
+Thành phần hiển thị: Ô chữ chỉ đọc dạng YYYY-MM-DD; bốn giá trị mẫu từ 2026-07-01 đến 2026-10-01.
+Chức năng và logic: Có thể là ngày trong tương lai; khi đó phiên bản đã duyệt vẫn chưa chi phối cách tính. Ngày hiệu lực là mốc duy nhất quyết định phiên bản nào áp cho một kỳ.",,,"incentive_rule_version","effective_from","Ngày phiên bản bắt đầu chi phối cách tính. Prototype có đúng cột này với ràng buộc không rỗng.",
+"5.1.4","img-019","Cột Trạng thái","状態","Status column","label","cột bảng chỉ đọc",,"string",,"Chờ duyệt | Đã duyệt; chờ tới ngày hiệu lực | Đang hiệu lực | Đã bị thay thế | Đã rollback",,,,,"Mục đích và ngữ cảnh: Cho biết phiên bản đang ở đâu trong vòng đời kiểm soát thay đổi.
+Thành phần hiển thị: Một thẻ chữ trong ô; bốn giá trị mẫu là Chờ duyệt; Đang hiệu lực; Đã bị thay thế và Đã rollback.
+Chức năng và logic: Trạng thái là một chuỗi không quay lui: chờ duyệt sang đã duyệt chờ tới ngày hiệu lực sang đang hiệu lực sang đã bị thay thế. Rollback là một nhánh riêng và phải truy vết được ở SC-24.",,,"incentive_rule_version","status","Trạng thái vòng đời của phiên bản. Prototype chỉ lưu ba giá trị; hai trạng thái còn lại được tính lúc đọc nên nhãn của một dòng tự đổi khi qua ngày.",
+"5.1.5","img-020","Cột Người lập","作成者","Maker column","label","cột bảng chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Nửa thứ nhất của cặp maker-checker mà FR-RULE-01 đòi ghi nhận.
+Thành phần hiển thị: Ô chữ chỉ đọc mang tên hiển thị của người tạo phiên bản.
+Chức năng và logic: Chỉ hiện tên hiển thị hoặc mã người dùng; không bao giờ hiện thư điện tử nội bộ. Giá trị này là căn cứ để SC-24 từ chối người tự duyệt bản của mình.",,,"incentive_rule_version","created_by","Người tạo phiên bản; là một trong hai cột quyết định điều kiện maker-checker. Prototype có đúng cột này; nhưng hiển thị rơi về thư điện tử nội bộ khi tên hiển thị rỗng.","- Khi không có tên hiển thị thì cột này rơi về mã người dùng; đúng như kỷ luật của báo cáo log điều chỉnh sau lock?"
+"5.1.6","img-021","Cột Người duyệt","承認者","Checker column","label","cột bảng chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Nửa thứ hai của cặp maker-checker; chứng minh phiên bản đã qua cổng phê duyệt.
+Thành phần hiển thị: Ô chữ chỉ đọc mang tên hiển thị của người phê duyệt; hiện dấu gạch với phiên bản còn chờ duyệt.
+Chức năng và logic: Rỗng là hợp lệ và có nghĩa: phiên bản chưa qua cổng duyệt nên chưa được chi phối cách tính. Người duyệt luôn phải khác người lập theo GOV-RULE-01.",,,"incentive_rule_version","approved_by","Người phê duyệt phiên bản; rỗng khi phiên bản còn chờ duyệt. Prototype có đúng cột này; hiển thị cùng chuỗi rơi về thư điện tử như cột người lập.",
+"5.2","img-022","Ghi chú dưới bảng danh sách","テーブル下の注記","Table footnote","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Ba ràng buộc thiết kế mà bảng phải giữ; viết ngay dưới bảng để không bị bỏ lúc dựng.
+Thành phần hiển thị: Ba đoạn: cột nội dung biểu suất là bắt buộc để nghiệm thu NFR-OPS-02; trạng thái là chuỗi không quay lui và rollback là nhánh riêng; phiên bản đã bị thay thế hoặc đã rollback không bị xoá.
+Chức năng và logic: Thuần hiển thị. Đoạn thứ ba là hệ quả của yêu cầu truy vết: kết quả thưởng cũ ở SC-22 còn trỏ về các phiên bản đó.",,,,,,
+"6","img-023","Khối liệt kê trạng thái màn","画面状態一覧ブロック","Screen state list block","others","khối tài liệu trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê đủ bảy trạng thái màn phải xử lý để không bỏ sót đường rẽ nào lúc dựng.
+Thành phần hiển thị: Tiêu đề khối và bảy thẻ trạng thái xếp thành hai hàng; mỗi thẻ có tiêu đề và một đoạn mô tả hành vi.
+Chức năng và logic: Thuần hiển thị tài liệu. Hai trạng thái rỗng được tách riêng vì rỗng do lọc và rỗng do chưa có dữ liệu dẫn tới hai hành động khác nhau.",,,,,,
+"6.1","img-024","Thẻ trạng thái Rỗng","空状態カード","Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả màn khi chưa có phiên bản biểu suất nào trong hệ thống.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng kèm câu hiển thị Chưa có phiên bản biểu suất nào và ghi chú vẫn tạo được phiên bản mới.
+Chức năng và logic: Thuần hiển thị tài liệu. Màn không cần dữ liệu tiền đề nên trạng thái rỗng vẫn giữ đường sang SC-24.",,,,,,
+"6.2","img-025","Thẻ trạng thái Rỗng do lọc","絞り込み結果ゼロカード","Empty by filter card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt rỗng vì bộ lọc không khớp với rỗng vì chưa có dữ liệu.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng do lọc kèm mô tả có dữ liệu nhưng lọc không khớp và phải nói rõ là do lọc.
+Chức năng và logic: Thuần hiển thị tài liệu. Hai nguyên nhân rỗng dẫn tới hai hành động khác nhau: bỏ lọc; hay tạo phiên bản mới.",,,,,,
+"6.3","img-026","Thẻ trạng thái Đang tải và lỗi tải","読み込み・読み込み失敗カード","Loading and load error card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hai trạng thái nạp dữ liệu của màn.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải / lỗi tải kèm mô tả khung trang hiện trước và lỗi truy vấn thì báo kèm nút tải lại.
+Chức năng và logic: Thuần hiển thị tài liệu. Lỗi truy vấn phải cho người dùng thử lại; không được để màn trắng.",,,,,,
+"6.4","img-027","Thẻ trạng thái Không có quyền","権限なしカード","No permission card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi khi người dùng không thuộc quản trị rule.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền kèm mô tả ngoài quản trị rule thì không vào được màn và cũng không đọc được danh sách qua API.
+Chức năng và logic: Thuần hiển thị tài liệu. Chặn phải áp cả ở đường vào trang và ở đường gọi API; chặn ở một phía là hở.",,,,,,
+"6.5","img-028","Thẻ trạng thái Hết hạn mức trong năm","年間上限到達カード","Annual quota exhausted card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi màn khi đã dùng hết 4 lần đổi rule trong năm.
+Thành phần hiển thị: Thẻ tiêu đề Hết hạn mức trong năm kèm mô tả đã dùng 4 trên 4 lần; nút tạo tắt và nói rõ hạn mức GOV-RULE-01 cùng mốc năm được tính.
+Chức năng và logic: Thuần hiển thị tài liệu. Nói rõ mốc năm là bắt buộc vì mốc năm còn đang chờ khách chốt.",,,,,,
+"6.6","img-029","Thẻ trạng thái Chưa có phiên bản hiệu lực","有効バージョンなしカード","No active version card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cảnh báo một sự cố vận hành: không có phiên bản hiệu lực thì SC-22 không tính được thưởng.
+Thành phần hiển thị: Thẻ tiêu đề Chưa có phiên bản hiệu lực kèm mô tả cảnh báo rõ và kèm đường sang SC-24 để duyệt.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là cảnh báo chủ động; không phải một trạng thái rỗng bình thường.",,,,,,
+"6.7","img-030","Thẻ trạng thái Chỉ đọc","読み取り専用カード","Read-only card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai rằng màn không ghi gì; mọi thao tác ghi nằm ở màn khác.
+Thành phần hiển thị: Thẻ tiêu đề Chỉ đọc kèm mô tả mọi thao tác tạo; duyệt và rollback nằm ở SC-24.
+Chức năng và logic: Thuần hiển thị tài liệu. Vì không có đường ghi nên màn không có trạng thái đang gửi hay gửi lỗi.",,,,,,
+"7","img-031","Ghi chú CHƯA CHỐT về phạm vi phiên bản hoá biểu suất","未確定事項の注記","Open question note","label","ghi chú chưa chốt",,,,,,,,,"Mục đích và ngữ cảnh: Khai một chỗ tài liệu khách tự chống nhau; để không ai tự quyết hộ khách ở tầng thiết kế.
+Thành phần hiển thị: Một khối ghi chú viền nét: BR-INC-01 cố định hệ số 110/100; trong khi FE-031; FR-INC-02 và CAP-06 đòi quản lý được công thức và biểu suất; NFR-OPS-02 đòi đổi được không cần triển khai lại.
+Chức năng và logic: Thuần hiển thị tài liệu. Câu hỏi để lại cho khách: một phiên bản biểu suất quản lý tham số nào. Cột Nội dung biểu suất chỉ vẽ được đầy đủ sau khi có câu trả lời.",,,,,,
+"8","img-032","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype comparison block","others","khối tài liệu đối chiếu",,,,,,,,,"Mục đích và ngữ cảnh: Đặt cách cài đặt hiện tại của prototype tách khỏi phần thiết kế; để đọc spec không lẫn hiện trạng vào yêu cầu.
+Thành phần hiển thị: Tiêu đề khối và một bảng ba cột: thiết kế đòi; prototype làm và mức lệch.
+Chức năng và logic: Thuần hiển thị tài liệu. Khối này là hiện trạng để đối chiếu; không phải nguồn của thiết kế.",,,,,,
+"8.1","img-033","Bảng đối chiếu thiết kế và prototype","設計・実装差分テーブル","Design versus prototype table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Tám chỗ prototype khác thiết kế; kèm mức lệch của từng chỗ.
+Thành phần hiển thị: Tám dòng gồm ba mức: Chưa đạt cho biểu suất là hằng trong mã nguồn; hạn mức 4 lần mỗi năm không được đếm và việc tạo phiên bản không ghi dấu vết kiểm toán. Khớp cho bốn cột người lập; người duyệt; ngày hiệu lực và trạng thái. Hở cho chỉ lọc được 3 trạng thái; nhiều dòng cùng đang hiệu lực; tên rơi về thư điện tử và hai kiểu rỗng dùng chung một trạng thái.
+Chức năng và logic: Bảng tĩnh; không lọc. Chỉ liệt những chỗ khác nhau; chỗ khớp chỉ nêu khi cần chặn cách đọc sai.",,,,,,
+"9","img-034","Chân ghi chú phân quyền và nguồn as-built","権限・出典フッター","Permission and source footer","label","chân ghi chú màn",,,,,,,,,"Mục đích và ngữ cảnh: Chốt lại phân quyền của màn và trỏ về tài liệu hiện trạng của prototype.
+Thành phần hiển thị: Hai dòng: dòng phân quyền nói chỉ quản trị rule vào được và màn chỉ đọc; dòng thứ hai là liên kết sang tài liệu bản as-built của màn.
+Chức năng và logic: Thuần hiển thị. Cả người lập và người duyệt dùng chung màn này; tách nhau ở SC-24 theo người tạo từng phiên bản.",,,,,,

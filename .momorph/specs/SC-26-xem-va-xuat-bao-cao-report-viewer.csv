@@ -1,0 +1,142 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn xem và xuất báo cáo","画面ヘッダー","Screen header block","others","khối đầu trang",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn SC-26 — nơi mọi người dùng nội bộ xem một mã báo cáo theo bộ lọc rồi xuất CSV.
+Thành phần hiển thị: Tiêu đề màn ở dòng trên; dưới là dòng metadata gồm ba mã FE; mã FN; mức ưu tiên; danh sách yêu cầu khách; actor và thẻ trạng thái dựng.
+Chức năng và logic: Thuần hiển thị; không có tương tác. Màn dùng chung cho cả 12 mã báo cáo; mã đang xem nằm ở tham số route.",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","tiêu đề trang",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết đang ở màn xem dữ liệu báo cáo; không phải màn danh mục báo cáo SC-25.
+Thành phần hiển thị: Một dòng chữ gồm mã màn SC-26 và tên màn Xem và xuất báo cáo.
+Chức năng và logic: Tĩnh; không đổi theo mã báo cáo đang xem.",,,,,,
+"1.2","img-003","Dòng metadata màn","画面メタ情報","Screen metadata line","label","dòng metadata",,,,,,,,,"Mục đích và ngữ cảnh: Truy được từ màn về đúng ba nhóm tính năng và đúng yêu cầu khách mà màn phải thoả.
+Thành phần hiển thị: Chuỗi phân tách bằng dấu · gồm ba mã FE kèm dải mã báo cáo của từng nhóm; mã FN-10; mức ưu tiên tách theo nhóm; ba mã yêu cầu khách; actor cả 7 vai trò kèm ngoại lệ tạo batch chỉ dành cho bộ phận quyết toán; mã thi công SCR026_ReportViewer; route /reports/[reportCode] và thẻ trạng thái.
+Chức năng và logic: Tĩnh. Dòng này khai rõ hai mức ưu tiên khác nhau trong cùng một màn: nhóm ngày và nhóm kế toán là P0; nhóm tháng là P1.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn","実装状況タグ","Build status tag","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn đã có bản thi công để đối chiếu; không phải cam kết rằng cả 12 mã báo cáo đã chạy thật.
+Thành phần hiển thị: Một thẻ chữ nhỏ nằm cuối dòng metadata.
+Chức năng và logic: Tĩnh. Số mã chạy thật và số mã còn dùng dữ liệu mẫu nằm ở khối đối chiếu prototype cuối màn.",,,,,,
+"2","img-005","Khối ba nhóm báo cáo và bộ lọc bắt buộc","レポートカタログブロック","Report catalog block","others","khối tài liệu danh mục",,,,,,,,,"Mục đích và ngữ cảnh: Liệt đủ 12 mã báo cáo bắt buộc của khách; kèm bộ lọc bắt buộc của từng mã.
+Thành phần hiển thị: Tiêu đề khối; một bảng bốn cột gộp dòng theo ba nhóm FE và một ghi chú về yêu cầu báo cáo tháng.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là toàn bộ bề mặt báo cáo: 12 mã cố định; không có đường tự tạo mã mới hay tự tạo mẫu báo cáo.",,,,,,
+"2.1","img-006","Bảng danh mục 12 mã báo cáo","12レポートカタログテーブル","Twelve report catalog table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Đầy đủ 12 mã báo cáo của TBL-REPORT-01; chia theo ba nhóm tính năng và kèm bộ lọc bắt buộc.
+Thành phần hiển thị: Mười hai dòng trong bốn cột nhóm FE; mã; nội dung; bộ lọc bắt buộc. Nhóm FE-034 gồm RPT-01 đến RPT-05; nhóm FE-035 gồm RPT-06 đến RPT-09; nhóm FE-036 gồm RPT-10 đến RPT-12.
+Chức năng và logic: Bảng tĩnh; không lọc. Cột bộ lọc bắt buộc quyết định biểu mẫu bên dưới hiện field nào cho mã đang xem.",,,,,,"- Với mỗi mã; tập cột đầu ra được chốt ở đâu: trong tài liệu này; hay trong một phụ lục riêng theo mã?
+- Khi khách đổi bộ lọc bắt buộc của một mã thì đây là thay đổi phạm vi; hay là cấu hình?"
+"2.2","img-007","Ghi chú yêu cầu báo cáo tháng","月次レポート要件の注記","Monthly report requirement note","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Khai ràng buộc riêng của nhóm báo cáo tháng: số tháng không được trộn hai phiên bản biểu suất mà không nói rõ.
+Thành phần hiển thị: Một đoạn ghi chú dưới bảng danh mục: nhóm tháng phải tổng hợp theo ngày nghiệp vụ và phiên bản rule; RPT-12 hiện thẳng version và ngày hiệu lực; RPT-10 và RPT-11 phải ghi version đã dùng cho kỳ tổng hợp.
+Chức năng và logic: Thuần hiển thị. Đây là hệ quả của việc phiên bản biểu suất có thể đổi giữa tháng: một con số tháng không nêu version là con số không giải thích được.",,,,,,"- Khi một tháng có hai phiên bản biểu suất thì RPT-10 và RPT-11 tách dòng theo version; hay gộp một dòng và liệt các version đã dùng?"
+"3","img-008","Khối bộ lọc dùng chung","共通絞り込みブロック","Shared filter block","others","khối bộ lọc",,,,,,,,,"Mục đích và ngữ cảnh: Một biểu mẫu lọc dùng chung cho cả 12 mã; mỗi mã chỉ hiện những field mà danh mục khai là bắt buộc của nó.
+Thành phần hiển thị: Tiêu đề khối; hàng đầu gồm ô chọn Ngày nghiệp vụ và ô chọn Kỳ đối tượng hoặc Tháng; hàng sau gồm ô chọn Người tham gia; ô chọn Bộ lọc riêng của mã và ô nhập Batch code; cuối cùng là nút Lọc và nút Xoá điều kiện.
+Chức năng và logic: Gửi bằng phương thức GET về chính màn; không ghi dữ liệu. Bộ lọc thiếu hoặc sai phải báo lỗi tại field và không được âm thầm thay bằng giá trị mặc định.",,,,,,
+"3.1","img-009","Ô chọn Ngày nghiệp vụ","営業日","Business date input","date_picker","ô chọn ngày bắt buộc",,"date","true","YYYY-MM-DD",,,,"Điều kiện: giá trị phải đúng dạng YYYY-MM-DD và là một ngày lịch thật.
+Lỗi: báo lỗi ngay tại field; tuyệt đối không âm thầm thay bằng ngày hôm nay.
+Điều kiện: field là bắt buộc với các mã khai nó trong danh mục.
+Lỗi: báo lỗi tại field và không chạy truy vấn.","Mục đích và ngữ cảnh: Chọn ngày nghiệp vụ cần xem; là bộ lọc bắt buộc của năm mã RPT-01; RPT-04; RPT-05; RPT-06 và RPT-08.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ kèm dấu bắt buộc; ô ngày mang giá trị mẫu 2026-09-08; dòng gợi ý liệt kê các mã dùng field này và nhắc giá trị sai định dạng phải báo lỗi ngay tại field.
+Chức năng và logic: Đọc lệch ngày là sai số liệu đối chiếu; nên hành vi bắt buộc là báo lỗi chứ không thay giá trị. Field này chỉ hiện với các mã có khai nó trong danh mục.",,"Không điều hướng; nạp lại chính màn với ngày đã chọn.",,,"Ngày nghiệp vụ là trục lọc chung; mỗi mã báo cáo áp nó lên thực thể riêng của mình như giao dịch; giao hàng; dòng đối chiếu hay log điều chỉnh. Vì một field lọc trải nhiều thực thể nên phần mapping cột để trống.","- Ngày nghiệp vụ mặc định khi mở màn là hôm nay; hay ngày nghiệp vụ đã chốt gần nhất?
+- Có cho chọn ngày ở tương lai không; vì báo cáo ngày tương lai luôn rỗng?"
+"3.2","img-010","Ô chọn Kỳ đối tượng hoặc Tháng","対象期間・対象月","Period or month input","date_picker","ô chọn kỳ bắt buộc",,"date","true","YYYY-MM",,,,"Điều kiện: giá trị phải đúng dạng YYYY-MM và là một tháng lịch thật.
+Lỗi: báo lỗi ngay tại field; không âm thầm thay bằng kỳ khác.
+Điều kiện: field là bắt buộc với các mã khai nó trong danh mục.
+Lỗi: báo lỗi tại field và không chạy truy vấn.","Mục đích và ngữ cảnh: Chọn kỳ tính thưởng hoặc tháng tổng hợp; không phải ngày nghiệp vụ.
+Thành phần hiển thị: Nhãn Kỳ đối tượng / Tháng kèm dấu bắt buộc; ô mang giá trị mẫu 2026-09; dòng gợi ý nói đây là kỳ tính 完納奨励金 của RPT-07 và tháng tổng hợp của RPT-10 và RPT-11.
+Chức năng và logic: Field này khác ô Ngày nghiệp vụ về ý nghĩa và về độ chi tiết; gộp hai field là nguồn của đọc lệch số liệu.",,"Không điều hướng; nạp lại chính màn với kỳ đã chọn.",,,"Với RPT-07 đây là kỳ tính thưởng nên áp lên kỳ của kết quả tính thưởng; với RPT-10 và RPT-11 đây là tháng tổng hợp trải nhiều ngày nghiệp vụ. Vì một field lọc phục vụ hai nghĩa khác nhau nên phần mapping cột để trống.","- Kỳ của RPT-07 là một tháng; hay là một ngày nghiệp vụ đã chốt như ở SC-22?
+- Nếu là một ngày thì hai field này nên tách hẳn nhãn và định dạng để không bị nhập lẫn?"
+"3.3","img-011","Ô chọn Người tham gia","参加者","Participant select","dropdown","ô chọn lọc",,"string","false",,,,"Tất cả người tham gia",,"Mục đích và ngữ cảnh: Thu hẹp báo cáo về một người tham gia; là bộ lọc bắt buộc của RPT-03; RPT-07 và RPT-10.
+Thành phần hiển thị: Nhãn Người tham gia; ô chọn mang giá trị mặc định Tất cả người tham gia; dòng gợi ý liệt kê ba mã dùng field này và nhắc nhãn chỉ hiện tên hiển thị chứ không hiện thư điện tử.
+Chức năng và logic: Không bắt buộc; bỏ trống là xem toàn bộ. Nhãn tuyệt đối không được rơi về thư điện tử nội bộ vì màn này là đường ra dữ liệu.",,"Không điều hướng; nạp lại chính màn với người tham gia đã chọn.","participant","id","Lọc theo người tham gia; nhãn lấy tên hiển thị. Prototype có bảng participant thật; nhưng nguồn nhãn của ô chọn chủ thể thực hiện lại rơi về thư điện tử nội bộ khi tên rỗng.",
+"3.4","img-012","Ô chọn Bộ lọc riêng của mã","レポート固有の絞り込み","Report-specific filter select","dropdown","ô chọn lọc theo mã",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Một khe lọc dùng chung; nghĩa của nó do mã báo cáo đang xem quyết định.
+Thành phần hiển thị: Nhãn Bộ lọc riêng của mã; ô chọn mang giá trị mặc định Tất cả; dòng gợi ý liệt kê bảy nghĩa theo bảy mã: lô hàng và trạng thái giao dịch của RPT-02; trạng thái hiệu lực của RPT-03; loại ngoại lệ của RPT-04; chủ thể thực hiện điều chỉnh của RPT-08; trạng thái tranh chấp của RPT-09; loại giao dịch của RPT-11; phiên bản rule và ngày hiệu lực của RPT-12.
+Chức năng và logic: Không bắt buộc; bỏ trống là xem toàn bộ. Một mã có thể khai nhiều khe lọc riêng như RPT-02 khai cả lô hàng và trạng thái giao dịch.",,"Không điều hướng; nạp lại chính màn với giá trị đã chọn.",,,"Mỗi mã báo cáo ánh xạ field này sang một thực thể khác nhau: lô hàng và trạng thái giao dịch; trạng thái hiệu lực; loại ngoại lệ giao hàng; chủ thể thực hiện điều chỉnh; trạng thái tranh chấp; loại giao dịch; phiên bản rule. Vì một field phục vụ bảy nghĩa nên phần mapping cột để trống.","- Với mã khai hai bộ lọc riêng như RPT-02 thì màn hiện hai ô; hay một ô ghép?
+- Danh sách lựa chọn của từng nghĩa lấy từ dữ liệu thật; hay từ một danh mục tĩnh?"
+"3.5","img-013","Ô nhập Batch code","バッチコード","Batch code input","text_form","ô nhập theo mã",,"string","false","mã batch do hệ thống sinh; nhập đúng mã đã có trong cơ sở dữ liệu",,"40",,"Điều kiện: batch code phải khớp một batch đã tồn tại và thuộc đúng ngày nghiệp vụ đang lọc.
+Lỗi: từ chối vì không tìm thấy batch; không trả về dữ liệu của batch khác.
+Điều kiện: muốn xuất CSV của RPT-06 thì batch code là bắt buộc.
+Lỗi: từ chối xuất và nói rõ đang ở chế độ xem trước.","Mục đích và ngữ cảnh: Chuyển RPT-06 giữa hai chế độ: xem trước số liệu hiện tại và xem đúng ảnh chụp của một batch đã gửi kế toán.
+Thành phần hiển thị: Nhãn Batch code; ô nhập mang giá trị mẫu BATCH-0001; dòng gợi ý nói chỉ RPT-06 dùng field này và không có batch code thì là chế độ xem trước; không xuất được CSV.
+Chức năng và logic: Chỉ hiện với RPT-06. Không có giá trị thì màn ở chế độ xem trước và nút xuất vô hiệu; có giá trị thì dòng lấy từ ảnh chụp bất biến của batch và xuất CSV hoạt động.",,"Không điều hướng; nạp lại chính màn ở chế độ xem batch.","accounting_export_batch","batch_code","Mã batch xuất kế toán; duy nhất. Prototype có bảng và cột này; tên file CSV dựng từ mã đã xác nhận trong cơ sở dữ liệu chứ không lấy từ tham số đường dẫn.","- Batch code là ô nhập tay; hay nên là ô chọn từ danh sách batch của ngày đang lọc để tránh nhập sai?"
+"3.6","img-014","Nút Lọc","絞り込みボタン","Filter button","button","nút phụ trong hàng lọc","text_only",,,,,,,,"Mục đích và ngữ cảnh: Áp dụng bộ lọc đã chọn cho bảng kết quả.
+Thành phần hiển thị: Một nút chữ đặt dưới hai hàng field lọc.
+Chức năng và logic: Gửi biểu mẫu bằng phương thức GET; không ghi dữ liệu. Bộ lọc thiếu hoặc sai thì báo lỗi tại field và không chạy truy vấn.","on_click","Nạp lại chính màn với bộ lọc đã chọn; không sang màn khác.",,,,
+"3.7","img-015","Nút Xoá điều kiện","条件クリアボタン","Clear filters button","button","nút phụ trong hàng lọc","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đưa biểu mẫu lọc về trạng thái ban đầu mà không phải xoá từng field.
+Thành phần hiển thị: Một nút chữ đặt cạnh nút Lọc.
+Chức năng và logic: Không ghi dữ liệu. Với các mã có field bắt buộc thì sau khi xoá; màn phải nói rõ đang thiếu điều kiện thay vì tự nạp một giá trị mặc định.","on_click","Nạp lại chính màn với bộ lọc rỗng; giữ nguyên mã báo cáo đang xem.",,,,"- Xoá điều kiện có xoá luôn các field bắt buộc như ngày nghiệp vụ; hay đưa chúng về giá trị mặc định?"
+"4","img-016","Khối bảng kết quả và xuất CSV","結果テーブル・CSV出力ブロック","Result table and CSV export block","others","khối danh sách và xuất dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Khung bảng và cơ chế phân trang dùng chung cho cả 12 mã; kèm đường xuất CSV toàn tập đã lọc.
+Thành phần hiển thị: Tiêu đề khối; bảng kết quả với tập cột thay đổi theo mã; khối phân trang; nút Xuất CSV và một ghi chú ba đoạn ở dưới.
+Chức năng và logic: Chỉ đọc dữ liệu; nhưng xuất CSV là một lần công bố dữ liệu đối chiếu nên phải để lại dấu vết kiểm toán.",,,,,,
+"4.1","img-017","Bảng kết quả báo cáo","レポート結果テーブル","Report result table","table","bảng danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Hiển thị dữ liệu của mã báo cáo đang xem; mọi mã đi qua cùng một khung bảng.
+Thành phần hiển thị: Bảng có tiêu đề cột dạng Cột 1 đến Cột N để nói rõ tập cột là biến theo mã; ba dòng mẫu với ngày nghiệp vụ; mã giao dịch; tên người tham gia và một số tiền.
+Chức năng và logic: Tập cột do mã báo cáo quy định; khung bảng và cơ chế phân trang là dùng chung. Không mã nào mang cột đường dẫn bằng chứng và không mã nào mang thư điện tử nội bộ.",,,,,"Tập cột và nguồn dữ liệu do từng mã báo cáo quy định nên không có một thực thể duy nhất cho bảng này. Prototype dùng một khung bảng chung; tập cột khai theo từng mã.","- Bảng có cần sắp xếp theo cột không; hay thứ tự do từng mã báo cáo định sẵn?
+- Với mã có rất nhiều cột thì bảng cuộn ngang; hay cho người dùng chọn cột hiển thị?"
+"4.2","img-018","Khối phân trang","ページネーション","Pagination block","pagination","khối phân trang",,,,,,,,,"Mục đích và ngữ cảnh: Đi lại giữa các trang kết quả của mã báo cáo đang xem.
+Thành phần hiển thị: Ba thành phần cạnh nhau: nút Trang trước; thẻ chỉ số trang và nút Trang sau.
+Chức năng và logic: Phân trang chỉ áp cho bảng trên màn. Xuất CSV lấy toàn bộ tập đã lọc nên không bị giới hạn theo trang.",,,,,,"- Số dòng mỗi trang là cố định; hay cho người dùng chọn?"
+"4.2.1","img-019","Nút Trang trước","前ページボタン","Previous page button","button","nút điều hướng trang","text_only",,,,,,,,"Mục đích và ngữ cảnh: Về trang kết quả liền trước.
+Thành phần hiển thị: Một nút chữ mang dấu mũi nhọn hướng trái và chữ Trang trước.
+Chức năng và logic: Vô hiệu khi đang ở trang đầu. Giữ nguyên toàn bộ bộ lọc khi đổi trang.","on_click","Nạp lại chính màn ở trang liền trước; giữ nguyên mã báo cáo và bộ lọc.",,,,
+"4.2.2","img-020","Thẻ chỉ số trang","ページ番号表示","Page indicator","label","thẻ chỉ số",,"integer",,"Trang <trang hiện tại> / <tổng số trang>",,,,,"Mục đích và ngữ cảnh: Cho biết đang ở trang nào trong tổng bao nhiêu trang của tập đã lọc.
+Thành phần hiển thị: Một thẻ chữ nhỏ giữa hai nút điều hướng; giá trị mẫu Trang 1 / 3.
+Chức năng và logic: Chỉ đọc. Tổng số trang tính từ tổng số dòng khớp bộ lọc; đổi bộ lọc là tính lại.",,,,,,
+"4.2.3","img-021","Nút Trang sau","次ページボタン","Next page button","button","nút điều hướng trang","text_only",,,,,,,,"Mục đích và ngữ cảnh: Sang trang kết quả liền sau.
+Thành phần hiển thị: Một nút chữ mang chữ Trang sau và dấu mũi nhọn hướng phải.
+Chức năng và logic: Vô hiệu khi đang ở trang cuối. Giữ nguyên toàn bộ bộ lọc khi đổi trang.","on_click","Nạp lại chính màn ở trang liền sau; giữ nguyên mã báo cáo và bộ lọc.",,,,
+"4.3","img-022","Nút Xuất CSV","CSV出力ボタン","Export CSV button","button","nút chính xuất dữ liệu","text_only",,,,,,,"Điều kiện: mã báo cáo phải nằm trong danh mục 12 mã.
+Lỗi: từ chối vì không có mã báo cáo đó.
+Điều kiện: riêng RPT-06 phải có batch code khớp một batch đã tồn tại của đúng ngày nghiệp vụ đang lọc.
+Lỗi: từ chối và nói rõ thiếu batch code hoặc không tìm thấy batch.","Mục đích và ngữ cảnh: Lấy toàn bộ tập đã lọc ra file CSV để dùng ngoài hệ thống; kể cả bàn giao cho bộ phận kế toán.
+Thành phần hiển thị: Một nút chữ nhấn mạnh đặt sau khối phân trang.
+Chức năng và logic: Xuất toàn bộ tập đã lọc; không giới hạn theo trang. Mỗi lần xuất là một lần công bố dữ liệu đối chiếu nên phải để lại dấu vết: ai tải; mã báo cáo nào; bộ lọc nào; thời điểm nào.","on_click","Tải một file CSV về máy người dùng; không rời màn.",,,"Xuất CSV không ghi dữ liệu nghiệp vụ; nhưng thiết kế đòi ghi một dòng dấu vết kiểm toán cho mỗi lần xuất. Prototype chưa có dòng nào cho đường xuất nên phần mapping để trống.","- Với tập rất lớn thì xuất đồng bộ ngay; hay đưa vào hàng đợi rồi thông báo khi file sẵn sàng?
+- Dấu vết kiểm toán của lần xuất có ghi cả số dòng đã xuất không?"
+"4.4","img-023","Ghi chú tập cột; xuất toàn tập và dấu vết kiểm toán","出力仕様の注記","Export rule note","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Bốn ràng buộc của khung xuất dữ liệu; viết ngay dưới nút để không bị bỏ lúc dựng.
+Thành phần hiển thị: Một đoạn ghi chú bốn ý: tập cột do từng mã quy định nhưng dùng chung khung bảng và phân trang; xuất CSV lấy toàn bộ tập đã lọc; RPT-08 không mang cột đường dẫn bằng chứng và không mang thư điện tử vì bằng chứng điều chỉnh chỉ xem trong SC-20; mọi lần xuất phải để lại dấu vết kiểm toán.
+Chức năng và logic: Thuần hiển thị. Ý thứ ba và thứ tư là hai ràng buộc bảo mật và truy vết; không phải chi tiết trình bày.",,,,,,
+"5","img-024","Khối bàn giao kế toán của RPT-06","会計連携ブロック","Accounting handover block","others","khối thao tác riêng theo mã",,,,,,,,,"Mục đích và ngữ cảnh: Phần riêng của RPT-06: tạo batch bàn giao dữ liệu đối chiếu cho hệ kế toán theo IF-ACC-01.
+Thành phần hiển thị: Tiêu đề khối; một đoạn mô tả sáu trường tối thiểu và hai chế độ xem; nút Tạo batch xuất kế toán kèm nhãn giới hạn vai trò; đường sang SC-27 và một ghi chú về tính append-only của batch.
+Chức năng và logic: Chỉ hiện với RPT-06. Dữ liệu bàn giao là bảng đối chiếu ngày sau khi đã lock; chưa lock thì không tạo được batch.",,,,,,"- Trạng thái dòng theo RFP có ba giá trị chờ; đã xác nhận và đã điều chỉnh — điều kiện sinh ra từng giá trị là gì?
+- Hệ kế toán bên nhận cộng dồn theo batch code; hay thay thế batch cũ bằng batch mới của cùng ngày?"
+"5.1","img-025","Nút Tạo batch xuất kế toán","会計エクスポートバッチ作成ボタン","Create accounting export batch button","button","nút chính có ghi dữ liệu","text_only",,,,,,,"Điều kiện: ngày nghiệp vụ phải đã được lock.
+Lỗi: từ chối kèm câu ""Ngày nghiệp vụ chưa lock; không thể tạo batch.""
+Điều kiện: ngày nghiệp vụ phải đúng dạng và là ngày lịch thật.
+Lỗi: từ chối kèm câu ""Ngày nghiệp vụ không hợp lệ.""
+Điều kiện: không có yêu cầu tạo batch khác cho cùng ngày đang chạy.
+Lỗi: từ chối kèm câu ""Có nhiều yêu cầu tạo batch cùng lúc; hãy thử lại.""","Mục đích và ngữ cảnh: Chốt một lần bàn giao dữ liệu đối chiếu sang hệ kế toán; mỗi lần là một batch có mã riêng.
+Thành phần hiển thị: Một nút chữ nhấn mạnh trong khối RPT-06.
+Chức năng và logic: Chỉ bộ phận quyết toán thấy và gọi được; sáu vai trò còn lại không thấy nút và gọi trực tiếp cũng bị chặn. Ngày đã lock là tiền đề; chưa lock thì từ chối.","on_click","Ở lại màn; batch mới xuất hiện trong danh sách batch của ngày và chuyển được sang chế độ xem batch.","accounting_export_batch",,"Ghi một batch mới kèm ảnh chụp bất biến của các dòng đã gửi và đóng dấu thuế suất cùng cơ sở thuế lên batch. Prototype có bảng này thật; bảng chỉ nhận thêm dòng và không có đường sửa hay xoá.",
+"5.2","img-026","Nhãn giới hạn vai trò của thao tác tạo batch","ロール制限ラベル","Role restriction label","label","chú thích giới hạn vai trò",,,,,,,,,"Mục đích và ngữ cảnh: Nói rõ chặn là ở hành động chứ không ở việc vào trang; đây là điểm dễ dựng sai nhất của màn.
+Thành phần hiển thị: Một thẻ chữ mờ đặt cạnh nút Tạo batch; nội dung Chỉ ROLE-SETTLEMENT.
+Chức năng và logic: Cả 7 vai trò vào màn; xem; lọc; phân trang và xuất CSV được. Chỉ riêng thao tác tạo batch bị chặn theo vai trò.",,,,,,
+"5.3","img-027","Ghi chú batch append-only và đóng dấu thuế","バッチ不変性の注記","Batch immutability note","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Hai ràng buộc giữ cho dữ liệu đã bàn giao vẫn tự giải thích được về sau.
+Thành phần hiển thị: Một đoạn ghi chú dưới hàng nút: batch là append-only và chỉ được thay bằng batch mới của cùng ngày; thuế suất cùng cơ sở thuế được đóng dấu lên từng batch.
+Chức năng và logic: Thuần hiển thị. Đóng dấu thuế lên batch là điều kiện để batch cũ còn đọc được sau khi quy tắc thuế đổi.",,,,,,
+"6","img-028","Khối liệt kê trạng thái màn","画面状態一覧ブロック","Screen state list block","others","khối tài liệu trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê đủ tám trạng thái màn phải xử lý để không bỏ sót đường rẽ nào lúc dựng.
+Thành phần hiển thị: Tiêu đề khối và tám thẻ trạng thái xếp thành hai hàng bốn cột; mỗi thẻ có tiêu đề và một đoạn mô tả hành vi.
+Chức năng và logic: Thuần hiển thị tài liệu. Hai thẻ cuối khai hai chỗ dễ đọc sai: chặn quyền là ở hành động chứ không ở vào trang; và lock là tiền đề chứ không phải rào chặn.",,,,,,
+"6.1","img-029","Thẻ trạng thái Rỗng","空状態カード","Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả màn khi bộ lọc hợp lệ nhưng không có dòng nào khớp.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng kèm câu hiển thị Không có dữ liệu khớp với bộ lọc đã chọn và ghi chú vẫn xuất CSV được; file chỉ có dòng header.
+Chức năng và logic: Thuần hiển thị tài liệu. Xuất một file chỉ có header là hợp lệ và có nghĩa: chứng minh đã kiểm và không có dữ liệu.",,,,,,
+"6.2","img-030","Thẻ trạng thái Bộ lọc thiếu hoặc sai","絞り込み条件不正カード","Invalid filter card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai hành vi bắt buộc khi bộ lọc không dùng được; đây là ràng buộc an toàn số liệu.
+Thành phần hiển thị: Thẻ tiêu đề Bộ lọc thiếu hoặc sai kèm mô tả báo lỗi tại field và không âm thầm thay bằng giá trị mặc định vì đọc lệch ngày là sai số liệu đối chiếu.
+Chức năng và logic: Thuần hiển thị tài liệu. Thay giá trị im lặng là chỗ người đọc dễ tưởng đang xem ngày mình chọn.",,,,,,
+"6.3","img-031","Thẻ trạng thái RPT-06 xem trước và xem batch","RPT-06 プレビュー・バッチ表示カード","RPT-06 preview and batch card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt hai chế độ của RPT-06 để không ai gửi kế toán một bản xem trước.
+Thành phần hiển thị: Thẻ tiêu đề RPT-06 xem trước / xem batch kèm hai đoạn: chưa có batch code thì xem được số liệu; nút xuất vô hiệu và chỉ tạo batch được nếu là bộ phận quyết toán; có batch code thì dòng lấy từ ảnh chụp của batch và xuất CSV hoạt động.
+Chức năng và logic: Thuần hiển thị tài liệu. Chế độ xem trước là số liệu hiện tại chưa gửi; chế độ xem batch là số liệu đã gửi và bất biến.",,,,,,
+"6.4","img-032","Thẻ trạng thái Mã báo cáo không tồn tại","未定義レポートコードカード","Unknown report code card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai ranh giới phạm vi của FN-10: danh mục chỉ có 12 mã và không có công cụ tự tạo báo cáo.
+Thành phần hiển thị: Thẻ tiêu đề Mã báo cáo không tồn tại kèm mô tả ra trang không tìm thấy vì catalog chỉ có 12 mã và không có đường tự tạo mã mới.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là ranh giới phạm vi được khách khai rõ; không phải giới hạn kỹ thuật tạm thời.",,,,,,
+"6.5","img-033","Thẻ trạng thái Đang tải và lỗi tải","読み込み・読み込み失敗カード","Loading and load error card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hai trạng thái nạp dữ liệu của màn.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải / lỗi tải kèm mô tả khung trang hiện dần và lỗi truy vấn rơi vào khối lỗi kèm nút tải lại.
+Chức năng và logic: Thuần hiển thị tài liệu. Lỗi truy vấn phải cho người dùng thử lại; không được để màn trắng.",,,,,,
+"6.6","img-034","Thẻ trạng thái Không có quyền","権限なしカード","No permission card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai rõ màn này không gác vai trò khi vào; chặn là ở một hành động duy nhất.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền kèm mô tả không áp dụng khi vào màn vì cả 7 vai trò xem; lọc; phân trang và xuất CSV được; chỉ hành động tạo batch bị chặn theo vai trò.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là ngoại lệ so với các màn khác của hệ thống nên phải khai rõ để không bị dựng thành gác vai trò.",,,,,,
+"6.7","img-035","Thẻ trạng thái Đang gửi và gửi lỗi","送信中・送信失敗カード","Submitting and submit error card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi của thao tác tạo batch trong lúc chạy và khi lỗi.
+Thành phần hiển thị: Thẻ tiêu đề Đang gửi / gửi lỗi kèm mô tả nút vô hiệu khi đang gửi và lỗi phải nói rõ lý do: ngày chưa lock; hoặc có yêu cầu tạo batch cùng lúc.
+Chức năng và logic: Thuần hiển thị tài liệu. Mỗi nguyên nhân lỗi phải có thông báo riêng để người dùng biết nên chờ; nên lock ngày; hay nên thử lại.",,,,,,
+"6.8","img-036","Thẻ trạng thái Read-only vì lock","締め後読み取り専用カード","Read-only after lock card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chặn một cách đọc sai: ở màn này lock không khoá gì; lock là điều kiện để làm được việc.
+Thành phần hiển thị: Thẻ tiêu đề Read-only vì lock kèm mô tả ngược lại là đúng vì lock là tiền đề để tạo batch và màn này không bao giờ khoá vì lock.
+Chức năng và logic: Thuần hiển thị tài liệu. Khai ngược lại như vậy là có chủ đích vì các màn khác của hệ thống bị khoá sau lock.",,,,,,
+"7","img-037","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype comparison block","others","khối tài liệu đối chiếu",,,,,,,,,"Mục đích và ngữ cảnh: Đặt cách cài đặt hiện tại của prototype tách khỏi phần thiết kế; để đọc spec không lẫn hiện trạng vào yêu cầu.
+Thành phần hiển thị: Tiêu đề khối và một bảng ba cột: thiết kế đòi; prototype làm và mức lệch.
+Chức năng và logic: Thuần hiển thị tài liệu. Khối này là hiện trạng để đối chiếu; không phải nguồn của thiết kế.",,,,,,
+"7.1","img-038","Bảng đối chiếu thiết kế và prototype","設計・実装差分テーブル","Design versus prototype table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Tám chỗ prototype khác thiết kế; kèm mức lệch của từng chỗ.
+Thành phần hiển thị: Tám dòng: 7 trên 12 mã chạy thật và 5 mã còn dùng dữ liệu mẫu; bản xuất kế toán rơi về thư điện tử nội bộ; đường xuất CSV không ghi dấu vết kiểm toán; ngày nghiệp vụ sai âm thầm rơi về hôm nay; RPT-09 chưa dựng vì phụ thuộc SC-19; thuế suất và cơ sở thuế còn là giả định; chức năng batch đang nằm trong màn này thay vì SC-27; và một ghi chú nội bộ khai sai số mã dùng dữ liệu mẫu.
+Chức năng và logic: Bảng tĩnh; không lọc. Hai dòng nặng nhất là rò thư điện tử nội bộ ra ngoài tổ chức và việc xuất dữ liệu không truy vết được.",,,,,,
+"8","img-039","Chân ghi chú phân quyền; định dạng CSV và nguồn as-built","権限・CSV仕様・出典フッター","Permission CSV format and source footer","label","chân ghi chú màn",,,,,,,,,"Mục đích và ngữ cảnh: Chốt lại phân quyền; định dạng file xuất và trỏ về tài liệu hiện trạng của prototype.
+Thành phần hiển thị: Ba dòng: dòng phân quyền nói cả 7 vai trò lọc; phân trang và xuất CSV được và riêng tạo batch chỉ bộ phận quyết toán; dòng định dạng CSV nói UTF-8 có BOM; phân tách dấu phẩy; quoting RFC 4180; kết dòng CRLF; tên file theo mã và ngày và riêng RPT-06 dựng từ batch code đã xác nhận trong cơ sở dữ liệu; dòng cuối là liên kết sang tài liệu bản as-built.
+Chức năng và logic: Thuần hiển thị. UTF-8 có BOM là bắt buộc để file chở được cả chữ Nhật và tiếng Việt có dấu; lấy tên file từ giá trị đã xác nhận trong cơ sở dữ liệu là lớp chặn chèn nội dung vào phần đầu phản hồi.",,,,,,"- Hệ kế toán bên nhận đọc được UTF-8 có BOM; hay đang chờ một bảng mã khác?"

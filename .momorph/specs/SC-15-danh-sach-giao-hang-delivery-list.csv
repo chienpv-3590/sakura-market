@@ -1,0 +1,103 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu trang màn danh sách giao hàng","配送一覧ヘッダー","Delivery list page header","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-020 → FN-06 → FR-DEL-01 và khai miền dữ liệu mà màn chạm
+Thành phần hiển thị: tiêu đề màn; dòng meta truy vết yêu cầu; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu; không có tương tác",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-15 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết một tính năng một yêu cầu để đọc màn không phải tra chỗ khác
+Thành phần hiển thị: mã FE-020; nhóm FN-06; ưu tiên P0; một yêu cầu chức năng; hai miền dữ liệu; sơ đồ liên quan; mã thi công; route; actor
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,"Đã dựng",,"Mục đích và ngữ cảnh: cho biết màn này đã có bản thi công để đối chiếu; khác với màn còn là thiết kế thuần
+Thành phần hiển thị: một nhãn chữ
+Chức năng và logic: tĩnh — giá trị đến từ trạng thái roster; không đổi theo dữ liệu nghiệp vụ",,,,,,
+"2","img-005","Khối bộ lọc danh sách","絞り込みパネル","Filter panel","others","filter_panel",,,,,,,,,"Mục đích và ngữ cảnh: thu hẹp danh sách theo bốn tiêu chí mà khâu giao nhận dùng thật trong khung giờ cập nhật giao nhận
+Thành phần hiển thị: bốn ô lọc xếp một hàng kèm chú thích từng ô; một nút áp dụng
+Chức năng và logic: gửi bốn tiêu chí về cùng một truy vấn danh sách; không tiêu chí nào bắt buộc; để trống là không lọc theo tiêu chí đó",,,,,,
+"2.1","img-006","Ô lọc ngày nghiệp vụ","業務日フィルター","Business date filter","date_picker","single_date",,"date","false","YYYY-MM-DD",,,"2026-09-09","Điều kiện: ngày nhập lớn hơn ngày nghiệp vụ hiện tại theo JST
+Lỗi: ""Ngày nghiệp vụ không nhận ngày tương lai.""
+Điều kiện: chuỗi ngày không đúng dạng YYYY-MM-DD
+Lỗi: ""Ngày nghiệp vụ không đúng định dạng.""","Mục đích và ngữ cảnh: chọn ngày nghiệp vụ cần theo dõi; mặc định là ngày đang diễn ra
+Thành phần hiển thị: nhãn hai ngôn ngữ; một ô chọn ngày; một chú thích về mốc múi giờ
+Chức năng và logic: neo theo giờ Nhật; không nhận ngày tương lai vì ngày nghiệp vụ là ngày đã hoặc đang diễn ra","on_click","Ở lại màn; nạp lại danh sách theo ngày đã chọn","transaction","business_date","Prototype có cột này với ràng buộc không rỗng và lọc theo đúng nó; nhưng ô lọc không có chặn trên nên ngày tương lai vẫn nhập được và cho ra danh sách rỗng không lời giải thích.","- Ngày nghiệp vụ của danh sách lọc theo ngày của giao dịch hay theo ngày của từng lần giao? Hai cách cho hai danh sách khác nhau vì một lần giao có ngày riêng."
+"2.2","img-007","Ô lọc trạng thái giao hàng","状態フィルター","Delivery status filter","dropdown","single_select",,"string","false",,,,"Tất cả","Điều kiện: giá trị chọn không thuộc bốn trạng thái của FR-DEL-01
+Lỗi: ""Trạng thái không hợp lệ.""","Mục đích và ngữ cảnh: thu hẹp danh sách về một bước của vòng đời giao hàng
+Thành phần hiển thị: nhãn hai ngôn ngữ; một danh sách chọn có giá trị Tất cả; một chú thích liệt bốn trạng thái
+Chức năng và logic: danh sách chọn phải đủ bốn trạng thái của FR-DEL-01 cộng giá trị Tất cả","on_click","Ở lại màn; nạp lại danh sách theo trạng thái đã chọn","delivery","status","Prototype có ràng buộc bốn giá trị trên cột này nhưng danh sách chọn chỉ đưa ra ba; giá trị ngoại lệ bị bỏ vì chưa đường ghi nào đặt được.","- Danh sách chọn nên đưa ra đủ bốn trạng thái ngay từ đầu; hay chỉ mở giá trị ngoại lệ sau khi màn ghi ngoại lệ chạy? Chọn sai thì người dùng gặp một bộ lọc luôn trả rỗng.
+- Chọn được nhiều trạng thái cùng lúc hay chỉ một? Khâu giao nhận thường cần xem chờ và đang giao chung một danh sách.
+- Định dạng hiển thị của giá trị trạng thái còn thiếu: hiện nguyên văn bốn nhãn của FR-DEL-01; hay có mã ngắn đi kèm để lọc bằng bàn phím?"
+"2.3","img-008","Ô lọc mã giao dịch","取引番号フィルター","Transaction code filter","text_form","text_input",,"string","false",,,,"TXN-0001",,"Mục đích và ngữ cảnh: tìm nhanh một giao dịch cụ thể khi hiện trường đọc mã trên phiếu
+Thành phần hiển thị: nhãn hai ngôn ngữ và một ô nhập chữ
+Chức năng và logic: để trống là không lọc theo mã; cách khớp mã còn là câu hỏi mở","on_click","Ở lại màn; nạp lại danh sách theo mã giao dịch đã nhập","transaction","txn_code","Prototype có cột này với ràng buộc duy nhất nhưng chưa có đường lọc nào theo nó ở màn danh sách giao hàng.","- Ô này tìm khớp đúng cả mã hay khớp một phần mã? Người ở hiện trường thường chỉ đọc được vài ký tự cuối trên phiếu.
+- Định dạng mã giao dịch còn thiếu trong nguồn thiết kế: mã có luôn là tiền tố cố định cộng số thứ tự; hay có thêm phần theo ngày? Cần biết trước khi kiểm định dạng ô nhập."
+"2.4","img-009","Ô lọc người tham gia","買出人フィルター","Participant filter","dropdown","single_select",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: xem tiến độ giao của một người tham gia; nhu cầu thường gặp khi có khiếu nại
+Thành phần hiển thị: nhãn hai ngôn ngữ; một danh sách chọn; một chú thích cấm hiện thông tin liên hệ
+Chức năng và logic: chỉ hiện tên người tham gia; không bao giờ hiện thông tin liên hệ cá nhân trên danh sách chọn","on_click","Ở lại màn; nạp lại danh sách theo người tham gia đã chọn","participant","name","Prototype có cột tên và quan hệ từ giao dịch sang người mua nhưng màn danh sách giao hàng chưa hiển thị và chưa lọc theo người tham gia.","- Danh sách chọn chỉ gồm người tham gia còn hiệu lực; hay gồm cả người đã mất hiệu lực? Giao hàng của giao dịch cũ vẫn phải giao nên có thể cần cả nhóm sau.
+- Định dạng nhãn người tham gia còn thiếu: chỉ tên; hay tên kèm mã và phân loại người tham gia? Cần biết để danh sách chọn không có hai dòng trùng tên."
+"2.5","img-010","Nút áp dụng bộ lọc","絞り込みボタン","Apply filter button","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: gom bốn tiêu chí thành một lần truy vấn thay vì nạp lại mỗi lần đổi một ô
+Thành phần hiển thị: một nút chữ
+Chức năng và logic: gửi bốn tiêu chí; giữ nguyên tiêu chí sau khi nạp lại để người dùng thấy mình đang lọc theo gì","on_click","Ở lại màn; nạp lại bảng danh sách theo bốn tiêu chí đang đặt và giữ tiêu chí trên đường dẫn để chia sẻ lại được",,,,
+"3","img-011","Khối danh sách giao hàng","配送一覧パネル","Delivery list panel","others","list_panel",,,,,,,,,"Mục đích và ngữ cảnh: bề mặt chính của màn: cho biết giao dịch nào còn phải giao và đã giao được bao nhiêu
+Thành phần hiển thị: một bảng tám cột kèm một dòng chú thích điều hướng bên dưới
+Chức năng và logic: chỉ đọc; mỗi dòng là một cửa vào chi tiết giao hàng",,,,,,
+"3.1","img-012","Bảng danh sách giao hàng tám cột","配送一覧テーブル","Delivery list table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: cho thấy tiến độ giao của cả ngày trong một bảng; thoả nghiệm thu của FR-DEL-01 về trạng thái theo từng lần thực hiện
+Thành phần hiển thị: tám cột: mã giao dịch; người tham gia; ngày nghiệp vụ; số lượng đặt; đã giao lũy kế; còn lại; số lần giao; trạng thái
+Chức năng và logic: chỉ đọc; sắp theo ngày nghiệp vụ giảm dần và trong cùng ngày thì giao dịch còn hàng chưa giao lên trước",,,"delivery","status; delivered_qty","Prototype đọc hai cột này cùng với ba cột của giao dịch; ba cột thiết kế đòi thêm là người tham gia; số lượng còn lại và số lần giao thì màn hiện chưa có.","- Bảng phải phân trang ở kích thước nào? Nguồn thiết kế đặt ngày cao điểm ở khoảng một nghìn hai trăm giao dịch nên đổ hết một lần là không dùng được.
+- Cột số lần giao đếm mọi lần giao; hay chỉ đếm lần giao đã xác nhận? Hai cách cho hai con số khi có lần giao đang chờ xác nhận."
+"3.1.1","img-013","Hàng tiêu đề tám cột","テーブル見出し行","Table header row","label","table_header",,,,,,,,,"Mục đích và ngữ cảnh: gọi tên từng cột bằng cả hai ngôn ngữ để người vận hành và bên nghiệp vụ Nhật đọc cùng một bảng
+Thành phần hiển thị: tám ô tiêu đề; mỗi ô một nhãn tiếng Việt trên một nhãn tiếng Nhật
+Chức năng và logic: tĩnh; không sắp xếp được theo cột ở bản thiết kế này",,,,,,
+"3.1.2","img-014","Dòng giao dịch (đại diện cho bốn dòng mẫu)","取引行","Transaction row","label","table_row",,,,"số lượng hai chữ số thập phân; ngày YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: mỗi dòng là một giao dịch có chỉ thị giao hàng; đọc ngang một dòng là biết còn phải giao bao nhiêu
+Thành phần hiển thị: tám ô dữ liệu; ô cuối là nhãn trạng thái
+Chức năng và logic: bấm vào dòng thì mở chi tiết; bốn dòng mẫu trên hình gộp làm một dòng đại diện vì chỉ khác giá trị","on_click","Mở SC-16 chi tiết giao hàng của đúng giao dịch trên dòng","delivery","delivered_qty; status","Bốn dòng mẫu chỉ khác nhau ở giá trị nên gộp thành một dòng đại diện; prototype đọc đúng hai cột này còn cột còn lại và số lần giao thì tính ở tầng ứng dụng hoặc chưa có.",
+"3.1.3","img-015","Nhãn trạng thái giao hàng trên dòng","状態バッジ","Delivery status badge","label","status_badge",,,,"một trong bốn trạng thái của FR-DEL-01",,,,,"Mục đích và ngữ cảnh: trả lời câu hỏi thường xuyên nhất của khâu giao nhận: dòng này đang ở bước nào
+Thành phần hiển thị: một nhãn chữ mang tên trạng thái bằng hai ngôn ngữ
+Chức năng và logic: giá trị lấy từ trạng thái giao hàng; bốn giá trị theo FR-DEL-01",,,"delivery","status","Prototype có đủ bốn giá trị ở tầng dữ liệu và đủ nhãn hai ngôn ngữ để vẽ; nhưng giá trị ngoại lệ không đường ghi nào đặt được nên nhãn đó chưa bao giờ xuất hiện.",
+"3.2","img-016","Ghi chú điều hướng và lũy kế","遷移注記","Navigation note","label","inline_note",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ ranh giới đọc và ghi giữa màn danh sách và hai màn tiếp theo
+Thành phần hiển thị: một đoạn chú thích hai dòng nhắc SC-16; SC-17 và hai cột lũy kế
+Chức năng và logic: tĩnh; đây là chú thích thiết kế chứ không phải thành phần chạy",,,,,,
+"4","img-017","Khối nghĩa nghiệp vụ của bốn trạng thái","状態定義パネル","Status definition panel","others","reference_panel",,,,,,,,,"Mục đích và ngữ cảnh: chốt nghĩa nghiệp vụ của bốn trạng thái để tầng sau không tự diễn giải khác
+Thành phần hiển thị: bốn thẻ định nghĩa xếp một hàng
+Chức năng và logic: tĩnh; là phần đặc tả đi kèm màn",,,,,,
+"4.1","img-018","Thẻ định nghĩa trạng thái Chờ","待機状態カード","Pending status card","label","definition_card",,,,,,,,,"Mục đích và ngữ cảnh: mốc đầu của vòng đời giao hàng
+Thành phần hiển thị: tên trạng thái và điều kiện nhận biết
+Chức năng và logic: trạng thái mặc định khi phiếu giao hàng vừa lập; lũy kế bằng không",,,,,,
+"4.2","img-019","Thẻ định nghĩa trạng thái Đang giao","配送中状態カード","In-transit status card","label","definition_card",,,,,,,,,"Mục đích và ngữ cảnh: trạng thái lặp của vòng đời giao hàng một phần
+Thành phần hiển thị: tên trạng thái; điều kiện nhận biết; dẫn chiếu sơ đồ FIG-029
+Chức năng và logic: còn lại lớn hơn không thì mỗi lần giao mới vẫn giữ nguyên trạng thái này",,,,,,
+"4.3","img-020","Thẻ định nghĩa trạng thái Hoàn tất","完了状態カード","Completed status card","label","definition_card",,,,,,,,,"Mục đích và ngữ cảnh: trạng thái cuối; là điều kiện để giao hàng vào bảng đối chiếu ngày
+Thành phần hiển thị: tên trạng thái; điều kiện chốt; ghi chú không quay lại
+Chức năng và logic: chỉ đặt được bằng thao tác chốt của người có quyền; số lượng về không không tự chuyển trạng thái",,,,,,
+"4.4","img-021","Thẻ định nghĩa trạng thái Ngoại lệ","例外状態カード","Exception status card","label","definition_card",,,,,,,,,"Mục đích và ngữ cảnh: trạng thái đại diện nhánh có chênh lệch của FIG-014
+Thành phần hiển thị: tên trạng thái; bốn loại ngoại lệ; dẫn chiếu FE-023 và FR-DEL-03
+Chức năng và logic: đặt được khi có bản ghi ngoại lệ; nguồn ngoại lệ nằm ở màn SC-17",,,,,,
+"5","img-022","Khối trạng thái màn","画面状態パネル","Screen state panel","others","state_panel",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ trạng thái màn phải xử lý để phía thi công không bỏ sót trạng thái rỗng và lỗi
+Thành phần hiển thị: sáu thẻ trạng thái xếp hai hàng
+Chức năng và logic: tĩnh; là phần đặc tả đi kèm màn",,,,,,
+"5.1","img-023","Thẻ trạng thái Có dữ liệu","データあり","Has data state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: định thứ tự mặc định của bảng theo việc cần làm trước
+Thành phần hiển thị: điều kiện và quy tắc sắp xếp
+Chức năng và logic: sắp hai mức: ngày nghiệp vụ giảm dần rồi ưu tiên dòng còn hàng chưa giao",,,,,,
+"5.2","img-024","Thẻ trạng thái Rỗng","空状態","Empty state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: bắt buộc phân biệt hai loại rỗng vì hai loại dẫn tới hai việc khác nhau
+Thành phần hiển thị: hai câu thông báo khác nhau và một đường xoá bộ lọc
+Chức năng và logic: chọn câu theo việc có tiêu chí lọc đang đặt hay không",,,,,,
+"5.3","img-025","Thẻ trạng thái Đang tải và Lỗi tải","読み込み中・読み込みエラー","Loading and load error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: giữ người dùng ở lại màn thay vì rơi về trang trắng hay trang lỗi chung
+Thành phần hiển thị: khung bảng tạm khi đang tải; khối lỗi kèm nút thử lại khi tải lỗi
+Chức năng và logic: tiêu chí lọc được giữ qua lần thử lại để không phải nhập lại",,,,,,
+"5.4","img-026","Thẻ trạng thái Ngày đã lock","ロック済み業務日","Locked business day state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ lock tác động lên trục ghi chứ không lên trục đọc
+Thành phần hiển thị: một câu quy tắc và hệ quả trên màn này
+Chức năng và logic: màn không có đường ghi nên trạng thái này không đổi gì trên giao diện",,,,,,
+"5.5","img-027","Thẻ trạng thái Không có quyền","権限なし","No permission state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ trục đọc không chặn theo vai trò ở màn này
+Thành phần hiển thị: một câu quy tắc và chỉ chỗ nơi vai trò thật sự khác nhau
+Chức năng và logic: màn chỉ đòi phiên đăng nhập còn hiệu lực; không kiểm vai trò",,,,,,
+"5.6","img-028","Thẻ trạng thái Khối lượng ngày cao điểm","繁忙日ボリューム","Peak day volume state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: đặt yêu cầu hiệu năng thành một trạng thái phải thiết kế chứ không phải việc tối ưu sau
+Thành phần hiển thị: con số tải thiết kế và quy tắc lọc ở tầng truy vấn
+Chức năng và logic: phân trang và lọc phải nằm ở truy vấn; không đọc hết bảng rồi lọc trong bộ nhớ",,,,,,
+"6","img-029","Khối đối chiếu thiết kế và prototype","プロトタイプ差分パネル","Prototype divergence panel","others","comparison_panel",,,,,,,,,"Mục đích và ngữ cảnh: gom mọi chỗ bản thi công lệch thiết kế vào một chỗ để người đọc không lẫn thiết kế với hiện trạng
+Thành phần hiển thị: một bảng ba cột: thiết kế đòi; prototype làm; mức
+Chức năng và logic: tĩnh; phần đối chiếu nằm ngoài phạm vi hành vi màn",,,,,,
+"6.1","img-030","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: khai năm chỗ lệch của màn danh sách giao hàng kèm mức độ
+Thành phần hiển thị: ba cột và năm dòng; cột mức phân ba loại lệch
+Chức năng và logic: tĩnh; chỉ liệt chỗ lệch chứ không liệt chỗ khớp",,,,,,
+"7","img-031","Ghi chú chân màn về phân quyền và vị trí trong luồng","画面フッター注記","Screen footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: đặt màn vào đúng chỗ trong khung giờ vận hành và nói rõ đường đi tiếp
+Thành phần hiển thị: ba đoạn: phân quyền; vị trí trong luồng; đường dẫn tới bản as-built
+Chức năng và logic: tĩnh; là chú thích thiết kế",,,,,,"- Khung giờ vận hành có phải là ràng buộc chức năng của màn không; ví dụ chặn ghi nhận giao hàng ngoài đoạn 05:00–08:00? Nguồn thiết kế mô tả khung giờ nhưng không nói có chặn."

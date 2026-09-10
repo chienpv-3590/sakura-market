@@ -1,0 +1,156 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn","画面ヘッダー","Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người đọc — màn nào; thoả tính năng nào; ai là actor
+Thành phần hiển thị: một tiêu đề màn; một dòng meta truy vết yêu cầu; và một thẻ trạng thái thi công
+Chức năng và logic: chỉ hiển thị — không có tương tác và không có trường nhập",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm gồm mã màn SC-02 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース情報","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn theo Feature List — màn này gánh hai tính năng và hai yêu cầu phi chức năng
+Thành phần hiển thị: hai mã FE-002 và FE-004; nhóm FN-01; ưu tiên P0; hai mã NFR-SEC-01 và NFR-SEC-03; loại màn Form; và actor
+Chức năng và logic: văn bản tĩnh — các mã không phải liên kết điều hướng",,,,,,"- Actor ghi ""các vai trò có quyền phê duyệt nội bộ"" nhưng RFP không liệt vai nào có quyền phê duyệt — diện actor thật là gì? Xem thêm ghi chú ở khối 1."
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này chưa có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Chưa thi công""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"2","img-005","Khối chú dẫn nền thiết kế và ranh giới tài liệu","設計根拠と文書範囲の注記","Design ground and document scope note","label","scope_note",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ màn vẽ theo nền thiết kế; và nói rõ những gì cố ý KHÔNG vẽ vì đây là tài liệu công khai
+Thành phần hiển thị: một khối chú dẫn nền vàng gồm hai mã yêu cầu khách; câu khẳng định cả hai còn hiệu lực; và danh sách bốn thứ không vẽ
+Chức năng và logic: bốn thứ không vẽ: cấu hình khoá; cách sinh yếu tố xác thực; nội dung mã dự phòng; luồng khôi phục thiết bị — chốt ở tài liệu bảo mật nội bộ chứ không ở đây",,,,,,"- Tài liệu bảo mật nội bộ chứa bốn hạng mục không vẽ ở đây đã có chưa; và ai là người chốt nội dung đó? Không có tài liệu đó thì màn không dựng được dù thiết kế đã đủ."
+"3","img-006","Khối diện bắt buộc MFA","MFA必須対象ブロック","MFA scope block","others","policy_section",,,,,,,,,"Mục đích và ngữ cảnh: khai ai thuộc diện bắt buộc yếu tố xác thực thứ hai — phần ""tài khoản quản trị và các role phê duyệt nội bộ"" của NFR-SEC-01 (RFP:809)
+Thành phần hiển thị: một nhãn khối; một bảng ba cột phủ 7 vai trò nội bộ; và một dòng ghi chú nêu rõ phần nào là suy luận
+Chức năng và logic: diện bắt buộc phải khai được theo vai trò và đổi được bằng cấu hình — thêm hay bớt vai trò không được sửa màn",,,,,"Thiết kế đòi một nơi khai diện bắt buộc MFA theo vai trò. Thực thể tài khoản nội bộ của miền D-PARTY (RFP:602) CHƯA có cột hay bảng ánh xạ nào cho việc này.","- Diện bắt buộc MFA khai ở đâu — một cột trên thực thể tài khoản; hay một bảng ánh xạ vai trò sang mức bảo mật? Thiết kế đòi đổi được bằng cấu hình nên cách khai quyết định việc thêm vai trò có phải sửa mã hay không."
+"3.1","img-007","Tiêu đề khối diện bắt buộc MFA",,"MFA scope block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm mã yêu cầu khách mà khối này thoả
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và mã NFR-SEC-01
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-008","Bảng diện bắt buộc MFA theo vai trò","ロール別MFA必須対象表","MFA scope by role table","table","policy_table",,,,,,,,,"Mục đích và ngữ cảnh: ánh xạ 7 vai trò nội bộ của TBL-ROLE-01 (RFP:245) sang hai câu hỏi: có quyền phê duyệt nội bộ hay không; và có thuộc diện bắt buộc MFA hay không
+Thành phần hiển thị: một bảng ba cột với hàng tiêu đề ""Vai trò""; ""Có quyền phê duyệt nội bộ""; ""Thuộc diện bắt buộc MFA""; và 4 hàng dữ liệu — ba hàng cho ba vai trò lẻ và một hàng gộp bốn vai trò hiện trường
+Chức năng và logic: cột thứ ba chỉ có hai giá trị Bắt buộc và Chưa chốt; giá trị Chưa chốt là chỗ chờ chủ đầu tư quyết chứ không phải chỗ đội dựng tự chọn",,,,,"Diện bắt buộc suy từ quyền phê duyệt thực tế của hệ thống; thực thể tài khoản nội bộ của D-PARTY (RFP:602) chưa có nơi lưu diện này.","- RFP KHÔNG định nghĩa vai nào ""có quyền phê duyệt nội bộ"". Cột thứ hai của bảng là suy luận từ trách nhiệm ở TBL-ROLE-01 (RFP:245) và từ GOV-RULE-01 (RFP:601) — chủ đầu tư có xác nhận đúng ba vai trò này không?
+- Bốn vai trò hiện trường ở hàng cuối để ""Chưa chốt"" — có phải bật MFA cho họ không? Bật thì thao tác hiện trường trong khung giờ 02:00–10:00 JST (NFR-AVL-01; RFP:804) nặng thêm một bước; không bật thì phải nói rõ vì sao họ ngoài diện.
+- SEC-IAM-02 (RFP:810) đòi nêu chính sách MFA cho người tham gia bên ngoài — màn này chỉ phủ người dùng nội bộ; diện bên ngoài thuộc màn nào?"
+"3.2.1","img-009","Dòng vai trò trong diện bắt buộc (đại diện)",,"MFA scope row (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng của bảng diện bắt buộc — lấy hàng đầu tiên ROLE-SYS-ADMIN làm đại diện cho cả 4 hàng có cùng kết cấu
+Thành phần hiển thị: ba ô: mã vai trò; mô tả quyền phê duyệt của vai đó; và kết luận thuộc diện hay chưa chốt
+Chức năng và logic: lặp 4 lần với nội dung khác nhau; kết cấu giống nhau nên gộp về một hàng đại diện",,,,,,
+"3.3","img-010","Ghi chú diện bắt buộc là suy luận",,"Inferred scope note","label","open_decision_note",,,,,,,,,"Mục đích và ngữ cảnh: khai thẳng chỗ thiết kế đi trước tài liệu khách — ba vai trò ở đầu bảng là suy luận; bốn vai trò hiện trường là giả định cần khách chốt
+Thành phần hiển thị: một đoạn chú thích ba câu: điều NFR-SEC-01 (RFP:809) nói; điều bảng suy ra; và yêu cầu diện bắt buộc phải khai được theo vai trò
+Chức năng và logic: không trình bày phần suy luận như thể RFP đã nói — đây là chỗ phải đưa vào biên bản với chủ đầu tư",,,,,,"- Nếu chủ đầu tư chốt một diện khác diện suy luận ở bảng thì phần nào của màn phải sửa? Thiết kế đòi diện đổi được bằng cấu hình nên câu trả lời phải là ""không sửa màn""; cần xác nhận điều đó là khả thi."
+"4","img-011","Khối nâng mức phiên","セッション昇格ブロック","Session step-up block","others","form_section",,,,,,,,,"Mục đích và ngữ cảnh: bước xác thực yếu tố thứ hai — đứng giữa bước mật khẩu của SC-01 và dữ liệu nghiệp vụ
+Thành phần hiển thị: một nhãn khối; ba trường và hai nút bên trái; và một vùng cố ý để trống bên phải
+Chức năng và logic: phiên chỉ đúng mức sau khi yếu tố thứ hai xác thực xong; trước đó mọi khu vực nghiệp vụ bị chặn",,,,,,
+"4.1","img-012","Tiêu đề khối nâng mức phiên",,"Step-up block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm điều kiện tiền đề — bước này chạy sau khi bí mật xác thực đã đúng
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và tham chiếu SC-01
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-013","Trường Yếu tố xác thực","認証要素","Authentication factor selector","dropdown","select_single",,"string","true",,,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: chỉ liệt yếu tố của chính tài khoản đang đăng nhập.
+Điều kiện: có nhiều hơn một yếu tố thì bắt buộc chọn.
+Lỗi: ""Phương thức xác thực không hợp lệ."" — khi giá trị gửi lên không thuộc tài khoản của phiên.","Mục đích và ngữ cảnh: chọn yếu tố xác thực để nâng mức phiên khi tài khoản đã đăng ký nhiều hơn một yếu tố
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select liệt yếu tố đã đăng ký; và một dòng chú thích về phạm vi danh sách
+Chức năng và logic: danh sách chỉ gồm yếu tố của chính tài khoản đang đăng nhập; giá trị gửi lên phải kiểm lại ở server chứ không tin danh sách đã render","on_click",,,,"Yếu tố xác thực do nhà cung cấp xác thực giữ; thiết kế không đòi lưu vào thực thể tài khoản nội bộ của D-PARTY (RFP:602).","- Một tài khoản được đăng ký tối đa bao nhiêu yếu tố? Thiết kế nói ""có nhiều hơn một thì bắt buộc chọn"" nhưng không khai ngưỡng trên.
+- Nhãn của từng option hiện gì để người dùng phân biệt hai yếu tố cùng loại? Thiết kế không khai và đây là màn công khai nên không mô tả chi tiết yếu tố.
+- Định dạng của yếu tố do nhà cung cấp quy định nên cột định dạng để trống — có cần khai danh sách phương thức được phép ở tài liệu nào không?"
+"4.3","img-014","Trường Mã xác thực một lần","ワンタイムコード","One-time code input","text_form","otp_input",,"string","true","chỉ chữ số — độ dài do nhà cung cấp xác thực quy định",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: chỉ nhận chữ số.
+Điều kiện: việc đối chiếu mã thuộc nhà cung cấp xác thực — tầng ứng dụng KHÔNG tự so sánh.
+Lỗi: ""Mã không đúng hoặc đã hết hiệu lực."" — một câu duy nhất cho ba nhánh sai; hết hiệu lực; và đã dùng.","Mục đích và ngữ cảnh: nhập mã xác thực một lần để hoàn tất bước nâng mức phiên
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập che ký tự; và một dòng chú thích nêu rõ ai đối chiếu mã
+Chức năng và logic: ba nhánh sai gộp về một thông báo để không nói cho người thử biết mã sai ở chỗ nào; số lần sai đếm vào cùng trục khoá tạm của NFR-SEC-03 (RFP:811) hoặc một trục riêng — xem khối đối chiếu",,,,,"Mã xác thực một lần không được lưu ở tầng ứng dụng; thực thể tài khoản nội bộ của D-PARTY (RFP:602) không có cột tương ứng.","- Số lần nhập sai mã có dùng chung bộ đếm với số lần sai bí mật xác thực không? Dùng chung thì người đã biết bí mật vẫn khoá được tài khoản người khác bằng cách nhập mã sai.
+- Độ dài mã do nhà cung cấp quy định — màn có cần tự chặn độ dài trước khi gửi không; hay để nhà cung cấp từ chối?
+- Có giới hạn số lần gửi mã trong một khoảng thời gian không? NFR-SEC-03 (RFP:811) chỉ đòi khoá tạm khi sai nhiều lần."
+"4.4","img-015","Ô Ghi nhớ thiết bị này","この端末を記憶する","Remember this device checkbox","checkbox","boolean_toggle",,"boolean","false",,,,"không chọn","Điều kiện: không bắt buộc — nhãn không có dấu sao.
+Điều kiện: thời hạn ghi nhớ lấy từ cấu hình server; TUYỆT ĐỐI không nhận từ client — nếu nhận thì NFR-SEC-03 (RFP:811) bị vô hiệu hoá từ phía người dùng.","Mục đích và ngữ cảnh: cho người dùng bỏ bước yếu tố thứ hai trên thiết bị đã tin trong một thời hạn nhất định
+Thành phần hiển thị: nhãn không dấu sao; một ô đánh dấu đang bỏ trống; và một dòng chú thích về nguồn của thời hạn ghi nhớ
+Chức năng và logic: chỉ gửi cờ bật hay tắt; thời hạn do server quyết — client không được gửi thời hạn lên vì đó là đường vô hiệu hoá timeout phiên","on_click",,,,"Trạng thái thiết bị đã tin do nhà cung cấp xác thực giữ; thiết kế không đòi cột trên thực thể tài khoản nội bộ của D-PARTY (RFP:602).","- Thời hạn ghi nhớ thiết bị là bao lâu? NFR-SEC-03 (RFP:811) đòi phiên phải có timeout nhưng không định lượng; con số này phải khách chốt cùng thời lượng timeout.
+- Người dùng có xem và thu hồi được danh sách thiết bị đã ghi nhớ không? Thiết kế không vẽ danh sách đó.
+- Đổi vai trò sang một vai thuộc diện bắt buộc MFA thì thiết bị đã ghi nhớ có còn hiệu lực không? Thiết kế chỉ nói phiên thành chưa đủ mức."
+"4.5","img-016","Nút Xác thực",,"Verify button","button","primary_action","text_only",,,,,,,"Điều kiện: hai trường bắt buộc của khối phải có giá trị.
+Điều kiện: tài khoản không đang trong thời gian khoá tạm — NFR-SEC-03 (RFP:811).
+Lỗi: ""Mã không đúng hoặc đã hết hiệu lực."" — giữ nguyên giá trị đang nhập ở các trường khác.
+Lỗi: ""Tài khoản đang bị khoá tạm; vui lòng thử lại sau."" — chỉ còn đường đăng xuất.","Mục đích và ngữ cảnh: hoàn tất bước nâng mức phiên và mở đường vào dữ liệu nghiệp vụ
+Thành phần hiển thị: một nút chính nhãn chữ đặt dưới ba trường của khối
+Chức năng và logic: xác thực thành công thì phiên đủ mức và người dùng đi tiếp tới khu vực làm việc của vai trò mình; mỗi lần thử sinh một bản ghi log theo khối 3","on_click","Xác thực thành công đưa người dùng tới khu vực làm việc của vai trò được gán ở SC-01; thất bại thì ở lại màn này.","audit_log",,"Sinh một bản ghi vết thao tác theo FR-AUDIT-01 (RFP:710) trên miền D-PARTY (RFP:602); bảng vết thao tác đã tồn tại thật.","- Bấm nút hai lần liên tiếp thì lần thứ hai bị chặn ở đâu? Thiết kế chỉ nói trạng thái đang gửi vô hiệu nút.
+- Xác thực thành công có làm mới thời điểm hết hiệu lực của phiên không? Thiết kế không khai."
+"4.6","img-017","Nút Đăng xuất",,"Sign out button","button","secondary_action","text_only",,,,,,,,"Mục đích và ngữ cảnh: đường ra duy nhất khi người dùng không hoàn tất được bước yếu tố thứ hai
+Thành phần hiển thị: một nút phụ nhãn chữ đặt cạnh nút Xác thực
+Chức năng và logic: kết thúc phiên và quay về SC-01; đây là hành động duy nhất còn dùng được ở trạng thái bị khoá tạm","on_click","Kết thúc phiên và quay về SC-01 kèm lý do hiện ở vùng thông báo lý do của màn đó.","audit_log",,"Sinh bản ghi vết đăng xuất theo FR-AUDIT-01 (RFP:710); khối 1 của SC-01 liệt sự kiện này là một trong 5 sự kiện log bắt buộc.",
+"4.7","img-018","Vùng cố ý để trống","意図的空白エリア","Intentionally blank area","others","scope_out_area",,,,,,,,,"Mục đích và ngữ cảnh: khai thẳng những gì tài liệu công khai này cố ý không mô tả — để người đọc không hiểu là thiết kế thiếu
+Thành phần hiển thị: một khung viền nét đứt chiếm nửa phải của khối; bên trong là nhãn vùng và một đoạn chú thích ba hạng mục
+Chức năng và logic: ba hạng mục không vẽ chốt ở tài liệu bảo mật nội bộ; màn thật vẫn có phần này nhưng nội dung không nằm trong tài liệu thiết kế công khai",,,,,,"- Vùng này trên màn thật chứa gì; và ai duyệt nội dung đó? Thiết kế công khai cố ý không mô tả nên phần này phải có một tài liệu riêng trước khi dựng."
+"5","img-019","Khối thiết lập bảo mật của chính tài khoản","自アカウントのセキュリティ設定ブロック","Own account security settings block","others","form_section",,,,,,,,,"Mục đích và ngữ cảnh: nơi người dùng tự xem và tự quản yếu tố xác thực của mình; và xem trạng thái bảo mật của phiên — phần FE-004 của NFR-SEC-03 (RFP:811)
+Thành phần hiển thị: một nhãn khối; bốn trường bên trái; ba trường chỉ đọc và hai nút bên phải
+Chức năng và logic: mọi trường ở khối này thuộc CHÍNH tài khoản đang đăng nhập — màn này không đọc và không sửa thiết lập của người khác; việc đó thuộc SC-03 và SC-04",,,"app_user",,"Thực thể tài khoản người dùng nội bộ của miền D-PARTY (RFP:602). Bảng đã tồn tại thật nhưng chỉ phủ được hai trường khoá tạm; các trường yếu tố xác thực chưa có nguồn.",
+"5.1","img-020","Tiêu đề khối thiết lập bảo mật",,"Security settings block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm hai mã tính năng mà khối này thoả
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và hai mã FE-002 và FE-004
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"5.2","img-021","Trường Trạng thái yếu tố xác thực (chỉ đọc)","認証要素の登録状態","Factor status (read-only)","label","readonly_field",,,,,,,"Đã đăng ký · 1 yếu tố",,"Mục đích và ngữ cảnh: cho chính chủ biết tài khoản mình đã đăng ký yếu tố xác thực chưa — và nếu thuộc diện bắt buộc mà chưa đăng ký thì nói rõ là chưa thoả yêu cầu
+Thành phần hiển thị: nhãn; một vùng chỉ đọc mang trạng thái đăng ký kèm số yếu tố; và một dòng chú thích về ca chưa thoả
+Chức năng và logic: chỉ đọc; giá trị suy từ số yếu tố đã đăng ký của phiên chứ không phải một trường người dùng nhập",,,,,"Suy từ dữ liệu của nhà cung cấp xác thực; thực thể tài khoản nội bộ của D-PARTY (RFP:602) CHƯA có cột nào phản ánh trạng thái này.","- Trường này hiện số yếu tố hay chỉ hiện có/không? Ảnh cho thấy có số nhưng nêu số lượng yếu tố cũng là tiết lộ mức phòng thủ của tài khoản; và trường này còn xuất hiện lại ở SC-03 và SC-04 cho tài khoản người khác."
+"5.3","img-022","Trường Bí mật xác thực hiện tại","現在の認証シークレット","Current authentication secret input","text_form","secret_input",,"string","true",,,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: xác thực lại trước MỌI thay đổi yếu tố; kể cả khi phiên đang còn hiệu lực.
+Lỗi: ""Xác thực lại không thành công."" — không thực hiện thay đổi yếu tố nào.","Mục đích và ngữ cảnh: buộc người dùng chứng minh lại danh tính trước khi đổi yếu tố xác thực — chặn đường người chiếm được phiên tự thay yếu tố
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập che ký tự; và một dòng chú thích nêu rõ áp cho mọi thay đổi
+Chức năng và logic: phiên còn hiệu lực không miễn bước này; xác thực lại thất bại thì không thay đổi gì và vẫn sinh bản ghi log",,,,,"Thiết kế đặt việc giữ bí mật xác thực ở nhà cung cấp xác thực; thực thể tài khoản nội bộ của D-PARTY (RFP:602) không có cột tương ứng.","- Xác thực lại có hiệu lực trong bao lâu — mỗi thay đổi một lần; hay một lần cho cả phiên làm việc? Thiết kế nói ""trước mọi thay đổi"" nên mặc định là mỗi lần.
+- Lần xác thực lại thất bại có đếm vào bộ đếm khoá tạm không? Thiết kế không khai."
+"5.4","img-023","Trường Đăng ký yếu tố mới","新しい認証要素の登録","Enroll new factor selector","dropdown","select_single",,"string","true",,,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: chỉ liệt phương thức đang được cho phép.
+Điều kiện: phương thức ngoài danh sách cho phép bị từ chối Ở SERVER — không chỉ ẩn ở màn.
+Lỗi: ""Phương thức này chưa được bật."" — khi giá trị gửi lên không thuộc danh sách cho phép.","Mục đích và ngữ cảnh: đăng ký một yếu tố xác thực mới cho chính tài khoản đang đăng nhập
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select liệt phương thức đang được cho phép; và một dòng chú thích về nơi chặn
+Chức năng và logic: danh sách render từ cấu hình cho phép; nhưng lớp chặn thật nằm ở server vì ẩn ở màn không phải chặn","on_click",,,,"Danh sách phương thức được phép là cấu hình; thiết kế không đòi lưu vào thực thể tài khoản nội bộ của D-PARTY (RFP:602).","- Danh sách phương thức được cho phép khai ở đâu và ai đổi được? Thiết kế nói là cấu hình nhưng không khai nơi khai báo.
+- Đăng ký yếu tố mới có yêu cầu xác nhận yếu tố đó hoạt động trước khi tính là đã đăng ký không? Thiết kế không vẽ bước xác nhận."
+"5.5","img-024","Trường Mã dự phòng (chỉ đọc)","バックアップコード","Recovery code status (read-only)","label","readonly_field",,,,,,,"Còn hiệu lực",,"Mục đích và ngữ cảnh: cho chính chủ biết mã dự phòng còn dùng được hay đã hết — không hơn
+Thành phần hiển thị: nhãn; một vùng chỉ đọc chỉ mang hai giá trị còn hiệu lực hay đã hết; và một dòng chú thích về điều cấm
+Chức năng và logic: KHÔNG bao giờ hiện nội dung mã; kể cả cho chính chủ — nội dung và cách phát mã chốt ở tài liệu bảo mật nội bộ",,,,,"Mã dự phòng do nhà cung cấp xác thực giữ; thiết kế cố ý không đòi cột nào trên thực thể tài khoản nội bộ của D-PARTY (RFP:602).","- Người dùng lấy mã dự phòng mới bằng đường nào? Màn này chỉ hiện trạng thái; thiết kế không vẽ đường phát mã vì đó là nội dung của tài liệu bảo mật nội bộ.
+- Mã dự phòng hết mà tài khoản vẫn thuộc diện bắt buộc thì màn có chặn gì không? Thiết kế không khai."
+"5.6","img-025","Trường Timeout phiên (chỉ đọc)","セッションタイムアウト","Session timeout policy (read-only)","label","readonly_field",,,,,,,"Theo cấu hình: giới hạn tổng và giới hạn không hoạt động",,"Mục đích và ngữ cảnh: cho người dùng thấy chính sách timeout đang áp cho phiên của mình — nghiệm thu NFR-SEC-03 (RFP:811) là ""kiểm thử bảo mật và review log"" nên chính sách phải xem được
+Thành phần hiển thị: nhãn; một vùng chỉ đọc nêu hai loại giới hạn là giới hạn tổng và giới hạn không hoạt động; và một dòng chú thích về nguồn thời lượng
+Chức năng và logic: chỉ đọc và lấy từ cấu hình server; thời lượng cụ thể do chủ đầu tư chốt nên màn không cứng hoá con số nào",,,,,"Chính sách timeout là cấu hình phiên; thiết kế không đòi lưu vào thực thể tài khoản nội bộ của D-PARTY (RFP:602).","- Thời lượng giới hạn tổng và giới hạn không hoạt động là bao nhiêu? NFR-SEC-03 (RFP:811) đòi phải có timeout nhưng KHÔNG định lượng — con số phải khách chốt.
+- Timeout quá ngắn thì người dùng bị đăng xuất giữa khung giờ nghiệp vụ 02:00–10:00 JST mà NFR-AVL-01 (RFP:804) đặt mục tiêu khả dụng — hai yêu cầu này cân với nhau thế nào?
+- Phiên hết hiệu lực giữa lúc đang nhập dữ liệu thì dữ liệu chưa gửi xử lý ra sao? Thiết kế không khai."
+"5.7","img-026","Trường Trạng thái khoá tạm (chỉ đọc)","一時ロック状態","Temporary lock state (read-only)","label","readonly_field",,,,,,,"Không bị khoá",,"Mục đích và ngữ cảnh: cho chính chủ thấy tài khoản mình có đang bị khoá tạm hay không — phần ""khoá tạm khi nhập sai nhiều lần"" của NFR-SEC-03 (RFP:811)
+Thành phần hiển thị: nhãn; một vùng chỉ đọc mang trạng thái khoá; và một dòng chú thích về nguồn của ngưỡng và thời lượng
+Chức năng và logic: chỉ đọc; khoá tạm tự hết theo thời gian nên đây là trục độc lập với quyền tài khoản do SC-03 quản",,,"app_user","failed_login_count; locked_until","Hai cột đếm số lần sai và mốc hết khoá trên thực thể tài khoản nội bộ của D-PARTY (RFP:602); đã tồn tại thật. Ngưỡng và thời lượng là giá trị cấu hình — NFR-SEC-03 (RFP:811) không định lượng.","- Ngưỡng số lần sai và thời lượng khoá tạm là bao nhiêu? NFR-SEC-03 (RFP:811) không định lượng; con số phải khách chốt trước khi dựng.
+- Trường này có hiện thời điểm hết khoá cho chính chủ không? Nêu thời điểm giúp người dùng khỏi thử vô ích nhưng cũng là thông tin về mức phòng thủ.
+- Quản trị mở khoá tạm ở SC-03 hoặc SC-04 thì trường này đổi ngay hay chờ lần tải lại? Thiết kế không khai."
+"5.8","img-027","Trường Hành vi bất thường phải ghi log (chỉ đọc)","記録対象の異常行動","Anomalous behaviour log list (read-only)","label","readonly_field",,,,,,,"Chỉ đọc — tra cứu ở SC-30",,"Mục đích và ngữ cảnh: khai 6 loại hành vi bất thường phải sinh bản ghi log — phần ""log các hành vi bất thường"" của NFR-SEC-03 (RFP:811)
+Thành phần hiển thị: nhãn; một vùng chỉ đọc trỏ sang SC-30 để tra cứu; và một dòng chú thích liệt 6 loại sự kiện
+Chức năng và logic: màn này là nơi sinh bản ghi cho 6 loại sự kiện đó; nơi tra cứu là SC-30 nên khối này không có phần hiển thị log",,,"audit_log","actor_id; action; created_at","Vết thao tác của miền D-PARTY (RFP:602) theo FR-AUDIT-01 (RFP:710); ba cột chủ thể; loại thao tác và thời điểm đã tồn tại thật. Nội dung ""nguồn lạ"" mà thiết kế đòi CHƯA có cột tương ứng.","- ""Xác thực từ nguồn lạ"" định nghĩa thế nào — khác địa chỉ mạng; khác thiết bị; hay khác vùng địa lý? Thiết kế chỉ ghi tên sự kiện; và dữ liệu này thuộc diện thông tin cá nhân theo RFP §09-06 (RFP:886).
+- 6 loại sự kiện này có cần phát cảnh báo cho quản trị không; hay chỉ ghi log? NFR-OPS-01 (RFP:814) đòi giám sát được sự kiện bảo mật nên có thể phải có alert.
+- Ai được đọc các bản ghi này ở SC-30? Đây là quyết định còn để ngỏ; xem ghi chú phân quyền ở chân màn."
+"5.9","img-028","Nút Lưu thiết lập",,"Save settings button","button","primary_action","text_only",,,,,,,"Điều kiện: bí mật xác thực hiện tại phải đúng — xác thực lại trước mọi thay đổi yếu tố.
+Điều kiện: phương thức đăng ký phải thuộc danh sách được phép.
+Lỗi: ""Xác thực lại không thành công."" — không lưu gì.
+Lỗi: ""Phương thức này chưa được bật."" — không lưu gì.","Mục đích và ngữ cảnh: ghi thay đổi thiết lập bảo mật của chính tài khoản — chủ yếu là đăng ký yếu tố mới
+Thành phần hiển thị: một nút chính nhãn chữ đặt ở đáy cột phải của khối
+Chức năng và logic: chỉ chạy sau khi xác thực lại thành công; mỗi lần lưu sinh một bản ghi log thuộc 6 loại sự kiện ở trường trên","on_click",,"audit_log",,"Sinh bản ghi vết thao tác theo FR-AUDIT-01 (RFP:710) trên miền D-PARTY (RFP:602). Thay đổi yếu tố do nhà cung cấp xác thực giữ nên không ghi vào thực thể tài khoản nội bộ.","- Lưu thành công có buộc xác thực lại bằng yếu tố mới ngay không? Thiết kế không vẽ bước xác nhận yếu tố mới hoạt động."
+"5.10","img-029","Nút Huỷ một yếu tố",,"Unenroll factor button","button","danger_action","text_only",,,,,,,"Điều kiện: bí mật xác thực hiện tại phải đúng.
+Điều kiện: KHÔNG cho huỷ yếu tố cuối cùng khi tài khoản vẫn thuộc diện bắt buộc MFA — không cho tài khoản tự hạ mức bảo mật của mình.
+Lỗi: ""Không thể huỷ yếu tố cuối cùng của tài khoản thuộc diện bắt buộc xác thực đa yếu tố."" — giữ nguyên yếu tố.","Mục đích và ngữ cảnh: huỷ một yếu tố xác thực đã đăng ký của chính tài khoản — ví dụ khi mất thiết bị
+Thành phần hiển thị: một nút mang sắc thái cảnh báo nhãn chữ đặt cạnh nút Lưu thiết lập
+Chức năng và logic: chặn cứng ca huỷ yếu tố cuối khi còn thuộc diện bắt buộc; bỏ chặn này thì NFR-SEC-01 (RFP:809) chỉ còn là hình thức vì ai cũng tự hạ mức được","on_click",,"audit_log",,"Sinh bản ghi vết theo FR-AUDIT-01 (RFP:710); là một trong 6 loại hành vi bất thường phải ghi log ở trường trên.","- Người mất hết thiết bị và hết mã dự phòng thì lấy lại truy cập bằng đường nào? Luồng khôi phục cố ý không mô tả trong tài liệu công khai này nhưng phải có trước khi dựng.
+- Quản trị hệ thống có được huỷ yếu tố của người khác không? Màn này chỉ phủ chính chủ; thiết kế không giao việc đó cho SC-03 hay SC-04."
+"6","img-030","Khối trạng thái màn","画面状態ブロック","Screen states block","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ các trạng thái màn phải xử lý — phần dễ bị cắt nhất khi thi công
+Thành phần hiển thị: một nhãn khối và một lưới 8 thẻ trạng thái
+Chức năng và logic: chỉ mô tả yêu cầu; không có tương tác",,,,,,
+"6.1","img-031","Tiêu đề khối trạng thái màn",,"States block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối trạng thái
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""Trạng thái""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"6.2","img-032","Lưới thẻ trạng thái màn",,"State card grid","others","state_card_grid",,,,,,,,,"Mục đích và ngữ cảnh: 8 trạng thái màn xếp thành lưới 4 cột 2 hàng — mỗi thẻ là một trạng thái phải xử lý được
+Thành phần hiển thị: 8 thẻ có cùng kết cấu: Thuộc diện chưa có yếu tố; Chờ nâng mức phiên; Mã không hợp lệ; Bị khoá tạm; Phiên hết hiệu lực; Vai trò đổi giữa phiên; Huỷ yếu tố cuối bị từ chối; Ngoài diện bắt buộc
+Chức năng và logic: hai trạng thái đầu là hai cửa chặn của NFR-SEC-01 (RFP:809): thuộc diện mà chưa có yếu tố thì chặn ngay ở bước nâng mức và không hiện ô nhập mã; chưa xong yếu tố thứ hai thì chặn mọi khu vực nghiệp vụ",,,,,,"- Trạng thái ""Ngoài diện bắt buộc"" trả 404 chứ không 403 — vai ngoài diện gọi thẳng API của màn này cũng nhận 404 chứ? Thiết kế chỉ nói ở mức vào màn.
+- Trạng thái ""Vai trò đổi giữa phiên"" phụ thuộc SC-04; hai màn có phải cùng một cơ chế đánh dấu phiên chưa đủ mức không? Thiết kế không khai cơ chế."
+"6.2.1","img-033","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên ""Thuộc diện; chưa có yếu tố"" làm đại diện cho cả 8 thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả; thẻ đại diện ghi rõ chỉ cho đăng ký yếu tố hoặc đăng xuất và không có ô nhập mã
+Chức năng và logic: lặp 8 lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên gộp về một thẻ đại diện",,,,,,
+"7","img-034","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: chỗ duy nhất trên màn nói về bản thi công — và là chỗ đặt lý do hoãn màn này
+Thành phần hiển thị: một nhãn khối và một bảng ba cột: thiết kế đòi; prototype làm; và mức lệch
+Chức năng và logic: lý do hoãn là PHẠM VI PROTOTYPE chứ không phải lý do thiết kế — NFR-SEC-01 (RFP:809) vẫn còn hiệu lực nên mục thiết kế của màn vẫn đủ",,,,,,
+"7.1","img-035","Tiêu đề khối đối chiếu prototype",,"Divergence block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối đối chiếu
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""ĐỐI CHIẾU PROTOTYPE""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"7.2","img-036","Bảng đối chiếu thiết kế và prototype","設計とプロトタイプの差分表","Design vs prototype divergence table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: 6 điểm bản thi công làm khác thiết kế; kèm mức lệch của từng điểm
+Thành phần hiển thị: một bảng ba cột với hàng tiêu đề ""Thiết kế đòi""; ""Prototype làm""; ""Mức""; và 6 hàng dữ liệu; ô mức mang một thẻ nhãn kèm câu giải thích
+Chức năng và logic: ba hàng ở mức ""cần khách chốt"" đều rơi vào chỗ tài liệu khách không định lượng hoặc không liệt: ngưỡng khoá tạm; diện bắt buộc MFA; và bộ đếm sai riêng cho bước mã",,,,,,"- Ba hàng ""cần khách chốt"" của bảng này là ba câu hỏi phải trả lời trước khi dựng — có đường nào dựng một phần mà không chốt hết ba câu không?"
+"7.2.1","img-037","Dòng đối chiếu kèm thẻ mức lệch (đại diện)",,"Divergence row with level tag (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng đối chiếu — lấy hàng đầu tiên làm đại diện cho cả 6 hàng có cùng kết cấu
+Thành phần hiển thị: ba ô: điều thiết kế đòi; điều bản thi công làm; và một thẻ nhãn mức lệch kèm câu giải thích
+Chức năng và logic: hàng đại diện là hàng mang lý do hoãn cả màn; nó nói rõ đây KHÔNG phải lý do thiết kế và yêu cầu khách vẫn còn hiệu lực",,,,,,
+"8","img-038","Khối ghi chú phân quyền và yêu cầu khách","権限と顧客要件の注記","Permission and requirement footnote","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt phân quyền của màn và nối từng khối về đúng phần nghiệm thu của hai yêu cầu khách
+Thành phần hiển thị: ba đoạn chú thích: phân quyền và ranh giới ""chỉ của chính tài khoản đang đăng nhập""; yêu cầu khách màn này thoả; và liên kết tới bản as-built
+Chức năng và logic: khối 1 khai diện bắt buộc; khối 2 là bước xác thực yếu tố thứ hai; khối 3 là nơi tự quản yếu tố và xem chính sách — nghiệm thu của cả hai yêu cầu đều đòi thiết lập phải XEM ĐƯỢC nên khối 3 chỉ đọc nhưng bắt buộc có",,,,,,"- Diện được vào màn này chính là diện bắt buộc MFA — vai ngoài diện muốn tự bật MFA thì vào bằng đường nào? Thiết kế đóng cả hai cửa cùng lúc.
+- Vai trò thuộc diện bắt buộc nhưng chưa đăng ký yếu tố nào vẫn phải vào được màn này để đăng ký; cửa 404 có chừa ca đó không? Thiết kế không khai."

@@ -1,0 +1,143 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Đầu trang màn cảnh báo hiệu lực","有効期限警告ヘッダー","Expiry warning page header","others","page_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-008 → FN-02 → FR-PARTY-03 và khai rõ màn chưa thi công
+Thành phần hiển thị: tiêu đề màn; dòng meta yêu cầu; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-07 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết và ưu tiên P1 để phân biệt màn này với hai màn P0 còn lại của FN-02
+Thành phần hiển thị: mã FE-008; nhóm FN-02; ưu tiên P1; yêu cầu FR-PARTY-03; loại màn List; actor
+Chức năng và logic: văn bản tĩnh",,,,,,"- Actor của FE-008 ghi là nhân viên vận hành chợ nhưng không khớp trực tiếp vai trò nào trong bảy vai trò nội bộ — màn này thuộc vai nào?"
+"1.3","img-004","Nhãn trạng thái chưa thi công","未実装タグ","Not built tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ toàn bộ màn là thiết kế phải dựng chứ không phải ảnh của bản thi công
+Thành phần hiển thị: một nhãn chữ ngắn
+Chức năng và logic: tĩnh — không đổi theo dữ liệu",,,,,,
+"2","img-005","Khối tiêu chí nghiệm thu FR-PARTY-03","受入基準の注記","Acceptance criteria note","label","acceptance_note",,,,,,,,,"Mục đích và ngữ cảnh: chép nguyên tiêu chí nghiệm thu của FR-PARTY-03 vì hai chữ cấu hình được quyết định toàn bộ hình dạng màn
+Thành phần hiển thị: một khối ghi chú nổi bật ở đầu màn
+Chức năng và logic: tĩnh; rút ra hai hệ quả — ngưỡng phải là dữ liệu cấu hình có người sửa và có lịch sử sửa; và ngưỡng phải tách theo căn cứ tham gia vì RFP §02-08 cấm gộp 許可 với 承認",,,,,,
+"3","img-006","Khối cấu hình ngưỡng cảnh báo","警告しきい値設定ブロック","Warning threshold config block","others","config_block",,,,,,,,,"Mục đích và ngữ cảnh: chỗ đáp ứng hai chữ cấu hình được của FR-PARTY-03; không có khối này thì màn chỉ là một báo cáo có ngưỡng cứng
+Thành phần hiển thị: bảng ngưỡng hiện hành theo căn cứ tham gia; hai trường nhập ngưỡng và lý do; nút lưu; ghi chú về câu hỏi chưa chốt
+Chức năng và logic: ngưỡng lưu theo từng căn cứ tham gia; mỗi lần đổi ngưỡng ghi audit kèm lý do và giá trị trước và sau",,,,,,
+"3.1","img-007","Bảng ngưỡng hiện hành theo căn cứ tham gia","しきい値一覧","Threshold table","table","config_table",,,,,,,,,"Mục đích và ngữ cảnh: cho thấy ngưỡng đang áp dụng cho từng căn cứ tham gia; cột người sửa và thời điểm sửa là bằng chứng cho FR-AUDIT-01
+Thành phần hiển thị: năm cột và ba dòng — một dòng cho mỗi căn cứ tham gia giấy phép; chấp thuận; đăng ký chợ
+Chức năng và logic: chỉ đọc; ba dòng độc lập vì thủ tục gia hạn của ba căn cứ khác nhau; dòng đăng ký chợ áp cho hai phân loại nên phân loại áp dụng liệt cả hai",,,,,"Thiết kế đòi một thực thể cấu hình ngưỡng cảnh báo khoá theo căn cứ tham gia; prototype chưa có thực thể nào cho việc này nên để trống có ý thức chứ không phải bỏ sót.","- Lịch sử đổi ngưỡng cần giữ bao lâu; và có cần xem lại được ngưỡng đã áp dụng ở một thời điểm quá khứ không? Bảng hiện chỉ hiện lần sửa gần nhất."
+"3.1.1","img-008","Dòng ngưỡng theo căn cứ (đại diện cho ba dòng)","しきい値行","Threshold row","label","table_row",,"integer",,"số nguyên dương; đơn vị ngày",,,,,"Mục đích và ngữ cảnh: một căn cứ tham gia và ngưỡng cảnh báo của nó; ba dòng cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: tên căn cứ tham gia; các phân loại áp dụng; số ngày ngưỡng; tên người sửa gần nhất; thời điểm sửa kèm hậu tố múi giờ
+Chức năng và logic: chỉ đọc; số ngày là số nguyên dương; các giá trị mẫu trên wireframe là minh hoạ và không phải con số khách đã chốt",,,,,"Thiết kế đòi khoá theo căn cứ tham gia để ba ngưỡng tách được; prototype chưa có thực thể cấu hình nên để trống.","- Ba con số ngưỡng mẫu trên wireframe chỉ là minh hoạ — giá trị khởi tạo cho mỗi căn cứ là bao nhiêu? Yêu cầu khách không cho con số nào."
+"3.2","img-009","Trường ngưỡng số ngày","しきい値（日数）","Threshold in days","text_form","number_input",,"integer","true","số nguyên dương; đơn vị ngày",,,,"Điều kiện: giá trị không phải số nguyên
+Lỗi: ""Ngưỡng phải là số nguyên.""
+Điều kiện: giá trị nhỏ hơn hoặc bằng không
+Lỗi: ""Ngưỡng phải lớn hơn 0 ngày.""","Mục đích và ngữ cảnh: số ngày trước ngày hết hiệu lực mà profile bắt đầu vào danh sách cảnh báo; là tham số cấu hình được mà FR-PARTY-03 đòi
+Thành phần hiển thị: nhãn Ngưỡng số ngày kèm dấu bắt buộc; một ô nhập số; một dòng gợi ý nói mỗi căn cứ một giá trị riêng
+Chức năng và logic: bắt buộc; số nguyên dương; lưu cho đúng căn cứ tham gia đang chọn chứ không lưu một giá trị dùng chung",,,,,"Thiết kế đòi cột số ngày trong thực thể cấu hình ngưỡng; prototype chưa có thực thể đó nên để trống.","- Ngưỡng có trần trên không; ví dụ 365 ngày? Không có trần thì một giá trị quá lớn làm danh sách cảnh báo mất tác dụng."
+"3.3","img-010","Trường lý do đổi ngưỡng","しきい値変更理由","Threshold change reason","text_form","text_input",,"string","true",,"1",,,"Điều kiện: lý do rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Vui lòng nhập lý do đổi ngưỡng.""","Mục đích và ngữ cảnh: đổi ngưỡng là đổi quy tắc vận hành chứ không phải đổi một tuỳ chọn hiển thị; nên FR-AUDIT-01 đòi truy được lý do
+Thành phần hiển thị: nhãn Lý do đổi ngưỡng kèm dấu bắt buộc; một ô nhập; một dòng gợi ý về audit
+Chức năng và logic: bắt buộc; ghi vào bản ghi kiểm toán cùng giá trị ngưỡng trước và sau",,,"audit_log","reason","Thực thể kiểm toán đã có trong prototype và dùng lại được; nhưng thao tác đổi ngưỡng thì chưa tồn tại.",
+"3.4","img-011","Nút lưu ngưỡng","しきい値を保存","Save threshold","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: chốt lần đổi ngưỡng cho căn cứ tham gia đang chọn
+Thành phần hiển thị: một nút chữ cạnh hai trường nhập
+Chức năng và logic: sau khi lưu phải nạp lại cả ba danh sách vì đổi ngưỡng đổi luôn tập dòng cảnh báo; không được dùng lại kết quả đã tải trước đó","on_click","Ở lại màn; nạp lại bảng ngưỡng và cả ba đường danh sách theo ngưỡng mới",,,,
+"3.5","img-012","Ghi chú câu hỏi chưa chốt về số ngưỡng","しきい値粒度の未確定事項","Open question on threshold granularity","label","open_question",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ mức chi tiết của ngưỡng là quyết định của khách chứ không phải chi tiết thi công; nó quyết định khoá của thực thể cấu hình
+Thành phần hiển thị: một đoạn ghi chú có nhãn chưa chốt dưới khối cấu hình
+Chức năng và logic: tĩnh; nêu rõ yêu cầu khách chỉ nói phải cấu hình được và không được gộp 許可 với 承認; mức chi tiết còn lại thì không nói",,,,,,"- Ngưỡng cảnh báo là một giá trị dùng chung; một giá trị cho mỗi căn cứ tham gia; hay một giá trị cho mỗi phân loại? Chọn sai thì hoặc gộp hai căn cứ mà RFP cấm; hoặc dựng thừa mức chi tiết không ai dùng."
+"4","img-013","Khối bộ lọc","絞り込みブロック","Filter block","others","filter_bar",,,,,,,,,"Mục đích và ngữ cảnh: thu hẹp ba danh sách theo căn cứ tham gia; phân loại; trạng thái hiệu lực; và có bao gồm dòng đã quá hạn hay không
+Thành phần hiển thị: bốn trường lọc nằm ngang; mỗi trường có nhãn và một dòng gợi ý hành vi
+Chức năng và logic: bộ lọc áp cho cả ba đường cùng lúc; bộ lọc phân loại phụ thuộc căn cứ đang chọn",,,,,,
+"4.1","img-014","Bộ lọc căn cứ tham gia","参加根拠フィルタ","Participation basis filter","dropdown","single_select",,"string","false","một trong ba căn cứ tham gia; hoặc tất cả",,,"Tất cả","Điều kiện: giá trị nằm ngoài ba căn cứ tham gia của FIG-004
+Lỗi: ""Căn cứ tham gia không hợp lệ.""","Mục đích và ngữ cảnh: chọn xem một đường xử lý; ba căn cứ tham gia không có giá trị gộp vì thủ tục gia hạn của chúng khác nhau
+Thành phần hiển thị: nhãn song ngữ Căn cứ tham gia · 参加根拠; ô chọn với lựa chọn Tất cả cộng ba căn cứ; dòng gợi ý nói rõ không có giá trị gộp
+Chức năng và logic: chọn một căn cứ thì chỉ hiện đường tương ứng; lựa chọn Tất cả hiện cả ba khối riêng chứ không trộn thành một danh sách phẳng","on_click","Ở lại màn; nạp lại ba đường theo bộ lọc mới","participant","license_type","Prototype có cột này nhưng là chuỗi tự do không có CHECK nên có thể tồn tại giá trị không thuộc ba căn cứ nào.",
+"4.2","img-015","Bộ lọc phân loại","区分フィルタ","Category filter","dropdown","single_select",,"string","false","một trong bốn phân loại; hoặc tất cả",,,"Tất cả","Điều kiện: phân loại không thuộc căn cứ tham gia đang chọn
+Lỗi: ""Phân loại không thuộc căn cứ tham gia đang chọn.""","Mục đích và ngữ cảnh: thu hẹp thêm trong một đường; ví dụ đường đăng ký chợ có hai phân loại nên cần tách được
+Thành phần hiển thị: nhãn song ngữ Phân loại · 区分; ô chọn; dòng gợi ý nói rõ tập lựa chọn phụ thuộc căn cứ đang chọn
+Chức năng và logic: tập lựa chọn thu hẹp theo căn cứ đang chọn để không tạo ra cặp phân loại và căn cứ vô nghĩa","on_click","Ở lại màn; nạp lại ba đường theo bộ lọc mới","participant","category","Prototype có CHECK bốn giá trị trên cột này nên tập lựa chọn khớp tầng dữ liệu.",
+"4.3","img-016","Bộ lọc trạng thái hiệu lực","有効状態フィルタ","Eligibility status filter","dropdown","single_select",,"string","false","một trong bốn trạng thái của FIG-010",,,"Tất cả","Điều kiện: giá trị nằm ngoài bốn trạng thái của FIG-010
+Lỗi: ""Trạng thái hiệu lực không hợp lệ.""","Mục đích và ngữ cảnh: tách nhóm đang xét lại khỏi nhóm còn hiệu lực vì hành động hợp lệ trên hai nhóm khác nhau
+Thành phần hiển thị: nhãn song ngữ Trạng thái hiệu lực · 有効状態; ô chọn; dòng gợi ý liệt bốn trạng thái
+Chức năng và logic: đúng bốn giá trị của FIG-010; trạng thái quyết định nút hành động nào hiện trên dòng","on_click","Ở lại màn; nạp lại ba đường theo bộ lọc mới","participant","status","Prototype có CHECK bốn giá trị FIG-010 trên cột này.",
+"4.4","img-017","Ô chọn bao gồm dòng đã quá hạn","期限切れを含む","Include already expired","checkbox","toggle_filter",,"boolean","false",,,,"true",,"Mục đích và ngữ cảnh: nhóm đã qua ngày hết hiệu lực mà trạng thái chưa đổi chính là nhóm sẽ bị từ chối giao dịch ngay tại quầy; ẩn nhóm đó đi là ẩn đúng chỗ nguy hiểm nhất
+Thành phần hiển thị: nhãn Bao gồm đã quá hạn; một ô chọn đã bật; một dòng gợi ý nói lý do bật mặc định
+Chức năng và logic: mặc định bật; khi bật thì dòng quá hạn hiện kèm số ngày còn lại âm và nhãn quá hạn","on_click","Ở lại màn; nạp lại ba đường theo bộ lọc mới","participant","valid_to; status","Điều kiện quá hạn tính từ ngày hết hiệu lực so với ngày hôm nay theo múi giờ Nhật; prototype có đủ hai cột nhưng không có tác vụ nào lật trạng thái.",
+"5","img-018","Khối đường 許可 giấy phép","許可ルートブロック","Permit route block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: đường xử lý cho căn cứ giấy phép 許可; gia hạn giấy phép có cơ quan cấp bên ngoài nên hành động nằm ở việc theo dõi hồ sơ chứ không ở việc quyết định
+Thành phần hiển thị: tiêu đề khối mang căn cứ; phân loại áp dụng; ngưỡng đang dùng — cộng bảng sáu cột và một ghi chú
+Chức năng và logic: chỉ nhận dòng có căn cứ là giấy phép; ngưỡng của riêng đường này quyết định dòng nào vào danh sách",,,,,,
+"5.1","img-019","Bảng danh sách đường 許可","許可ルート一覧","Permit route table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: danh sách profile giấy phép sắp hết hiệu lực; sắp theo số ngày còn lại tăng dần để việc gấp nhất nằm trên cùng
+Thành phần hiển thị: sáu cột gồm số ngày còn lại; tên; phân loại; ngày hết hiệu lực; badge trạng thái; cột hành động
+Chức năng và logic: số ngày còn lại là giá trị dẫn xuất từ ngày hết hiệu lực so với hôm nay theo múi giờ Nhật; dòng đã quá hạn mang giá trị âm kèm nhãn quá hạn",,,"participant","name; category; license_type; status; valid_to","Năm cột đầu đọc từ thực thể người tham gia; cột số ngày còn lại là dẫn xuất và không lưu.","- Danh sách này có phân trang không; và nếu ngưỡng lớn thì trần bao nhiêu dòng? Thiết kế chưa nói trần."
+"5.1.1","img-020","Dòng cảnh báo giấy phép (đại diện cho hai dòng mẫu)","許可警告行","Permit warning row","label","table_row",,"integer",,"số ngày là số nguyên; có thể âm khi đã quá hạn",,,,,"Mục đích và ngữ cảnh: một profile giấy phép sắp hoặc đã hết hiệu lực; hai dòng mẫu cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: số ngày còn lại; tên; phân loại; ngày hết hiệu lực; badge trạng thái; nút hành động của đúng dòng
+Chức năng và logic: số ngày còn lại âm thì hiện kèm nhãn quá hạn và nút hành động đổi sang cạnh chuyển sang mất hiệu lực; nút hành động luôn thuộc dòng chứ không thuộc cả bảng",,,"participant","name; category; license_type; status; valid_to","Dòng quá hạn tồn tại thật vì trạng thái đã lưu không tự đổi khi qua ngày hết hiệu lực.",
+"5.2","img-021","Nút ghi nhận đã nộp hồ sơ gia hạn","更新申請の記録","Record renewal application","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: gia hạn giấy phép do cơ quan bên ngoài cấp nên hệ thống chỉ theo dõi được tiến độ hồ sơ; không có quyết định nào để bấm
+Thành phần hiển thị: một nút chữ trong cột hành động của dòng
+Chức năng và logic: ghi nhận mốc đã nộp hồ sơ cho profile của dòng; không đổi trạng thái vòng đời vì FIG-010 không có cạnh nào cho việc nộp hồ sơ gia hạn","on_click","Ở lại màn; đánh dấu dòng đã nộp hồ sơ gia hạn",,,"Thiết kế đòi một chỗ lưu mốc đã nộp hồ sơ gia hạn; prototype chưa có thực thể nào cho việc này nên để trống.","- Mốc đã nộp hồ sơ gia hạn lưu ở đâu và ai được ghi? Yêu cầu FR-PARTY-03 chỉ đòi cảnh báo nên nút này là mở rộng cần khách xác nhận phạm vi."
+"5.3","img-022","Nút chuyển sang mất hiệu lực","失効へ変更","Move to ineligible","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: dòng đã quá ngày hết hiệu lực mà trạng thái vẫn còn hiệu lực; đây là đường để trạng thái đã lưu bắt kịp thực tế
+Thành phần hiển thị: một nút chữ nổi bật trong cột hành động của dòng quá hạn
+Chức năng và logic: đi đúng cạnh hết hạn của FIG-010; đòi lý do như mọi cạnh khác; chỉ hiện khi số ngày còn lại đã âm và trạng thái vẫn là có hiệu lực","on_click","Chuyển profile của dòng sang trạng thái mất hiệu lực theo cạnh hết hạn của FIG-010","participant","status","Cùng cạnh chuyển trạng thái đã có ở SC-06; ghi cột trạng thái cộng một dòng lịch sử chuyển trạng thái.",
+"5.4","img-023","Ghi chú thủ tục gia hạn giấy phép","許可手続きの注記","Permit procedure note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ vì sao đường này không có nút gỡ tạm ngừng — thủ tục của 仲卸 là có điều kiện mà RFP không định nghĩa điều kiện đó
+Thành phần hiển thị: một đoạn ghi chú dưới bảng
+Chức năng và logic: tĩnh; nói rõ vẽ một nút gỡ dùng chung là gộp hai căn cứ tham gia — đúng điều RFP §02-08 cấm",,,,,,
+"6","img-024","Khối đường 承認 chấp thuận","承認ルートブロック","Approval route block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: đường xử lý cho căn cứ chấp thuận 承認; chấp thuận là quyết định của đơn vị vận hành chợ nên hành động nằm hẳn trong hệ thống
+Thành phần hiển thị: tiêu đề khối mang căn cứ; phân loại áp dụng; ngưỡng đang dùng — cộng bảng sáu cột và một ghi chú
+Chức năng và logic: chỉ nhận dòng có căn cứ là chấp thuận; hai nút hành động ứng đúng hai cạnh cuối của FIG-010",,,,,,
+"6.1","img-025","Bảng danh sách đường 承認","承認ルート一覧","Approval route table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: danh sách profile chấp thuận sắp hết hiệu lực; cùng sáu cột với đường giấy phép nhưng cột hành động khác hẳn
+Thành phần hiển thị: sáu cột gồm số ngày còn lại; tên; phân loại; ngày hết hiệu lực; badge trạng thái; cột hành động
+Chức năng và logic: nút hành động phụ thuộc trạng thái của dòng — dòng còn hiệu lực thì nộp đơn xét lại; dòng đang xét lại thì chấp thuận lại",,,"participant","name; category; license_type; status; valid_to","Cùng nguồn dữ liệu với đường giấy phép; khác nhau ở điều kiện lọc theo căn cứ tham gia và ở ngưỡng áp dụng.",
+"6.1.1","img-026","Dòng cảnh báo chấp thuận (đại diện cho hai dòng mẫu)","承認警告行","Approval warning row","label","table_row",,"integer",,"số ngày là số nguyên; có thể bằng không hoặc âm",,,,,"Mục đích và ngữ cảnh: một profile chấp thuận sắp hết hiệu lực; hai dòng mẫu cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: số ngày còn lại; tên; phân loại; ngày hết hiệu lực; badge trạng thái; nút hành động của đúng dòng
+Chức năng và logic: số ngày còn lại bằng không nghĩa là hết hiệu lực trong ngày nghiệp vụ hôm nay chứ không phải đã quá hạn; nút hành động đổi theo trạng thái của dòng",,,"participant","name; category; license_type; status; valid_to","Dòng đang ở trạng thái xét lại tồn tại được vì đó là một trong bốn trạng thái của FIG-010.",
+"6.2","img-027","Nút nộp đơn xét lại","再審査申請","Submit for review","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: cạnh thứ tư của FIG-010; là bước đầu của đường xin chấp thuận lại
+Thành phần hiển thị: một nút chữ trong cột hành động của dòng
+Chức năng và logic: FIG-010 chỉ cho cạnh này đi từ trạng thái mất hiệu lực; nên nút đặt trên dòng còn hiệu lực phải được hiểu là đường vào nhanh và tầng dịch vụ vẫn từ chối nếu trạng thái nguồn chưa đúng","on_click","Chuyển profile của dòng sang trạng thái xét lại theo cạnh nộp đơn của FIG-010","participant","status","Cùng cạnh chuyển trạng thái đã có ở SC-06.","- Nút nộp đơn xét lại đặt trên dòng còn hiệu lực thì nghiệp vụ mong đợi gì — cho nộp đơn trước khi mất hiệu lực; hay chỉ hiện nút sau khi đã mất hiệu lực? FIG-010 chỉ có cạnh đi từ mất hiệu lực."
+"6.3","img-028","Nút chấp thuận lại","再承認","Re-approve","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: cạnh thứ năm của FIG-010; chốt quyết định chấp thuận lại của đơn vị vận hành chợ
+Thành phần hiển thị: một nút chữ nổi bật trong cột hành động của dòng đang ở trạng thái xét lại
+Chức năng và logic: chỉ hiện khi trạng thái của dòng là xét lại; đòi lý do như mọi cạnh khác","on_click","Chuyển profile của dòng về trạng thái có hiệu lực theo cạnh chấp thuận của FIG-010","participant","status","Cùng cạnh chuyển trạng thái đã có ở SC-06.",
+"6.4","img-029","Ghi chú thủ tục chấp thuận","承認手続きの注記","Approval procedure note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: giải thích vì sao đường này có hai nút thật trong khi đường giấy phép chỉ có nút theo dõi hồ sơ
+Thành phần hiển thị: một đoạn ghi chú dưới bảng
+Chức năng và logic: tĩnh; nói rõ cả hai hành động cũng làm được ở SC-06 và màn này chỉ là đường vào nhanh cho công việc theo lô",,,,,,
+"7","img-030","Khối đường đăng ký chợ","市場登録ルートブロック","Market registration route block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: đường xử lý cho căn cứ đăng ký chợ; là đường duy nhất phủ hai phân loại và cũng là đường có một ô chưa chốt
+Thành phần hiển thị: tiêu đề khối mang hai phân loại và ngưỡng đang dùng — cộng bảng sáu cột và một ghi chú
+Chức năng và logic: chỉ nhận dòng có căn cứ là đăng ký chợ; hành động khác nhau theo phân loại vì FIG-004 chỉ có dòng cho một trong hai",,,,,,
+"7.1","img-031","Bảng danh sách đường đăng ký chợ","市場登録ルート一覧","Market registration route table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: danh sách profile đăng ký chợ sắp hết hiệu lực; gồm cả hai phân loại dùng cùng căn cứ này
+Thành phần hiển thị: sáu cột gồm số ngày còn lại; tên; phân loại; ngày hết hiệu lực; badge trạng thái; cột hành động
+Chức năng và logic: cột hành động khác nhau theo phân loại — dòng 卸売業者 có nút ghi nhận đã đăng ký lại; dòng 買出人 để nhãn chưa chốt vì RFP không có thủ tục nào",,,"participant","name; category; license_type; status; valid_to","Prototype gán căn cứ đăng ký cho cả hai phân loại này; nhưng yêu cầu khách không có dòng nào cho một trong hai nên việc gán đó là suy luận chứ không phải văn bản.",
+"7.1.1","img-032","Dòng cảnh báo đăng ký chợ (đại diện cho hai dòng mẫu)","市場登録警告行","Market registration warning row","label","table_row",,"integer",,"số ngày là số nguyên",,,,,"Mục đích và ngữ cảnh: một profile đăng ký chợ sắp hết hiệu lực; hai dòng mẫu cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: số ngày còn lại; tên; phân loại; ngày hết hiệu lực; badge trạng thái; ô hành động
+Chức năng và logic: ô hành động của dòng 買出人 mang nhãn chưa chốt thay vì một nút; dòng vẫn phải hiện để không bỏ sót cảnh báo",,,"participant","name; category; license_type; status; valid_to","Cùng nguồn dữ liệu với hai đường trên.",
+"7.2","img-033","Nút ghi nhận đã đăng ký lại","再登録の記録","Record re-registration","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: thủ tục của căn cứ đăng ký chợ là đăng ký lại; theo FIG-004 thì 卸売業者 đi lối chấp thuận nên ở đây chỉ ghi nhận mốc
+Thành phần hiển thị: một nút chữ trong cột hành động của dòng 卸売業者
+Chức năng và logic: ghi nhận mốc đã đăng ký lại; không đổi trạng thái vòng đời vì FIG-010 không có cạnh cho việc đăng ký lại","on_click","Ở lại màn; đánh dấu dòng đã đăng ký lại",,,"Thiết kế đòi một chỗ lưu mốc đã đăng ký lại; prototype chưa có thực thể nào cho việc này nên để trống.",
+"7.3","img-034","Nhãn chưa chốt ở ô hành động của 買出人","未確定タグ","Undecided tag","label","open_question_tag",,,,,,,,,"Mục đích và ngữ cảnh: giữ ô hành động trống có chủ đích cho phân loại mà RFP không có dòng nào; suy ra thủ tục từ dòng gần giống là lấp bằng suy luận
+Thành phần hiển thị: một nhãn chữ ngắn trong ô hành động của dòng
+Chức năng và logic: chỉ đọc; dòng vẫn hiện trong danh sách cảnh báo nhưng không có nút nào ngoài đường mở chi tiết",,,,,,"- 買出人 có thủ tục gia hạn nào và ai được ghi nhận nó? Không có câu trả lời thì ô hành động của phân loại này phải để trống chứ không dùng lối của phân loại khác."
+"7.4","img-035","Ghi chú 買出人 không có dòng trong FIG-004","買出人の欠落行の注記","Note on the missing market-buyer row","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: nói thẳng chỗ tài liệu khách thiếu; và nói rõ hệ quả cho màn là để trống ô hành động chứ không bỏ dòng
+Thành phần hiển thị: một đoạn ghi chú dưới bảng
+Chức năng và logic: tĩnh; đòi dòng của phân loại đó vẫn phải hiện để không bỏ sót cảnh báo; và cấm suy thủ tục ra từ phân loại khác",,,,,,
+"8","img-036","Khối trạng thái màn","画面状態ブロック","Screen state block","others","state_matrix",,,,,,,,,"Mục đích và ngữ cảnh: liệt các trạng thái màn phải xử lý; ba trạng thái là đặc thù của màn có ba đường song song
+Thành phần hiển thị: sáu ô trạng thái; mỗi ô có tên và mô tả hành vi mong đợi
+Chức năng và logic: tĩnh trên wireframe nhưng là hợp đồng hành vi cho tầng hiển thị",,,,,,
+"8.1","img-037","Trạng thái rỗng","空状態","Empty state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: danh sách rỗng phải nói rõ đang xem cửa sổ bao nhiêu ngày; rỗng mà không biết ngưỡng thì người dùng không biết tin được hay không
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: thông báo hiện riêng từng đường và kèm ngưỡng đang áp dụng của đường đó",,,,,,
+"8.2","img-038","Trạng thái rỗng một đường","片ルート空","Single route empty state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: ẩn một khối rỗng làm người dùng tưởng đã kiểm cả ba đường trong khi chỉ thấy hai
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: khối rỗng vẫn giữ tiêu đề và ngưỡng của nó; ẩn khối là mất thông tin rằng đường đó đã kiểm và sạch",,,,,,
+"8.3","img-039","Trạng thái đang tải hoặc lỗi tải","読み込み・エラー","Loading or error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: ba đường tải song song nên một đường lỗi không được làm trắng cả màn
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: khung xương cho cả ba đường; khối lỗi có nút thử lại và giữ nguyên bộ lọc đang chọn",,,,,,
+"8.4","img-040","Trạng thái quá hạn mà trạng thái chưa đổi","期限切れ未反映","Expired but status unchanged state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: đây là nhóm nguy hiểm nhất — trạng thái đã lưu nói còn hiệu lực nhưng ngày đã qua nên giao dịch sẽ bị từ chối ngay tại quầy
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: nhãn cảnh báo nặng hơn nhóm còn lại; và nút hành động của dòng đổi sang cạnh chuyển sang mất hiệu lực",,,,,,
+"8.5","img-041","Trạng thái đang gửi hoặc gửi lỗi","送信中・送信エラー","Submitting or submit error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: màn có nhiều nút hành động trên nhiều dòng; khoá cả bảng khi gửi một dòng làm người dùng mất việc
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: chỉ nút của đúng dòng bị vô hiệu; lỗi hiện trên đúng dòng và giữ nguyên trạng thái cũ; nút dựng từ danh sách cũ có thể trỏ vào một cạnh đã không còn hợp lệ nên tầng dịch vụ phải từ chối và không tin nút",,,,,,
+"8.6","img-042","Trạng thái không xác định được căn cứ","根拠不明","Undetermined basis state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: dữ liệu cũ có thể mang cặp phân loại và căn cứ không khớp FIG-004; nhét dòng đó vào một đường là chọn hộ một thủ tục gia hạn
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: xếp riêng thành nhóm không xác định được căn cứ; không có hành động nào ngoài đường mở chi tiết",,,,,,
+"9","img-043","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_block",,,,,,,,,"Mục đích và ngữ cảnh: đặt cạnh nhau thiết kế đòi gì và bản thi công hiện làm gì; màn chưa dựng nên phần lớn là thiếu chứ không phải lệch
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột
+Chức năng và logic: chỉ đọc; là phần đối chiếu chứ không phải phần thiết kế",,,,,,
+"9.1","img-044","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","comparison_table",,,,,,,,,"Mục đích và ngữ cảnh: sáu hạng mục lệch; nặng nhất là ngưỡng cảnh báo đang là hằng số cứng trong mã của một báo cáo chứ không phải dữ liệu cấu hình
+Thành phần hiển thị: ba cột Thiết kế đòi; Prototype làm; Mức — và sáu dòng hạng mục
+Chức năng và logic: chỉ đọc; hai dòng cuối mang mức cần khách chốt nên không tự quyết ở tầng thi công",,,,,,
+"10","img-045","Ghi chú chân màn về phân quyền và cách tính ngày","フッター注記","Footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ba điều dễ trôi — vai trò vào màn còn là đề xuất; ngày hết hiệu lực rỗng không bao giờ vào danh sách; và mọi phép tính ngày neo múi giờ Nhật
+Thành phần hiển thị: hai dòng ghi chú và một đường dẫn tới file spec của màn
+Chức năng và logic: tĩnh; nêu rõ còn 0 ngày nghĩa là hết hiệu lực trong ngày nghiệp vụ hôm nay chứ không phải đã quá hạn; và màn không chạm dữ liệu thuộc phạm vi lock kỳ",,,,,,"- Vai trò nào được đổi ngưỡng và vai trò nào chỉ được đọc danh sách? Yêu cầu khách giao cho bên dự thầu đề xuất cơ chế phân tách quyền nên đây là quyết định cần khách phê duyệt."

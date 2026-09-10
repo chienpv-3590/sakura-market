@@ -1,0 +1,117 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn","画面ヘッダー","Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người đọc — màn nào; thoả tính năng nào; ai là actor
+Thành phần hiển thị: một tiêu đề màn; một dòng meta truy vết yêu cầu; và một thẻ trạng thái thi công
+Chức năng và logic: chỉ hiển thị — không có tương tác và không có trường nhập",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm gồm mã màn SC-01 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース情報","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn theo Feature List — người đọc biết màn phải thoả điều gì
+Thành phần hiển thị: mã FE-001; nhóm FN-01; ưu tiên P0; yêu cầu khách FR-IAM-01; loại màn Form; và actor là toàn bộ người dùng nội bộ
+Chức năng và logic: văn bản tĩnh — các mã không phải liên kết điều hướng",,,,,,"- Dòng meta này là chú thích của wireframe hay là nội dung sẽ có trên màn thật? Thiết kế không khai."
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này đã có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Đã thi công"" kèm mã màn và đường dẫn của bản thi công
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"2","img-005","Khối xác thực người dùng nội bộ","内部利用者認証ブロック","Internal user authentication block","others","form_section",,,,,,,,,"Mục đích và ngữ cảnh: nửa ""xác thực người dùng nội bộ"" của FR-IAM-01 (RFP:627) — cổng duy nhất vào hệ thống
+Thành phần hiển thị: một vùng nhận diện tĩnh bên trái; bốn trường bên phải; và một nút chính ở đáy
+Chức năng và logic: gửi hai trường bắt buộc; nhánh từ chối dùng một thông báo duy nhất để không cho dò định danh tồn tại",,,"app_user",,"Thực thể tài khoản người dùng nội bộ thuộc miền D-PARTY (RFP:602). Bảng đã tồn tại thật và mang đủ cột cho khối này.",
+"2.1","img-006","Tiêu đề khối xác thực",,"Authentication block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm mã yêu cầu khách mà khối này thoả
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và mã FR-IAM-01
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"2.2","img-007","Vùng nhận diện","識別表示エリア","Branding area","others","branding_area",,,,,,,,,"Mục đích và ngữ cảnh: vùng tĩnh mang dấu hiệu nhận diện của chợ; đặt cạnh form để người dùng biết mình vào đúng hệ thống
+Thành phần hiển thị: một khung viền nét đứt chiếm khoảng 42% chiều rộng khối; bên trong là nhãn vùng và một đoạn chú thích
+Chức năng và logic: không có trường nhập và không có liên kết điều hướng — thiết kế đòi cổng vào hệ thống chỉ có một đường",,,,,,"- Vùng nhận diện có chứa nội dung nào cần cấu hình được theo môi trường không? Thiết kế chỉ nói là vùng tĩnh."
+"2.3","img-008","Trường Định danh người dùng nội bộ","内部利用者ID","Internal user identifier input","text_form","identity_input",,"string","true","<phần cục bộ>@<miền>",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: phải là định danh tồn tại trong danh bạ người dùng nội bộ — FR-IAM-01 (RFP:627) chỉ cấp đường vào cho người dùng nội bộ.
+Lỗi: dùng chung một thông báo từ chối duy nhất với nhánh sai bí mật — không phân biệt sai định danh hay sai bí mật; kể cả qua mã trả về.","Mục đích và ngữ cảnh: định danh dùng để xác thực người dùng nội bộ — nửa thứ nhất của cặp thông tin đăng nhập
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập chữ với giá trị gợi ý dạng địa chỉ thư; và một dòng chú thích về tính duy nhất
+Chức năng và logic: giá trị phải duy nhất trong danh bạ người dùng nội bộ; sai định danh và sai bí mật trả về cùng một thông báo để chống dò tài khoản tồn tại",,,"app_user","email","Cột định danh của thực thể tài khoản nội bộ trong miền D-PARTY (RFP:602). Bảng và cột đã tồn tại thật; cột mang ràng buộc duy nhất.","- Định danh có bắt buộc theo dạng địa chỉ thư không? Thiết kế chỉ đòi ""duy nhất trong danh bạ người dùng nội bộ""; ảnh cho thấy giá trị gợi ý dạng địa chỉ thư nhưng đó là ví dụ.
+- Độ dài tối đa của định danh là bao nhiêu? Thiết kế và RFP không khai.
+- Định danh có phân biệt chữ hoa chữ thường không? Thiết kế không khai."
+"2.4","img-009","Trường Bí mật xác thực","認証シークレット","Authentication secret input","text_form","secret_input",,"string","true",,,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: không rỗng.
+Lỗi: dùng chung một thông báo từ chối duy nhất với nhánh sai định danh.","Mục đích và ngữ cảnh: bí mật xác thực của người dùng nội bộ — nửa thứ hai của cặp thông tin đăng nhập
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập che ký tự; và một dòng chú thích về ba điều cấm
+Chức năng và logic: giá trị không hiển thị lại; không ghi vào log; không đi qua URL — nên phải gửi bằng phương thức không đặt dữ liệu lên đường dẫn",,,,,"Thiết kế đặt việc giữ bí mật xác thực ở nhà cung cấp xác thực; thực thể tài khoản nội bộ của D-PARTY (RFP:602) không có cột tương ứng.","- Yêu cầu độ mạnh của bí mật xác thực là gì — độ dài tối thiểu; tập ký tự; thời hạn đổi? Thiết kế và RFP không khai nên cột định dạng để trống.
+- Có luồng tự đặt lại bí mật xác thực không? Màn này cố ý không có liên kết điều hướng nào."
+"2.5","img-010","Trường Ngôn ngữ hiển thị","表示言語","Display language selector","dropdown","select_single",,"string","false","VI | JA",,,"Tiếng Việt","Điều kiện: không bắt buộc — nhãn không có dấu sao.
+Điều kiện: chỉ nhận hai giá trị VI và JA; giá trị lạ rơi về mặc định thay vì báo lỗi hệ thống.","Mục đích và ngữ cảnh: chọn ngôn ngữ hiển thị ngay tại cổng vào — người dùng chưa đăng nhập nên chưa có nơi nào khác để chọn
+Thành phần hiển thị: nhãn không dấu sao; một select hai giá trị VI và JA đang chọn Tiếng Việt; và một dòng chú thích
+Chức năng và logic: đổi ngôn ngữ áp ngay cho chính màn này; không điều hướng và không gửi dữ liệu xác thực","on_click","Đổi giá trị áp ngay cho ngôn ngữ hiển thị của màn; không điều hướng sang màn khác.",,,"Thiết kế không đòi lưu lựa chọn ngôn ngữ vào thực thể tài khoản nội bộ của D-PARTY (RFP:602); không có cột tương ứng.","- Ngôn ngữ chọn trước khi đăng nhập có được ghi nhớ cho phiên sau khi đăng nhập không? Thiết kế không khai.
+- Lựa chọn này có ghi vào tài khoản để dùng lại ở thiết bị khác không; hay chỉ sống trong trình duyệt hiện tại?"
+"2.6","img-011","Vùng thông báo lý do","理由通知エリア","Reason notice area","label","readonly_notice",,,,,,,,,"Mục đích và ngữ cảnh: nói cho người bị đẩy về cổng vào biết vì sao — hết phiên; hoặc quyền tài khoản đã bị tạm ngừng
+Thành phần hiển thị: nhãn; một vùng chỉ đọc mang câu lý do; và một dòng chú thích liệt hai lý do thiết kế đòi hiện
+Chức năng và logic: chỉ đọc và không gửi lên server; nội dung do luồng đẩy người dùng về đây quyết định chứ không do người dùng nhập",,,,,,"- Thiết kế liệt hai lý do (phiên hết hiệu lực; quyền tài khoản bị tạm ngừng) — còn lý do nào khác phải hiện không; ví dụ đang bị khoá tạm hay chưa đủ mức bảo mật?
+- Câu lý do có được phép nêu tình trạng tài khoản cụ thể không; hay phải giữ chung để không lộ thông tin cho người ngoài?"
+"2.7","img-012","Nút Đăng nhập",,"Sign in button","button","primary_action","text_only",,,,,,,"Điều kiện: cả hai trường bắt buộc phải có giá trị.
+Điều kiện: quyền tài khoản phải đang hoạt động — tài khoản đã bị tạm ngừng ở SC-03 thì không vào được.
+Điều kiện: tài khoản không đang trong thời gian khoá tạm — NFR-SEC-03 (RFP:811) đòi khoá tạm khi nhập sai nhiều lần.
+Lỗi: một thông báo từ chối duy nhất cho mọi nhánh sai định danh hoặc sai bí mật — không phân biệt được từ bên ngoài; kể cả qua mã trả về.
+Lỗi: ""Quyền tài khoản đã bị tạm ngừng; vui lòng liên hệ quản trị hệ thống."" — không để người dùng thử lại vô ích.
+Lỗi: ""Tài khoản đang bị khoá tạm; vui lòng thử lại sau."" — nêu rõ phải chờ đến khi nào.","Mục đích và ngữ cảnh: gửi cặp thông tin xác thực và kết thúc bước mật khẩu của FR-IAM-01 (RFP:627)
+Thành phần hiển thị: một nút chính nhãn chữ đặt dưới bốn trường
+Chức năng và logic: xác thực xong thì gán vai trò rồi đưa thẳng tới khu vực làm việc của vai trò đó; mọi nhánh từ chối dùng chung một thông báo; mỗi lần thử sinh một bản ghi log truy cập theo khối 3","on_click","Xác thực thành công đưa thẳng tới khu vực làm việc của vai trò được gán theo bảng ở khối 2 — không qua trang trung gian kiểu ""chọn khu vực"". Vai trò thuộc diện bắt buộc MFA thì sang SC-02 trước khi chạm dữ liệu nghiệp vụ (NFR-SEC-01; RFP:809).","app_user","failed_login_count; locked_until","Hai cột đếm số lần sai và mốc hết khoá tạm trên thực thể tài khoản nội bộ của D-PARTY (RFP:602); đã tồn tại thật. Thiết kế đòi ngưỡng và thời lượng là giá trị cấu hình chứ không cứng trong màn — NFR-SEC-03 (RFP:811) không định lượng hai giá trị này.","- Ngưỡng số lần sai và thời lượng khoá tạm là bao nhiêu? NFR-SEC-03 (RFP:811) đòi phải có nhưng không định lượng; thiết kế đẩy sang giá trị cấu hình nên cần khách chốt trước khi dựng.
+- Đếm số lần sai theo cửa sổ thời gian trượt hay theo số lần sai liên tiếp? Hai cách cho kết quả khác nhau khi người dùng sai rải rác nhiều ngày.
+- Có chặn theo nguồn truy cập ngoài chặn theo tài khoản không? Nếu chỉ đếm theo tài khoản thì người ngoài dò định danh lạ không bị chặn.
+- Bấm nút trước khi màn kịp phản hồi thì lần gửi thứ hai bị chặn ở đâu? Thiết kế chỉ nói trạng thái ""Đang xác thực"" vô hiệu nút và hai trường."
+"3","img-013","Khối gán vai trò tại thời điểm đăng nhập","ログイン時ロール付与ブロック","Role assignment at sign-in block","others","role_mapping_section",,,,,,,,,"Mục đích và ngữ cảnh: nửa ""gán vai trò tại thời điểm đăng nhập"" của FR-IAM-01 (RFP:627) và phần nghiệm thu ""vào được đúng khu vực làm việc""
+Thành phần hiển thị: một nhãn khối; một bảng hai cột phủ đủ 7 vai trò nội bộ; và một dòng ghi chú về thời điểm gán
+Chức năng và logic: vai trò được gán ngay tại thời điểm đăng nhập; khu vực làm việc suy ra từ vai trò nên không cần trang chọn khu vực",,,"app_user","role","Cột vai trò của thực thể tài khoản nội bộ trong miền D-PARTY (RFP:602); đã tồn tại thật với ràng buộc đúng 7 giá trị của TBL-ROLE-01 (RFP:245).",
+"3.1","img-014","Tiêu đề khối gán vai trò",,"Role assignment block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm số lượng vai trò nội bộ mà khối phủ
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và cụm ""7 vai trò nội bộ""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-015","Bảng ánh xạ vai trò và khu vực làm việc","ロール別作業エリア対応表","Role to landing area mapping table","table","mapping_table",,,,,,,,,"Mục đích và ngữ cảnh: khai đúng 7 vai trò nội bộ của TBL-ROLE-01 (RFP:245) và khu vực làm việc của từng vai
+Thành phần hiển thị: một bảng hai cột với hàng tiêu đề ""Vai trò"" và ""Khu vực làm việc được đưa tới ngay sau khi xác thực""; và 7 hàng dữ liệu
+Chức năng và logic: bảng này là hợp đồng điều hướng sau xác thực; nghiệm thu FR-IAM-01 đòi ""vào được đúng khu vực làm việc"" nên mỗi vai phải có đúng một khu vực đích",,,"app_user","role","Tập giá trị của cột vai trò trên thực thể tài khoản nội bộ của D-PARTY (RFP:602). Ánh xạ vai trò sang khu vực làm việc là quy tắc điều hướng — thiết kế không đòi lưu thành dữ liệu.","- Một tài khoản có được giữ nhiều hơn một vai trò không? Bảng vẽ quan hệ một-một nên nếu khách cần đa vai thì cột đích không còn xác định.
+- Vai trò không có khu vực làm việc riêng thì đưa đi đâu? Bảng hiện phủ đủ 7 vai nhưng thiết kế không nói gì cho ca vai trò mới."
+"3.2.1","img-016","Dòng vai trò và khu vực làm việc (đại diện)",,"Role mapping row (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng ánh xạ — lấy hàng đầu tiên ROLE-INTAKE làm đại diện cho cả 7 hàng có cùng kết cấu
+Thành phần hiển thị: ô thứ nhất là mã vai trò; ô thứ hai là tên khu vực làm việc đích
+Chức năng và logic: lặp 7 lần với 7 vai trò khác nhau; kết cấu và cách đọc giống nhau nên gộp về một hàng đại diện",,,,,,
+"3.3","img-017","Ghi chú thời điểm gán vai trò",,"Role assignment timing note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt lại điều dễ mất nhất của FR-IAM-01 — thời điểm gán vai trò là lúc đăng nhập chứ không phải lúc dựng menu
+Thành phần hiển thị: một đoạn chú thích ba câu: thời điểm gán; hệ quả khi đổi vai trò giữa phiên; và lý do không có trang chọn khu vực
+Chức năng và logic: đổi vai trò ở SC-04 làm phiên đang dùng không còn đúng mức nên lần điều hướng kế tiếp phải xác thực lại",,,,,,"- Đổi vai trò giữa phiên thì phiên cũ hết hiệu lực ngay; hay chỉ hết ở lần điều hướng kế tiếp? Thiết kế nói ""lần điều hướng kế tiếp"" nên vẫn còn một khoảng người dùng giữ vai trò cũ.
+- Người dùng đang mở nhiều tab thì mọi tab phải xác thực lại cùng lúc không? Thiết kế không khai."
+"4","img-018","Khối ghi log truy cập","アクセスログ記録ブロック","Access log requirement block","others","audit_section",,,,,,,,,"Mục đích và ngữ cảnh: phần ""và có log"" của nghiệm thu FR-IAM-01 (RFP:627) — khối này khai nội dung bắt buộc của bản ghi; không phải một vùng hiển thị
+Thành phần hiển thị: một nhãn khối; một bảng hai cột liệt 5 sự kiện phải ghi; và một dòng ghi chú
+Chức năng và logic: màn này là nơi sinh ra bản ghi log; nơi tra cứu là SC-30 nên không có phần hiển thị log ở đây",,,"audit_log",,"Thực thể vết thao tác dùng chung; FR-AUDIT-01 (RFP:710) đòi chủ thể; timestamp; before/after và lý do. Bảng đã tồn tại thật.",
+"4.1","img-019","Tiêu đề khối ghi log truy cập",,"Access log block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm lời nhắc khối này không sinh phần hiển thị nào
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối; mã FR-IAM-01 và cụm ""không hiển thị trên màn""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-020","Bảng sự kiện log bắt buộc","必須ログイベント一覧","Required log event table","table","requirement_table",,,,,,,,,"Mục đích và ngữ cảnh: khai 5 sự kiện quanh cổng đăng nhập phải sinh bản ghi log và nội dung bắt buộc của từng bản ghi
+Thành phần hiển thị: một bảng hai cột với hàng tiêu đề ""Sự kiện phải ghi"" và ""Nội dung bắt buộc của bản ghi""; và 5 hàng dữ liệu gồm xác thực thành công; xác thực bị từ chối; tài khoản bị khoá tạm; đăng nhập vào tài khoản đã tạm ngừng; đăng xuất hoặc phiên kết thúc do timeout
+Chức năng và logic: ba sự kiện cuối cũng là phần ""log hành vi bất thường"" của NFR-SEC-03 (RFP:811); nên bảng này phục vụ hai yêu cầu khách cùng lúc",,,"audit_log","actor_id; action; created_at","Vết thao tác của miền D-PARTY (RFP:602) theo FR-AUDIT-01 (RFP:710); các cột chủ thể; loại thao tác và thời điểm đã tồn tại thật. Nội dung ""nguồn truy cập"" mà thiết kế đòi cho sự kiện bị từ chối CHƯA có cột tương ứng.","- ""Nguồn truy cập"" phải ghi ở mức nào — địa chỉ mạng; thiết bị; hay chuỗi nhận dạng trình duyệt? Thiết kế chỉ ghi tên trường; và đây là dữ liệu cá nhân theo RFP §09-06 (RFP:886) nên phạm vi thu thập phải chốt trước.
+- Bản ghi cho nhánh bị từ chối có được lưu định danh đã dùng không; kể cả khi định danh đó không tồn tại? Ghi thì thành nơi tích tụ định danh lạ; không ghi thì mất đường điều tra.
+- Thời hạn lưu bản ghi log truy cập là bao lâu? DR-RET-01 (RFP:813) nêu 7 năm cho dữ liệu nghiệp vụ tra cứu online nhưng không nói rõ vết truy cập có thuộc diện đó."
+"4.2.1","img-021","Dòng sự kiện log (đại diện)",,"Log event row (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng sự kiện log — lấy hàng đầu tiên ""Xác thực thành công"" làm đại diện cho cả 5 hàng có cùng kết cấu
+Thành phần hiển thị: ô thứ nhất là tên sự kiện; ô thứ hai là danh sách nội dung bắt buộc nối bằng dấu chấm giữa
+Chức năng và logic: lặp 5 lần với 5 sự kiện khác nhau; kết cấu giống nhau nên gộp về một hàng đại diện",,,,,,
+"4.3","img-022","Ghi chú nơi sinh log và nơi tra cứu",,"Log origin and lookup note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: tách rõ hai việc — sinh bản ghi và tra cứu bản ghi thuộc hai màn khác nhau
+Thành phần hiển thị: một dòng chú thích ngắn nêu màn này sinh log và SC-30 là nơi tra cứu
+Chức năng và logic: không có đường điều hướng sang SC-30 từ màn này; người chưa đăng nhập không được đọc log",,,,,,
+"5","img-023","Khối trạng thái màn","画面状態ブロック","Screen states block","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ các trạng thái màn phải xử lý — phần dễ bị cắt nhất khi thi công
+Thành phần hiển thị: một nhãn khối và một lưới 8 thẻ trạng thái
+Chức năng và logic: chỉ mô tả yêu cầu; không có tương tác",,,,,,
+"5.1","img-024","Tiêu đề khối trạng thái màn",,"States block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối trạng thái
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""Trạng thái""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"5.2","img-025","Lưới thẻ trạng thái màn",,"State card grid","others","state_card_grid",,,,,,,,,"Mục đích và ngữ cảnh: 8 trạng thái màn xếp thành lưới 4 cột 2 hàng — mỗi thẻ là một trạng thái phải xử lý được
+Thành phần hiển thị: 8 thẻ có cùng kết cấu: Mặc định; Đang xác thực; Bị từ chối; Quyền đã bị tạm ngừng; Đang bị khoá tạm; Phiên hết hiệu lực; Đã có phiên hợp lệ; Chưa đủ mức bảo mật
+Chức năng và logic: ba trạng thái Bị từ chối; Quyền đã bị tạm ngừng và Đang bị khoá tạm phải không phân biệt được từ bên ngoài ở nhánh sai thông tin xác thực; hai trạng thái Đã có phiên hợp lệ và Chưa đủ mức bảo mật quyết định có render form hay không",,,,,,"- Trạng thái ""Chưa đủ mức bảo mật"" phụ thuộc SC-02 đang hoãn — trước khi SC-02 dựng thì vai trò thuộc diện bắt buộc MFA vào thẳng khu vực làm việc hay bị chặn? Thiết kế không khai đường tạm.
+- Trạng thái ""Đang bị khoá tạm"" phải nêu rõ thời điểm hết khoá; nhưng nêu chính xác cũng là nói cho người ngoài biết tài khoản đó tồn tại. Khách chọn phía nào?"
+"5.2.1","img-026","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên ""Mặc định"" làm đại diện cho cả 8 thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả; thẻ đại diện ghi ""Hai trường bắt buộc còn rỗng; nút bật; không có thông báo nào""
+Chức năng và logic: lặp 8 lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên gộp về một thẻ đại diện",,,,,,
+"6","img-027","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: chỗ duy nhất trên màn nói về bản thi công — tách khỏi phần thiết kế để không lẫn hai nền
+Thành phần hiển thị: một nhãn khối và một bảng ba cột: thiết kế đòi; prototype làm; và mức lệch
+Chức năng và logic: chỉ hiển thị; nội dung là 5 điểm lệch giữa thiết kế và bản thi công",,,,,,
+"6.1","img-028","Tiêu đề khối đối chiếu prototype",,"Divergence block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối đối chiếu
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""ĐỐI CHIẾU PROTOTYPE""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"6.2","img-029","Bảng đối chiếu thiết kế và prototype","設計とプロトタイプの差分表","Design vs prototype divergence table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: 5 điểm bản thi công làm khác thiết kế; kèm mức lệch của từng điểm
+Thành phần hiển thị: một bảng ba cột với hàng tiêu đề ""Thiết kế đòi""; ""Prototype làm""; ""Mức""; và 5 hàng dữ liệu; ô mức mang một thẻ nhãn
+Chức năng và logic: chỉ ba giá trị mức: khác có chủ đích; khác không chủ đích; cần khách chốt — hàng ""cần khách chốt"" là hàng phải đưa vào biên bản với chủ đầu tư",,,,,,"- Bảng đối chiếu này có xuất hiện trên màn thật không; hay chỉ tồn tại trong tài liệu thiết kế? Nếu chỉ ở tài liệu thì màn thật không có khối này."
+"6.2.1","img-030","Dòng đối chiếu kèm thẻ mức lệch (đại diện)",,"Divergence row with level tag (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng đối chiếu — lấy hàng đầu tiên làm đại diện cho cả 5 hàng có cùng kết cấu
+Thành phần hiển thị: ba ô: điều thiết kế đòi; điều bản thi công làm; và một thẻ nhãn mức lệch kèm câu giải thích ngắn
+Chức năng và logic: lặp 5 lần với nội dung khác nhau; kết cấu giống nhau nên gộp về một hàng đại diện",,,,,,
+"7","img-031","Khối ghi chú phân quyền và yêu cầu khách","権限と顧客要件の注記","Permission and requirement footnote","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt phân quyền của màn và nối từng khối về đúng phần nghiệm thu của FR-IAM-01 (RFP:627)
+Thành phần hiển thị: ba đoạn chú thích: phân quyền; yêu cầu khách màn này thoả kèm nguyên văn nghiệm thu; và liên kết tới bản as-built
+Chức năng và logic: khối 1 lo nhánh từ chối; khối 2 lo ""vào được đúng khu vực làm việc""; khối 3 lo ""và có log"" — đây là màn duy nhất trong 32 màn không có cổng xác thực",,,,,,"- Màn công khai này có cần chống truy cập tự động ở mức nào không? NFR-SEC-03 (RFP:811) chỉ đòi khoá tạm theo tài khoản; thiết kế không khai lớp chặn theo nguồn truy cập."

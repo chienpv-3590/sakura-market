@@ -1,0 +1,94 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Đầu trang màn ghi kết quả đánh giá","目利き結果記録ヘッダー","Appraisal entry page header","others","page_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-010 → FN-03 → FR-LOT-02 và ràng buộc phạm vi SCOPE-OUT-01
+Thành phần hiển thị: tiêu đề màn; dòng meta yêu cầu; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-09 và tên màn tiếng Việt kèm thuật ngữ tiếng Nhật
+Chức năng và logic: văn bản tĩnh; tên màn còn phụ thuộc câu hỏi chưa chốt về hai thuật ngữ",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết và nêu rõ một ràng buộc phạm vi cũng nằm trong yêu cầu của màn
+Thành phần hiển thị: mã FE-010; nhóm FN-03; ưu tiên P0; một yêu cầu chức năng và một ràng buộc phạm vi; loại màn Form; actor
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn đã có bản thi công để đối chiếu; không phải trạng thái nghiệp vụ
+Thành phần hiển thị: một nhãn chữ ngắn
+Chức năng và logic: tĩnh — không đổi theo dữ liệu",,,,,,
+"2","img-005","Khối ranh giới phán đoán của con người","人の判断境界ブロック","Human judgment boundary block","label","requirement_note",,,,,,,,,"Mục đích và ngữ cảnh: SCOPE-OUT-01 loại hẳn khỏi phạm vi việc đánh giá tự động độ tươi; chất lượng; phân loại loài — nên màn này chỉ ghi nhận phán đoán của con người
+Thành phần hiển thị: tiêu đề khối và một đoạn diễn giải ranh giới theo FIG-008
+Chức năng và logic: rút ra bốn điều màn không được có — không chấm điểm; không gợi ý hạng; không xếp loại tự động; và không ô nào mang nghĩa hệ thống đánh giá",,,,,,
+"3","img-006","Khối ngữ cảnh lô hàng","ロット情報ブロック","Lot context block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: người đánh giá phải biết đang ghi cho lô nào và bản ghi rơi vào kỳ nào trước khi ghi
+Thành phần hiển thị: bốn trường chỉ đọc gồm mã lô; mặt hàng; trạng thái hiện tại; ngày nghiệp vụ của lô
+Chức năng và logic: chỉ đọc; đọc mở cho các vai vận hành vì đây là ngữ cảnh chứ không phải dữ liệu ghi",,,,,,
+"3.1","img-007","Trường mã lô","ロット番号","Lot code","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: định danh lô đang ghi kết quả; là mã người đánh giá đối chiếu với mã ghi trên kiện hàng thật
+Thành phần hiển thị: nhãn song ngữ Mã lô · ロット番号 và một ô chỉ đọc
+Chức năng và logic: chỉ đọc; giá trị mang sang từ màn tiếp nhận hoặc từ màn chi tiết lô",,,"lot","lot_code","Prototype có cột mã lô duy nhất; màn đọc thẳng theo định danh lô trên đường dẫn.",
+"3.2","img-008","Trường mặt hàng","品目","Item name","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: mặt hàng của lô; giúp người đánh giá xác nhận đang đứng trước đúng lô
+Thành phần hiển thị: nhãn song ngữ Mặt hàng · 品目 và một ô chỉ đọc
+Chức năng và logic: chỉ đọc; không sửa được ở màn này — sửa thuộc tính lô thuộc màn chi tiết lô",,,"lot","item","Prototype có cột mặt hàng không rỗng.",
+"3.3","img-009","Trường trạng thái hiện tại của lô","現在の状態","Current lot status","label","readonly_field",,"string",,"một trong năm trạng thái của FIG-011",,,,,"Mục đích và ngữ cảnh: điều kiện tiền đề của màn — chỉ lô ở bước một của FIG-011 mới chờ ghi kết quả đánh giá
+Thành phần hiển thị: nhãn song ngữ Trạng thái hiện tại · 状態; ô chỉ đọc ghi trạng thái kèm vị trí bước; dòng gợi ý về điều kiện tiền đề
+Chức năng và logic: chỉ đọc; lô ở bước khác thì màn không hiện form nhập mà hiện kết quả đã có",,,"lot","status","Prototype có bốn giá trị trên cột này và thiếu giá trị cho bước hai của FIG-011.",
+"3.4","img-010","Trường ngày nghiệp vụ của lô","ロットの業務日","Lot business date","label","readonly_field",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: bản ghi kết quả thừa hưởng ngày nghiệp vụ của lô; nên người ghi phải thấy ngày đó trước khi ghi để biết bản ghi thuộc kỳ nào
+Thành phần hiển thị: nhãn song ngữ Ngày nghiệp vụ của lô · 業務日; ô chỉ đọc; dòng gợi ý về lý do phải hiện
+Chức năng và logic: chỉ đọc; đây là dữ liệu quyết định việc kỳ đã lock có chặn hay không nên không được ẩn",,,"lot","business_date","Prototype có cột này và bản ghi đánh giá sao lại giá trị đó; nhưng màn hiện không hiển thị ngày này ở đâu.",
+"4","img-011","Khối kết quả đánh giá bằng mắt","目視評価結果ブロック","Visual appraisal result block","others","form_block",,,,,,,,,"Mục đích và ngữ cảnh: phần ghi duy nhất của màn; nội dung là phán đoán của người có kinh nghiệm chứ không phải một hạng do hệ thống suy ra
+Thành phần hiển thị: một trường nhập nhiều dòng; dòng gợi ý về việc không dùng danh sách hạng cố định; nút lưu kèm ghi chú về phím xác nhận
+Chức năng và logic: một trường bắt buộc; lưu xong đưa lô sang bước hai của FIG-011",,,,,,
+"4.1","img-012","Trường kết quả thẩm định","目利き結果","Appraisal result","textarea","multiline_input",,"string","true",,"1","1000",,"Điều kiện: kết quả rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Vui lòng nhập kết quả thẩm định.""
+Điều kiện: kết quả vượt trần độ dài
+Lỗi: ""Kết quả thẩm định vượt độ dài cho phép.""","Mục đích và ngữ cảnh: FR-LOT-02 đòi lưu kết quả đánh giá bằng mắt; là phán đoán cuối cùng của con người và phải giữ ở dạng truy vết được
+Thành phần hiển thị: nhãn song ngữ Kết quả thẩm định · 目利き結果 kèm dấu bắt buộc; một ô nhập nhiều dòng có chữ gợi ý cách viết; dòng gợi ý về lý do không dùng danh sách hạng
+Chức năng và logic: văn bản tự do chứ không phải danh sách hạng cố định — đóng khung nó thành danh sách chính là bước đầu của tự động hoá mà SCOPE-OUT-01 cấm; bắt buộc; có trần độ dài và hiển thị số ký tự còn lại",,,"mekiki_record","grade","Prototype có cột này ở dạng chữ tự do không có ràng buộc giá trị — đúng ý SCOPE-OUT-01; nhưng cũng không có trần độ dài ở tầng nào.","- Trần độ dài của kết quả thẩm định là bao nhiêu ký tự? Không có trần thì một nội dung rất dài lưu được và làm hỏng cả báo cáo lẫn màn tra cứu."
+"4.2","img-013","Nút lưu kết quả","結果を保存","Save result","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: chốt lần ghi kết quả; là thao tác ghi duy nhất của màn
+Thành phần hiển thị: một nút chữ và một ghi chú nói phím xác nhận cũng lưu
+Chức năng và logic: dùng được bằng bàn phím theo NFR-USE-01; chặn gửi trùng khi đang gửi; hai việc phải xảy ra cùng nhau — ghi bản ghi kết quả và lật trạng thái lô sang bước hai; không được để một việc thành công mà việc kia thất bại","on_click","Ở lại màn; hiện xác nhận đã lưu và đưa lô sang bước hai của FIG-011",,,,"- Nếu ghi bản ghi kết quả thành công mà lật trạng thái lô thất bại thì hệ thống xử lý thế nào? Thiết kế đòi hai việc đi cùng nhau nhưng chưa nói cơ chế bù trừ."
+"5","img-014","Khối truy vết bắt buộc","トレーサビリティブロック","Mandatory traceability block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: tiêu chí nghiệm thu FR-LOT-02 là truy ngược được người ghi và thời điểm; nên bốn giá trị này là phần chịu lực của màn chứ không phải thông tin phụ
+Thành phần hiển thị: bốn trường chỉ đọc gồm người xác nhận; thời điểm ghi nhận; ngày nghiệp vụ của bản ghi; trạng thái lô sau khi lưu — cộng một ghi chú chưa chốt
+Chức năng và logic: cả bốn do tầng dịch vụ quyết định và không nhận từ phía người dùng; nhưng phải hiện trên màn trước khi ghi",,,,,,
+"5.1","img-015","Trường người xác nhận","評価担当者","Confirmed by","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: FR-LOT-02 đòi lưu người xác nhận; người đánh giá đang ký tên vào một phán đoán nghiệp vụ nên họ có quyền thấy tên mình được ghi vào đâu
+Thành phần hiển thị: nhãn song ngữ Người xác nhận · 評価担当者; ô chỉ đọc mang tên người của phiên đang đăng nhập; dòng gợi ý nói rõ phải hiện chứ không lưu ngầm
+Chức năng và logic: lấy từ phiên đăng nhập và không nhận từ phía người dùng; hiện bằng tên và không hiện địa chỉ thư điện tử",,,"mekiki_record","assessor_id","Prototype có cột này nhưng cho phép rỗng ở tầng dữ liệu; đường ghi hiện có luôn gán nên rủi ro nằm ở đường ghi khác trong tương lai.",
+"5.2","img-016","Trường thời điểm ghi nhận","評価日時","Assessed at","label","readonly_field",,"date",,"YYYY-MM-DD HH:mm JST",,,,,"Mục đích và ngữ cảnh: FR-LOT-02 đòi lưu thời điểm ghi nhận; đây là thời điểm thực của việc ghi và khác hẳn ngày nghiệp vụ của bản ghi
+Thành phần hiển thị: nhãn song ngữ Thời điểm ghi nhận · 評価日時; ô chỉ đọc; dòng gợi ý phân biệt với ngày nghiệp vụ
+Chức năng và logic: tầng dịch vụ đặt và neo múi giờ Nhật; hai giá trị thời gian trên màn không được trộn lẫn vì một cái là thời điểm thật và một cái là kỳ đối chiếu",,,"mekiki_record","assessed_at","Prototype có cột này với giá trị mặc định là thời điểm ghi; màn hiện không có nhãn cho trường này.",
+"5.3","img-017","Trường ngày nghiệp vụ của bản ghi","記録の業務日","Record business date","label","readonly_field",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: bản ghi kết quả thừa hưởng ngày nghiệp vụ của lô; nên nó gắn kết quả với lô chứ không gắn với người ghi
+Thành phần hiển thị: nhãn song ngữ Ngày nghiệp vụ của bản ghi · 業務日; ô chỉ đọc; dòng gợi ý nêu hệ quả cụ thể
+Chức năng và logic: kế thừa từ lô và không nhận từ phía người dùng; hệ quả là báo cáo quy công việc của ngày sau về ngày trước — điều đó phải khai rõ chứ không để ngầm",,,"mekiki_record","business_date","Prototype sao lại ngày nghiệp vụ của lô vào cột này để cơ chế khoá kỳ đọc thẳng cột mà không phải nối bảng.",
+"5.4","img-018","Trường trạng thái lô sau khi lưu","保存後の状態","Lot status after save","label","readonly_field",,"string",,"một trong năm trạng thái của FIG-011",,,,,"Mục đích và ngữ cảnh: theo FIG-011 thì ghi kết quả đưa lô sang bước hai; công bố bán là một quyết định riêng ở màn chi tiết lô
+Thành phần hiển thị: nhãn song ngữ Trạng thái lô sau khi lưu · 状態; ô chỉ đọc ghi cạnh chuyển kèm vị trí bước; dòng gợi ý nói rõ không nhảy thẳng sang bước ba
+Chức năng và logic: cạnh đi từ bước một sang bước hai; gộp hai bước là gộp việc ghi phán đoán với quyết định bán — hai việc của hai vai khác nhau",,,"lot","status","Prototype đưa lô thẳng sang trạng thái công bố vì thiếu giá trị cho bước hai; nên việc đánh giá và quyết định bán bị gộp thành một.",
+"5.5","img-019","Ghi chú chưa chốt về tên trạng thái và tên màn","用語の未確定事項","Open question on terminology","label","open_question",,,,,,,,,"Mục đích và ngữ cảnh: tài liệu khách dùng hai thuật ngữ cho hai chỗ; bảng thuật ngữ định nghĩa chúng riêng nhưng có chỗ khác lại viết chúng là một
+Thành phần hiển thị: một đoạn ghi chú có nhãn chưa chốt dưới khối truy vết
+Chức năng và logic: tĩnh; nêu rõ ảnh hưởng — nếu là hai việc thì FIG-011 cần hai bước và màn này chỉ phụ trách một; nếu là một việc thì phải chốt gọi tên nào",,,,,,"- Tên trạng thái bước hai của FIG-011 và tên màn này dùng thuật ngữ nào? Nếu là hai việc khác nhau thì việc còn lại ghi ở màn nào và ai làm."
+"6","img-020","Khối trạng thái màn","画面状態ブロック","Screen state block","others","state_matrix",,,,,,,,,"Mục đích và ngữ cảnh: liệt bảy trạng thái màn phải xử lý; hai trạng thái cuối là hai cửa kiểm nghiệp vụ chứ không phải chuyện hiển thị
+Thành phần hiển thị: bảy ô trạng thái; mỗi ô có tên và mô tả hành vi mong đợi
+Chức năng và logic: tĩnh trên wireframe nhưng là hợp đồng hành vi cho tầng hiển thị",,,,,,
+"6.1","img-021","Trạng thái sẵn sàng nhập","入力可能","Ready to enter state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: trạng thái làm việc bình thường; hai điều kiện phải cùng đúng mới hiện form
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: đúng vai và lô còn ở bước một; con trỏ đã nằm trong trường nhập ngay khi màn mở",,,,,,
+"6.2","img-022","Trạng thái không tìm thấy lô","ロット未検出","Lot not found state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: đường dẫn có thể trỏ vào một lô không tồn tại; người đánh giá cần đường quay lại chứ không phải một trang trống
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: nói rõ mã lô không tồn tại và kèm đường về danh sách lô",,,,,,
+"6.3","img-023","Trạng thái sai vai trò","役割相違","Wrong role state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: ngữ cảnh lô là dữ liệu đọc mở cho các vai vận hành; chặn nằm ở hành động ghi
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: vẫn xem được ngữ cảnh lô; form đổi thành một dòng nói rõ vai nào ghi được; chặn thật nằm ở tầng dịch vụ chứ không ở việc ẩn form",,,,,,
+"6.4","img-024","Trạng thái đã có kết quả","結果あり","Result already recorded state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một lô có tối đa một kết quả đánh giá; ghi thêm là làm mất phán đoán cũ mà FR-LOT-02 đòi truy vết
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: hiện kết quả đã ghi kèm người xác nhận và thời điểm; không hiện form nhập mới; sửa kết quả đi qua luồng điều chỉnh có kiểm soát chứ không sửa tại chỗ",,,,,,
+"6.5","img-025","Trạng thái đang gửi hoặc gửi lỗi","送信中・送信エラー","Submitting or submit error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: nội dung đánh giá là phán đoán vừa hình thành trong đầu người xem hàng; mất nó khi lỗi là mất dữ liệu thật
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: trường vô hiệu và nút báo đang lưu khi gửi; lỗi thì giữ nguyên nội dung đã nhập",,,,,,
+"6.6","img-026","Trạng thái xung đột đồng thời","同時実行の競合","Concurrent conflict state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một lô chỉ có một kết quả cuối cùng; hai bản ghi cho một lô là hai phán đoán mâu thuẫn không ai gỡ được
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: người sau bị từ chối vì lô đã rời bước một; điểm chặn phải là ràng buộc dữ liệu chứ không phải một lần đọc trước khi ghi",,,,,,
+"6.7","img-027","Trạng thái ngày nghiệp vụ đã lock","業務日ロック","Locked business day state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: bản ghi kết quả thừa hưởng ngày nghiệp vụ của lô; nên ghi muộn là ghi vào một kỳ có thể đã chốt và làm đổi số liệu đã công bố
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: từ chối trước khi ghi kèm lý do kỳ đã chốt; chỉ dẫn sang luồng điều chỉnh sau chốt; chặn phải phủ cả đường thêm bản ghi mới chứ không chỉ đường sửa bản ghi cũ",,,,,,
+"7","img-028","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_block",,,,,,,,,"Mục đích và ngữ cảnh: đặt cạnh nhau thiết kế đòi gì và bản thi công hiện làm gì để phần đọc spec không lẫn hai chuyện
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột
+Chức năng và logic: chỉ đọc; là phần đối chiếu chứ không phải phần thiết kế",,,,,,
+"7.1","img-029","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","comparison_table",,,,,,,,,"Mục đích và ngữ cảnh: sáu hạng mục lệch; nặng nhất là kỳ đã chốt vẫn ghi thêm được bản ghi kết quả bằng giao diện bình thường
+Thành phần hiển thị: ba cột Thiết kế đòi; Prototype làm; Mức — và sáu dòng hạng mục
+Chức năng và logic: chỉ đọc; dòng cuối mang mức cần khách chốt nên không tự quyết ở tầng thi công",,,,,,
+"8","img-030","Ghi chú chân màn về phân quyền và đường đọc kết quả","フッター注記","Footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ba điều dễ trôi — đọc mở nhưng ghi hẹp; kết quả phải đọc lại được từ chính bản ghi kết quả; và sửa kết quả đi qua luồng điều chỉnh
+Thành phần hiển thị: hai dòng ghi chú và một đường dẫn tới file spec của màn
+Chức năng và logic: tĩnh; nêu rõ kết quả không được suy ra từ một dòng kiểm toán vì mất dòng đó là mất kết quả trên màn dù bản ghi vẫn còn",,,,,,"- Kết quả đánh giá đã ghi có được sửa không; và nếu có thì đi qua luồng điều chỉnh nào? Yêu cầu khách chỉ đòi truy vết người ghi và thời điểm chứ không nói việc sửa."

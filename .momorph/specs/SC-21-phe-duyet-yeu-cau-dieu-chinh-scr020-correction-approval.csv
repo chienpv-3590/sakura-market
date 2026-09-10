@@ -1,0 +1,145 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn phê duyệt yêu cầu điều chỉnh",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết của nó; cho biết đây là cửa quyết định của nhóm điều chỉnh sau khi chốt.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-029 · FN-08 · ưu tiên P0 · FR-CORR-02 cùng ba ràng buộc kèm và actor; dòng tham chiếu phụ nêu mã thi công · loại màn List-Detail · route và một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác.",,,,,,
+"1.1","img-002","Tiêu đề màn","修正依頼の承認","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn duyệt hoặc từ chối yêu cầu điều chỉnh và sinh bản ghi đảo ngược hoặc phần chênh lệch.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-21 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về đúng tính năng và điều khoản yêu cầu; nêu rõ maker-checker đến từ GOV-RULE-01 chứ không từ FR-CORR-02.
+Thành phần hiển thị: Ba dòng chữ nhỏ: dòng tính năng · ưu tiên và yêu cầu; dòng actor nêu bộ phận quyết toán vai người duyệt; dòng tham chiếu phụ nêu mã thi công · loại màn · route và thẻ trạng thái.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn đã có bản thi công để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng tham chiếu phụ với nội dung Đã dựng.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu.",,,,,,
+"2","img-005","Khối thiết kế đòi theo cột nghiệm thu",,"Acceptance-criteria block","others","khối bảng hai cột",,,,,,,,,"Mục đích và ngữ cảnh: Dịch cột nghiệm thu của bốn yêu cầu thành điều phải thấy được trên màn; là bảng kiểm khi nghiệm thu màn này.
+Thành phần hiển thị: Tiêu đề khối; bên dưới là bảng hai cột bốn dòng cho FR-CORR-02 · GOV-RULE-01 · FR-AUDIT-01 · FR-INC-03.
+Chức năng và logic: Chỉ đọc; nội dung là ràng buộc phạm vi áp lên panel quyết định và bảng kết quả.",,,,,,
+"2.1","img-006","Bảng yêu cầu và điều phải thấy trên màn",,"Requirement-to-screen mapping table","table","bảng hai cột",,,,,,,,,"Mục đích và ngữ cảnh: Neo từng khối của màn về đúng câu chữ nghiệm thu; bốn dòng là bốn ràng buộc độc lập chứ không suy ra được lẫn nhau.
+Thành phần hiển thị: Bốn dòng: FR-CORR-02 đòi duyệt hoặc từ chối được và sau khi duyệt bản ghi gốc vẫn giữ nguyên cùng bản ghi đảo ngược hoặc chênh lệch truy được về yêu cầu; GOV-RULE-01 đòi người phê duyệt khác người lập; FR-AUDIT-01 đòi thao tác phê duyệt truy được chủ thể · thời điểm · trước sau và lý do; FR-INC-03 đòi phần chênh lệch tiền thưởng xuất hiện ở kỳ tiếp theo.
+Chức năng và logic: Chỉ đọc; dòng GOV-RULE-01 in đậm cụm ràng buộc riêng vì maker-checker không suy ra được từ vai trò.",,,"correction_request; transaction_adjustment","status; approved_by; requested_by; kind; qty_delta; unit_price_delta; amount_delta","Miền dữ liệu D-SETTLE và D-TRADE. Hai bảng thi công có thật và khớp thiết kế; cả hai chỉ thêm dòng. Sắc thái: điều kiện người duyệt khác người lập KHÔNG được cài bằng ràng buộc cơ sở dữ liệu mà chỉ so ở tầng ứng dụng.",
+"3","img-007","Khối danh sách yêu cầu",,"Request list block","others","khối lọc và bảng danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Hàng đợi quyết định của người duyệt: thấy yêu cầu nào đang chờ · lý do người lập nêu · bằng chứng và trạng thái maker-checker của chính mình trên từng dòng.
+Thành phần hiển thị: Tiêu đề khối; một ô lọc theo trạng thái; bảng năm cột bốn dòng mẫu; một đoạn ghi chú về liên kết bằng chứng.
+Chức năng và logic: Mặc định lọc chờ duyệt; cột Maker-checker nói rõ dòng nào người đang xem được phép quyết định.",,,"correction_request","status; reason; requested_by; approved_by; evidence_path","Danh sách đọc từ bảng yêu cầu điều chỉnh; mã giao dịch lấy qua khoá ngoại tới bảng giao dịch.","Danh sách có phân trang không; và sắp xếp mặc định theo thời điểm gửi cũ nhất trước hay mới nhất trước?"
+"3.1","img-008","Ô lọc theo trạng thái","状態で絞り込み","Status filter","dropdown","ô chọn một giá trị",,"string","false",,,,"Chờ duyệt","Điều kiện: chỉ nhận bốn lựa chọn tất cả · chờ duyệt · đã duyệt · bị từ chối.
+Lỗi: giá trị ngoài tập phải bị từ chối và nói rõ là lọc sai; không được trả danh sách rỗng im lặng vì người dùng sẽ đọc thành hết việc.","Mục đích và ngữ cảnh: Chọn nhóm yêu cầu cần xem; mặc định là chờ duyệt vì màn này là hàng đợi quyết định.
+Thành phần hiển thị: Nhãn Lọc theo trạng thái; ô chọn rộng hết khối hiện Chờ duyệt; dòng nhắc bên dưới liệt bốn lựa chọn và nêu lựa chọn mặc định.
+Chức năng và logic: Bộ lọc phải là ô chọn ngay trên màn; và phải phân biệt được trạng thái rỗng do hết việc với trạng thái rỗng do lọc không khớp.","on_click","Đổi giá trị thì tải lại bảng danh sách theo trạng thái mới; không rời màn.","correction_request","status","Cột trạng thái nhận đúng ba giá trị chờ duyệt · đã duyệt · bị từ chối; lựa chọn tất cả là bộ lọc rỗng chứ không phải một giá trị của cột.","Bộ lọc có nhớ lựa chọn lần trước khi người dùng trở lại màn không?
+Có cần thêm bộ lọc theo ngày nghiệp vụ hoặc theo người lập khi hàng đợi dài không?"
+"3.2","img-009","Bảng danh sách yêu cầu năm cột","修正依頼一覧","Correction request list table","table","bảng năm cột",,,,,,,,,"Mục đích và ngữ cảnh: Cho người duyệt đủ dữ liệu để quyết định ngay trên danh sách: sửa cái gì · vì sao · đang ở trạng thái nào · có bằng chứng gì và mình có được quyết định dòng này không.
+Thành phần hiển thị: Năm cột; bốn dòng mẫu phủ đủ bốn tình huống: chờ duyệt và duyệt được · chờ duyệt nhưng chính mình là người lập · đã duyệt · bị từ chối. Cột Trạng thái là nhãn màu; cột Bằng chứng là liên kết; cột Maker-checker hiện tên người lập và người duyệt.
+Chức năng và logic: Chỉ đọc; dòng bị từ chối không có liên kết bằng chứng nào là một khả năng cần xử lý; cột Maker-checker phải nói thẳng khi người đang xem không được quyết định dòng đó.",,,"correction_request","target_txn_id; reason; status; evidence_path; requested_by; approved_by","Mã giao dịch lấy qua khoá ngoại tới bảng giao dịch. Cột Maker-checker là giá trị dẫn xuất từ việc so người lập với người đang xem.","Dòng bị từ chối trong ảnh mẫu để dấu gạch ở cột Bằng chứng — bằng chứng bị thu hồi sau khi từ chối hay chỉ là trạng thái không tạo được liên kết?
+Cột Lý do dài thì cắt bớt kèm chỗ mở rộng hay hiện đủ và để dòng cao lên?"
+"3.2.1","img-010","Nhãn trạng thái yêu cầu trong dòng",,"Request status badge","label","nhãn trong ô bảng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết ngay dòng nào còn phải quyết định.
+Thành phần hiển thị: Nhãn chữ nhỏ viền tròn trong ô cột Trạng thái; bốn dòng mẫu cho ba giá trị Chờ duyệt · Đã duyệt · Bị từ chối. Các nhãn gộp thành một hạng mục vì cùng cấu trúc và cùng vai trò.
+Chức năng và logic: Chỉ đọc; trạng thái đổi được đúng một lần từ chờ duyệt sang đã duyệt hoặc bị từ chối.",,,"correction_request","status","Ba giá trị của cột trạng thái; giá trị khi tạo luôn là chờ duyệt và do phía hệ thống đặt.",
+"3.3","img-011","Ghi chú liên kết bằng chứng có hạn giờ",,"Time-limited evidence link note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Chốt cách mở tệp bằng chứng: liên kết có hạn giờ sinh tại thời điểm mở màn; đây là ràng buộc bảo mật của tệp chứng từ.
+Thành phần hiển thị: Một đoạn chữ nhỏ dưới bảng; cụm có hạn giờ in đậm.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc áp lên cột Bằng chứng của bảng danh sách.",,,,,"Đường dẫn tệp bằng chứng không bao giờ có mặt trong file xuất; báo cáo log điều chỉnh sau lock RPT-08 cố ý không có cột này.","Liên kết bằng chứng có hạn giờ là bao nhiêu giây; và hết hạn giữa lúc người duyệt đang xem thì màn xử lý ra sao?"
+"4","img-012","Khối panel quyết định",,"Decision panel block","others","khối form quyết định",,,,,,,,,"Mục đích và ngữ cảnh: Nơi thực hiện quyết định của FR-CORR-02: duyệt hoặc từ chối; và nơi chọn hình thức ghi là đảo ngược toàn bộ hay chỉ phần chênh lệch.
+Thành phần hiển thị: Tiêu đề khối nêu hai điều kiện hiện panel; bên dưới là ô chọn Loại điều chỉnh dạng nhóm lựa chọn; hai ô chênh lệch số lượng và đơn giá; vùng văn bản Lý do quyết định; hai nút Duyệt và Từ chối; một đoạn ghi chú về cách tính số tiền.
+Chức năng và logic: Chỉ hiện khi yêu cầu đang chờ duyệt VÀ người xem khác người lập; hai điều kiện phải cùng đúng.",,,"transaction_adjustment","kind; qty_delta; unit_price_delta; amount_delta","Panel ghi một dòng mới vào bảng điều chỉnh giao dịch; bảng này chỉ thêm dòng và không bao giờ sửa bản ghi giao dịch gốc.",
+"4.1","img-013","Ô chọn Loại điều chỉnh","修正区分","Adjustment kind","radio_button","nhóm hai lựa chọn loại trừ nhau",,"string","true","none",,,"Đảo ngược toàn bộ (reverse)","Điều kiện: đúng một trong hai lựa chọn đảo ngược toàn bộ hoặc chỉ phần chênh lệch.
+Lỗi: thiếu loại điều chỉnh khi bấm Duyệt thì từ chối và nói rõ là chưa chọn loại điều chỉnh.","Mục đích và ngữ cảnh: Chọn hình thức ghi bản ghi mới; hai lối này là hai lối duy nhất FR-CORR-02 cho phép.
+Thành phần hiển thị: Nhãn Loại điều chỉnh kèm dấu sao bắt buộc; một hàng hai lựa chọn loại trừ nhau với lựa chọn đảo ngược toàn bộ đang được chọn; dòng nhắc nêu cả hai lối đều thêm bản ghi mới.
+Chức năng và logic: Cả hai lối đều THÊM bản ghi mới; không lối nào sửa bản ghi gốc. Đảo ngược toàn bộ là cùng một cơ chế: thêm một dòng triệt tiêu toàn bộ giao dịch gốc chứ không xoá giao dịch gốc.","on_click","Chọn chỉ phần chênh lệch thì hai ô chênh lệch trở thành bắt buộc; chọn đảo ngược toàn bộ thì hệ thống tự triệt tiêu toàn bộ giá trị gốc.","transaction_adjustment","kind","Cột loại điều chỉnh nhận đúng hai giá trị đảo ngược và chênh lệch; đây là ràng buộc ở tầng cơ sở dữ liệu.","Đảo ngược toàn bộ rồi có cần tạo lại giao dịch đúng bằng một đường riêng không; hay việc tạo lại nằm ngoài phạm vi màn này?"
+"4.2","img-014","Ô nhập Chênh lệch số lượng","数量の差分","Quantity delta","text_form","ô nhập số một dòng",,"integer","true","số thập phân hai chữ số; nhận giá trị âm",,,,"Điều kiện: bắt buộc khi chọn chỉ phần chênh lệch.
+Điều kiện: chênh lệch số lượng và chênh lệch đơn giá không được cùng bằng 0 — không có gì để ghi thì bị từ chối.
+Lỗi: thiếu hoặc không hợp lệ thì từ chối và nói rõ chênh lệch không hợp lệ.","Mục đích và ngữ cảnh: Nhập phần số lượng phải cộng thêm hoặc trừ đi so với giao dịch gốc.
+Thành phần hiển thị: Nhãn Chênh lệch số lượng kèm dấu sao bắt buộc; ô nhập số hiện mẫu -12.00; dòng nhắc nêu điều kiện bắt buộc và điều kiện không được cả hai bằng 0.
+Chức năng và logic: Chỉ bắt buộc ở lối chỉ phần chênh lệch; nhận số âm; hệ thống dùng giá trị này cùng đơn giá gốc để tính lại số tiền chênh lệch.",,,"transaction_adjustment","qty_delta","Cột số thập phân hai chữ số; nhận giá trị âm vì lối đảo ngược phải triệt tiêu được giá trị gốc.","Chênh lệch số lượng có bị chặn theo biên nào không; ví dụ trừ nhiều hơn số lượng gốc thành số hiệu lực âm.
+Số lượng lấy đơn vị gì và có bao nhiêu chữ số thập phân do khách chốt?"
+"4.3","img-015","Ô nhập Chênh lệch đơn giá","単価の差分","Unit price delta","text_form","ô nhập số một dòng",,"integer","true","số nguyên JPY; không có phần lẻ",,,,"Điều kiện: bắt buộc khi chọn chỉ phần chênh lệch.
+Điều kiện: phải là số nguyên JPY — đơn giá không có phần lẻ.
+Điều kiện: không được cùng bằng 0 với chênh lệch số lượng.
+Lỗi: nhập số thập phân phải bị từ chối ngay như lỗi nhập liệu chứ không rơi thành lỗi hệ thống.","Mục đích và ngữ cảnh: Nhập phần đơn giá phải cộng thêm hoặc trừ đi so với giao dịch gốc.
+Thành phần hiển thị: Nhãn Chênh lệch đơn giá kèm dấu sao bắt buộc; ô nhập số hiện mẫu 0; dòng nhắc nêu đơn giá tính bằng JPY và không có phần lẻ.
+Chức năng và logic: Chỉ bắt buộc ở lối chỉ phần chênh lệch; phải chặn số thập phân ngay tại ô nhập vì đây là lỗi nhập liệu chứ không phải lỗi hệ thống.",,,"transaction_adjustment","unit_price_delta","Cột số nguyên; đơn giá tính bằng JPY nên mọi phần lẻ phải bị chặn trước khi tới tầng cơ sở dữ liệu.","Chênh lệch đơn giá có biên trên hay biên dưới nào do khách chốt không?"
+"4.4","img-016","Ô nhập Lý do quyết định","判断理由","Decision reason","textarea","vùng văn bản nhiều dòng",,"string","true","none",,"1000",,"Điều kiện: bắt buộc cho CẢ duyệt và từ chối.
+Điều kiện: bỏ khoảng trắng hai đầu rồi phải còn nội dung.
+Lỗi: lý do rỗng thì từ chối thao tác; lý do rỗng là thao tác không giải thích được về sau.","Mục đích và ngữ cảnh: Trường lý do mà FR-AUDIT-01 đòi cho thao tác phê duyệt; là thứ giải thích quyết định về sau khi có kiểm toán.
+Thành phần hiển thị: Nhãn Lý do quyết định kèm dấu sao bắt buộc; vùng văn bản rộng hết khối hiện một câu mẫu; dòng nhắc nêu bắt buộc cho cả duyệt và từ chối.
+Chức năng và logic: Bắt buộc ở cả hai nhánh quyết định; nội dung đi vào dấu vết kiểm toán chứ không chỉ hiện trên màn.",,,,,"Lý do quyết định phải vào dấu vết kiểm toán của thao tác phê duyệt theo FR-AUDIT-01 cùng chủ thể · thời điểm và giá trị trước sau.","Lý do quyết định có hiện lại trên danh sách sau khi đã xử lý không; thẻ trạng thái Đã xử lý nói là có.
+Lý do từ chối có được gửi lại cho người lập bằng thông báo không?"
+"4.5","img-017","Nút Duyệt","承認","Approve button","button","nút hành động chính","text_only",,,,,,,"Điều kiện: người duyệt phải khác người lập — ràng buộc riêng của GOV-RULE-01; không suy ra được từ vai trò.
+Điều kiện: yêu cầu phải còn ở trạng thái chờ duyệt.
+Điều kiện: phải có loại điều chỉnh và lý do quyết định; ở lối chỉ phần chênh lệch thì hai ô chênh lệch phải hợp lệ và không cùng bằng 0.
+Điều kiện: nút vô hiệu trong lúc đang gửi để không bấm trùng.
+Lỗi: tự duyệt yêu cầu của chính mình phải bị từ chối kể cả khi gọi đường ghi trực tiếp; người quyết định sau nhận thông báo yêu cầu đã được xử lý.","Mục đích và ngữ cảnh: Hành động chính của màn: chấp thuận điều chỉnh và sinh bản ghi đảo ngược hoặc phần chênh lệch thay vì ghi đè lịch sử.
+Thành phần hiển thị: Nút chữ nền đậm đặt cuối panel quyết định.
+Chức năng và logic: Duyệt xong thì bản ghi gốc vẫn giữ nguyên; số hiệu lực hiện tại đọc ra bằng cách cộng dồn gốc và các dòng điều chỉnh; phần chênh lệch tiền thưởng xuất hiện ở kỳ tiếp theo theo FR-INC-03.","on_click","Duyệt yêu cầu: sinh một bản ghi điều chỉnh mới rồi phần chênh lệch tiền thưởng xuất hiện ở kỳ tiếp theo và xem được ở SC-22; bản ghi gốc giữ nguyên.","correction_request; transaction_adjustment","status; approved_by; kind; qty_delta; unit_price_delta; amount_delta","Một lần duyệt phải là một thao tác trọn vẹn: đổi trạng thái yêu cầu và ghi dòng điều chỉnh không được để lỡ nửa đường.","Duyệt xong mà bước sinh phần chênh lệch tiền thưởng thất bại thì màn báo cho người duyệt như thế nào?
+Một yêu cầu duyệt xong có phát thông báo cho người lập không?"
+"4.6","img-018","Nút Từ chối","却下","Reject button","button","nút hành động cảnh báo","text_only",,,,,,,"Điều kiện: người từ chối phải khác người lập.
+Điều kiện: yêu cầu phải còn ở trạng thái chờ duyệt.
+Điều kiện: phải có lý do quyết định.
+Lỗi: lý do rỗng thì từ chối thao tác; người quyết định sau nhận thông báo yêu cầu đã được xử lý.","Mục đích và ngữ cảnh: Nhánh quyết định thứ hai của FR-CORR-02; từ chối cũng là một quyết định phải giải thích được.
+Thành phần hiển thị: Nút chữ viền đỏ đặt cạnh nút Duyệt.
+Chức năng và logic: Không sinh bản ghi điều chỉnh; nhưng vẫn đòi lý do quyết định và vẫn vào dấu vết kiểm toán như nhánh duyệt.","on_click","Từ chối yêu cầu: yêu cầu chuyển sang trạng thái bị từ chối; không sinh bản ghi điều chỉnh nào và giao dịch gốc không đổi.","correction_request","status; approved_by","Chỉ đổi trạng thái yêu cầu; không ghi dòng nào vào bảng điều chỉnh giao dịch.","Yêu cầu bị từ chối rồi thì người lập gửi lại được yêu cầu mới cho cùng giao dịch không?"
+"4.7","img-019","Ghi chú số tiền chênh lệch không nhập tay",,"Amount computed server-side note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Chốt một bất biến về tiền: người duyệt không đặt được số tiền tuỳ ý; số tiền luôn suy ra từ số gốc và phần chênh lệch.
+Thành phần hiển thị: Một đoạn chữ nhỏ cuối panel quyết định.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc áp lên hai ô chênh lệch và lên nút Duyệt.",,,"transaction_adjustment","amount_delta","Cột số tiền chênh lệch tính bằng JPY do hệ thống tự tính từ số lượng và đơn giá gốc đọc lại tại thời điểm duyệt; không nhận giá trị từ người dùng.",
+"5","img-020","Khối kết quả sau khi duyệt",,"Post-approval result block","others","khối bảng bốn cột",,,,,,,,,"Mục đích và ngữ cảnh: Vẽ rõ hình dạng dữ liệu sau khi duyệt để không ai cài thành ghi đè: ba dòng gồm gốc · dòng điều chỉnh và số hiệu lực hiện tại.
+Thành phần hiển thị: Tiêu đề khối dẫn FR-CORR-02; bảng bốn cột ba dòng; một đoạn ghi chú về lối đảo ngược toàn bộ.
+Chức năng và logic: Chỉ đọc; nội dung là đặc tả kết quả của nút Duyệt.",,,"transaction; transaction_adjustment","qty; unit_price; qty_delta; unit_price_delta","Số hiệu lực hiện tại là giá trị dẫn xuất bằng cách cộng dồn bản ghi gốc và các dòng điều chỉnh; không có cột nào lưu sẵn giá trị này.",
+"5.1","img-021","Bảng ba dòng gốc và điều chỉnh và số hiệu lực",,"Original versus adjustment table","table","bảng bốn cột",,,,,,,,,"Mục đích và ngữ cảnh: Trả lời dứt điểm câu hỏi sau khi duyệt thì số nào là số đúng; và khẳng định báo cáo kỳ đã chốt vẫn ra đúng số cũ.
+Thành phần hiển thị: Bốn cột; ba dòng: giao dịch gốc giữ nguyên 120.00 và 1 850 JPY; dòng điều chỉnh mang -12.00 và 0; số hiệu lực hiện tại 108.00 và 1 850 JPY.
+Chức năng và logic: Chỉ đọc; số hiệu lực hiện tại đọc ra bằng cách CỘNG DỒN chứ không phải một giá trị bị ghi đè; báo cáo của kỳ đã chốt vẫn dùng số gốc.",,,,,,"Số hiệu lực hiện tại hiện ở những màn nào; và màn giao dịch SC-12 có hiện cả hai số gốc và số hiệu lực không?
+Một giao dịch có nhiều dòng điều chỉnh thì bảng này hiện đủ mọi dòng hay chỉ dòng mới nhất?"
+"5.2","img-022","Ghi chú lối đảo ngược toàn bộ",,"Full reverse mechanism note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Chặn cách cài sai thẳng thắn nhất: dùng lệnh xoá cho lối đảo ngược toàn bộ.
+Thành phần hiển thị: Một đoạn chữ nhỏ dưới bảng kết quả.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc áp lên lựa chọn đảo ngược toàn bộ của ô Loại điều chỉnh.",,,,,,
+"6","img-023","Khối maker-checker khi bạn là người lập",,"Maker-checker self-approval block","others","khối minh hoạ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Vẽ rõ trường hợp người xem chính là người lập; đây là ràng buộc riêng của GOV-RULE-01 và là chỗ dễ cài thành chỉ ẩn nút.
+Thành phần hiển thị: Khối viền nét đứt tiêu đề dẫn GOV-RULE-01; một đoạn khẳng định không phê duyệt được yêu cầu do chính mình tạo; hai nút Duyệt và Từ chối ở trạng thái vô hiệu; một đoạn ghi chú về chỗ chặn thật.
+Chức năng và logic: Panel quyết định không hiện và hai nút không tồn tại; nhưng chặn thật phải nằm ở phía hệ thống.",,,"correction_request","requested_by; approved_by","So người lập với người đang thao tác. Sắc thái: điều kiện người duyệt khác người lập KHÔNG có ràng buộc ở tầng cơ sở dữ liệu mà chỉ được so ở tầng ứng dụng.",
+"6.1","img-024","Nút Duyệt ở trạng thái vô hiệu","承認（無効状態）","Approve button - disabled state","button","nút hành động vô hiệu","text_only",,,,,,,"Điều kiện: người xem chính là người lập thì nút ở trạng thái vô hiệu và panel quyết định không render.
+Lỗi: gọi đường ghi trực tiếp phải bị phía hệ thống từ chối vì tự phê duyệt.","Mục đích và ngữ cảnh: Minh hoạ trạng thái vô hiệu của nút Duyệt khi người xem là người lập.
+Thành phần hiển thị: Nút chữ mờ trong khối minh hoạ maker-checker.
+Chức năng và logic: Là biến thể trạng thái của cùng một nút; ẩn nút chỉ là gợi ý trình bày chứ không phải hàng rào.",,,,,,
+"6.2","img-025","Nút Từ chối ở trạng thái vô hiệu","却下（無効状態）","Reject button - disabled state","button","nút hành động vô hiệu","text_only",,,,,,,"Điều kiện: người xem chính là người lập thì nút ở trạng thái vô hiệu.
+Lỗi: gọi đường ghi trực tiếp phải bị phía hệ thống từ chối vì tự quyết định yêu cầu của chính mình.","Mục đích và ngữ cảnh: Minh hoạ trạng thái vô hiệu của nút Từ chối khi người xem là người lập.
+Thành phần hiển thị: Nút chữ mờ đặt cạnh nút Duyệt vô hiệu.
+Chức năng và logic: Ràng buộc maker-checker áp cho cả hai nhánh quyết định chứ không chỉ nhánh duyệt.",,,,,,"Người lập có được tự từ chối yêu cầu của mình như một cách thu hồi không; hay đó phải là một đường thu hồi riêng?"
+"6.3","img-026","Ghi chú chặn thật nằm ở phía hệ thống",,"Server-side enforcement note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Nói thẳng maker-checker là ràng buộc kiến trúc chứ không phải quy tắc trình bày; và nói rõ nó không suy ra được từ vai trò.
+Thành phần hiển thị: Một đoạn chữ nhỏ cuối khối; các cụm chỉ là gợi ý trình bày và không suy ra được từ vai trò in đậm.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc áp lên hai nút quyết định và lên panel quyết định. Người lập và người duyệt cùng thuộc bộ phận quyết toán nên phân quyền theo vai trò không thay được ràng buộc này.",,,,,,
+"7","img-027","Khối trạng thái màn",,"Screen states block","others","khối mười một thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê các trạng thái màn phải xử lý được; ba thẻ về maker-checker · rỗng do lọc và kỳ đã chốt là ba chỗ dễ bỏ sót.
+Thành phần hiển thị: Mười một thẻ xếp ba hàng; mỗi thẻ có tiêu đề trạng thái và một đoạn mô tả hành vi mong đợi.
+Chức năng và logic: Chỉ trình bày; nội dung là đặc tả hành vi cho bảng danh sách và panel quyết định.",,,,,,
+"7.1","img-028","Thẻ trạng thái Rỗng",,"Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái hết việc; vẫn phải chỉ đường sang màn tạo yêu cầu.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng và một đoạn mô tả nêu câu thông báo cụ thể.
+Chức năng và logic: Kèm liên kết sang SC-20 để người dùng không phải tự tìm đường.",,,,,,
+"7.2","img-029","Thẻ trạng thái Rỗng do lọc",,"Empty-by-filter state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt hai trạng thái rỗng khác nhau về bản chất; gộp chúng lại làm người duyệt tưởng đã hết việc.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng do lọc và một đoạn mô tả ngắn.
+Chức năng và logic: Thông báo phải nói rõ là do bộ lọc và gợi ý bỏ lọc; khác hẳn thông báo chưa có yêu cầu nào.",,,,,,
+"7.3","img-030","Thẻ trạng thái Đang tải và lỗi tải",,"Loading and load-error state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Gom hai trạng thái hạ tầng khi nạp danh sách.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải / lỗi tải và một đoạn mô tả ngắn.
+Chức năng và logic: Khung trang hiện trước rồi dữ liệu vào sau; lỗi truy vấn thì báo kèm nút tải lại.",,,,,,
+"7.4","img-031","Thẻ trạng thái Không có quyền",,"Forbidden state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai ranh giới phân quyền của màn và nói rõ chặn ở cả hai đường: vào màn và gọi đường quyết định.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền và một đoạn mô tả ngắn.
+Chức năng và logic: Chỉ bộ phận quyết toán vào được màn; vai khác cũng không gọi được đường duyệt trực tiếp.",,,,,,
+"7.5","img-032","Thẻ trạng thái Bạn là người lập",,"Self-made request state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái maker-checker; là thẻ quan trọng nhất của màn vì nó tách quyền ĐỌC khỏi quyền QUYẾT ĐỊNH.
+Thành phần hiển thị: Thẻ tiêu đề Bạn là người lập và một đoạn mô tả ngắn.
+Chức năng và logic: Người lập vẫn thấy đủ dữ liệu của yêu cầu mình gửi nhưng không có nút quyết định; và gọi đường ghi trực tiếp vẫn bị phía hệ thống từ chối.",,,,,,
+"7.6","img-033","Thẻ trạng thái Chờ duyệt và được duyệt",,"Pending and approvable state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái làm việc bình thường của người duyệt.
+Thành phần hiển thị: Thẻ tiêu đề Chờ duyệt; được duyệt và một đoạn mô tả ngắn.
+Chức năng và logic: Panel quyết định hiện đủ gồm ô lý do bắt buộc; hai điều kiện hiện panel cùng đúng.",,,,,,
+"7.7","img-034","Thẻ trạng thái Đã xử lý",,"Already decided state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái sau quyết định; nói rõ lý do quyết định phải hiện lại được chứ không chỉ nằm trong log.
+Thành phần hiển thị: Thẻ tiêu đề Đã xử lý và một đoạn mô tả ngắn.
+Chức năng và logic: Panel quyết định không còn; màn hiện nhãn trạng thái · người duyệt và lý do quyết định.",,,,,,"Lý do quyết định hiện trên dòng danh sách hay chỉ trong phần chi tiết của dòng?"
+"7.8","img-035","Thẻ trạng thái Đang gửi",,"Submitting state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chống bấm trùng trên một quyết định chỉ được ghi một lần.
+Thành phần hiển thị: Thẻ tiêu đề Đang gửi và một đoạn mô tả ngắn.
+Chức năng và logic: Cả nút Duyệt và nút Từ chối vô hiệu trong lúc gửi.",,,,,,
+"7.9","img-036","Thẻ trạng thái Gửi lỗi",,"Submit error state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chốt yêu cầu về chất lượng thông báo lỗi cho thao tác quyết định; bốn nguyên nhân có bốn cách xử lý khác nhau.
+Thành phần hiển thị: Thẻ tiêu đề Gửi lỗi và một đoạn mô tả liệt bốn nguyên nhân.
+Chức năng và logic: Mỗi nguyên nhân có một thông báo riêng; đặc biệt phân biệt lỗi nhập liệu với việc người khác đã xử lý trước.",,,,,,"Bốn thông báo lỗi này cần bản tiếng Nhật tương ứng; nội dung từng câu do ai chốt?"
+"7.10","img-037","Thẻ trạng thái Hai người duyệt cùng lúc",,"Concurrent decision state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Xử lý tranh chấp đồng thời trên một quyết định chỉ ghi được một lần.
+Thành phần hiển thị: Thẻ tiêu đề Hai người duyệt cùng lúc và một đoạn mô tả ngắn.
+Chức năng và logic: Chỉ một quyết định được ghi; người thứ hai nhận thông báo yêu cầu đã được xử lý chứ không ghi đè.",,,,,,
+"7.11","img-038","Thẻ trạng thái Kỳ đã chốt",,"Locked period state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Giải thích vì sao màn này ghi được trong khi ngày nghiệp vụ đã lock; đây là chỗ dễ cài thành chặn oan.
+Thành phần hiển thị: Thẻ tiêu đề Kỳ đã chốt và một đoạn mô tả ngắn.
+Chức năng và logic: Kỳ đã chốt là điều kiện luôn đúng vì SC-20 chỉ nhận giao dịch của ngày đã chốt; duyệt vẫn ghi được vì ghi bằng bản ghi MỚI chứ không sửa bản ghi cũ.",,,,,"Hai bảng của màn này cố ý KHÔNG mang tầng chặn ghi theo ngày lock; nếu áp tầng đó lên đây thì đường điều chỉnh sau lock mất luôn.",
+"8","img-039","Khối đối chiếu prototype",,"Design versus prototype comparison block","table","bảng ba cột trong khối chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Khối chú thích tài liệu; không phải thành phần của sản phẩm. Nó đặt cạnh nhau điều thiết kế đòi và điều bản thi công hiện làm.
+Thành phần hiển thị: Khối viền nét đứt tiêu đề ĐỐI CHIẾU PROTOTYPE chứa bảng ba cột bảy dòng; cột Mức phân loại Chưa đạt · Khớp · Hở.
+Chức năng và logic: Chỉ đọc; không có thao tác nào và không tham gia luồng nghiệp vụ của màn.",,,,,,
+"9","img-040","Chân ghi chú phân quyền và tệp bằng chứng",,"Permission and evidence footnote","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Chốt ranh giới phân quyền của màn và nhắc lại rằng ngoại lệ maker-checker nằm bên trong chính vai trò được phép.
+Thành phần hiển thị: Hai đoạn chữ nhỏ cuối màn: đoạn phân quyền và một liên kết sang bản đặc tả as-built của màn.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc phân quyền áp lên hai nút quyết định và lên cột Bằng chứng.",,,,,,"Khi người lập là người duy nhất còn hoạt động trong bộ phận quyết toán thì yêu cầu treo mãi; có cần đường leo thang cho trường hợp này không?"

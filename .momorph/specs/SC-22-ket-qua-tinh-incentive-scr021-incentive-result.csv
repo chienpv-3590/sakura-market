@@ -1,0 +1,116 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn kết quả tính thưởng","画面ヘッダー","Screen header block","others","khối đầu trang",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn SC-22 — nơi bộ phận quyết toán đọc kết quả tính 完納奨励金 của một kỳ.
+Thành phần hiển thị: Tiêu đề màn ở dòng trên; dưới là dòng metadata gồm mã FE; mã FN; mức ưu tiên; danh sách yêu cầu khách và thẻ trạng thái dựng.
+Chức năng và logic: Thuần hiển thị; không có tương tác. Vai trò ngoài bộ phận quyết toán không vào được màn nên không thấy khối này.",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","tiêu đề trang",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết đang ở màn kết quả tính thưởng; không phải màn quản lý biểu suất.
+Thành phần hiển thị: Một dòng chữ gồm mã màn SC-22 và tên màn Kết quả tính 完納奨励金.
+Chức năng và logic: Tĩnh; không đổi theo kỳ đang xem hay theo vai trò.",,,,,,
+"1.2","img-003","Dòng metadata màn","画面メタ情報","Screen metadata line","label","dòng metadata",,,,,,,,,"Mục đích và ngữ cảnh: Truy được từ màn về đúng tính năng và đúng yêu cầu khách mà màn phải thoả.
+Thành phần hiển thị: Chuỗi phân tách bằng dấu · gồm ba mã FE; hai mã FN; mức ưu tiên; bốn mã yêu cầu khách; actor; mã thi công SCR021_IncentiveResult; loại List chỉ đọc; route /incentive và thẻ trạng thái.
+Chức năng và logic: Tĩnh. FE-043 mang ưu tiên P1 trong khi FE-030 và FE-032 là P0 — khác biệt này ảnh hưởng thứ tự thi công; nêu ngay ở đây để không bị đọc gộp.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn","実装状況タグ","Build status tag","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn đã có bản thi công để đối chiếu; không phải cam kết rằng thiết kế đã đạt.
+Thành phần hiển thị: Một thẻ chữ nhỏ nằm cuối dòng metadata.
+Chức năng và logic: Tĩnh. Thẻ này nói về sự tồn tại của bản thi công; mức đạt hay chưa đạt nằm ở khối đối chiếu prototype cuối màn.",,,,,,
+"2","img-005","Khối yêu cầu khách phải thấy trên màn","受入条件ブロック","Acceptance criteria block","others","khối tài liệu yêu cầu",,,,,,,,,"Mục đích và ngữ cảnh: Ghi lại đúng phần Nghiệm thu của bốn yêu cầu khách mà màn này phải chứng minh; để người dựng không phải mở lại tài liệu gốc.
+Thành phần hiển thị: Tiêu đề khối và một bảng hai cột: mã yêu cầu và điều phải thấy được trên màn.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là chuẩn nghiệm thu cho chính màn này; mọi thành phần bên dưới phải truy về được một dòng trong bảng.",,,,,,
+"2.1","img-006","Bảng yêu cầu và điểm nghiệm thu","要求・受入条件テーブル","Requirement and acceptance table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Bốn dòng yêu cầu mà màn phải thoả; mỗi dòng nói rõ điều gì phải nhìn thấy được.
+Thành phần hiển thị: Bốn dòng: BR-INC-01 (hệ số 110/100; làm tròn xuống JPY; không gia hạn; JST; quá hạn thì thưởng bằng 0); FR-INC-01 (số tiền tính từ số tiền đủ điều kiện; tỷ lệ chi trả và phiên bản rule đang hiệu lực); FR-INC-03 với FE-032 (delta ở kỳ sau có nguyên nhân rõ ràng; báo cáo kỳ trước giữ nguyên); FR-AUDIT-03 với FE-043 (mở bản ghi là thấy version rule và ngày hiệu lực).
+Chức năng và logic: Bảng tĩnh; không lọc; không sắp xếp. Bốn dòng là cố định theo Feature List của màn.",,,,,,
+"3","img-007","Khối quy tắc nghiệp vụ BR-INC-01","業務ルールブロック","Business rule block","others","khối tài liệu quy tắc",,,,,,,,,"Mục đích và ngữ cảnh: Đưa bảy yếu tố đã cố định của BR-INC-01 lên bề mặt màn; quy tắc sinh ra tiền phải đọc được chứ không nằm ẩn trong cài đặt.
+Thành phần hiển thị: Tiêu đề khối và một bảng ba cột: yếu tố; giá trị khách đã cố định; chỗ nhìn thấy được trên màn.
+Chức năng và logic: Thuần hiển thị. Cột thứ ba là ràng buộc thiết kế: mỗi yếu tố quy tắc phải có một chỗ tương ứng trên màn để kiểm chứng.",,,,,,
+"3.1","img-008","Bảng yếu tố quy tắc và giá trị đã cố định","ルール要素テーブル","Rule element table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Bảy yếu tố khách đã cố định trong BR-INC-01; kèm nơi kiểm chứng từng yếu tố trên màn.
+Thành phần hiển thị: Bảy dòng: hệ số 110/100; làm tròn xuống cắt phần lẻ theo đơn vị JPY; thời gian gia hạn không áp dụng; quá hạn thanh toán thì thưởng bằng 0 và không chia tỷ lệ; mốc thời gian theo JST và ngày nghiệp vụ; điều chỉnh sau khi chốt sinh delta ở kỳ tiếp theo; version áp dụng theo ngày hiệu lực.
+Chức năng và logic: Bảng tĩnh. Ba yếu tố ràng buộc trực tiếp cách trình bày: không có cột hạn gia hạn; cột số tiền không bao giờ có phần thập phân; dòng 0 JPY là dữ liệu thật kèm nhãn lý do.",,,,,,
+"4","img-009","Khối bộ lọc kỳ và người tham gia","絞り込みブロック","Filter block","others","khối bộ lọc",,,,,,,,,"Mục đích và ngữ cảnh: Chọn kỳ và người tham gia để đọc đúng tập kết quả cần đối chiếu.
+Thành phần hiển thị: Tiêu đề khối; ô chọn Kỳ theo ngày nghiệp vụ JST; ô chọn Người tham gia và nút Xem đặt cùng một hàng.
+Chức năng và logic: Gửi bằng phương thức GET về chính màn; không ghi dữ liệu. Kỳ là điều kiện bắt buộc; người tham gia là điều kiện tuỳ chọn.",,,,,,
+"4.1","img-010","Ô chọn Kỳ — ngày nghiệp vụ JST","対象期間(営業日 JST)","Period date input","date_picker","ô chọn ngày bắt buộc",,"date","true","YYYY-MM-DD",,,"Ngày nghiệp vụ JST của hôm nay","Điều kiện: giá trị phải đúng dạng YYYY-MM-DD và là một ngày lịch thật.
+Lỗi: báo lỗi ngay tại field; tuyệt đối không âm thầm đổi sang kỳ khác rồi hiện số của kỳ đó.
+Điều kiện: không nhận ngày ở tương lai.
+Lỗi: báo lỗi tại field và giữ nguyên kỳ đang xem.","Mục đích và ngữ cảnh: Chọn kỳ cần đọc; một kỳ là một ngày nghiệp vụ JST đã chốt.
+Thành phần hiển thị: Nhãn Kỳ — ngày nghiệp vụ JST kèm dấu bắt buộc; ô ngày mang giá trị mẫu 2026-09-09; dòng gợi ý bên dưới nói mặc định là hôm nay và không chọn được ngày tương lai.
+Chức năng và logic: Mốc thời gian là JST theo BR-INC-01; cột kỳ là ngày nghiệp vụ chứ không phải thời điểm chạy engine. Kỳ chưa chốt thì bảng kết quả rỗng vì thưởng chỉ tính sau khi chốt kỳ ở SC-18.",,"Không điều hướng; nạp lại chính màn SC-22 theo kỳ đã chọn.","incentive_result","period","Điều kiện lọc trên kỳ của kết quả tính thưởng; giá trị bộ lọc không được lưu. Prototype có đúng cột này và lọc theo nó.","- Văn bản lỗi hiển thị cho kỳ sai định dạng và cho kỳ ở tương lai là gì?
+- Kỳ mặc định khi mở màn lúc chưa có kỳ nào đã chốt: giữ hôm nay và hiện rỗng; hay nhảy về kỳ đã chốt gần nhất?"
+"4.2","img-011","Ô chọn Người tham gia","参加者","Participant select","dropdown","ô chọn lọc",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Thu hẹp bảng kết quả về một người tham gia để đối chiếu từng người.
+Thành phần hiển thị: Nhãn Người tham gia; ô chọn mang giá trị mặc định Tất cả; dòng gợi ý nói mỗi kỳ có một dòng cho mỗi người tham gia đủ điều kiện.
+Chức năng và logic: Không bắt buộc; bỏ trống là xem toàn kỳ. Thiết kế đòi bộ lọc này có mặt trên màn chứ không chỉ ở tầng API.",,"Không điều hướng; nạp lại chính màn SC-22 theo người tham gia đã chọn.","participant","id","Lọc kết quả theo người tham gia. Prototype có bảng participant thật; tuy nhiên bộ lọc này chỉ tồn tại ở API; chưa có ô nhập trên màn.","- Danh sách người tham gia trong ô chọn lấy toàn bộ danh mục; hay chỉ những người có kết quả trong kỳ đang xem?
+- Người tham gia đã mất hiệu lực nhưng còn kết quả thưởng cũ có còn xuất hiện trong ô chọn không?"
+"4.3","img-012","Nút Xem","表示ボタン","View button","button","nút phụ trong hàng lọc","text_only",,,,,,,,"Mục đích và ngữ cảnh: Áp dụng bộ lọc đã chọn cho bảng kết quả kỳ.
+Thành phần hiển thị: Một nút chữ đặt cuối hàng bộ lọc; ngang với hai ô chọn.
+Chức năng và logic: Gửi biểu mẫu bằng phương thức GET; không ghi dữ liệu và không có trạng thái đang gửi vì màn chỉ đọc.","on_click","Nạp lại chính màn SC-22 với kỳ và người tham gia đã chọn; không sang màn khác.",,,,
+"5","img-013","Khối kết quả kỳ","期間別計算結果ブロック","Period result block","others","khối danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Nơi đọc số tiền thưởng của kỳ; kèm đủ dữ kiện để giải thích từng con số.
+Thành phần hiển thị: Tiêu đề khối; bảng kết quả bảy cột và một ghi chú ba đoạn ở dưới bảng.
+Chức năng và logic: Chỉ đọc. Không có đường ghi cho người dùng đăng nhập; dòng kết quả do hệ thống sinh khi chốt kỳ hoặc khi duyệt điều chỉnh.",,,,,,
+"5.1","img-014","Bảng kết quả tính thưởng","奨励金結果テーブル","Incentive result table","table","bảng danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Toàn bộ kết quả tính thưởng của kỳ đang lọc; mỗi dòng là một người tham gia.
+Thành phần hiển thị: Bảy cột: Kỳ; Người tham gia; Số tiền (JPY); Loại; Phiên bản biểu suất kèm ngày hiệu lực; Kỳ gốc; Nguyên nhân. Ba dòng mẫu cho ba tình huống: trong hạn; quá hạn về 0 và dòng chênh lệch âm.
+Chức năng và logic: Chỉ đọc; không phân trang trong thiết kế hiện tại. Dòng loại chênh lệch mang phiên bản của kỳ gốc chứ không phải phiên bản hôm nay.",,,"incentive_result",,"Một dòng bảng là một dòng kết quả tính thưởng của một người tham gia trong một kỳ. Prototype có bảng incentive_result thật với đủ các cột tương ứng; bảng chỉ nhận thêm dòng và không có đường sửa.","- Bảng có cần phân trang và sắp xếp theo cột không; hay một kỳ luôn đủ nhỏ để hiện hết?
+- Thứ tự mặc định của các dòng trong một kỳ là gì: theo mã người tham gia; theo số tiền giảm dần; hay theo loại?"
+"5.1.1","img-015","Cột Kỳ","対象期間","Period column","label","cột bảng chỉ đọc",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: Cho biết dòng kết quả thuộc kỳ nào; nền tảng để đối chiếu với bảng đối chiếu ngày.
+Thành phần hiển thị: Ô chữ chỉ đọc dạng YYYY-MM-DD; ví dụ 2026-09-09.
+Chức năng và logic: Là ngày nghiệp vụ JST theo BR-INC-01; không phải thời điểm engine chạy. Với dòng chênh lệch; đây là kỳ mà phần chênh được ghi nhận chứ không phải kỳ gốc.",,,"incentive_result","period","Kỳ mà dòng kết quả thuộc về; là ngày nghiệp vụ JST. Prototype có đúng cột này và đặt ràng buộc không rỗng.",
+"5.1.2","img-016","Cột Người tham gia","参加者","Participant column","label","cột bảng chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Cho biết dòng thưởng thuộc về ai; là trục đối chiếu với bộ phận kế toán.
+Thành phần hiển thị: Ô chữ chỉ đọc mang tên hiển thị của người tham gia.
+Chức năng và logic: Chỉ hiện tên hiển thị hoặc mã; không bao giờ hiện thư điện tử nội bộ vì màn này đọc dữ liệu có thể được xuất tiếp ra ngoài.",,,"incentive_result","participant_id","Khoá ngoại sang người tham gia; hiển thị lấy tên từ bảng participant. Prototype có cột này và rơi về mã người tham gia khi không ghép được tên.","- Khi không ghép được tên người tham gia thì hiện mã người tham gia; hay hiện một nhãn khuyết rõ ràng?"
+"5.1.3","img-017","Cột Số tiền (JPY)","金額(JPY)","Amount column","label","cột bảng chỉ đọc",,"integer",,"số nguyên JPY; có thể âm với dòng chênh lệch",,,,,"Mục đích và ngữ cảnh: Con số nghiệp vụ chính của màn: số tiền 完納奨励金 của một người tham gia trong một kỳ.
+Thành phần hiển thị: Ô chữ chỉ đọc; ba giá trị mẫu là 244 200; 0 và -13 200.
+Chức năng và logic: Làm tròn xuống theo đơn vị JPY nên không bao giờ có phần thập phân. Giá trị 0 là kết quả thật khi thanh toán quá hạn; giá trị âm chỉ xuất hiện ở dòng chênh lệch.",,,"incentive_result","amount_jpy","Số tiền thưởng đã tính; đơn vị JPY và luôn là số nguyên. Prototype có đúng cột này ở kiểu số nguyên.",
+"5.1.4","img-018","Cột Loại","種別","Kind column","label","cột bảng chỉ đọc",,"string",,"Bình thường | Chênh lệch (delta)",,,,,"Mục đích và ngữ cảnh: Phân biệt số tính của chính kỳ đó với phần chênh lệch mang sang từ kỳ trước.
+Thành phần hiển thị: Một thẻ chữ trong ô: Bình thường hoặc Chênh lệch (delta).
+Chức năng và logic: Dòng chênh lệch chỉ sinh ra từ một điều chỉnh đã được duyệt sau khi kỳ gốc đã chốt; kỳ gốc không bị tính lại.",,,"incentive_result","kind","Phân biệt dòng tính bình thường và dòng chênh lệch. Prototype có đúng cột này với hai giá trị cho phép.",
+"5.1.5","img-019","Cột Phiên bản biểu suất · ngày hiệu lực","適用ルールバージョン・発効日","Rule version and effective date column","label","cột bảng chỉ đọc",,"string",,"v<số phiên bản> · YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: Chứng minh yêu cầu truy vết: mở một bản ghi thưởng là thấy ngay quy tắc nào sinh ra số tiền.
+Thành phần hiển thị: Ô chữ chỉ đọc dạng v3 · 2026-09-01; luôn có giá trị ở mọi dòng.
+Chức năng và logic: Là cột thường của mọi dòng chứ không phải chi tiết phải bấm mở. Dòng chênh lệch mang phiên bản của kỳ gốc; đổi biểu suất hôm nay không được rỉ vào kỳ cũ.",,,"incentive_result","rule_version_id","Khoá ngoại sang phiên bản biểu suất; hiển thị lấy số phiên bản và ngày hiệu lực từ bảng phiên bản. Prototype có đúng cột này và đặt ràng buộc không rỗng nên không dòng nào thiếu phiên bản.",
+"5.1.6","img-020","Cột Kỳ gốc","元の対象期間","Origin period column","label","cột bảng chỉ đọc",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: Đường truy vết từ dòng chênh lệch về kỳ đã chốt mà nó điều chỉnh.
+Thành phần hiển thị: Ô chữ chỉ đọc; hiện dấu gạch với dòng bình thường và hiện một ngày với dòng chênh lệch.
+Chức năng và logic: Thiết kế đòi truy vết đi được hai chiều: từ dòng chênh lệch về kỳ gốc bằng cột này; và từ kỳ gốc thấy được kỳ nào đã phát sinh chênh lệch.",,,"incentive_result","origin_period","Kỳ mà phần chênh lệch trỏ về; rỗng với dòng bình thường. Prototype có đúng cột này và cho phép rỗng.","- Chiều ngược lại trình bày thế nào: một cột thêm ở kỳ gốc; một dòng ghi chú dưới bảng; hay một liên kết mở kỳ có chênh lệch?"
+"5.1.7","img-021","Cột Nguyên nhân","理由","Reason column","label","cột bảng chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Giải thích vì sao dòng có con số đó; yêu cầu khách đòi delta phải có nguyên nhân rõ ràng.
+Thành phần hiển thị: Ô chữ chỉ đọc; ba giá trị mẫu là Thanh toán trong hạn; Quá hạn thanh toán → 0 theo BR-INC-01 và Yêu cầu điều chỉnh CR-0007 (SC-21).
+Chức năng và logic: Với dòng bình thường; nguyên nhân nói rõ trong hạn hay quá hạn để dòng 0 JPY không bị đọc thành thiếu dữ liệu. Với dòng chênh lệch; nguyên nhân trỏ về đúng mã yêu cầu điều chỉnh nguồn.",,,"incentive_result","source_correction_id","Với dòng chênh lệch; nguyên nhân trỏ về yêu cầu điều chỉnh đã sinh ra nó qua khoá ngoại này. Prototype có cột này nhưng chưa đưa lên màn. Nguyên nhân của dòng bình thường (trong hạn hay quá hạn) chưa có cột lưu trong thiết kế nên để trống phần mapping đó.","- Nguyên nhân của dòng chênh lệch có phải là một liên kết mở được yêu cầu điều chỉnh ở SC-21; hay chỉ là chữ?
+- Tập giá trị nguyên nhân của dòng bình thường có cố định thành danh mục; hay là câu tự do?"
+"5.2","img-022","Ghi chú dưới bảng kết quả","テーブル下の注記","Table footnote","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Ba ràng buộc trình bày mà bảng phải giữ; viết ngay dưới bảng để không bị bỏ lúc dựng.
+Thành phần hiển thị: Ba đoạn: cột phiên bản không bao giờ rỗng và không phải chi tiết bấm mở; dòng chênh lệch mang phiên bản của kỳ gốc; cột nguyên nhân của dòng chênh lệch trỏ về đúng yêu cầu điều chỉnh.
+Chức năng và logic: Thuần hiển thị. Đoạn thứ hai là hệ quả của yêu cầu thay đổi quy tắc không được làm biến dạng dữ liệu đã chốt.",,,,,,
+"6","img-023","Khối bất biến thiết kế — báo cáo kỳ trước giữ nguyên","設計不変条件ブロック","Design invariant block","others","khối tài liệu bất biến",,,,,,,,,"Mục đích và ngữ cảnh: Khai một bất biến không nhìn thấy được qua ảnh chụp: kỳ đã chốt không bao giờ bị tính lại.
+Thành phần hiển thị: Tiêu đề khối và hai đoạn văn: kỳ đã chốt đọc ra vẫn đúng bằng số hôm chốt kỳ; và truy vết phải đi được hai chiều giữa kỳ gốc và dòng chênh lệch.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là điều kiện nghiệm thu của FE-032; một cài đặt chỉ có chiều từ chênh lệch về kỳ gốc là chưa đạt.",,,,,,
+"7","img-024","Khối liệt kê trạng thái màn","画面状態一覧ブロック","Screen state list block","others","khối tài liệu trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê đủ tám trạng thái màn phải xử lý để không bỏ sót đường rẽ nào lúc dựng.
+Thành phần hiển thị: Tiêu đề khối và tám thẻ trạng thái xếp thành hai hàng bốn cột; mỗi thẻ có tiêu đề và một đoạn mô tả hành vi.
+Chức năng và logic: Thuần hiển thị tài liệu. Bốn trạng thái đầu là chung cho mọi màn danh sách; bốn trạng thái sau là riêng của nghiệp vụ tính thưởng.",,,,,,
+"7.1","img-025","Thẻ trạng thái Rỗng","空状態カード","Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả màn khi kỳ đang lọc không có dòng kết quả nào.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng kèm câu hiển thị Chưa có kết quả tính thưởng cho kỳ này và ghi chú chỉ đổi kỳ được.
+Chức năng và logic: Thuần hiển thị tài liệu. Trạng thái rỗng không có nút hành động nào ngoài việc đổi bộ lọc kỳ.",,,,,,
+"7.2","img-026","Thẻ trạng thái Đang tải và lỗi tải","読み込み・読み込み失敗カード","Loading and load error card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hai trạng thái nạp dữ liệu của màn.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải / lỗi tải kèm mô tả khung trang hiện trước và lỗi truy vấn thì báo kèm nút tải lại.
+Chức năng và logic: Thuần hiển thị tài liệu. Lỗi truy vấn phải cho người dùng thử lại; không được để màn trắng.",,,,,,
+"7.3","img-027","Thẻ trạng thái Không có quyền","権限なしカード","No permission card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi khi người dùng không thuộc bộ phận quyết toán.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền kèm mô tả ngoài bộ phận quyết toán thì không vào được màn và cũng không đọc được kết quả qua API.
+Chức năng và logic: Thuần hiển thị tài liệu. Chặn phải áp cả ở đường vào trang và ở đường gọi API; chặn ở một phía là hở.",,,,,,
+"7.4","img-028","Thẻ trạng thái Kỳ không hợp lệ","不正な対象期間カード","Invalid period card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi bắt buộc khi giá trị kỳ nhập vào không dùng được.
+Thành phần hiển thị: Thẻ tiêu đề Kỳ không hợp lệ kèm mô tả phải báo rõ kỳ nhập sai và không được âm thầm đổi sang kỳ khác rồi hiện số của kỳ đó.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là ràng buộc an toàn số liệu: đọc lệch kỳ là đọc sai tiền.",,,,,,
+"7.5","img-029","Thẻ trạng thái Kỳ chưa chốt","未締めカード","Period not locked card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt kỳ chưa chốt với kỳ có dữ liệu nhưng bằng không.
+Thành phần hiển thị: Thẻ tiêu đề Kỳ chưa chốt kèm mô tả màn rỗng vì thưởng chỉ tính sau khi chốt kỳ ở SC-18.
+Chức năng và logic: Thuần hiển thị tài liệu. Chốt kỳ ở SC-18 là tiền đề dữ liệu của màn này.",,,,,,
+"7.6","img-030","Thẻ trạng thái Không có phiên bản đang hiệu lực","有効バージョンなしカード","No active rule version card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả trường hợp không tính được thưởng vì thiếu phiên bản biểu suất đang hiệu lực.
+Thành phần hiển thị: Thẻ tiêu đề Không có phiên bản đang hiệu lực kèm mô tả phải nói rõ nguyên nhân và chỉ đường sang SC-24 thay vì hiện rỗng như không có dữ liệu.
+Chức năng và logic: Thuần hiển thị tài liệu. Rỗng vì thiếu quy tắc và rỗng vì không có dữ liệu là hai nguyên nhân khác nhau; gộp lại là che mất một sự cố vận hành.",,,,,,
+"7.7","img-031","Thẻ trạng thái Dòng 0 JPY","0円行カード","Zero amount row card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khẳng định dòng 0 JPY là kết quả nghiệp vụ thật; không phải thiếu dữ liệu.
+Thành phần hiển thị: Thẻ tiêu đề Dòng 0 JPY kèm mô tả đây là kết quả thật của BR-INC-01 khi quá hạn và nhãn nguyên nhân phải nói rõ.
+Chức năng và logic: Thuần hiển thị tài liệu. Dòng 0 JPY không được lọc bỏ khi đối chiếu; bỏ đi là mất bằng chứng đã tính.",,,,,,
+"7.8","img-032","Thẻ trạng thái Chỉ đọc","読み取り専用カード","Read-only card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai rằng màn không có bất kỳ thao tác ghi nào.
+Thành phần hiển thị: Thẻ tiêu đề Chỉ đọc kèm mô tả kết quả do hệ thống ghi khi chốt kỳ hoặc khi duyệt điều chỉnh.
+Chức năng và logic: Thuần hiển thị tài liệu. Vì không có đường ghi cho người dùng nên màn không có trạng thái đang gửi hay gửi lỗi.",,,,,,
+"8","img-033","Ghi chú CHƯA CHỐT về phạm vi phiên bản hoá biểu suất","未確定事項の注記","Open question note","label","ghi chú chưa chốt",,,,,,,,,"Mục đích và ngữ cảnh: Khai một chỗ tài liệu khách tự chống nhau; để không ai tự quyết hộ khách ở tầng thiết kế.
+Thành phần hiển thị: Một khối ghi chú viền nét: BR-INC-01 cố định hệ số 110/100; trong khi FE-031; FR-INC-02 và CAP-06 đòi quản lý được công thức và biểu suất; NFR-OPS-02 đòi đổi được không cần triển khai lại.
+Chức năng và logic: Thuần hiển thị tài liệu. Câu hỏi để lại cho khách: phần nào của công thức được phiên bản hoá; và hệ số 110/100 có nằm trong phần đó không.",,,,,,
+"9","img-034","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype comparison block","others","khối tài liệu đối chiếu",,,,,,,,,"Mục đích và ngữ cảnh: Đặt cách cài đặt hiện tại của prototype tách khỏi phần thiết kế; để đọc spec không lẫn hiện trạng vào yêu cầu.
+Thành phần hiển thị: Tiêu đề khối và một bảng ba cột: thiết kế đòi; prototype làm và mức lệch.
+Chức năng và logic: Thuần hiển thị tài liệu. Khối này là hiện trạng để đối chiếu; không phải nguồn của thiết kế.",,,,,,
+"9.1","img-035","Bảng đối chiếu thiết kế và prototype","設計・実装差分テーブル","Design versus prototype table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Tám chỗ prototype khác thiết kế; kèm mức lệch của từng chỗ.
+Thành phần hiển thị: Tám dòng gồm ba mức: Chưa đạt cho biểu suất là hằng trong mã nguồn; chênh lệch không gắn với kỳ gốc; chênh lệch không hiện mã yêu cầu điều chỉnh và số tiền tính từ bảng dữ liệu mẫu. Khớp cho cột phiên bản luôn hiện. Hở cho bộ lọc người tham gia chỉ có ở API; kỳ sai âm thầm rơi về hôm nay và engine chạy đồng bộ trong lần chốt kỳ.
+Chức năng và logic: Bảng tĩnh; không lọc. Chỉ liệt những chỗ khác nhau; chỗ khớp chỉ nêu khi cần chặn cách đọc sai.",,,,,,
+"10","img-036","Chân ghi chú phân quyền và nguồn as-built","権限・出典フッター","Permission and source footer","label","chân ghi chú màn",,,,,,,,,"Mục đích và ngữ cảnh: Chốt lại phân quyền của màn và trỏ về tài liệu hiện trạng của prototype.
+Thành phần hiển thị: Hai dòng: dòng phân quyền nói chỉ bộ phận quyết toán vào được và chỉ đọc; dòng thứ hai là liên kết sang tài liệu bản as-built của màn.
+Chức năng và logic: Thuần hiển thị. Bảng kết quả không có đường ghi cho người dùng đăng nhập; chỉ hệ thống ghi được.",,,,,,

@@ -1,0 +1,183 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn cấu hình thông báo",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết; cho biết đây là màn quản trị của nhóm thông báo.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-040 · FN-12 · ưu tiên P1 · FR-NOTIFY-03 · loại màn Form · route đề xuất · actor quản trị vận hành ánh xạ sang một vai trò · một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác nào.",,,,,,
+"1.1","img-002","Tiêu đề màn","通知設定","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn cấu hình thông báo.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-29 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về FE-040 và FR-NOTIFY-03; khai luôn ánh xạ actor sang vai trò của hệ.
+Thành phần hiển thị: Hai dòng chữ nhỏ liệt tính năng · nhóm chức năng · ưu tiên · yêu cầu · loại màn · route đề xuất · actor quản trị vận hành ánh xạ ROLE-SYS-ADMIN · thẻ trạng thái.
+Chức năng và logic: Tĩnh. Ánh xạ actor là một giả định phải chốt vì hệ không có vai trò nào mang đúng tên quản trị vận hành.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn chưa có bản thi công nào để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng metadata với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu chứ không từ dữ liệu nghiệp vụ.",,,,,,
+"2","img-005","Dải chú thích yêu cầu và điều kiện nghiệm thu",,"Requirement and acceptance notice","label","dải chú thích đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Ghim đúng ba thứ bắt buộc của FR-NOTIFY-03 và biến điều kiện nghiệm thu thành một ràng buộc kiến trúc.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt ba đoạn: đoạn khai màn chưa thi công; đoạn dẫn FR-NOTIFY-03 với ba thứ người nhận và ngưỡng và thời điểm gửi; cùng điều kiện nghiệm thu là đổi cấu hình không làm mất lịch sử gửi; đoạn nói rõ nghiệm thu đó là ràng buộc kiến trúc nên cấu hình chỉ áp cho lần gửi sau và lịch sử gửi là bất biến.
+Chức năng và logic: Tĩnh. Ba thứ FR-NOTIFY-03 đòi là bắt buộc; mọi field khác trên màn chỉ là phương tiện để đặt được ba thứ đó.",,,,,,
+"3","img-006","Khối cấu hình một loại event",,"Per-event config block","others","khối form mười field và ba nút",,,,,,,,,"Mục đích và ngữ cảnh: Nơi quản trị đặt người nhận · ngưỡng · thời điểm gửi cho một loại event; là thân chính của màn.
+Thành phần hiển thị: Tiêu đề khối dẫn ba thứ FR-NOTIFY-03 đòi; mười field xếp thành bốn hàng gồm một ô chỉ đọc; hai hộp kiểm; bốn ô chọn; một ô số; một ô giờ và một vùng văn bản; ba nút hành động cuối khối.
+Chức năng và logic: Một dòng cấu hình cho mỗi loại event. Lưu là sinh phiên bản mới chứ không ghi đè; nên khối này không bao giờ sửa tại chỗ một dòng duy nhất.",,,,,,
+"3.1","img-007","Ô Loại event","イベント種別","Event type","label","ô chỉ đọc kèm nhãn và dòng nhắc",,"string",,,,,,,"Mục đích và ngữ cảnh: Cho biết đang cấu hình cho loại event nào; đây là khoá của dòng cấu hình nên không sửa được từ màn.
+Thành phần hiển thị: Nhãn Loại event; ô chỉ đọc nền xám hiện giá trị profile sắp hết hiệu lực; dòng nhắc ghi field số 1 là chỉ đọc và mỗi loại event của FR-NOTIFY-01 có một dòng.
+Chức năng và logic: Chỉ đọc. Tập giá trị lấy theo các nhóm event mà FR-NOTIFY-01 liệt; nhưng yêu cầu khách viết là ví dụ nên tập này chưa đóng.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Tập loại event là danh sách đóng hay mở; yêu cầu khách viết bốn nhóm dưới dạng ví dụ?
+Một loại event mới xuất hiện thì màn tự hiện dòng chưa cấu hình hay phải tạo tay?
+Định dạng của giá trị loại event là chuỗi tiếng Việt hiển thị hay một mã cố định; ảnh chỉ cho thấy nhãn."
+"3.2","img-008","Hộp kiểm Bật thông báo","通知を有効化","Enable notification","checkbox","hộp kiểm bắt buộc kèm nhãn và dòng nhắc",,"boolean","true",,,,"false","Điều kiện: bắt buộc có giá trị.
+Lỗi: ""Hãy chọn trạng thái bật hoặc tắt cho loại event này.""","Mục đích và ngữ cảnh: Công tắc quyết định loại event này có sinh thông báo hay không.
+Thành phần hiển thị: Nhãn Bật thông báo kèm dấu sao bắt buộc; hộp kiểm chưa chọn kèm chữ Bật và ghi chú dạng công tắc; dòng nhắc ghi field số 2 và mặc định tắt.
+Chức năng và logic: Mặc định tắt là có chủ đích: không tự bật một loại event mà đường sinh event chưa tồn tại. Bật một event chưa có nguồn dữ liệu thì màn phải hiện nhãn sẽ không phát sinh.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Bật một event chưa có nguồn dữ liệu thì chặn hẳn; hay cho lưu kèm nhãn cảnh báo?
+Tắt thông báo cho một event có xoá cấu hình cũ hay chỉ tạm dừng?"
+"3.3","img-009","Ô chọn Phân loại","重要度","Severity","dropdown","ô chọn bắt buộc kèm nhãn và dòng nhắc",,"string","true",,,,"thường","Điều kiện: chỉ nhận hai giá trị critical và thường.
+Lỗi: ""Phân loại không hợp lệ.""","Mục đích và ngữ cảnh: Quyết định thông báo của loại event này có chịu mốc năm phút hay không; đây là field kéo theo hệ quả nặng nhất của khối.
+Thành phần hiển thị: Nhãn Phân loại kèm dấu sao bắt buộc; ô chọn hiện giá trị thường kèm mũi chỉ xuống; dòng nhắc ghi field số 3 với hai giá trị critical và thường và nói rõ chọn critical là kéo theo mốc năm phút của FR-NOTIFY-02.
+Chức năng và logic: Chọn critical làm mọi thông báo của loại event này phải gửi xong trong năm phút; nên đây không phải một nhãn trang trí.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Đổi phân loại từ thường sang critical có áp cho các thông báo đã sinh trước đó không?
+Định dạng giá trị gửi lên là chuỗi hiển thị hay mã cố định; ảnh chỉ cho thấy nhãn tiếng Việt."
+"3.4","img-010","Hộp kiểm Kênh gửi","送信チャネル","Delivery channels","checkbox","nhóm hộp kiểm bắt buộc kèm nhãn và dòng nhắc",,"string","true",,,,"in_app","Điều kiện: phải chọn tối thiểu một kênh.
+Lỗi: ""Hãy chọn ít nhất một kênh gửi.""
+Điều kiện: chỉ nhận hai giá trị in_app và email.
+Lỗi: ""Kênh gửi không hợp lệ.""","Mục đích và ngữ cảnh: Đặt kênh cho loại event này trong đúng ranh giới phạm vi của nhóm chức năng thông báo.
+Thành phần hiển thị: Nhãn Kênh gửi kèm dấu sao bắt buộc; hai hộp kiểm in_app đã chọn và email chưa chọn; dòng nhắc ghi field số 4 với ràng buộc tối thiểu một kênh; chỉ hai kênh theo BR-NOTIFY-01; SMS và FAX ngoài phạm vi FN-12 nên giao diện không để chỗ cho chúng; và chọn email khi chưa có hạ tầng gửi thì vào trạng thái kênh chưa khả dụng.
+Chức năng và logic: Giao diện chỉ có đúng hai hộp kiểm; không có chỗ nào thêm kênh thứ ba. Chọn email mà chưa có hạ tầng gửi thì cấu hình vẫn lưu được nhưng phải cảnh báo rõ là email sẽ không gửi.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Chọn email khi chưa có hạ tầng gửi thì chặn lưu hay cho lưu kèm cảnh báo?
+Bỏ chọn hết hai kênh có tương đương với tắt thông báo hay là một lỗi riêng?"
+"3.5","img-011","Ô chọn Người nhận theo vai trò","宛先ロール","Recipient roles","dropdown","ô chọn nhiều giá trị kèm nhãn và dòng nhắc",,"string","true",,,,,"Điều kiện: bắt buộc nếu Người nhận đích danh để trống.
+Lỗi: ""Hãy chọn người nhận theo vai trò hoặc người nhận đích danh.""
+Điều kiện: chỉ nhận bảy giá trị vai trò của hệ.
+Lỗi: ""Vai trò không hợp lệ.""","Mục đích và ngữ cảnh: Một trong hai cách đặt người nhận — chính thứ đầu tiên trong ba thứ FR-NOTIFY-03 đòi.
+Thành phần hiển thị: Nhãn Người nhận theo vai trò kèm dấu sao bắt buộc; ô chọn nhiều giá trị ghi Chọn nhiều với chú thích bảy vai trò; dòng nhắc ghi field số 5 và ràng buộc bắt buộc nếu không chọn field số 6.
+Chức năng và logic: Gửi theo vai trò làm cấu hình bền hơn khi nhân sự đổi. Tập giá trị đúng bằng bảy vai trò của hệ; không tự thêm vai trò mới.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó. Tập bảy giá trị vai trò lấy theo ràng buộc vai trò của bảng người dùng nội bộ đã tồn tại.","Chọn cả vai trò và đích danh cùng lúc thì hợp lệ; hay phải chọn đúng một trong hai cách?
+Một người vừa thuộc vai trò được chọn vừa nằm trong danh sách đích danh thì nhận một hay hai thông báo?
+Định dạng nhãn hiển thị của một vai trò là mã hay tên tiếng Việt; ảnh chỉ cho thấy dòng mặc định."
+"3.6","img-012","Ô chọn Người nhận đích danh","宛先ユーザー","Named recipients","dropdown","ô chọn nhiều giá trị kèm nhãn và dòng nhắc",,"string","true",,,,,"Điều kiện: bắt buộc nếu Người nhận theo vai trò để trống.
+Lỗi: ""Hãy chọn người nhận theo vai trò hoặc người nhận đích danh.""
+Điều kiện: chỉ chọn được tài khoản đang hoạt động.
+Lỗi: tài khoản đã vô hiệu thì bỏ qua khi gửi và không báo lỗi.","Mục đích và ngữ cảnh: Cách thứ hai đặt người nhận; dùng khi một cảnh báo cần đến đúng một người chứ không cả vai trò.
+Thành phần hiển thị: Nhãn Người nhận đích danh kèm dấu sao bắt buộc; ô chọn nhiều giá trị ghi Chọn nhiều với ví dụ một tên người; dòng nhắc ghi field số 6 với ràng buộc bắt buộc nếu không chọn field số 5; chỉ tài khoản đang hoạt động; và tài khoản đã vô hiệu thì bỏ khi gửi mà không lỗi.
+Chức năng và logic: Tài khoản bị vô hiệu sau khi cấu hình đã lưu thì bị bỏ qua lúc gửi chứ không làm cả lượt gửi thất bại.","on_click",,"app_user","id; display_name; is_active","Danh sách chọn đọc từ bảng người dùng nội bộ đã tồn tại; chỉ lấy tên hiển thị và cờ đang hoạt động; không hiện thư điện tử. Cột lưu lựa chọn thì CHƯA TỒN TẠI vì bảng cấu hình chưa có.","Danh sách chọn hiện toàn bộ tài khoản hay chỉ tài khoản thuộc vai trò liên quan tới loại event?
+Danh sách người nhận đích danh phơi ra ai nhận cảnh báo gì; vai trò nào được xem field này?
+Định dạng nhãn hiển thị một người nhận là gì; ảnh chỉ cho thấy dòng mặc định nên chưa suy ra được mẫu nhãn."
+"3.7","img-013","Ô Ngưỡng","しきい値","Threshold","text_form","ô nhập số kèm nhãn và dòng nhắc",,"integer","false",,,,,"Điều kiện: là số nguyên dương.
+Lỗi: ""Ngưỡng phải là số nguyên lớn hơn 0.""
+Điều kiện: bắt buộc nếu loại event thuộc nhóm có ngưỡng.
+Lỗi: ""Loại event này cần một ngưỡng.""","Mục đích và ngữ cảnh: Thứ thứ hai trong ba thứ FR-NOTIFY-03 đòi; là con số quyết định khi nào một event được coi là đáng cảnh báo.
+Thành phần hiển thị: Nhãn Ngưỡng; ô nhập hiện dấu gạch kèm chú thích không đặt mặc định bịa; dòng nhắc ghi field số 7 với ràng buộc số nguyên dương; bắt buộc nếu loại event thuộc nhóm có ngưỡng; và nói rõ yêu cầu khách không cho con số nào.
+Chức năng và logic: Ô để trống có chủ đích: yêu cầu khách không cho một con số mặc định nào cho bất kỳ loại event nào; nên mọi mặc định đều là giả định phải chốt.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Ngưỡng mặc định cho từng loại event là bao nhiêu; yêu cầu khách không cho con số nào nên cần khách chốt từng event?
+Loại event nào thuộc nhóm có ngưỡng và loại nào không?
+Ngưỡng cảnh báo sắp hết hiệu lực do màn này quản thì con số cứng đang dùng ở báo cáo phải bỏ; ai chịu trách nhiệm bỏ nó?
+Định dạng nhập là số thuần hay có phần đơn vị kèm trong cùng ô; ảnh chỉ cho thấy dấu gạch."
+"3.8","img-014","Ô chọn Đơn vị ngưỡng","しきい値の単位","Threshold unit","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,"ngày",,"Mục đích và ngữ cảnh: Cho ngưỡng một đơn vị đọc được; vì cùng một con số nghĩa khác nhau tuỳ loại event.
+Thành phần hiển thị: Nhãn Đơn vị ngưỡng; ô chọn hiện giá trị ngày kèm mũi chỉ xuống; dòng nhắc ghi field số 8 với hai giá trị ngày và số lượng tuỳ loại event.
+Chức năng và logic: Đơn vị đi kèm ngưỡng nên đổi đơn vị mà không đổi con số là đổi nghĩa của cấu hình.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Đơn vị có bị khoá theo loại event; hay quản trị chọn tự do?
+Có cần thêm đơn vị nào ngoài ngày và số lượng cho bốn nhóm event của yêu cầu khách?"
+"3.9","img-015","Ô Thời điểm gửi theo giờ JST","送信時刻（JST）","Send time JST","text_form","ô nhập giờ kèm nhãn và dòng nhắc",,"string","false","hh:mm",,,,"Điều kiện: đúng dạng hh:mm theo giờ JST.
+Lỗi: ""Thời điểm gửi phải theo dạng hh:mm.""
+Điều kiện: nằm trong khung giờ dịch vụ; nếu ngoài khung thì phải khai rõ.
+Lỗi: ""Thời điểm này nằm ngoài khung giờ dịch vụ 02:00–10:00 JST.""","Mục đích và ngữ cảnh: Thứ thứ ba trong ba thứ FR-NOTIFY-03 đòi; quyết định thông báo tới người nhận vào lúc nào trong ngày.
+Thành phần hiển thị: Nhãn Thời điểm gửi kèm chú thích JST; ô nhập hiện mẫu hh:mm; dòng nhắc ghi field số 9 với ràng buộc trong khung giờ dịch vụ 02:00 tới 10:00 JST theo NFR-AVL-01 hoặc khai rõ là gửi ngoài khung; và luôn hiểu theo JST.
+Chức năng và logic: Giá trị luôn hiểu theo JST; không theo giờ thiết bị. Field này khiến cả phương án chỉ có kênh trong ứng dụng cũng không đủ; vì gửi theo giờ cần một tiến trình chạy ngoài request.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng cấu hình thông báo nhưng hệ hiện chưa có bảng nào giữ nó.","Thời điểm gửi có buộc nằm trong khung giờ dịch vụ hay cho phép ngoài khung kèm khai rõ?
+Để trống thời điểm gửi thì hiểu là gửi ngay khi sinh event hay không gửi?
+Một loại event có cần nhiều thời điểm gửi trong ngày không?"
+"3.10","img-016","Vùng văn bản Lý do thay đổi","変更理由","Change reason","textarea","vùng văn bản bắt buộc kèm nhãn và dòng nhắc",,"string","true",,,"1000",,"Điều kiện: không rỗng sau khi cắt khoảng trắng hai đầu.
+Lỗi: ""Hãy ghi lý do thay đổi cấu hình.""","Mục đích và ngữ cảnh: Giữ lại vì sao cấu hình đổi; để phiên bản cũ và mới đọc được như một chuỗi quyết định chứ không phải một loạt giá trị rời.
+Thành phần hiển thị: Nhãn Lý do thay đổi kèm dấu sao bắt buộc; vùng văn bản nhiều dòng với dòng gợi ý Ghi vào lịch sử cấu hình; dòng nhắc ghi field số 10 với ràng buộc không rỗng sau khi cắt khoảng trắng và rỗng thì không ghi thay đổi.
+Chức năng và logic: Lý do được ghi vào dòng phiên bản mới; không ghi vào dòng cấu hình đang áp dụng.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng phiên bản cấu hình thông báo; khuôn phiên bản hoá đã có sẵn ở nhóm biểu suất và dùng lại được; nhưng bảng cho thông báo thì chưa có.","Yêu cầu khách không đòi lý do thay đổi; giữ nó là bắt buộc hay để tuỳ chọn?
+Độ dài tối đa của lý do là bao nhiêu; ảnh không cho thấy giới hạn nào.
+Định dạng nội dung có cần theo mẫu nào không; hay là văn bản tự do?"
+"3.11","img-017","Nút Lưu thành phiên bản mới","新しいバージョンとして保存","Save as new version","button","nút hành động chính cuối khối","text_only",,,,,,,"Điều kiện: mọi field bắt buộc phải hợp lệ.
+Lỗi: hiện lỗi tại đúng field và giữ nguyên giá trị đang nhập.
+Điều kiện: phiên bản đang áp dụng không được đổi giữa lúc mở form và lúc lưu.
+Lỗi: ""Cấu hình đã đổi ở nơi khác; hãy tải lại."" khi so sánh phiên bản thất bại.","Mục đích và ngữ cảnh: Đường ghi duy nhất của màn; và là chỗ thực thi ràng buộc kiến trúc của FR-NOTIFY-03.
+Thành phần hiển thị: Nút chữ Lưu thành phiên bản mới ở đầu hàng nút cuối khối; kiểu nút hành động chính.
+Chức năng và logic: Sinh phiên bản mới chứ không ghi đè phiên bản cũ; lịch sử gửi trong quá khứ không bị đổi. Cấu hình mới chỉ áp cho lần gửi sau.","on_click","Sinh một phiên bản cấu hình mới và đặt nó thành phiên bản đang áp dụng; ở lại cùng màn rồi nạp lại bảng phiên bản.",,,"CHƯA TỒN TẠI: thiết kế đòi một bảng phiên bản cấu hình thông báo; khuôn phiên bản hoá đã có sẵn ở nhóm biểu suất và dùng lại được; nhưng bảng cho thông báo thì chưa có.","Phiên bản mới có ngày hiệu lực trong tương lai được không; hay áp dụng ngay khi lưu?
+Có cần cơ chế tách người lập và người phê duyệt cho cấu hình thông báo không?
+Hai quản trị lưu cùng lúc thì bên nào thắng và bên kia nhận thông báo gì?"
+"3.12","img-018","Nút Gửi thử","テスト送信","Send test button","button","nút phụ cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho quản trị kiểm cấu hình có tới được người nhận thật hay không; trước khi tin vào nó.
+Thành phần hiển thị: Nút chữ Gửi thử cạnh nút lưu; kiểu nút phụ.
+Chức năng và logic: Không sinh phiên bản mới và không đổi cấu hình đang áp dụng. Cần khai rõ lượt gửi thử có vào lịch sử gửi hay không.","on_click","Gửi một thông báo thử theo cấu hình đang nhập; kết quả hiện ngay trong màn.",,,"CHƯA TỒN TẠI: lịch sử gửi phụ thuộc bảng log gửi của SC-28; hiện chưa có.","Gửi thử có ghi vào lịch sử gửi hay là một đường riêng không lưu vết?
+Gửi thử gửi cho toàn bộ người nhận đã cấu hình hay chỉ cho chính quản trị đang bấm?
+Gửi thử có bị chặn khi kênh email chưa khả dụng không?"
+"3.13","img-019","Nút Xem lịch sử cấu hình","設定履歴を見る","View config history button","button","nút phụ cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường đi từ form sang chuỗi phiên bản; để quản trị thấy cấu hình đã đổi qua những giá trị nào.
+Thành phần hiển thị: Nút chữ Xem lịch sử cấu hình ở cuối hàng nút; kiểu nút phụ.
+Chức năng và logic: Chỉ đọc; không có nút sửa hay xoá ở bảng phiên bản.","on_click","Mở bảng phiên bản cấu hình của loại event đang xem.",,,"CHƯA TỒN TẠI: thiết kế đòi một bảng phiên bản cấu hình thông báo; khuôn phiên bản hoá đã có sẵn ở nhóm biểu suất và dùng lại được; nhưng bảng cho thông báo thì chưa có.","Lịch sử cấu hình có giới hạn số phiên bản hiển thị không?
+Có cần đường quay lại một phiên bản cũ không; hay chỉ tạo phiên bản mới với giá trị cũ?"
+"4","img-020","Khối cấu hình áp cho tương lai và lịch sử gửi bất biến",,"Future-config and immutable-history block","others","khối hai bảng đặt cạnh nhau kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Vẽ rõ đường phân tách mà điều kiện nghiệm thu của FR-NOTIFY-03 đòi: cấu hình đổi được; lịch sử gửi thì không.
+Thành phần hiển thị: Tiêu đề khối dẫn điều kiện nghiệm thu; hai bảng đặt cạnh nhau là bảng phiên bản cấu hình bên trái và bảng lịch sử gửi bên phải; mỗi bảng có ghi chú riêng; một đoạn ghi chú chung cuối khối.
+Chức năng và logic: Đây là chỗ nghiệm thu đọc thẳng: đổi cấu hình rồi mở lại lịch sử gửi cũ thì phải thấy đúng cấu hình lúc gửi.",,,,,,
+"4.1","img-021","Bảng phiên bản cấu hình","設定バージョン一覧","Config version table","table","bảng sáu cột",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy cấu hình là một chuỗi phiên bản; mỗi phiên bản có ngày hiệu lực và lý do riêng.
+Thành phần hiển thị: Sáu cột: version · hiệu lực từ · người nhận · ngưỡng · thời điểm gửi · lý do; hai hàng dữ liệu mẫu trong đó hàng đầu mang thẻ đang áp dụng.
+Chức năng và logic: Sắp xếp theo version giảm dần. Sửa cấu hình là sinh phiên bản mới nên bảng chỉ tăng; không có nút sửa hay xoá.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng phiên bản cấu hình thông báo; khuôn phiên bản hoá đã có sẵn ở nhóm biểu suất và dùng lại được; nhưng bảng cho thông báo thì chưa có.","Bảng hiển thị bao nhiêu phiên bản gần nhất; hay toàn bộ?
+Một phiên bản có ngày hiệu lực tương lai thì hiện nhãn gì để phân biệt với phiên bản đang áp dụng?"
+"4.1.1","img-022","Hàng tiêu đề bảng phiên bản cấu hình",,"Config version header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên sáu cột của bảng phiên bản cấu hình.
+Thành phần hiển thị: Một hàng nền xám nhạt với sáu nhãn: Version · Hiệu lực từ · Người nhận · Ngưỡng · Thời điểm gửi · Lý do.
+Chức năng và logic: Tĩnh.",,,,,,
+"4.1.2","img-023","Hàng phiên bản đang áp dụng — đại diện",,"Active config version row (representative)","others","hàng dữ liệu bảng",,,,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: Một hàng là một phiên bản cấu hình; hai hàng mẫu có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Sáu ô: số version kèm thẻ đang áp dụng · ngày hiệu lực dạng YYYY-MM-DD · người nhận theo vai trò hoặc theo người · ngưỡng kèm đơn vị · thời điểm gửi dạng hh:mm · lý do thay đổi.
+Chức năng và logic: Chỉ đọc. Đúng một phiên bản mang thẻ đang áp dụng ở mỗi thời điểm; các hàng còn lại là phiên bản đã bị thay.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng phiên bản cấu hình thông báo; khuôn phiên bản hoá đã có sẵn ở nhóm biểu suất và dùng lại được; nhưng bảng cho thông báo thì chưa có.","Chỉ một phiên bản được mang thẻ đang áp dụng; nếu có phiên bản hiệu lực tương lai thì thẻ đó thuộc phiên bản nào?
+Ô người nhận hiện đầy đủ danh sách hay chỉ hiện số lượng khi danh sách dài?"
+"4.2","img-024","Ghi chú sinh phiên bản mới",,"New-version note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Chốt cách thi hành của bảng phiên bản; và chỉ ra khuôn đã có sẵn để dùng lại.
+Thành phần hiển thị: Một đoạn chữ nhỏ: sửa cấu hình là sinh phiên bản mới chứ không ghi đè phiên bản cũ; cùng khuôn phiên bản biểu suất đã dựng cho hai màn quản lý biểu suất.
+Chức năng và logic: Tĩnh; là ràng buộc thi hành; không phải gợi ý.",,,,,,
+"4.3","img-025","Bảng lịch sử gửi bất biến","送信履歴（不変）","Immutable delivery history table","table","bảng năm cột chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Bằng chứng cho điều kiện nghiệm thu của FR-NOTIFY-03: lịch sử gửi không đổi khi cấu hình đổi.
+Thành phần hiển thị: Năm cột: thời điểm gửi · kênh · người nhận lúc đó · kết quả · version đã dùng; hai hàng dữ liệu mẫu cho hai kênh; cùng trỏ về một version cũ.
+Chức năng và logic: Chỉ đọc; không có nút sửa hay xoá ở bất kỳ đâu. Cột version đã dùng là chỗ nối dòng lịch sử về đúng cấu hình lúc gửi.",,,,,"CHƯA TỒN TẠI: lịch sử gửi phụ thuộc bảng log gửi của SC-28; hiện chưa có. Cột version đã dùng nối về bảng phiên bản cấu hình; cũng chưa có.","Lịch sử gửi giữ trong bao lâu; yêu cầu khách đòi đổi cấu hình không làm mất lịch sử nhưng không cho thời hạn?
+Bảng này lọc theo loại event đang xem hay hiện toàn bộ?"
+"4.3.1","img-026","Hàng tiêu đề bảng lịch sử gửi",,"Delivery history header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên năm cột của bảng lịch sử gửi.
+Thành phần hiển thị: Một hàng nền xám nhạt với năm nhãn: Thời điểm gửi · Kênh · Người nhận lúc đó · Kết quả · Version đã dùng.
+Chức năng và logic: Tĩnh.",,,,,,
+"4.3.2","img-027","Hàng lịch sử gửi — đại diện",,"Delivery history row (representative)","others","hàng dữ liệu bảng",,,,"YYYY-MM-DD hh:mm",,,,,"Mục đích và ngữ cảnh: Một hàng là một lượt gửi đã xảy ra; hai hàng mẫu có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Năm ô: thời điểm gửi dạng YYYY-MM-DD hh:mm · kênh email hoặc in_app · người nhận theo phiên bản đã dùng · thẻ kết quả thành công hoặc thất bại kèm số lần thử · số version đã dùng.
+Chức năng và logic: Ô người nhận giữ nguyên giá trị của phiên bản đã dùng; kể cả sau khi phiên bản mới thay phiên bản đó.",,,,,"CHƯA TỒN TẠI: lịch sử gửi phụ thuộc bảng log gửi của SC-28; hiện chưa có.","Kết quả thất bại hiện kèm số lần thử trên trần ba lần; định dạng đó có cần thêm trạng thái cuối cùng không?
+Một lượt gửi cho nhiều người nhận thì bảng liệt từng người hay gộp một hàng?"
+"4.4","img-028","Ghi chú lịch sử giữ nguyên giá trị của phiên bản đã dùng",,"History immutability note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Chốt bất biến của bảng lịch sử gửi; là điều mà điều kiện nghiệm thu đọc trực tiếp.
+Thành phần hiển thị: Một đoạn chữ nhỏ: dòng lịch sử giữ nguyên người nhận và ngưỡng của phiên bản đã dùng kể cả sau khi phiên bản mới thay phiên bản cũ; chỉ đọc và không có nút sửa hay xoá ở bất kỳ đâu.
+Chức năng và logic: Tĩnh; là ràng buộc bất biến; không phải mô tả giao diện.",,,,,,
+"4.5","img-029","Ghi chú nghiệm thu và hai đường thi hành",,"Acceptance and implementation note","label","đoạn nhắc cuối khối",,,,,,,,,"Mục đích và ngữ cảnh: Nói rõ cách nghiệm thu đọc điều kiện; và khoanh phần thuộc quyết định kiến trúc chứ không thuộc màn.
+Thành phần hiển thị: Một đoạn chữ nhỏ: nghiệm thu FR-NOTIFY-03 đọc thẳng là đổi cấu hình rồi mở lại lịch sử gửi cũ phải thấy đúng cấu hình lúc gửi; hai đường thi hành đều đạt là trỏ về mã phiên bản hoặc chụp cấu hình vào chính dòng log theo cùng khuôn bản chụp dòng của batch kế toán; chốt ở quyết định kiến trúc; cái không đạt là sửa tại chỗ một dòng cấu hình duy nhất.
+Chức năng và logic: Tĩnh. Câu quan trọng nhất là câu cuối: một dòng cấu hình sửa tại chỗ thì không bao giờ thoả điều kiện nghiệm thu.",,,,,,
+"5","img-030","Khối trạng thái màn",,"Screen state block","others","khối chín thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê mọi trạng thái màn phải xử lý; trong đó hai trạng thái là cảnh báo về sự thật phũ phàng của hạ tầng.
+Thành phần hiển thị: Tiêu đề khối; chín thẻ xếp thành ba hàng; mỗi thẻ có một tiêu đề nhỏ và một đoạn mô tả.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"5.1","img-031","Thẻ trạng thái Rỗng",,"State card empty","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái ngày đầu: chưa loại event nào được cấu hình.
+Thành phần hiển thị: Thẻ có tiêu đề Rỗng và mô tả liệt danh sách loại event với trạng thái chưa cấu hình kèm nút tạo.
+Chức năng và logic: Rỗng không có nghĩa là không có loại event nào; danh sách loại event vẫn hiện để quản trị biết còn thiếu gì.",,,,,,
+"5.2","img-032","Thẻ trạng thái Đang tải",,"State card loading","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết cấu hình đang được nạp.
+Thành phần hiển thị: Thẻ có tiêu đề Đang tải và mô tả skeleton.
+Chức năng và logic: Form bị vô hiệu trong lúc nạp.",,,,,,
+"5.3","img-033","Thẻ trạng thái Lỗi tải",,"State card load error","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt lỗi kỹ thuật với trạng thái chưa cấu hình.
+Thành phần hiển thị: Thẻ có tiêu đề Lỗi tải và mô tả thông báo lỗi kèm nút thử lại.
+Chức năng và logic: Không rơi về trạng thái rỗng khi truy vấn thất bại — rỗng và lỗi dẫn tới hai hành động khác nhau.",,,,,,
+"5.4","img-034","Thẻ trạng thái Không có quyền",,"State card forbidden","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai hai mức chặn khác nhau cho hai trục vào màn và gọi đường ghi.
+Thành phần hiển thị: Thẻ có tiêu đề Không có quyền và mô tả vai trò khác ROLE-SYS-ADMIN nhận trang không tìm thấy ở route và lỗi từ chối quyền khi gọi đường ghi.
+Chức năng và logic: Hai mã khác nhau là có chủ đích: chặn vào trang không lộ sự tồn tại tài nguyên; còn đường ghi thì từ chối tường minh.",,,,,,
+"5.5","img-035","Thẻ trạng thái Đang gửi",,"State card submitting","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chặn bấm lưu hai lần khi một phiên bản đang được ghi.
+Thành phần hiển thị: Thẻ có tiêu đề Đang gửi và mô tả form bị vô hiệu kèm chỉ báo đang chạy.
+Chức năng và logic: Toàn form bị vô hiệu vì lưu là một thao tác trên cả dòng cấu hình chứ không trên từng field.",,,,,,
+"5.6","img-036","Thẻ trạng thái Gửi lỗi",,"State card submit failed","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Giữ lại công sức của quản trị khi lưu thất bại.
+Thành phần hiển thị: Thẻ có tiêu đề Gửi lỗi và mô tả server từ chối hoặc so sánh phiên bản thất bại thì hiện lỗi tại field và giữ nguyên giá trị đang nhập.
+Chức năng và logic: Không xoá form khi lỗi; giá trị đang nhập là dữ liệu chưa lưu của người dùng.",,,,,,
+"5.7","img-037","Thẻ trạng thái Kênh chưa khả dụng",,"State card channel unavailable","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Ngăn màn bán một lời hứa rỗng: cấu hình kênh email khi chưa có hạ tầng gửi.
+Thành phần hiển thị: Thẻ có tiêu đề Kênh chưa khả dụng và mô tả đã chọn email nhưng chưa có hạ tầng gửi thì cảnh báo rõ là cấu hình lưu được nhưng email sẽ không gửi.
+Chức năng và logic: Trạng thái này bắt buộc; không phải trang trí: không có nó thì quản trị tưởng email đã hoạt động.",,,,,,
+"5.8","img-038","Thẻ trạng thái Event chưa có nguồn dữ liệu",,"State card no event source","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Ngăn cách hiểu sai thứ hai: bật một loại event mà đường sinh event chưa tồn tại.
+Thành phần hiển thị: Thẻ có tiêu đề Event chưa có nguồn dữ liệu và mô tả bật một event mà đường sinh event chưa tồn tại thì hiện nhãn sẽ không phát sinh; để quản trị không tưởng là đã hoạt động.
+Chức năng và logic: Cấu hình vẫn lưu được nhưng phải nói rõ nó sẽ im lặng cho tới khi có nguồn event.",,,,,,
+"5.9","img-039","Thẻ trạng thái Không có read-only vì lock",,"State card no lock read-only","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Đóng lại một giả định dễ sai: màn này không liên quan tới khoá ngày nghiệp vụ.
+Thành phần hiển thị: Thẻ có tiêu đề Không có read-only vì lock và mô tả màn không chạm bảng bị lock ngày nên không bao giờ trả mã lỗi khoá ngày.
+Chức năng và logic: Vì vậy không có trạng thái chỉ đọc theo ngày trên màn này.",,,,,,
+"6","img-040","Khối đối chiếu thiết kế và prototype",,"Design vs prototype block","others","khối bảng ba cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Tách rõ phần thiết kế đòi khỏi hiện trạng code; và nêu một xung đột phải xử trước khi dựng.
+Thành phần hiển thị: Tiêu đề khối viết hoa; bảng ba cột sáu hàng dữ liệu; một đoạn ghi chú về rủi ro hai nguồn chân lý.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"6.1","img-041","Bảng đối chiếu thiết kế và prototype","設計と実装の差分","Design gap table","table","bảng ba cột sáu dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Liệt từng hạng mục lệch kèm mức; trong đó có một hạng mục ở mức xung đột.
+Thành phần hiển thị: Ba cột: thiết kế đòi · prototype làm · mức; sáu hàng gồm bảng cấu hình · phiên bản hoá cấu hình · lịch sử gửi bất biến · thời điểm gửi theo giờ · ngưỡng cấu hình được · phân quyền ghi.
+Chức năng và logic: Cột mức có ba nhãn: chưa có · một phần · xung đột. Hàng ngưỡng là hàng duy nhất ở mức xung đột.",,,,,,
+"6.1.1","img-042","Hàng tiêu đề bảng đối chiếu",,"Gap table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột của bảng đối chiếu.
+Thành phần hiển thị: Một hàng nền xám nhạt với ba nhãn: Thiết kế đòi · Prototype làm · Mức.
+Chức năng và logic: Tĩnh.",,,,,,
+"6.1.2","img-043","Hàng một hạng mục đối chiếu — đại diện",,"Gap row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng là một hạng mục lệch; sáu hàng có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Ba ô: mô tả điều thiết kế đòi · mô tả hiện trạng code · thẻ mức; hàng đại diện đang hiện hạng mục bảng cấu hình thông báo với mức chưa có.
+Chức năng và logic: Chỉ đọc. Thẻ mức ở ô cuối lấy một trong ba giá trị chưa có · một phần · xung đột.",,,,,,
+"6.2","img-044","Ghi chú rủi ro hai nguồn chân lý",,"Two sources of truth note","label","đoạn nhắc cuối khối",,,,,,,,,"Mục đích và ngữ cảnh: Nêu xung đột phải xử trước khi dựng; vì để nguyên thì hai con số cùng mang một tên.
+Thành phần hiển thị: Một đoạn chữ nhỏ: FR-PARTY-03 đòi ngưỡng cảnh báo sắp hết hiệu lực là cấu hình được và ngưỡng đó đúng là field số 7 của màn này; nếu màn này quản ngưỡng đó thì phải bỏ hằng số cứng và cho báo cáo đọc cấu hình; để cả hai tồn tại là để quản trị đổi trên màn mà báo cáo vẫn cắt ở con số cũ và không ai biết cái nào đúng.
+Chức năng và logic: Tĩnh; là điều kiện tiền đề; không phải khuyến nghị.",,,,,,
+"7","img-045","Chân ghi chú phân quyền; hạ tầng và giả định",,"Permission infra and assumption footer","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Gom bốn thứ phải đọc trước khi dựng: phân quyền; ranh giới quyết định hạ tầng; năm giả định và hai ghi chú thi hành.
+Thành phần hiển thị: Bốn đoạn chữ nhỏ: đoạn phân quyền nêu chỉ một vai trò được vào và hai mã lỗi cho hai trục cùng lưu ý danh sách người nhận đích danh phơi ra ai nhận cảnh báo gì; đoạn khai quyết định hạ tầng thuộc quyết định kiến trúc và field thời điểm gửi khiến cả phương án chỉ có kênh trong ứng dụng cũng không đủ; đoạn năm giả định cần chốt; đoạn ghi chú về event không bao giờ phát sinh và về thứ tự ghi khi không có giao dịch xuyên bảng.
+Chức năng và logic: Tĩnh. Năm giả định gồm: ánh xạ actor quản trị vận hành sang một vai trò của hệ; ngưỡng mặc định từng loại event; thời điểm gửi có buộc trong khung giờ dịch vụ; một dòng cho mỗi loại event; bắt buộc lý do khi sửa.",,,,,,

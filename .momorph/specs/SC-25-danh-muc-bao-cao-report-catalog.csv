@@ -1,0 +1,76 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu trang màn danh mục báo cáo","レポートカタログヘッダー","Report catalog page header","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-033 và FE-034 → FN-10 → FR-RPT-01; FR-RPT-03; TBL-REPORT-01
+Thành phần hiển thị: tiêu đề màn; hai dòng meta truy vết; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-25 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết và nói rõ màn mở cho cả bảy vai trò
+Thành phần hiển thị: hai dòng meta: một dòng tính năng; nhóm chức năng; ưu tiên và yêu cầu; một dòng mã thi công và route
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,"Đã dựng",,"Mục đích và ngữ cảnh: cho biết màn đã có bản thi công để đối chiếu
+Thành phần hiển thị: một nhãn chữ
+Chức năng và logic: tĩnh — giá trị đến từ trạng thái roster",,,,,,
+"2","img-005","Khối điểm vào chung của 12 báo cáo bắt buộc","共通入口パネル","Shared entry point panel","others","list_panel",,,,,,,,,"Mục đích và ngữ cảnh: một điểm vào duy nhất cho toàn bộ danh mục báo cáo bắt buộc; thoả FR-RPT-01 về catalog bắt buộc
+Thành phần hiển thị: một bảng năm cột với đúng 12 dòng kèm một chú thích ràng buộc nguyên trạng
+Chức năng và logic: chỉ đọc; bấm mã báo cáo là sang màn xem và xuất báo cáo đó",,,,,,
+"2.1","img-006","Bảng danh mục báo cáo năm cột","レポートカタログテーブル","Report catalog table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: bản sao nguyên trạng của TBL-REPORT-01 để người dùng thấy hệ thống có đúng những báo cáo nào
+Thành phần hiển thị: năm cột: mã; tên báo cáo bắt buộc; tần suất; bộ lọc bắt buộc; nhóm tính năng
+Chức năng và logic: chỉ đọc; luôn đúng 12 dòng vì danh mục là hằng của yêu cầu khách chứ không phải dữ liệu nghiệp vụ",,,,,,"- Bảng có cần cột trạng thái cho biết mã nào đang chạy trên dữ liệu thật và mã nào còn dữ liệu mẫu không? Yêu cầu khách chỉ liệt 12 mã nên cột này là quyết định thiết kế cần chủ đầu tư chấp thuận."
+"2.1.1","img-007","Hàng tiêu đề năm cột","テーブル見出し行","Table header row","label","table_header",,,,,,,,,"Mục đích và ngữ cảnh: gọi tên năm cột của danh mục
+Thành phần hiển thị: năm ô tiêu đề chữ tiếng Việt
+Chức năng và logic: tĩnh; không sắp xếp được theo cột vì thứ tự mã là thứ tự của yêu cầu khách",,,,,,
+"2.1.2","img-008","Dòng báo cáo (đại diện cho 12 dòng)","レポート行","Report row","label","table_row",,,,"mã dạng RPT-NN",,,,,"Mục đích và ngữ cảnh: mỗi dòng là một báo cáo bắt buộc; bấm mã là vào chạy báo cáo đó
+Thành phần hiển thị: năm ô dữ liệu; ô mã là một liên kết chữ
+Chức năng và logic: chỉ đọc; 12 dòng chỉ khác nhau ở giá trị nên gộp thành một dòng đại diện; cột bộ lọc phải lấy cùng nguồn với form lọc ở màn xem báo cáo","on_click","Mở SC-26 xem và xuất báo cáo của đúng mã trên dòng; mã không có trong danh mục thì trả 404",,,,
+"2.2","img-009","Ghi chú ràng buộc nguyên trạng danh mục","カタログ不変注記","Catalog immutability note","label","inline_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt hai ràng buộc: danh mục đúng 12 dòng; và cột bộ lọc phải cùng nguồn với form lọc của màn xem báo cáo
+Thành phần hiển thị: một đoạn chú thích hai dòng dẫn TBL-REPORT-01 và SC-26
+Chức năng và logic: tĩnh; là ràng buộc thiết kế nối SC-25 với SC-26",,,,,,
+"3","img-010","Khối khung dùng chung cho cả 12 mã","共通フレームパネル","Shared framework panel","others","detail_panel",,,,,,,,,"Mục đích và ngữ cảnh: khai ba cơ chế mà cả 12 báo cáo dùng chung; đây là toàn bộ nội dung của FE-033
+Thành phần hiển thị: ba trường chỉ đọc mô tả bộ lọc; phân trang và xuất CSV; một chú thích ranh giới phạm vi
+Chức năng và logic: chỉ đọc; ba cơ chế này dựng một lần rồi dùng cho mọi mã kể cả nhóm báo cáo tháng",,,,,,
+"3.1","img-011","Trường cơ chế bộ lọc dùng chung","共通フィルター方式","Shared filter mechanism","label","readonly_field",,"string",,,,,"Một form; chỉ hiện field mà mã đang xem khai",,"Mục đích và ngữ cảnh: một form lọc duy nhất phục vụ 12 mã thay vì 12 form riêng
+Thành phần hiển thị: nhãn; một ô chỉ đọc mô tả cơ chế; một chú thích dẫn nguồn field và chỉ chỗ chi tiết
+Chức năng và logic: form hiện đúng những field mà mã đang xem khai; danh sách field lấy từ cột bộ lọc của yêu cầu khách",,,,,,"- Bộ lọc bắt buộc của mỗi mã có phải điều kiện để chạy báo cáo; hay chỉ là tiêu chí tuỳ chọn? Cột Bộ lọc của yêu cầu khách không nói field đó bắt buộc hay không."
+"3.2","img-012","Trường cơ chế phân trang dùng chung","共通ページング方式","Shared pagination mechanism","label","readonly_field",,"string",,,,,"Kích thước trang cố định; số trang đi qua URL",,"Mục đích và ngữ cảnh: một cơ chế phân trang duy nhất cho mọi mã để trạng thái xem chia sẻ lại được qua đường dẫn
+Thành phần hiển thị: nhãn; một ô chỉ đọc mô tả cơ chế; một chú thích nói rõ áp cho cả nhóm báo cáo tháng
+Chức năng và logic: kích thước trang cố định; số trang mang trên đường dẫn nên mở lại đúng trang đang xem",,,,,,"- Kích thước trang cố định là bao nhiêu dòng? Nguồn thiết kế không cho con số nào và số này ảnh hưởng trực tiếp tới ngưỡng hiệu năng của truy vấn báo cáo."
+"3.3","img-013","Trường cơ chế xuất CSV dùng chung","共通CSV出力方式","Shared CSV export mechanism","label","readonly_field",,"string",,,,,"Lấy toàn bộ tập đã lọc; không giới hạn theo trang",,"Mục đích và ngữ cảnh: thoả nghiệm thu của FR-RPT-01 về xuất CSV; và chốt rằng bản xuất không bị cắt theo trang đang xem
+Thành phần hiển thị: nhãn; một ô chỉ đọc mô tả cơ chế; một chú thích dẫn nghiệm thu
+Chức năng và logic: xuất toàn bộ tập đã lọc chứ không chỉ trang hiện tại; phải có đủ trường bắt buộc của mã",,,,,,"- Bản xuất CSV có trần số dòng hay có cần chạy nền khi tập quá lớn không? Yêu cầu khách đòi xuất được toàn bộ tập đã lọc nhưng không nói giới hạn nào."
+"3.4","img-014","Ghi chú ranh giới phạm vi báo cáo","スコープ境界注記","Report scope boundary note","label","inline_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ranh giới phạm vi của FN-10 để không ai dựng thêm công cụ tự tạo báo cáo
+Thành phần hiển thị: một đoạn chú thích ba dòng dẫn FR-RPT-03 và FN-10
+Chức năng và logic: tĩnh; là ràng buộc phạm vi cho toàn nhóm chức năng báo cáo",,,,,,
+"4","img-015","Khối trạng thái màn","画面状態パネル","Screen state panel","others","state_panel",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ trạng thái màn phải xử lý; phần lớn là không áp dụng vì màn chỉ đọc một hằng
+Thành phần hiển thị: bảy thẻ trạng thái xếp hai hàng
+Chức năng và logic: tĩnh; là phần đặc tả đi kèm màn",,,,,,
+"4.1","img-016","Thẻ trạng thái Rỗng","空状態","Empty state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ vì sao màn không cần trạng thái rỗng
+Thành phần hiển thị: một câu giải thích
+Chức năng và logic: danh mục là hằng của yêu cầu khách nên không có đường nào cho ra danh sách rỗng",,,,,,
+"4.2","img-017","Thẻ trạng thái Đang tải","読み込み中","Loading state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: giữ người dùng thấy khung trang thay vì màn trắng
+Thành phần hiển thị: một câu mô tả cách hiển thị khi đang tải
+Chức năng và logic: khung trang hiện trước rồi danh mục về sau",,,,,,
+"4.3","img-018","Thẻ trạng thái Lỗi tải","読み込みエラー","Load error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: phân biệt lỗi tải với danh mục rỗng
+Thành phần hiển thị: một khối lỗi kèm nút tải lại
+Chức năng và logic: lỗi tải không bao giờ hiển thị thành danh mục rỗng vì hai tình huống dẫn tới hai việc khác nhau",,,,,,
+"4.4","img-019","Thẻ trạng thái Không có quyền","権限なし","No permission state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ màn không chặn theo vai trò
+Thành phần hiển thị: một câu quy tắc
+Chức năng và logic: màn chỉ đòi phiên đăng nhập còn hiệu lực; nội dung giống nhau cho cả bảy vai trò",,,,,,
+"4.5","img-020","Thẻ trạng thái Chưa đăng nhập hoặc tài khoản bị vô hiệu","未認証・アカウント無効","Unauthenticated or inactive account state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: phân biệt hai lý do bị đưa về trang đăng nhập
+Thành phần hiển thị: hai lý do kèm trên đường chuyển về trang đăng nhập
+Chức năng và logic: chuyển về trang đăng nhập kèm mã lý do; không trả trang 404",,,,,,
+"4.6","img-021","Thẻ trạng thái Đang gửi và gửi lỗi","送信中・送信エラー","Submitting and submit error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ màn không có đường ghi nào
+Thành phần hiển thị: một câu quy tắc
+Chức năng và logic: không có input và không có hành động ghi nên hai trạng thái này không phát sinh",,,,,,
+"4.7","img-022","Thẻ trạng thái Read-only vì lock","ロックによる読み取り専用","Read-only due to lock state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ khoá kỳ không tác động lên màn này
+Thành phần hiển thị: một câu quy tắc
+Chức năng và logic: danh mục không mang ngày nghiệp vụ nên không nằm trong phạm vi khoá kỳ",,,,,,
+"5","img-023","Khối đối chiếu thiết kế và prototype","プロトタイプ差分パネル","Prototype divergence panel","others","comparison_panel",,,,,,,,,"Mục đích và ngữ cảnh: gom mọi chỗ bản thi công lệch thiết kế vào một chỗ để không lẫn thiết kế với hiện trạng
+Thành phần hiển thị: một bảng ba cột: thiết kế đòi; prototype làm; mức
+Chức năng và logic: tĩnh; phần đối chiếu nằm ngoài phạm vi hành vi màn",,,,,,
+"5.1","img-024","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: khai năm chỗ lệch của màn danh mục báo cáo kèm mức độ và nguyên nhân chặn của từng mã còn dữ liệu mẫu
+Thành phần hiển thị: ba cột và năm dòng; cột mức phân bốn loại: thiếu; khác có chủ đích; chưa thi công; lệch tài liệu nội bộ
+Chức năng và logic: tĩnh; chỉ liệt chỗ lệch chứ không liệt chỗ khớp",,,,,,
+"6","img-025","Ghi chú chân màn về phân quyền","画面フッター注記","Screen footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: khai phân quyền của màn và chỉ chỗ nơi vai trò thật sự khác nhau
+Thành phần hiển thị: hai đoạn: phân quyền; đường dẫn tới bản as-built
+Chức năng và logic: tĩnh; là chú thích thiết kế",,,,,,

@@ -1,0 +1,140 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn quản lý batch xuất kế toán",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết của nó; cho biết đây là điểm vào duy nhất của nhóm tích hợp kế toán.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-037 · FN-11 · ưu tiên P0 · yêu cầu IF-ACC-01 và DR-SETTLE-01 cùng actor; dòng tham chiếu phụ nêu route đề xuất và một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác nào.",,,,,,
+"1.1","img-002","Tiêu đề màn","会計データ出力バッチ管理","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn quản lý các lần bàn giao dữ liệu đối chiếu sang hệ thống kế toán.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-27 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về đúng tính năng và điều khoản yêu cầu khách; nêu rõ IF-ACC-01 và DR-SETTLE-01 là hai yêu cầu chính.
+Thành phần hiển thị: Hai dòng chữ nhỏ: dòng tính năng · nhóm chức năng · ưu tiên · yêu cầu · actor đề xuất; dòng tham chiếu phụ nêu route đề xuất và thẻ trạng thái.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn chưa có bản thi công nào để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng tham chiếu phụ với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu chứ không từ dữ liệu nghiệp vụ.",,,,,,
+"2","img-005","Dải chú thích ranh giới phạm vi thiết kế",,"Design scope notice banner","label","dải chú thích đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Chặn cách đọc sai rằng cả phần tích hợp kế toán chưa làm; khoanh đúng phần thiết kế đòi mà chưa có.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt; chữ đậm ở đầu câu; nội dung phân biệt phần đã chạy qua màn báo cáo và phần còn thiếu là tra cứu xuyên nhiều ngày cùng trạng thái bàn giao.
+Chức năng và logic: Tĩnh; là ghi chú dành cho người đọc thiết kế và không hiện cho người dùng cuối.",,,,,,
+"3","img-006","Khối 6 trường tối thiểu bắt buộc của dữ liệu bàn giao",,"Mandatory export fields block","others","khối bảng ba cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Ghim đúng tập trường mà yêu cầu khách bắt buộc phải có trong mỗi lần bàn giao; là bảng kiểm khi nghiệm thu màn này.
+Thành phần hiển thị: Tiêu đề khối dẫn DR-SETTLE-01; bảng ba cột sáu dòng cho từng trường tối thiểu; một đoạn ghi chú cuối khối về bên nhận và hai trường kèm bắt buộc.
+Chức năng và logic: Chỉ đọc; nội dung là ràng buộc phạm vi áp lên khối danh sách và khối bộ lọc bên dưới.",,,,,,
+"3.1","img-007","Bảng 6 trường tối thiểu","最小必須項目一覧","Mandatory field table","table","bảng ba cột sáu dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê từng trường tối thiểu kèm nội dung mà yêu cầu khách gán cho nó; người đọc dùng bảng này để kiểm bản xuất có đủ trường hay không.
+Thành phần hiển thị: Ba cột: số thứ tự · tên trường tối thiểu · nội dung theo yêu cầu khách; sáu hàng dữ liệu là ngày nghiệp vụ · người tham gia · tổng số tiền · thuế · trạng thái · batch code.
+Chức năng và logic: Chỉ đọc; không phân trang; không sắp xếp lại được.",,,,,,
+"3.1.1","img-008","Hàng tiêu đề bảng 6 trường",,"Mandatory field table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột để đọc được các hàng dữ liệu bên dưới.
+Thành phần hiển thị: Một hàng nền xám nhạt với ba nhãn: dấu thăng · Trường tối thiểu · Nội dung theo yêu cầu khách.
+Chức năng và logic: Tĩnh.",,,,,,
+"3.1.2","img-009","Hàng một trường tối thiểu — đại diện sáu hàng",,"Mandatory field row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng mô tả một trường tối thiểu; sáu hàng có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Ba ô trên một hàng: số thứ tự · tên trường in đậm · câu mô tả nội dung; hàng đại diện đang hiện trường số 1 là Ngày nghiệp vụ với nội dung ngày nghiệp vụ đã lock.
+Chức năng và logic: Chỉ đọc. Nội dung sáu hàng theo thứ tự: ngày nghiệp vụ đã lock; mã người tham gia hoặc nhóm người tham gia được gộp; tổng số tiền đã tính cả điều chỉnh sau lock đã duyệt; số thuế tương ứng tổng số tiền của dòng; trạng thái dòng gồm chờ · đã xác nhận · đã điều chỉnh; batch code là mã lần xuất cho ngày đã chốt và một ngày có thể có nhiều batch.",,,,,,
+"3.2","img-010","Ghi chú bên nhận và hai trường kèm",,"Receiver and extra-field note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Khai bên nhận dữ liệu và hai trường phải kèm ngoài sáu trường tối thiểu; đồng thời khai phần chưa chốt của interface.
+Thành phần hiển thị: Một đoạn chữ nhỏ: bên nhận là hệ thống kế toán hiện hành do bộ phận tài chính vận hành; mỗi bản xuất phải kèm thời điểm tạo và người khởi tạo; phương thức kết nối · xác thực · retry · nghiệm thu interface chốt tại buổi làm việc về interface.
+Chức năng và logic: Tĩnh; nội dung này là lý do vì sao khối trạng thái bàn giao còn ở dạng đề xuất.",,,,,,
+"4","img-011","Khối bộ lọc tra cứu batch xuyên nhiều ngày",,"Cross-day batch filter block","others","khối bộ lọc năm điều kiện và hai nút",,,,,,,,,"Mục đích và ngữ cảnh: Cho bộ phận đối chiếu tìm lại một hoặc một nhóm lần bàn giao mà không bị buộc phải biết trước đúng một ngày nghiệp vụ.
+Thành phần hiển thị: Tiêu đề khối; hai hàng điều kiện gồm khoảng ngày nghiệp vụ · batch code · trạng thái · người tham gia; cuối hàng thứ hai là nút Tra cứu và nút Xoá điều kiện.
+Chức năng và logic: Mọi điều kiện đều không bắt buộc; để trống hết thì tra cứu trả về toàn bộ batch theo trang. Điều kiện được gửi cùng nhau trong một lần tra cứu.",,,,,,
+"4.1","img-012","Ô Ngày nghiệp vụ từ","業務日 開始","Business date from","date_picker","ô chọn ngày kèm nhãn và dòng nhắc",,"date","false","YYYY-MM-DD",,,,"Điều kiện: phải nhỏ hơn hoặc bằng Ngày nghiệp vụ đến.
+Lỗi: ""Khoảng ngày không hợp lệ."" — hiện ngay tại ô nhập chứ không điều hướng.
+Điều kiện: chỉ nhận ngày đã lock.
+Lỗi: ""Ngày này chưa chốt kỳ nên chưa có gì để bàn giao.""","Mục đích và ngữ cảnh: Mốc đầu của khoảng ngày nghiệp vụ cần tra; đây là điều kiện phân biệt màn này với danh sách batch của đúng một ngày.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ từ; ô chọn ngày hiện mẫu YYYY-MM-DD; dòng nhắc bên dưới nêu hai ràng buộc là nhỏ hơn hoặc bằng đến ngày và chỉ nhận ngày đã lock.
+Chức năng và logic: Lock là tiền đề của bàn giao nên ngày chưa lock không bao giờ có batch; ô này lọc trên ngày nghiệp vụ của batch chứ không trên thời điểm tạo batch.","on_click",,"accounting_export_batch","business_date","Bảng đã tồn tại và có index theo business_date. Sắc thái: đường đọc hiện có chỉ lọc đúng một business_date; lọc theo khoảng là đường đọc mới mà thiết kế đòi.","Ô này có tự chặn ngày trong tương lai không; hay để server trả danh sách rỗng?
+Chỉ nhập từ ngày mà bỏ trống đến ngày thì hiểu là mở đến hôm nay hay báo lỗi?
+Ngày chưa lock thì chặn ngay tại ô nhập hay để tra cứu rồi trả rỗng?"
+"4.2","img-013","Ô Ngày nghiệp vụ đến","業務日 終了","Business date to","date_picker","ô chọn ngày kèm nhãn và dòng nhắc",,"date","false","YYYY-MM-DD",,,,"Điều kiện: phải lớn hơn hoặc bằng Ngày nghiệp vụ từ.
+Lỗi: ""Khoảng ngày không hợp lệ."" — hiện ngay tại ô nhập.","Mục đích và ngữ cảnh: Mốc cuối của khoảng ngày nghiệp vụ cần tra.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ đến; ô chọn ngày hiện mẫu YYYY-MM-DD; dòng nhắc nêu ràng buộc lớn hơn hoặc bằng từ ngày và nói rõ khoảng ngày sai thì báo lỗi tại field.
+Chức năng và logic: Lỗi khoảng ngày báo tại field chứ không chặn cả khối; hai ô ngày cùng chịu một quy tắc nên chỉ cần một thông báo lỗi.","on_click",,"accounting_export_batch","business_date","Cùng cột với ô từ ngày; khoảng ngày là điều kiện bao gồm cả hai đầu mút.","Khoảng ngày có bị giới hạn độ dài tối đa để giữ ngưỡng thời gian phản hồi không?
+Để trống đến ngày mà có từ ngày thì mặc định lấy tới đâu?"
+"4.3","img-014","Ô Batch code","バッチコード","Batch code","text_form","ô nhập một dòng kèm nhãn và dòng nhắc",,"string","false","BATCH-NNNN theo mẫu hiển thị BATCH-0001",,,,,"Mục đích và ngữ cảnh: Đường tra nhanh khi người dùng đã biết đúng mã của một lần bàn giao — thường là khi kế toán gọi lại hỏi về một mã cụ thể.
+Thành phần hiển thị: Nhãn Batch code; ô nhập một dòng hiện mẫu BATCH-0001; dòng nhắc nói rõ đây là cách tra cứu chính xác một lần xuất.
+Chức năng và logic: Nhập batch code thì các điều kiện khác trở nên không cần thiết vì batch code là duy nhất trong toàn hệ; không khớp thì trả danh sách rỗng chứ không báo lỗi.",,,"accounting_export_batch","batch_code","Cột đã tồn tại và là duy nhất trên toàn bảng. Sắc thái: định dạng mã do hai bên thống nhất ở buổi làm việc về interface nên mẫu hiển thị chỉ là giả định làm việc.","Tra batch code có phân biệt chữ hoa chữ thường không?
+Có cho tra theo một phần của mã hay bắt buộc khớp trọn mã?
+Mẫu BATCH-0001 là mẫu đã chốt hay chỉ là mẫu minh hoạ cần khách xác nhận?"
+"4.4","img-015","Ô chọn Trạng thái","ステータス","Status filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Lọc theo trạng thái của dữ liệu bàn giao — trường tối thiểu số 5 của yêu cầu khách.
+Thành phần hiển thị: Nhãn Trạng thái; ô chọn hiện giá trị đang chọn là Tất cả kèm mũi chỉ xuống; dòng nhắc liệt ba giá trị chờ · đã xác nhận · đã điều chỉnh và ghi rõ đây là trường tối thiểu số 5.
+Chức năng và logic: Tập giá trị lấy đúng ba giá trị mà yêu cầu khách khai; giá trị Tất cả là mặc định và không lọc gì.","on_click",,"accounting_export_batch","lines","Yêu cầu khách khai trường này ở mức DÒNG (Trạng thái dòng) nên giá trị nằm trong bản chụp dòng của batch. Không có cột trạng thái riêng ở mức batch: CHƯA TỒN TẠI.","Lọc theo trạng thái là lọc batch có ít nhất một dòng ở trạng thái đó; hay lọc batch mà toàn bộ dòng ở trạng thái đó?
+Một batch có nhiều dòng khác trạng thái nhau thì cột Trạng thái ở danh sách hiện giá trị nào?
+Định dạng giá trị gửi lên cho ô chọn này là chuỗi tiếng Việt hiển thị hay một mã cố định; ảnh không cho thấy nên cần khách chốt."
+"4.5","img-016","Ô chọn Người tham gia","参加者","Participant filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,"Tất cả người tham gia",,"Mục đích và ngữ cảnh: Lọc theo người tham gia — trường tối thiểu số 2 của yêu cầu khách; dùng khi kế toán đối chiếu số của một đối tác.
+Thành phần hiển thị: Nhãn Người tham gia; ô chọn hiện Tất cả người tham gia kèm mũi chỉ xuống; dòng nhắc ghi rõ đây là trường tối thiểu số 2 và nhãn chỉ hiện tên hiển thị chứ không hiện thư điện tử.
+Chức năng và logic: Danh sách chọn chỉ hiện tên hiển thị của người tham gia; địa chỉ thư điện tử không bao giờ ra giao diện màn này.","on_click",,"accounting_export_batch","lines","Mã người tham gia của từng dòng nằm trong bản chụp dòng của batch; batch không có cột người tham gia riêng vì một batch gộp nhiều người tham gia.","Chọn được nhiều người tham gia cùng lúc hay chỉ một?
+Danh sách chọn lấy toàn bộ người tham gia hay chỉ những người có mặt trong khoảng ngày đang lọc?
+Định dạng nhãn hiển thị của một người tham gia là gì; ảnh chỉ cho thấy dòng mặc định nên chưa suy ra được mẫu nhãn."
+"4.6","img-017","Nút Tra cứu","照会","Search button","button","nút hành động chính trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Kích hoạt tra cứu; là hành động duy nhất làm đổi nội dung khối danh sách.
+Thành phần hiển thị: Nút chữ Tra cứu đặt ở đầu ô hành động cuối hàng thứ hai của khối bộ lọc.
+Chức năng và logic: Không đổi dữ liệu; chỉ đọc. Trong lúc tra cứu thì khối danh sách vào trạng thái đang tải và bộ lọc bị vô hiệu.","on_click","Nạp lại khối danh sách batch theo các điều kiện đang đặt; ở lại cùng màn và không điều hướng.",,,,"Bấm Tra cứu khi khoảng ngày đang sai thì chặn ngay hay vẫn gửi rồi để server từ chối?
+Điều kiện tra cứu có được giữ lại trên đường dẫn để chia sẻ lại kết quả không?"
+"4.7","img-018","Nút Xoá điều kiện","条件クリア","Clear filter button","button","nút phụ trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng thoát khỏi một bộ điều kiện đã lọc quá hẹp mà không phải sửa từng ô.
+Thành phần hiển thị: Nút chữ Xoá điều kiện đặt cạnh nút Tra cứu; kiểu nút phụ nhạt hơn.
+Chức năng và logic: Đặt hai ô ngày và ô batch code về rỗng; hai ô chọn về giá trị Tất cả; sau đó tự tra cứu lại.","on_click","Trả mọi điều kiện về giá trị mặc định và nạp lại danh sách không lọc.",,,,"Xoá điều kiện có tự tra cứu lại ngay hay chỉ xoá rồi chờ người dùng bấm Tra cứu?"
+"5","img-019","Khối danh sách batch xuyên ngày",,"Cross-day batch list block","others","khối bảng chín cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Nơi người dùng thấy toàn bộ lần bàn giao đã thực hiện và biết lần nào đã thực sự tới bên nhận.
+Thành phần hiển thị: Tiêu đề khối; bảng chín cột với hai hàng dữ liệu mẫu; một đoạn ghi chú cuối khối về tính chỉ-thêm của batch.
+Chức năng và logic: Danh sách chỉ đọc; hai hành động trên từng hàng là xem dòng đã bàn giao và gửi lại. Không có đường sửa hay xoá batch.",,,,,,
+"5.1","img-020","Bảng danh sách batch","バッチ一覧","Batch list table","table","bảng chín cột chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Trình bày từng lần bàn giao trên một hàng; đủ để đối chiếu số với kế toán mà không phải mở chi tiết.
+Thành phần hiển thị: Chín cột: batch code · ngày nghiệp vụ · trạng thái · số dòng · tổng tiền JPY · tổng thuế JPY · thời điểm tạo · người khởi tạo · ô hành động; hai hàng dữ liệu mẫu cùng một ngày nghiệp vụ.
+Chức năng và logic: Sắp xếp mặc định theo thời điểm tạo giảm dần nên batch mới nhất nằm trên. Batch có 0 dòng vẫn phải hiện; xuất lại cùng một ngày sinh batch mới và batch cũ không bị lọc bớt.",,,"accounting_export_batch","batch_code; business_date; row_count; total_net_amount_jpy; total_tax_jpy; exported_at; exported_by","Bảng đã tồn tại với đủ các cột trên; exported_by trỏ tới bảng người dùng và chỉ lấy tên hiển thị. Cột Trạng thái ở mức batch thì CHƯA TỒN TẠI.","Bảng phân trang bao nhiêu dòng một trang và có cho đổi cách sắp xếp theo cột không?
+Một ngày có nhiều batch thì có gom nhóm theo ngày hay để phẳng theo thời điểm tạo?"
+"5.1.1","img-021","Hàng tiêu đề bảng batch",,"Batch table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên chín cột của bảng danh sách.
+Thành phần hiển thị: Một hàng nền xám nhạt với tám nhãn cột và một ô cuối để trống dành cho các nút hành động.
+Chức năng và logic: Tĩnh; không sắp xếp được từ hàng tiêu đề.",,,,,,
+"5.1.2","img-022","Hàng dữ liệu một batch — đại diện",,"Batch data row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng là một lần bàn giao; hai hàng mẫu có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Tám ô giá trị: batch code BATCH-0002 · ngày nghiệp vụ 2026-09-08 · trạng thái Chờ · số dòng 42 · tổng tiền 6 180 400 · tổng thuế 494 432 · thời điểm tạo 2026-09-09 09:40 · người khởi tạo Người dùng A; ô cuối chứa hai nút hành động.
+Chức năng và logic: Chỉ đọc; số tiền và số thuế hiện theo đơn vị JPY không có phần lẻ. Cột Trạng thái là trường tối thiểu số 5 nên không được để trống trên hàng.",,,"accounting_export_batch","batch_code; business_date; row_count; total_net_amount_jpy; total_tax_jpy; exported_at; exported_by","Bảy cột trên đã tồn tại thật. Ô Trạng thái trên hàng chưa có cột tương ứng ở mức batch: CHƯA TỒN TẠI; hiện chỉ suy được từ bản chụp dòng.","Người khởi tạo hiện tên rỗng thì hiện gì; có được rơi về địa chỉ thư điện tử nội bộ không?
+Tổng tiền và tổng thuế có cần hiện kèm thuế suất đã đóng dấu lên batch để giải thích con số không?"
+"5.1.3","img-023","Nút Xem dòng","明細を見る","View lines button","button","nút phụ trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường đi từ một lần bàn giao tới chính tập dòng đã gửi; để trả lời câu hỏi của kế toán về một con số cụ thể.
+Thành phần hiển thị: Nút chữ Xem dòng ở ô hành động cuối hàng; kiểu nút phụ.
+Chức năng và logic: Chỉ đọc; tập dòng là bản chụp đã đóng dấu tại thời điểm xuất nên không đổi theo dữ liệu hiện tại. Batch có 0 dòng vẫn mở được và hiện danh sách rỗng.","on_click","Mở đúng tập dòng đã bàn giao của batch đó; kèm cả sáu trường tối thiểu.","accounting_export_batch","lines","Tập dòng là bản chụp bất biến nằm ngay trên batch; đọc lại luôn ra đúng cái đã gửi kế toán chứ không tính lại từ dữ liệu hiện tại.","Xem dòng mở ngay trong màn dạng lớp phủ hay điều hướng sang màn báo cáo?
+Tập dòng có xuất lại được ra tệp không; nếu có thì tệp đó có phải đúng tệp đã bàn giao?"
+"5.1.4","img-024","Nút Gửi lại","再送信","Resend button","button","nút phụ trong hàng","text_only",,,,,,,"Điều kiện: chỉ bấm được khi batch đang ở trạng thái cho phép gửi lại.
+Lỗi: ""Batch này đang được gửi."" khi có một lượt gửi khác đang chạy trên cùng batch.
+Điều kiện: hai người bấm cùng lúc thì chỉ một bên thắng.
+Lỗi: ""Batch đã đổi trạng thái; hãy tải lại danh sách."" cho bên thua.","Mục đích và ngữ cảnh: Đường xử lý khi một lần bàn giao chưa tới được bên nhận; đây là hành động ghi duy nhất của màn.
+Thành phần hiển thị: Nút chữ Gửi lại ở ô hành động cuối hàng; đặt cạnh nút Xem dòng.
+Chức năng và logic: Không tạo batch mới và không sửa nội dung batch; chỉ ghi lại kết quả của lượt gửi. Gửi lỗi thì giữ nguyên trạng thái cũ chứ không ghi thành đã xác nhận.","on_click","Gửi lại batch đó tới hệ thống kế toán; hàng vào trạng thái đang gửi và nút bị vô hiệu cho tới khi có kết quả.",,,"CHƯA TỒN TẠI: thiết kế đòi trạng thái bàn giao · thời điểm gửi · lỗi gửi ở mức batch nhưng chưa có bảng hay cột nào giữ chúng.","Số lần gửi lại tối đa là bao nhiêu; con số retry ba lần của yêu cầu khách chỉ dành cho thông báo nên màn này chưa có căn cứ?
+Bên nhận xử lý batch trùng ngày theo kiểu thay thế hay cộng dồn; nếu cộng dồn thì Gửi lại có cần một bước xác nhận riêng?
+Gửi lại có bắt người dùng ghi lý do để lưu vết không?"
+"5.1.5","img-025","Nút Gửi lại ở trạng thái vô hiệu","再送信（無効）","Resend button disabled","button","nút phụ vô hiệu trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng thấy vì sao một batch không gửi lại được mà không phải bấm thử rồi nhận lỗi.
+Thành phần hiển thị: Cùng nút Gửi lại nhưng chữ và viền nhạt hơn; xuất hiện trên hàng batch thứ hai đang ở trạng thái Đã điều chỉnh.
+Chức năng và logic: Không nhận thao tác. Trạng thái vô hiệu là kết quả của trạng thái batch chứ không của vai trò người dùng.",,,,,"CHƯA TỒN TẠI: điều kiện bật hay tắt nút phụ thuộc trạng thái bàn giao ở mức batch mà cột đó chưa có.","Những trạng thái nào làm nút Gửi lại tắt; khi tắt thì có hiện dòng giải thích lý do không?"
+"5.2","img-026","Ghi chú tính chỉ-thêm của khối danh sách",,"Append-only note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Khai bất biến quan trọng nhất của dữ liệu bàn giao: đã gửi ra ngoài tổ chức thì không sửa lại được.
+Thành phần hiển thị: Một đoạn chữ nhỏ: batch là chỉ-thêm nên không sửa không xoá; xuất lại cùng ngày sinh batch mới và danh sách phải hiện cả batch cũ; batch 0 dòng cũng hiện; Xem dòng mở đúng tập dòng kèm sáu trường tối thiểu; thuế suất và cơ sở thuế được đóng dấu lên từng batch.
+Chức năng và logic: Tĩnh; giải thích vì sao bảng không có nút sửa hay xoá.",,,,,,
+"6","img-027","Khối trạng thái màn",,"Screen state block","others","khối bảy thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê mọi trạng thái mà màn phải xử lý; để phần dựng không bỏ sót trạng thái rỗng và trạng thái lỗi.
+Thành phần hiển thị: Tiêu đề khối; bảy thẻ xếp thành hai hàng; mỗi thẻ có một tiêu đề nhỏ và một đoạn mô tả.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"6.1","img-028","Thẻ trạng thái Rỗng",,"State card empty","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái người đọc gặp đầu tiên khi chưa ngày nào được xuất.
+Thành phần hiển thị: Thẻ có tiêu đề Rỗng và câu hiển thị Chưa có batch nào khớp điều kiện.
+Chức năng và logic: Rỗng là trạng thái hợp lệ chứ không phải lỗi; bộ lọc vẫn dùng được để đổi điều kiện.",,,,,,
+"6.2","img-029","Thẻ trạng thái Đang tải",,"State card loading","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết tra cứu đang chạy để không bấm Tra cứu nhiều lần.
+Thành phần hiển thị: Thẻ có tiêu đề Đang tải và mô tả skeleton bảng cùng bộ lọc bị vô hiệu.
+Chức năng và logic: Bộ lọc bị vô hiệu trong lúc tải nên không có hai lượt tra cứu chồng nhau.",,,,,,
+"6.3","img-030","Thẻ trạng thái Lỗi tải",,"State card load error","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt lỗi kỹ thuật với danh sách rỗng — hai cái này không được hiện giống nhau.
+Thành phần hiển thị: Thẻ có tiêu đề Lỗi tải và mô tả khối lỗi kèm nút thử lại; không rơi về danh sách rỗng.
+Chức năng và logic: Giữ nguyên điều kiện đang lọc khi thử lại.",,,,,,
+"6.4","img-031","Thẻ trạng thái Không có quyền",,"State card forbidden","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai mức chặn của màn: chặn vào trang chứ không chỉ chặn hành động.
+Thành phần hiển thị: Thẻ có tiêu đề Không có quyền và mô tả vai trò không thuộc bộ phận đối chiếu không vào được màn vì đây là dữ liệu tiền đã bàn giao ra ngoài.
+Chức năng và logic: Chặn vào trang trả trang không tìm thấy nên không lộ sự tồn tại của tài nguyên.",,,,,,
+"6.5","img-032","Thẻ trạng thái Đang gửi",,"State card sending","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chặn bấm Gửi lại hai lần trên cùng một batch.
+Thành phần hiển thị: Thẻ có tiêu đề Đang gửi và mô tả đúng hàng đó vào trạng thái chờ; nút vô hiệu; không cho bấm hai lần.
+Chức năng và logic: Trạng thái đang gửi là trạng thái của một hàng chứ không của cả bảng; các hàng khác vẫn dùng được.",,,,,,
+"6.6","img-033","Thẻ trạng thái Gửi lỗi",,"State card send failed","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Ngăn tình huống tệ nhất: đánh dấu đã bàn giao khi bên nhận chưa nhận.
+Thành phần hiển thị: Thẻ có tiêu đề Gửi lỗi và mô tả lỗi hiện trên đúng hàng; giữ nguyên trạng thái cũ; không được ghi thành đã xác nhận khi bên nhận chưa nhận.
+Chức năng và logic: Kết quả lỗi phải phân biệt được với kết quả không rõ; gửi thành công mà mất phản hồi là một ca riêng.",,,,,,
+"6.7","img-034","Thẻ trạng thái Read-only vì lock",,"State card lock read-only","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Đảo lại một giả định dễ sai: màn này không bị khoá vì lock.
+Thành phần hiển thị: Thẻ có tiêu đề Read-only vì lock và mô tả ngược lại là đúng — lock là tiền đề để xuất nên màn ghi về một ngày đã lock và không bao giờ bị khoá vì lock.
+Chức năng và logic: Vì vậy màn không có trạng thái bị khoá theo ngày và không trả mã lỗi khoá ngày.",,,,,,
+"7","img-035","Khối đối chiếu thiết kế và prototype",,"Design vs prototype block","others","khối bảng ba cột",,,,,,,,,"Mục đích và ngữ cảnh: Tách rõ phần thiết kế đòi khỏi phần prototype đã làm; để người đọc không đọc bản thi công như thể nó là thiết kế.
+Thành phần hiển thị: Tiêu đề khối viết hoa; bảng ba cột sáu hàng dữ liệu với cột cuối phân mức lệch.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"7.1","img-036","Bảng đối chiếu thiết kế và prototype","設計と実装の差分","Design gap table","table","bảng ba cột sáu dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Liệt từng hạng mục lệch kèm mức độ; để phần ước lượng biết chỗ nào là việc mới và chỗ nào là chờ khách chốt.
+Thành phần hiển thị: Ba cột: thiết kế đòi · prototype làm · mức; sáu hàng dữ liệu gồm màn quản lý batch riêng · trạng thái ở mức batch · tập giá trị trạng thái dòng · kênh gửi thật · định dạng batch code · các trường kèm bắt buộc.
+Chức năng và logic: Chỉ liệt chỗ khác chứ không liệt chỗ khớp; cột mức phân biệt chưa thi công · thiếu trường bắt buộc · khác không chủ đích · chờ khách chốt · giả định chưa chốt · đúng thiết kế.",,,,,,
+"7.1.1","img-037","Hàng tiêu đề bảng đối chiếu",,"Gap table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột của bảng đối chiếu.
+Thành phần hiển thị: Một hàng nền xám nhạt với ba nhãn: Thiết kế đòi · Prototype làm · Mức.
+Chức năng và logic: Tĩnh.",,,,,,
+"7.1.2","img-038","Hàng một hạng mục đối chiếu — đại diện",,"Gap row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng là một hạng mục lệch; sáu hàng có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Ba ô: mô tả điều thiết kế đòi · mô tả điều prototype làm kèm liên kết sang màn báo cáo · nhãn mức lệch; hàng đại diện đang hiện hạng mục màn quản lý batch riêng tra cứu xuyên nhiều ngày với mức Chưa thi công.
+Chức năng và logic: Chỉ đọc. Ô giữa có thể chứa liên kết nội bộ tới màn khác trong cùng bộ wireframe.",,,,,,
+"8","img-039","Chân ghi chú phân quyền và giả định cần chốt",,"Permission and assumption footer","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Gom hai thứ không thuộc thân màn nhưng bắt buộc phải đọc trước khi dựng: mức chặn theo vai trò và bốn giả định chưa chốt.
+Thành phần hiển thị: Ba đoạn chữ nhỏ: đoạn phân quyền đề xuất chỉ một vai trò và chặn ở mức vào trang; đoạn bốn giả định cần chốt với khách; đoạn liên kết tới bản as-built.
+Chức năng và logic: Tĩnh. Bốn giả định gồm: tập giá trị trạng thái bàn giao ở mức batch; số lần thử gửi tối đa; bên nhận xử lý batch trùng ngày theo kiểu thay thế hay cộng dồn; thời hạn giữ tập dòng đã bàn giao.",,,,,,

@@ -1,0 +1,132 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Đầu trang màn chi tiết người tham gia","参加者詳細ヘッダー","Participant detail page header","others","page_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-005 và FE-006 → FN-02 → FR-PARTY-01 và nói rõ màn gồm bốn khối
+Thành phần hiển thị: tiêu đề màn; dòng meta yêu cầu; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-06 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai hai tính năng cùng đổ về một màn — quản lý profile và vòng đời hiệu lực
+Thành phần hiển thị: mã FE-005 và FE-006; nhóm FN-02; ưu tiên P0; yêu cầu FR-PARTY-01; loại màn Detail bốn khối; actor đọc và actor ghi
+Chức năng và logic: văn bản tĩnh — hai actor tách nhau vì đọc và ghi là hai trục quyền khác nhau",,,,,,
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn đã có bản thi công để đối chiếu; không phải trạng thái nghiệp vụ
+Thành phần hiển thị: một nhãn chữ ngắn
+Chức năng và logic: tĩnh — không đổi theo dữ liệu",,,,,,
+"2","img-005","Khối profile chỉ đọc","プロフィール参照ブロック","Read-only profile block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: khối đọc dành cho mọi vai vận hành — ai cũng cần biết một người tham gia thuộc loại nào và còn hiệu lực đến khi nào
+Thành phần hiển thị: tên người tham gia làm tiêu đề; bốn trường chỉ đọc gồm phân loại; căn cứ tham gia; trạng thái hiệu lực; khoảng hiệu lực
+Chức năng và logic: chỉ đọc; không có trường nào của khối này bị ẩn theo vai trò",,,,,,
+"2.1","img-006","Trường phân loại (chỉ đọc)","区分","Category","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: một trong bốn phân loại của FR-PARTY-01; quyết định thủ tục áp cho profile này ở mọi chỗ khác của màn
+Thành phần hiển thị: nhãn song ngữ Phân loại · 区分 và giá trị phân loại trong ô chỉ đọc
+Chức năng và logic: chỉ đọc ở khối này; giá trị bất biến sau khi tạo nên không có đường sửa nào trên màn",,,"participant","category","Prototype có `participant.category` với CHECK đúng bốn giá trị; tính bất biến thì chỉ chặn ở tầng ứng dụng.",
+"2.2","img-007","Trường căn cứ tham gia (chỉ đọc)","参加根拠","Participation basis","label","readonly_field",,"string",,,,,,,"Mục đích và ngữ cảnh: căn cứ pháp lý cho việc tham gia — đăng ký chợ; giấy phép 許可; hoặc chấp thuận 承認; RFP §02-08 cấm gộp hai căn cứ sau thành một quy tắc chung
+Thành phần hiển thị: nhãn song ngữ Căn cứ tham gia · 参加根拠; giá trị căn cứ; một dòng gợi ý nói rõ giá trị suy từ phân loại
+Chức năng và logic: suy từ phân loại theo FIG-004 và không nhập tự do; nên nó không phải một trường độc lập mà là hệ quả của phân loại",,,"participant","license_type","Prototype có cột này nhưng là chuỗi tự do không có CHECK; cặp phân loại và căn cứ chỉ được kiểm ở tầng ứng dụng nên ghi thẳng vào cơ sở dữ liệu là vào được cặp sai.",
+"2.3","img-008","Trường trạng thái hiệu lực (chỉ đọc)","有効状態","Eligibility status","label","readonly_field",,"string",,"một trong bốn trạng thái của FIG-010",,,,,"Mục đích và ngữ cảnh: trạng thái vòng đời đã lưu theo FIG-010; là điểm xuất phát để tính những cạnh chuyển trạng thái còn hợp lệ
+Thành phần hiển thị: nhãn song ngữ Trạng thái hiệu lực · 有効状態 và giá trị trạng thái
+Chức năng và logic: chỉ đọc; giá trị đã lưu chứ không phải kết luận hôm nay giao dịch được hay không",,,"participant","status","Prototype có CHECK bốn giá trị FIG-010; đường đi giữa các trạng thái thì chỉ được kiểm ở tầng ứng dụng.",
+"2.4","img-009","Trường khoảng hiệu lực (chỉ đọc)","有効期間","Validity period","label","readonly_field",,"date",,"YYYY-MM-DD → YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: khoảng ngày hiệu lực; là dữ liệu để SC-07 tính danh sách cảnh báo sắp hết hiệu lực
+Thành phần hiển thị: nhãn song ngữ Khoảng hiệu lực · 有効期間; hai ngày nối bằng dấu mũi tên; một dòng gợi ý về ngày kết thúc rỗng
+Chức năng và logic: ngày kết thúc để trống nghĩa là vô hạn hạn; ngày neo theo múi giờ Nhật vì ngày nghiệp vụ neo theo múi giờ đó",,,"participant","valid_from; valid_to","Prototype cho phép cột hiệu lực đến rỗng nghĩa là vô hạn; không có tác vụ định kỳ nào lật trạng thái khi qua ngày đó.",
+"3","img-010","Khối sửa profile","プロフィール編集ブロック","Profile edit block","others","form_block",,,,,,,,,"Mục đích và ngữ cảnh: phép sửa trong bộ CRUD của FE-005; chỉ vai quản trị người tham gia được dùng
+Thành phần hiển thị: năm trường gồm phân loại đã khoá; tên; hiệu lực từ; hiệu lực đến; lý do cập nhật — cộng một nút lưu
+Chức năng và logic: vai không có quyền ghi thì khối vẫn hiện nhưng nội dung đổi thành dòng nhắc vai trò phụ trách; mọi lần sửa ghi audit kèm lý do và giá trị trước và sau",,,,,,
+"3.1","img-011","Trường phân loại đã khoá","区分（変更不可）","Category (immutable)","label","locked_field",,"string","false",,,,,"Điều kiện: yêu cầu sửa có mang trường phân loại; kể cả khi giá trị không đổi
+Lỗi: ""Phân loại không sửa được sau khi tạo.""","Mục đích và ngữ cảnh: chặn cứng việc đổi phân loại; đổi phân loại là đổi ranh giới pháp lý và căn cứ tham gia chứ không phải sửa một ô dữ liệu
+Thành phần hiển thị: nhãn song ngữ Phân loại · 区分; giá trị kèm chú thích khoá và bất biến; một dòng gợi ý nói cách xử lý đúng là lập profile mới
+Chức năng và logic: hiện dạng chỉ đọc trong form; tầng dịch vụ từ chối mọi yêu cầu có mang trường này để không có đường lách qua giao diện",,,"participant","category","Thiết kế đòi tính bất biến ở tầng dữ liệu; prototype chỉ chặn ở tầng ứng dụng và tự khai điều đó trong chú thích của bảng.",
+"3.2","img-012","Trường tên","名称","Name","text_form","text_input",,"string","true",,"1","100",,"Điều kiện: tên rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Tên không được để trống.""","Mục đích và ngữ cảnh: tên hiển thị của người tham gia; là trục tra cứu chính ở màn danh sách
+Thành phần hiển thị: nhãn song ngữ Tên · 名称 kèm dấu bắt buộc và một ô nhập
+Chức năng và logic: bắt buộc; cắt khoảng trắng hai đầu trước khi lưu; chuỗi rỗng phải bị từ chối kèm mã lỗi riêng chứ không bị bỏ qua im lặng",,,"participant","name","Prototype có cột không rỗng nhưng đường sửa bỏ qua chuỗi rỗng im lặng thay vì từ chối.","- Tên có cần lưu song song bản tiếng Nhật và bản chữ latinh không? Màn danh sách tìm khớp một phần trên cả hai hệ chữ."
+"3.3","img-013","Trường hiệu lực từ","有効開始日","Valid from","date_picker","date_input",,"date","true","YYYY-MM-DD",,,,"Điều kiện: giá trị không đúng dạng YYYY-MM-DD
+Lỗi: ""Ngày bắt đầu hiệu lực không đúng định dạng.""","Mục đích và ngữ cảnh: ngày bắt đầu hiệu lực tham gia; là mốc dưới của khoảng dùng để kết luận hiệu lực tại một thời điểm
+Thành phần hiển thị: nhãn song ngữ Hiệu lực từ · 有効開始日 kèm dấu bắt buộc và một ô chọn ngày
+Chức năng và logic: bắt buộc; đúng dạng năm bốn chữ số gạch tháng gạch ngày; hiểu theo múi giờ Nhật",,,"participant","valid_from","Prototype có cột không rỗng và kiểm định dạng ở tầng ứng dụng.",
+"3.4","img-014","Trường hiệu lực đến","有効終了日","Valid to","date_picker","date_input",,"date","false","YYYY-MM-DD",,,,"Điều kiện: giá trị không đúng dạng YYYY-MM-DD
+Lỗi: ""Ngày hết hiệu lực không đúng định dạng.""
+Điều kiện: ngày hết hiệu lực nhỏ hơn ngày bắt đầu hiệu lực
+Lỗi: ""Ngày hết hiệu lực không được nhỏ hơn ngày bắt đầu.""","Mục đích và ngữ cảnh: ngày hết hiệu lực; là dữ liệu để SC-07 dựng danh sách cảnh báo trước ngày mất hiệu lực
+Thành phần hiển thị: nhãn song ngữ Hiệu lực đến · 有効終了日 và một ô chọn ngày; một dòng gợi ý về giá trị rỗng và về ràng buộc so với ngày bắt đầu
+Chức năng và logic: được phép rỗng nghĩa là vô hạn hạn; có giá trị thì phải không nhỏ hơn ngày bắt đầu và bị từ chối kèm lý do rõ ràng nếu vi phạm",,,"participant","valid_to","Prototype cho phép cột rỗng; ràng buộc ngày kết thúc không nhỏ hơn ngày bắt đầu thì không có ở tầng nào.",
+"3.5","img-015","Trường lý do cập nhật","更新理由","Update reason","text_form","text_input",,"string","true",,"1",,,"Điều kiện: lý do rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Vui lòng nhập lý do cập nhật.""","Mục đích và ngữ cảnh: FR-AUDIT-01 đòi mỗi lần sửa phải truy được lý do; lý do là dữ liệu kiểm toán chứ không phải một thuộc tính của profile
+Thành phần hiển thị: nhãn song ngữ Lý do cập nhật · 更新理由 kèm dấu bắt buộc; một ô nhập; một dòng gợi ý nói rõ lý do không thuộc profile
+Chức năng và logic: bắt buộc với mọi lần sửa; không ghi vào profile mà ghi vào bản ghi kiểm toán cùng giá trị trước và sau",,,"audit_log","reason","Prototype ghi lý do vào bản ghi kiểm toán và bắt buộc ở tầng ứng dụng.",
+"3.6","img-016","Nút lưu thay đổi","変更を保存","Save changes","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: chốt lần sửa profile; là thao tác ghi duy nhất của khối này
+Thành phần hiển thị: một nút chữ ở cuối khối sửa
+Chức năng và logic: chặn gửi trùng khi đang gửi; mỗi mã lỗi từ tầng dịch vụ phải hiện thành một câu riêng để người dùng biết trường nào sai","on_click","Ở lại màn; nạp lại khối profile và khối lịch sử sau khi lưu",,,,"- Khi hai vai quản trị sửa cùng một profile gần nhau thì màn có so giá trị trước khi ghi để chặn ghi đè không? Thiết kế đòi chống ghi đè ở cạnh chuyển trạng thái nhưng chưa nói cho khối sửa."
+"4","img-017","Khối vòng đời hiệu lực","有効性ライフサイクルブロック","Eligibility lifecycle block","others","state_machine_block",,,,,,,,,"Mục đích và ngữ cảnh: phần chịu lực của FE-006 — chuyển trạng thái theo FIG-010 với đúng năm cạnh; và cổng kiểm theo phân loại của FIG-004 trên cạnh gỡ tạm ngừng
+Thành phần hiển thị: bảng năm cạnh; ghi chú một cạnh không phải ba; bảng cổng kiểm theo phân loại; trường lý do; các nút cạnh hợp lệ; ghi chú về cách hiện nút
+Chức năng và logic: chỉ những cạnh hợp lệ từ trạng thái hiện tại mới hiện thành nút; cạnh gỡ tạm ngừng còn phải qua cổng kiểm theo phân loại mới đi được",,,,,,
+"4.1","img-018","Bảng năm cạnh của FIG-010","遷移表","Transition table","table","state_transition_table",,,,,,,,,"Mục đích và ngữ cảnh: chép đúng năm cạnh của FIG-010 để không ai thêm cạnh; mọi cặp trạng thái và sự kiện ngoài bảng là chuyển trạng thái không hợp lệ chứ không phải chưa làm
+Thành phần hiển thị: bốn cột Từ; Sự kiện; Đến; Cổng kiểm theo phân loại — và năm dòng cạnh
+Chức năng và logic: chỉ đọc; cột cổng kiểm chỉ có giá trị ở đúng một dòng là cạnh gỡ tạm ngừng; bốn dòng còn lại không có cổng kiểm",,,"participant","status","Prototype có đủ năm cạnh và từ chối mọi cặp ngoài bảng; thiếu là cổng kiểm theo phân loại chứ không phải thiếu cạnh.","- Có cạnh nào cần thời hạn tự động không; ví dụ hồ sơ ở trạng thái xét lại quá lâu thì đi đâu? FIG-010 không có cạnh nào rời xét lại ngoài chấp thuận."
+"4.1.1","img-019","Hàng cạnh gỡ tạm ngừng","停止解除の遷移行","Unsuspend transition row","label","table_row",,,,,,,,,"Mục đích và ngữ cảnh: dòng quan trọng nhất của bảng — FIG-010 chỉ có một cạnh này; cái khác nhau theo phân loại là thủ tục và thẩm quyền trên cạnh đó
+Thành phần hiển thị: trạng thái nguồn Tạm ngừng; sự kiện Gỡ tạm ngừng; trạng thái đích Có hiệu lực; ô cổng kiểm ghi có kèm chỉ dẫn xuống bảng dưới
+Chức năng và logic: một cạnh duy nhất có cổng kiểm; không tách thành ba cạnh song song theo phân loại",,,,,,
+"4.2","img-020","Ghi chú một cạnh chứ không phải ba","単一遷移の注記","Single-edge note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chặn cách đọc sai phổ biến nhất của FN-02 — dựng ba cạnh gỡ tạm ngừng cho ba phân loại rồi mâu thuẫn với FIG-010
+Thành phần hiển thị: một đoạn ghi chú dưới bảng cạnh
+Chức năng và logic: tĩnh; khai rõ mọi cặp trạng thái và sự kiện ngoài năm dòng đều bị từ chối; kể cả cặp mất hiệu lực sang có hiệu lực và cặp tạm ngừng sang xét lại",,,,,,
+"4.3","img-021","Bảng cổng kiểm theo phân loại","区分別ゲート表","Category gate table","table","guard_table",,,,,,,,,"Mục đích và ngữ cảnh: mã hoá cột Gỡ tạm ngừng của FIG-004 thành điều kiện tiền đề và thẩm quyền cho cùng một cạnh; đây là chỗ RFP §02-08 được thi hành
+Thành phần hiển thị: bốn cột Phân loại; Thủ tục gỡ tạm ngừng; Ai quyết định; Điều kiện tiền đề — và bốn dòng phân loại
+Chức năng và logic: chỉ đọc; bốn dòng đi qua cùng một cạnh; nút gỡ tạm ngừng phải mang đúng tên thủ tục của phân loại đang xem chứ không dùng một nhãn chung",,,"participant","category; license_type; valid_to","Cổng kiểm cần đọc cả ba cột này; prototype hiện chỉ đọc cột trạng thái khi chuyển nên không thể phân biệt thủ tục.","- Bằng chứng của thủ tục Chấp thuận và thủ tục Xét lại lưu ở đâu để cổng kiểm đọc được? Thiết kế nêu ai quyết định nhưng chưa nêu nơi lưu quyết định."
+"4.3.1","img-022","Hàng cổng kiểm theo phân loại (đại diện cho bốn hàng)","ゲート行","Gate row","label","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một phân loại và cổng kiểm của nó trên cạnh gỡ tạm ngừng; bốn hàng cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: tên phân loại; tên thủ tục theo FIG-004; ai quyết định; điều kiện tiền đề phải đạt
+Chức năng và logic: chỉ đọc; điều kiện tiền đề là thứ tầng dịch vụ phải kiểm trước khi cho đi qua cạnh; không đạt thì cạnh bị từ chối kèm lý do nói rõ còn thiếu bước nào",,,,,,
+"4.3.2","img-023","Nhãn chưa chốt trong bảng cổng kiểm (đại diện)","未確定タグ","Undecided tag","label","open_question_tag",,,,,,,,,"Mục đích và ngữ cảnh: đánh dấu hai chỗ RFP không có dữ liệu — nghĩa của thủ tục Có điều kiện cho 仲卸; và toàn bộ dòng 買出人
+Thành phần hiển thị: một nhãn chữ ngắn trong ô bảng; các nhãn cùng dạng nên gộp một đại diện
+Chức năng và logic: chỉ đọc; ô mang nhãn này thì nút gỡ tạm ngừng của phân loại tương ứng không được mở cho tới khi khách chốt",,,,,,"- Thủ tục Có điều kiện của 仲卸 gồm những điều kiện gì; và 買出人 dùng thủ tục nào? Hai câu này chặn việc mở nút gỡ tạm ngừng cho hai phân loại đó."
+"4.4","img-024","Trường lý do chuyển trạng thái","変更理由","Transition reason","textarea","multiline_input",,"string","true",,"1","1000",,"Điều kiện: lý do rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Vui lòng nhập lý do trước khi chuyển trạng thái.""","Mục đích và ngữ cảnh: FR-AUDIT-01 đòi mọi lần chuyển trạng thái truy được lý do; lý do cũng là dữ liệu của sổ vòng đời hiệu lực
+Thành phần hiển thị: nhãn song ngữ Lý do chuyển trạng thái · 変更理由 kèm dấu bắt buộc và một ô nhập nhiều dòng
+Chức năng và logic: bắt buộc với cả năm cạnh; chặn ngay ở giao diện khi rỗng và bị từ chối lần nữa ở tầng dịch vụ",,,"participant_status_history","reason","Prototype ghi lý do vào cả bảng lịch sử chuyển trạng thái và bản ghi kiểm toán; cột lý do của bảng lịch sử là không rỗng.",
+"4.5","img-025","Nút cạnh vi phạm sang tạm ngừng","違反による停止","Suspend on violation","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: cạnh thứ nhất của FIG-010 — đưa profile đang có hiệu lực sang tạm ngừng khi có vi phạm
+Thành phần hiển thị: một nút chữ mang tên cạnh dạng sự kiện rồi trạng thái đích
+Chức năng và logic: chỉ hiện khi trạng thái hiện tại là có hiệu lực; đòi lý do trước khi bấm; cạnh này không có cổng kiểm theo phân loại","on_click","Chuyển profile sang trạng thái tạm ngừng; nạp lại khối profile và khối lịch sử","participant","status","Ghi cột trạng thái của thực thể người tham gia cộng một dòng lịch sử chuyển trạng thái; prototype ghi hai bảng tuần tự chứ không nguyên tử.",
+"4.6","img-026","Nút cạnh hết hạn sang mất hiệu lực","期限切れによる失効","Expire to ineligible","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: cạnh thứ ba của FIG-010 — đánh dấu profile đã qua ngày hết hiệu lực; đây cũng là hành động mà màn cảnh báo SC-07 dẫn về
+Thành phần hiển thị: một nút chữ mang tên cạnh dạng sự kiện rồi trạng thái đích
+Chức năng và logic: chỉ hiện khi trạng thái hiện tại là có hiệu lực; đòi lý do; cạnh này không có cổng kiểm theo phân loại","on_click","Chuyển profile sang trạng thái mất hiệu lực; nạp lại khối profile và khối lịch sử","participant","status","Không có tác vụ định kỳ nào lật trạng thái ở ngày hết hiệu lực nên cạnh này là đường duy nhất để trạng thái đã lưu bắt kịp thực tế.","- Cạnh hết hạn nên do người bấm hay do hệ thống tự lật ở ngày hết hiệu lực? Nếu tự lật thì chủ thể của bản ghi kiểm toán là ai."
+"4.7","img-027","Ghi chú chỉ hiện cạnh hợp lệ","有効遷移のみ表示","Show only valid edges note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: giữ giao diện và tầng dịch vụ nói cùng một câu; hiện cả năm nút rồi vô hiệu bớt sẽ khiến người dùng đoán sai vòng đời
+Thành phần hiển thị: một đoạn ghi chú dưới các nút cạnh
+Chức năng và logic: tĩnh; đòi nút gỡ tạm ngừng mang đúng tên thủ tục của phân loại đang xem vì đó là ba việc nghiệp vụ khác nhau",,,,,,
+"5","img-028","Khối lịch sử vòng đời","ライフサイクル履歴ブロック","Lifecycle history block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: sổ vòng đời hiệu lực của profile; là bằng chứng truy vết cho FR-AUDIT-01 và là dữ liệu để SC-07 biết hồ sơ đã nộp đơn xét lại chưa
+Thành phần hiển thị: bảng sáu cột theo thứ tự cũ nhất trước; một đoạn ghi chú về cột và về múi giờ
+Chức năng và logic: chỉ đọc và chỉ ghi thêm — không có đường sửa hay xoá dòng lịch sử",,,,,,
+"5.1","img-029","Bảng sáu cột lịch sử chuyển trạng thái","遷移履歴テーブル","Transition history table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: một dòng một lần chuyển trạng thái; cột Thủ tục áp dụng là thứ FIG-004 đòi truy được vì cùng một cạnh nhưng khác thủ tục thì phải phân biệt được trong lịch sử
+Thành phần hiển thị: sáu cột tiêu đề song ngữ; các dòng lịch sử; badge cho hai cột trạng thái
+Chức năng và logic: sắp cũ nhất trước để đọc như một dòng thời gian; người thực hiện hiện bằng tên và không hiện địa chỉ thư điện tử; thời điểm neo múi giờ Nhật",,,"participant_status_history","from_status; to_status; reason; changed_by; changed_at","Prototype có năm cột này nhưng không có cột thủ tục áp dụng nên cùng một cạnh gỡ tạm ngừng không phân biệt được thủ tục trong lịch sử.",
+"5.1.1","img-030","Dòng lịch sử chuyển trạng thái (đại diện cho hai dòng mẫu)","履歴行","History row","label","table_row",,,,"thời điểm theo YYYY-MM-DD HH:mm JST",,,,,"Mục đích và ngữ cảnh: một lần chuyển trạng thái; hai dòng mẫu trên wireframe cùng cấu trúc nên gộp một đại diện
+Thành phần hiển thị: badge trạng thái nguồn và đích; thủ tục áp dụng; lý do; tên người thực hiện; thời điểm kèm hậu tố múi giờ
+Chức năng và logic: dòng đầu tiên của một profile có cột Từ trống vì không có trạng thái nguồn; mọi thời điểm neo múi giờ Nhật và hiện hậu tố để không đọc lệch theo máy người dùng",,,"participant_status_history","from_status; to_status; reason; changed_by; changed_at","Cột trạng thái nguồn cho phép rỗng trong prototype; hai cột trạng thái của bảng lịch sử không có CHECK nên có thể mang giá trị ngoài FIG-010.",
+"5.2","img-031","Ghi chú cột lịch sử và múi giờ","履歴列の注記","History column note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ba quy tắc của khối lịch sử — cột Từ trống ở dòng đầu; cột Thủ tục áp dụng là yêu cầu truy vết của FIG-004; và không hiện địa chỉ thư điện tử
+Thành phần hiển thị: một đoạn ghi chú dưới bảng lịch sử
+Chức năng và logic: tĩnh; đòi thời điểm neo múi giờ Nhật thay vì theo múi giờ của máy người dùng",,,,,,
+"6","img-032","Khối trạng thái màn","画面状態ブロック","Screen state block","others","state_matrix",,,,,,,,,"Mục đích và ngữ cảnh: liệt các trạng thái màn phải xử lý; hai trạng thái cuối là đặc thù của màn có chuyển trạng thái
+Thành phần hiển thị: sáu ô trạng thái; mỗi ô có tên và mô tả hành vi mong đợi
+Chức năng và logic: tĩnh trên wireframe nhưng là hợp đồng hành vi cho tầng hiển thị",,,,,,
+"6.1","img-033","Trạng thái rỗng","空状態","Empty state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: profile mới chưa có lần chuyển trạng thái nào; nhưng khối hành động không bao giờ rỗng
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: chỉ hiện dòng cấp ban đầu ở lịch sử; cả bốn trạng thái của FIG-010 đều có ít nhất một cạnh đi ra nên nút cạnh không bao giờ hết",,,,,,
+"6.2","img-034","Trạng thái đang tải hoặc lỗi tải","読み込み・エラー","Loading or error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: màn có bốn khối đọc từ nhiều nguồn nên một khối lỗi không được làm trắng cả trang
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: khung xương theo từng khối; khối lỗi hiện riêng và không làm trắng các khối còn lại",,,,,,
+"6.3","img-035","Trạng thái không tìm thấy","未検出","Not found state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: hai nguyên nhân dẫn tới cùng một kết cục — không có profile để hiện
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: profile không tồn tại; hoặc phân loại và trạng thái trong dữ liệu rơi ngoài tập hợp lệ của FR-PARTY-01 và FIG-010; cả hai cùng dẫn tới trang không tìm thấy",,,,,,
+"6.4","img-036","Trạng thái chỉ đọc","読み取り専用","Read-only state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: vai không có quyền ghi vẫn đọc đủ bốn khối; chặn nằm ở hành động ghi chứ không ở việc đọc
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: giữ nguyên hai khối ghi trên bố cục nhưng đổi nội dung thành dòng nhắc vai trò phụ trách để người dùng biết phải nhờ ai",,,,,,
+"6.5","img-037","Trạng thái xung đột đồng thời","同時実行の競合","Concurrent conflict state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: hai người có quyền ghi cùng chuyển trạng thái một profile; nếu không chặn thì dòng lịch sử của người sau ghi trạng thái nguồn đã sai
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: người sau bị từ chối vì trạng thái nguồn đã đổi; không được ghi đè và không được ghi một dòng lịch sử sai",,,,,,
+"6.6","img-038","Trạng thái cổng kiểm chưa đạt","ゲート未達","Gate not satisfied state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: cạnh gỡ tạm ngừng bị chặn vì thủ tục của phân loại đó chưa hoàn tất; đây là trạng thái mà cổng kiểm FIG-004 sinh ra
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: từ chối kèm câu nói rõ còn thiếu bước nào; và khai luôn rằng ngày nghiệp vụ đã lock không liên quan tới màn này vì vòng đời trải nhiều ngày",,,,,,
+"7","img-039","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_block",,,,,,,,,"Mục đích và ngữ cảnh: đặt cạnh nhau thiết kế đòi gì và bản thi công hiện làm gì để phần đọc spec không lẫn hai chuyện
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột
+Chức năng và logic: chỉ đọc; là phần đối chiếu chứ không phải phần thiết kế",,,,,,
+"7.1","img-040","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","comparison_table",,,,,,,,,"Mục đích và ngữ cảnh: bảy hạng mục lệch giữa thiết kế và bản thi công; nặng nhất là cạnh gỡ tạm ngừng không có cổng kiểm theo phân loại
+Thành phần hiển thị: ba cột Thiết kế đòi; Prototype làm; Mức — và bảy dòng hạng mục
+Chức năng và logic: chỉ đọc; dòng cuối mang mức cần khách chốt nên không tự quyết ở tầng thi công",,,,,,
+"8","img-041","Ghi chú chân màn về phân quyền và hiệu lực","フッター注記","Footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt hai điều dễ trôi — chặn nằm ở tầng dịch vụ; và trạng thái đã lưu không tự đổi khi qua ngày hết hiệu lực
+Thành phần hiển thị: hai dòng ghi chú và một đường dẫn tới file spec của màn
+Chức năng và logic: tĩnh; nêu hệ quả cụ thể — một profile có thể mang badge có hiệu lực mà vẫn bị từ chối giao dịch; nhóm đó phải hiện ở SC-07 trước khi tới hiện trường",,,,,,

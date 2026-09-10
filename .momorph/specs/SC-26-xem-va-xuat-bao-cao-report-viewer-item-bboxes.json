@@ -1,0 +1,353 @@
+[
+  {
+    "itemNo": "1",
+    "position": {
+      "startX": 26,
+      "startY": 22,
+      "endX": 1026,
+      "endY": 140
+    }
+  },
+  {
+    "itemNo": "1.1",
+    "position": {
+      "startX": 26,
+      "startY": 22,
+      "endX": 1026,
+      "endY": 48
+    }
+  },
+  {
+    "itemNo": "1.2",
+    "position": {
+      "startX": 26,
+      "startY": 60,
+      "endX": 1026,
+      "endY": 117
+    }
+  },
+  {
+    "itemNo": "1.2.1",
+    "position": {
+      "startX": 391,
+      "startY": 97,
+      "endX": 444,
+      "endY": 117
+    }
+  },
+  {
+    "itemNo": "2",
+    "position": {
+      "startX": 26,
+      "startY": 156,
+      "endX": 1026,
+      "endY": 637
+    }
+  },
+  {
+    "itemNo": "2.1",
+    "position": {
+      "startX": 42,
+      "startY": 201,
+      "endX": 1010,
+      "endY": 575
+    }
+  },
+  {
+    "itemNo": "2.2",
+    "position": {
+      "startX": 42,
+      "startY": 578,
+      "endX": 1010,
+      "endY": 610
+    }
+  },
+  {
+    "itemNo": "3",
+    "position": {
+      "startX": 26,
+      "startY": 650,
+      "endX": 1026,
+      "endY": 965
+    }
+  },
+  {
+    "itemNo": "3.1",
+    "position": {
+      "startX": 42,
+      "startY": 694,
+      "endX": 521,
+      "endY": 772
+    }
+  },
+  {
+    "itemNo": "3.2",
+    "position": {
+      "startX": 532,
+      "startY": 694,
+      "endX": 1010,
+      "endY": 772
+    }
+  },
+  {
+    "itemNo": "3.3",
+    "position": {
+      "startX": 42,
+      "startY": 782,
+      "endX": 357,
+      "endY": 910
+    }
+  },
+  {
+    "itemNo": "3.4",
+    "position": {
+      "startX": 368,
+      "startY": 782,
+      "endX": 684,
+      "endY": 910
+    }
+  },
+  {
+    "itemNo": "3.5",
+    "position": {
+      "startX": 695,
+      "startY": 782,
+      "endX": 1010,
+      "endY": 910
+    }
+  },
+  {
+    "itemNo": "3.6",
+    "position": {
+      "startX": 42,
+      "startY": 920,
+      "endX": 87,
+      "endY": 949
+    }
+  },
+  {
+    "itemNo": "3.7",
+    "position": {
+      "startX": 91,
+      "startY": 920,
+      "endX": 188,
+      "endY": 949
+    }
+  },
+  {
+    "itemNo": "4",
+    "position": {
+      "startX": 26,
+      "startY": 978,
+      "endX": 1026,
+      "endY": 1255
+    }
+  },
+  {
+    "itemNo": "4.1",
+    "position": {
+      "startX": 42,
+      "startY": 1022,
+      "endX": 1010,
+      "endY": 1137
+    }
+  },
+  {
+    "itemNo": "4.2",
+    "position": {
+      "startX": 42,
+      "startY": 1148,
+      "endX": 287,
+      "endY": 1177
+    }
+  },
+  {
+    "itemNo": "4.2.1",
+    "position": {
+      "startX": 42,
+      "startY": 1148,
+      "endX": 135,
+      "endY": 1177
+    }
+  },
+  {
+    "itemNo": "4.2.2",
+    "position": {
+      "startX": 139,
+      "startY": 1153,
+      "endX": 200,
+      "endY": 1173
+    }
+  },
+  {
+    "itemNo": "4.2.3",
+    "position": {
+      "startX": 203,
+      "startY": 1148,
+      "endX": 287,
+      "endY": 1177
+    }
+  },
+  {
+    "itemNo": "4.3",
+    "position": {
+      "startX": 297,
+      "startY": 1148,
+      "endX": 372,
+      "endY": 1177
+    }
+  },
+  {
+    "itemNo": "4.4",
+    "position": {
+      "startX": 42,
+      "startY": 1180,
+      "endX": 1010,
+      "endY": 1229
+    }
+  },
+  {
+    "itemNo": "5",
+    "position": {
+      "startX": 26,
+      "startY": 1268,
+      "endX": 1026,
+      "endY": 1476
+    }
+  },
+  {
+    "itemNo": "5.1",
+    "position": {
+      "startX": 42,
+      "startY": 1377,
+      "endX": 186,
+      "endY": 1406
+    }
+  },
+  {
+    "itemNo": "5.2",
+    "position": {
+      "startX": 189,
+      "startY": 1377,
+      "endX": 334,
+      "endY": 1406
+    }
+  },
+  {
+    "itemNo": "5.3",
+    "position": {
+      "startX": 42,
+      "startY": 1417,
+      "endX": 1010,
+      "endY": 1449
+    }
+  },
+  {
+    "itemNo": "6",
+    "position": {
+      "startX": 26,
+      "startY": 1489,
+      "endX": 1026,
+      "endY": 1776
+    }
+  },
+  {
+    "itemNo": "6.1",
+    "position": {
+      "startX": 42,
+      "startY": 1533,
+      "endX": 277,
+      "endY": 1659
+    }
+  },
+  {
+    "itemNo": "6.2",
+    "position": {
+      "startX": 286,
+      "startY": 1533,
+      "endX": 522,
+      "endY": 1659
+    }
+  },
+  {
+    "itemNo": "6.3",
+    "position": {
+      "startX": 531,
+      "startY": 1533,
+      "endX": 766,
+      "endY": 1659
+    }
+  },
+  {
+    "itemNo": "6.4",
+    "position": {
+      "startX": 775,
+      "startY": 1533,
+      "endX": 1010,
+      "endY": 1659
+    }
+  },
+  {
+    "itemNo": "6.5",
+    "position": {
+      "startX": 42,
+      "startY": 1668,
+      "endX": 277,
+      "endY": 1760
+    }
+  },
+  {
+    "itemNo": "6.6",
+    "position": {
+      "startX": 286,
+      "startY": 1668,
+      "endX": 522,
+      "endY": 1760
+    }
+  },
+  {
+    "itemNo": "6.7",
+    "position": {
+      "startX": 531,
+      "startY": 1668,
+      "endX": 766,
+      "endY": 1760
+    }
+  },
+  {
+    "itemNo": "6.8",
+    "position": {
+      "startX": 775,
+      "startY": 1668,
+      "endX": 1010,
+      "endY": 1760
+    }
+  },
+  {
+    "itemNo": "7",
+    "position": {
+      "startX": 26,
+      "startY": 1789,
+      "endX": 1026,
+      "endY": 2268
+    }
+  },
+  {
+    "itemNo": "7.1",
+    "position": {
+      "startX": 42,
+      "startY": 1833,
+      "endX": 1010,
+      "endY": 2252
+    }
+  },
+  {
+    "itemNo": "8",
+    "position": {
+      "startX": 26,
+      "startY": 2283,
+      "endX": 1026,
+      "endY": 2385
+    }
+  }
+]

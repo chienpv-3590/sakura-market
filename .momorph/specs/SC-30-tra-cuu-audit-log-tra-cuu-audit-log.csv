@@ -1,0 +1,156 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn tra cứu audit log",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết; cho biết đây là phía đọc của dữ liệu audit.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-042 · FN-13 · ưu tiên P1 · FR-AUDIT-02 · NFR-PERF-01 · tham chiếu mục bảo vệ thông tin cá nhân · loại màn List · route đề xuất · actor · một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác nào.",,,,,,
+"1.1","img-002","Tiêu đề màn","監査ログ照会","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn tra cứu dấu vết thao tác của toàn hệ.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-30 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về FE-042 và hai mã yêu cầu; khai luôn rằng màn chạm mục bảo vệ thông tin cá nhân của yêu cầu khách.
+Thành phần hiển thị: Hai dòng chữ nhỏ liệt tính năng · nhóm chức năng · ưu tiên · FR-AUDIT-02 · NFR-PERF-01 · tham chiếu mục bảo vệ thông tin cá nhân · loại màn · route đề xuất · actor là bộ phận hành chính và kiểm toán nội bộ · thẻ trạng thái.
+Chức năng và logic: Tĩnh. Actor mà yêu cầu khách gọi tên không khớp vai trò nào của hệ nên ánh xạ là một giả định phải chốt.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn chưa có bản thi công nào để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn ở đầu dòng thứ hai của metadata với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu chứ không từ dữ liệu nghiệp vụ.",,,,,,
+"2","img-005","Dải chú thích yêu cầu; nghiệm thu và quan hệ với phía ghi",,"Requirement acceptance and write-side notice","label","dải chú thích đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Ghim bốn tiêu chí bắt buộc; ngưỡng nghiệm thu; và điều quan trọng nhất của màn: dữ liệu tìm được phải do phía ghi lưu từ đầu.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt ba đoạn: đoạn khai màn chưa thi công; đoạn dẫn FR-AUDIT-02 với bốn tiêu chí bắt buộc và ngưỡng NFR-PERF-01 là p95 không vượt hai giây kèm nghiệm thu bằng báo cáo load test; đoạn nêu quan hệ với tính năng ghi audit là phía ghi của cùng dữ liệu.
+Chức năng và logic: Tĩnh. Kết luận của đoạn thứ ba là ràng buộc thiết kế: cái gì phía ghi không lưu thì phía đọc không có cách nào tìm.",,,,,,
+"3","img-006","Khối bốn tiêu chí bắt buộc",,"Mandatory criteria filter block","others","khối bộ lọc sáu điều kiện và hai nút",,,,,,,,,"Mục đích và ngữ cảnh: Nơi người điều tra dựng câu hỏi của mình; bốn field đầu là đúng bốn tiêu chí FR-AUDIT-02 bắt buộc.
+Thành phần hiển thị: Tiêu đề khối nêu phạm vi field số 1 tới số 4; hai hàng sáu điều kiện; hai nút hành động; một đoạn ghi chú về việc kết hợp tiêu chí.
+Chức năng và logic: Bốn tiêu chí bắt buộc phải kết hợp được với nhau và mỗi tiêu chí phải đứng một mình cũng chạy được. Hai field cuối là tiện ích thêm để thu hẹp kết quả.",,,,,,
+"3.1","img-007","Ô ID giao dịch","取引ID","Transaction ID","text_form","ô nhập một dòng kèm nhãn và dòng nhắc",,"string","true","uuid hoặc mã giao dịch nghiệp vụ",,,,"Điều kiện: nhận cả uuid và mã nghiệp vụ.
+Lỗi: không phân tích được giá trị thì trả danh sách rỗng chứ không trả lỗi 4xx.","Mục đích và ngữ cảnh: Tiêu chí thứ nhất trong bốn tiêu chí bắt buộc; là đường vào thường dùng nhất khi điều tra một giao dịch cụ thể.
+Thành phần hiển thị: Nhãn ID giao dịch kèm dấu sao bắt buộc; ô nhập một dòng hiện gợi ý uuid hoặc mã giao dịch; dòng nhắc ghi field số 1 là tiêu chí một trên bốn; nhận cả hai dạng; và không phân tích được thì trả danh sách rỗng.
+Chức năng và logic: Giá trị lạ không làm lỗi mà chỉ trả rỗng — có chủ đích; vì người điều tra thường dán mã từ nơi khác.",,,"audit_log","entity; entity_id","Bảng audit đã tồn tại. Sắc thái: tra được nhưng chỉ qua MỘT CẶP CỘT loại thực thể và mã thực thể; không có cột riêng cho ID giao dịch; và mã thực thể lưu dạng chuỗi. Đây là chuyện hình dạng truy vấn; sửa được ở tầng đọc.","Nhập một uuid không thuộc giao dịch mà thuộc thực thể khác thì vẫn tra hay báo không hợp lệ?
+Có cho tra theo một phần của mã hay bắt buộc khớp trọn?
+Mã giao dịch nghiệp vụ và uuid có thể trùng dạng không; nếu có thì ưu tiên đường nào?"
+"3.2","img-008","Ô Ngày nghiệp vụ","業務日","Business date","date_picker","ô chọn khoảng ngày kèm nhãn và dòng nhắc",,"date","true","YYYY-MM-DD — YYYY-MM-DD",,,,"Điều kiện: mốc đầu phải nhỏ hơn hoặc bằng mốc cuối.
+Lỗi: ""Khoảng ngày không hợp lệ.""","Mục đích và ngữ cảnh: Tiêu chí thứ hai trong bốn tiêu chí bắt buộc; là trục thời gian mà mọi cuộc điều tra bắt đầu từ đó.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ kèm dấu sao bắt buộc; ô chọn khoảng ngày hiện mẫu hai mốc dạng YYYY-MM-DD; dòng nhắc ghi field số 2 là tiêu chí hai trên bốn và nói rõ đây là ngày nghiệp vụ theo JST chứ không phải ngày hệ thống.
+Chức năng và logic: Ngày nghiệp vụ khác ngày hệ thống: một điều chỉnh làm sau 10:00 thuộc về ngày nghiệp vụ trước đó; nên không suy được ngày nghiệp vụ từ thời điểm ghi.",,,,,"CHƯA TỒN TẠI: bảng audit không có cột nào chứa ngày nghiệp vụ; và không tính ngược được từ thời điểm ghi. Dữ liệu này phải do phía ghi truyền vào từ đầu nên dữ liệu cũ không lấp lại được.","Chỉ nhập mốc đầu mà bỏ trống mốc cuối thì hiểu là mở đến hôm nay hay báo lỗi?
+Khoảng ngày có bị giới hạn độ dài tối đa để giữ ngưỡng thời gian phản hồi không?
+Bản ghi không có ngày nghiệp vụ thì hiện dấu gạch và có bị loại khỏi kết quả khi lọc theo ngày không?"
+"3.3","img-009","Ô chọn Người tham gia","参加者","Participant","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","true",,,,,,"Mục đích và ngữ cảnh: Tiêu chí thứ ba trong bốn tiêu chí bắt buộc; là người tham gia của bản ghi nghiệp vụ; không phải người bấm nút.
+Thành phần hiển thị: Nhãn Người tham gia kèm dấu sao bắt buộc; ô chọn hiện Chọn kèm mũi chỉ xuống; dòng nhắc ghi field số 3 là tiêu chí ba trên bốn và phân biệt rõ với field số 6 là người thực hiện thao tác.
+Chức năng và logic: Hai khái niệm này khác nhau và không được gộp: người tham gia là đối tượng nghiệp vụ; người thực hiện là chủ thể thao tác.","on_click",,,,"CHƯA TỒN TẠI: bảng audit không có cột nào cho người tham gia của bản ghi. Chỉ tới được bằng cách nối bảng theo từng loại thực thể; mỗi loại một đường khác nhau; và có loại không tới được.","Chọn được nhiều người tham gia cùng lúc hay chỉ một?
+Danh sách chọn hiện toàn bộ người tham gia hay chỉ những người có mặt trong khoảng ngày đang lọc?
+Định dạng nhãn hiển thị một người tham gia là gì; ảnh chỉ cho thấy dòng mặc định."
+"3.4","img-010","Ô chọn Loại thao tác","操作種別","Action type","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","true",,,,"Tất cả","Điều kiện: chỉ nhận giá trị thuộc tập đóng do server nạp.
+Lỗi: giá trị ngoài tập thì trả lỗi 422 chứ không lặng lẽ bỏ qua.","Mục đích và ngữ cảnh: Tiêu chí thứ tư trong bốn tiêu chí bắt buộc; quyết định cuộc điều tra nhìn vào loại hành vi nào.
+Thành phần hiển thị: Nhãn Loại thao tác kèm dấu sao bắt buộc; ô chọn hiện Tất cả kèm mũi chỉ xuống; dòng nhắc ghi field số 4 là tiêu chí bốn trên bốn với tập giá trị đóng nạp từ server; ngoài tập thì trả 422; và ghi rõ tập phải tối thiểu phủ tạo · sửa · phê duyệt · lock · đổi quyền.
+Chức năng và logic: Tập giá trị đóng và nạp từ server chứ không viết cứng ở giao diện; giá trị lạ trả lỗi tường minh vì đây là tiêu chí bắt buộc; khác với hai field tiện ích.","on_click",,"audit_log","action","Cột đã tồn tại. Sắc thái: hiện lưu dạng chuỗi tự do; không có ràng buộc tập giá trị và không có danh mục dùng chung; nên tập giá trị đóng cho ô chọn phải được chuẩn hoá ở phía ghi trước.","Tập giá trị của ô chọn nhóm theo năm hành vi mà yêu cầu khách liệt; hay liệt phẳng từng giá trị?
+Chọn được nhiều loại thao tác cùng lúc hay chỉ một?
+Định dạng nhãn hiển thị một loại thao tác là mã hay câu tiếng Việt; ảnh chỉ cho thấy dòng Tất cả."
+"3.5","img-011","Ô chọn Thực thể","エンティティ","Entity filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Tiêu chí phụ; không do FR-AUDIT-02 đòi nhưng cần để thu hẹp kết quả cho đạt ngưỡng thời gian phản hồi.
+Thành phần hiển thị: Nhãn Thực thể; ô chọn hiện Tất cả kèm mũi chỉ xuống; dòng nhắc ghi field số 5 là tiêu chí phụ không do yêu cầu khách đòi và mục đích là thu hẹp kết quả để đạt ngưỡng NFR-PERF-01.
+Chức năng và logic: Là tiện ích thêm nên giá trị lạ có thể bỏ qua bộ lọc; khác với bốn tiêu chí bắt buộc.","on_click",,"audit_log","entity","Cột đã tồn tại và lọc được trực tiếp. Sắc thái: cùng cột này đang gánh cả vai trò lọc theo loại thực thể và vai trò một nửa của việc tra theo mã giao dịch.","Tập giá trị loại thực thể nạp từ server hay viết cứng ở giao diện?
+Chọn thực thể có tự thu hẹp tập giá trị của ô chọn Loại thao tác không?
+Định dạng nhãn hiển thị một loại thực thể là gì; ảnh chỉ cho thấy dòng Tất cả."
+"3.6","img-012","Ô chọn Người thực hiện","実行者","Actor filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,,,"Mục đích và ngữ cảnh: Tiêu chí phụ; là chủ thể đã bấm nút; khác hẳn với người tham gia của bản ghi.
+Thành phần hiển thị: Nhãn Người thực hiện; ô chọn hiện Chọn kèm mũi chỉ xuống; dòng nhắc ghi field số 6 là tiêu chí phụ; hiện tên hiển thị; và nói rõ không hiện thư điện tử ở bất kỳ cột nào theo mục bảo vệ thông tin cá nhân.
+Chức năng và logic: Ràng buộc không hiện thư điện tử là ràng buộc bảo mật áp cho toàn màn; không riêng field này.","on_click",,"audit_log","actor_id","Cột đã tồn tại và trỏ tới bảng người dùng nội bộ; chỉ lấy tên hiển thị. Sắc thái: cột cho phép rỗng vì có đường ghi xảy ra trước khi có phiên đăng nhập.","Danh sách chọn có bao gồm cả tài khoản đã bị vô hiệu không?
+Có chọn được giá trị hệ thống để tìm các bản ghi không có người thực hiện không?
+Định dạng nhãn hiển thị một người thực hiện là gì; ảnh chỉ cho thấy dòng mặc định."
+"3.7","img-013","Nút Tra cứu","照会","Search button","button","nút hành động chính cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Kích hoạt tra cứu; là hành động duy nhất làm đổi nội dung khối kết quả.
+Thành phần hiển thị: Nút chữ Tra cứu ở đầu hàng nút cuối khối bộ lọc.
+Chức năng và logic: Không đổi dữ liệu; chỉ đọc. Trong lúc tra cứu thì khối kết quả vào trạng thái đang tải.","on_click","Nạp lại khối kết quả theo các điều kiện đang đặt; ở lại cùng màn và không điều hướng.",,,,"Bấm Tra cứu khi chưa đặt điều kiện nào thì trả toàn bộ bảng hay yêu cầu tối thiểu một điều kiện?
+Điều kiện tra cứu có được giữ lại trên đường dẫn để chia sẻ lại kết quả không; nếu có thì có rủi ro gì với dữ liệu nhạy?"
+"3.8","img-014","Nút Xoá điều kiện","条件クリア","Clear filter button","button","nút phụ cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người điều tra bắt đầu lại một câu hỏi mới mà không phải sửa từng ô.
+Thành phần hiển thị: Nút chữ Xoá điều kiện cạnh nút Tra cứu; kiểu nút phụ.
+Chức năng và logic: Đặt các ô nhập về rỗng và các ô chọn về giá trị Tất cả.","on_click","Trả mọi điều kiện về giá trị mặc định.",,,,"Xoá điều kiện có tự tra cứu lại ngay hay chỉ xoá rồi chờ người dùng bấm Tra cứu?"
+"3.9","img-015","Ghi chú kết hợp bốn tiêu chí",,"Criteria combination note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Chốt hai yêu cầu về hình dạng truy vấn mà bốn tiêu chí bắt buộc phải thoả.
+Thành phần hiển thị: Một đoạn chữ nhỏ: bốn tiêu chí bắt buộc phải kết hợp được với nhau vì đó là kịch bản điều tra thật gồm một người tham gia một ngày nghiệp vụ một loại thao tác; mỗi tiêu chí phải đứng một mình cũng chạy được; mỗi tiêu chí đòi một cột lọc được và một index.
+Chức năng và logic: Tĩnh; là ràng buộc thiết kế nối sang khối hiệu năng bên dưới.",,,,,,
+"4","img-016","Khối kết quả tra cứu",,"Result block","others","khối bảng bảy cột kèm ghi chú và ba nút",,,,,,,,,"Mục đích và ngữ cảnh: Nơi trả lời câu hỏi của người điều tra; khối này chạm dữ liệu nhạy nên chỉ vẽ khung và nhãn.
+Thành phần hiển thị: Tiêu đề khối nêu phạm vi field số 7 tới số 11 và nói rõ chỉ vẽ khung và nhãn; bảng bảy cột với hai hàng mẫu ở hai ca khác nhau; một đoạn ghi chú; ba nút phân trang và xuất.
+Chức năng và logic: Chỉ đọc; không có form ghi nào trên màn. Phân trang thực hiện phía server.",,,,,,
+"4.1","img-017","Bảng kết quả audit","監査ログ一覧","Audit result table","table","bảng bảy cột chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Trình bày từng bản ghi audit trên một hàng; đủ để truy được bốn thứ mà điều kiện nghiệm thu của phía ghi đòi.
+Thành phần hiển thị: Bảy cột: thời điểm · ngày nghiệp vụ · thao tác · thực thể và mã · người thực hiện · lý do · trước và sau; hai hàng mẫu chỉ chứa nhãn dạng chứ không chứa dữ liệu thật.
+Chức năng và logic: Sắp xếp mặc định theo thời điểm giảm dần. Bảng chỉ tăng theo thời gian nên phân trang là bắt buộc từ đầu; không tải hết rồi lọc ở giao diện.",,,"audit_log","created_at; action; entity; entity_id; actor_id; reason; before; after","Bảng audit đã tồn tại với đủ tám cột trên và đang được ghi thật ở nhiều điểm gọi khắp hệ. Riêng cột ngày nghiệp vụ thì CHƯA TỒN TẠI nên cột thứ hai của bảng hiện chưa có nguồn.","Bảng phân trang bao nhiêu dòng một trang và trần kết quả là bao nhiêu?
+Có cho đổi cách sắp xếp theo cột không; nếu có thì cột nào?
+Hai hàng mẫu cố ý không chứa dữ liệu thật; bản dựng có cần chế độ che dữ liệu cho môi trường trình diễn không?"
+"4.1.1","img-018","Hàng tiêu đề bảng kết quả",,"Result table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên bảy cột của bảng kết quả.
+Thành phần hiển thị: Một hàng nền xám nhạt với bảy nhãn: Thời điểm · Ngày nghiệp vụ · Thao tác · Thực thể và ID · Người thực hiện · Lý do · Trước và Sau.
+Chức năng và logic: Tĩnh.",,,,,,
+"4.1.2","img-019","Hàng bản ghi có người thực hiện — đại diện",,"Audit row with actor (representative)","others","hàng dữ liệu bảng",,,,"YYYY-MM-DD hh:mm",,,,,"Mục đích và ngữ cảnh: Ca thông thường: một thao tác do một người dùng nội bộ thực hiện; có lý do và có nội dung trước sau.
+Thành phần hiển thị: Bảy ô mang nhãn dạng: thời điểm dạng YYYY-MM-DD hh:mm · ngày nghiệp vụ dạng YYYY-MM-DD · nhãn thao tác · nhãn thực thể kèm mã · tên hiển thị người thực hiện · nhãn lý do có thể rỗng · một nút mở panel so sánh.
+Chức năng và logic: Chỉ đọc. Nội dung trước và sau không hiện thô trên bảng vì là dữ liệu tự do; chỉ mở trong panel so sánh.",,,"audit_log","created_at; action; entity; entity_id; actor_id; reason","Sáu cột này đã tồn tại thật. Ô ngày nghiệp vụ trên hàng thì CHƯA TỒN TẠI cột tương ứng.","Lý do rỗng thì hiện dấu gạch hay để ô trống?
+Tên hiển thị của người thực hiện dài quá thì cắt bớt hay xuống dòng?"
+"4.1.3","img-020","Nút Mở panel so sánh trước và sau","差分パネルを開く","Open diff panel button","button","nút phụ trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường duy nhất xem nội dung trước và sau; tách khỏi bảng vì dữ liệu này tự do và có thể rất dài.
+Thành phần hiển thị: Nút chữ Mở panel diff ở ô cuối hàng; kiểu nút phụ.
+Chức năng và logic: Chỉ đọc. Cả hai giá trị trước và sau rỗng là ca hợp lệ nên panel phải chịu được ca đó mà không lỗi.","on_click","Mở panel so sánh nội dung trước và sau của đúng bản ghi đó.","audit_log","before; after","Hai cột đã tồn tại thật và cho phép rỗng; panel so sánh đã được dựng ở hai màn chi tiết khác nên dùng lại được.","Panel so sánh có giới hạn độ dài nội dung hiển thị không?
+Nội dung trước và sau có cần che một số trường nhạy trước khi hiện không; nếu có thì trường nào?
+Định dạng trình bày nội dung so sánh là gì; ảnh chỉ vẽ nút nên chưa suy ra được."
+"4.1.4","img-021","Hàng bản ghi không có người thực hiện",,"Audit row without actor","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Ca biên bắt buộc phải xử lý: bản ghi do hệ thống ghi; không có chủ thể và không có nội dung trước sau.
+Thành phần hiển thị: Bảy ô: thời điểm · dấu gạch ở ô ngày nghiệp vụ · nhãn thao tác · nhãn thực thể kèm mã · chữ hệ thống ở ô người thực hiện · dấu gạch ở ô lý do · chữ ghi rõ cả hai giá trị trước và sau đều rỗng.
+Chức năng và logic: Người thực hiện rỗng thì hiện chữ hệ thống chứ không để ô trống; vì có đường ghi xảy ra trước khi có phiên đăng nhập. Người thực hiện đã bị vô hiệu thì dòng vẫn hiện; không ẩn dòng.",,,"audit_log","actor_id; before; after; reason","Ba cột trước sau và lý do cho phép rỗng; và cột người thực hiện cũng cho phép rỗng — nên ca này là ca hợp lệ của bảng đã tồn tại chứ không phải dữ liệu lỗi.","Chữ hiện thay cho người thực hiện rỗng là hệ thống; có cần phân biệt các nguồn hệ thống khác nhau không?
+Dòng không có nội dung trước sau thì nút mở panel so sánh ẩn đi hay hiện ở trạng thái vô hiệu?"
+"4.2","img-022","Ghi chú bốn thứ nghiệm thu và các ca rỗng",,"Acceptance and empty-case note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Nối cột của bảng về đúng điều kiện nghiệm thu của phía ghi; và liệt các ca rỗng mà bản dựng phải chịu được.
+Thành phần hiển thị: Một đoạn chữ nhỏ: các cột thời điểm · người thực hiện · trước và sau · lý do là đúng bốn thứ mà điều kiện nghiệm thu của FR-AUDIT-01 đòi truy được; người thực hiện rỗng hiện chữ hệ thống; người thực hiện đã vô hiệu thì dòng vẫn hiện; nội dung trước sau là dữ liệu tự do nên không hiện thô trên bảng mà dùng lại panel so sánh đã dựng; cả hai rỗng là hợp lệ nên panel không được lỗi.
+Chức năng và logic: Tĩnh; là bảng kiểm cho phần dựng bảng kết quả.",,,,,,
+"4.3","img-023","Nút Trang trước","前のページ","Previous page button","button","nút phân trang","text_only",,,,,,,,"Mục đích và ngữ cảnh: Một nửa của cặp phân trang; phân trang là bắt buộc vì bảng audit chỉ tăng.
+Thành phần hiển thị: Nút chữ Trang trước ở đầu hàng nút dưới bảng kết quả; kiểu nút phụ.
+Chức năng và logic: Vô hiệu khi đang ở trang đầu. Phân trang thực hiện phía server; không phải cắt ở giao diện.","on_click","Nạp trang kết quả trước đó; giữ nguyên điều kiện đang lọc.",,,,"Ở trang đầu thì nút ẩn đi hay hiện ở trạng thái vô hiệu?
+Có cần ô nhảy tới trang bất kỳ không; hay chỉ trước và sau?"
+"4.4","img-024","Nút Trang sau","次のページ","Next page button","button","nút phân trang","text_only",,,,,,,,"Mục đích và ngữ cảnh: Nửa còn lại của cặp phân trang.
+Thành phần hiển thị: Nút chữ Trang sau cạnh nút Trang trước; kiểu nút phụ.
+Chức năng và logic: Vô hiệu khi đã ở trang cuối hoặc khi kết quả đã đạt trần.","on_click","Nạp trang kết quả tiếp theo; giữ nguyên điều kiện đang lọc.",,,,"Kết quả vượt trần thì nút này vô hiệu và hiện lời nhắc thu hẹp điều kiện chứ không cho đi tiếp?"
+"4.5","img-025","Nút Xuất CSV ở trạng thái vô hiệu","CSV出力（無効）","Export CSV disabled","button","nút vô hiệu kèm nhãn giải thích","text_only",,,,,,,,"Mục đích và ngữ cảnh: Khai một quyết định phạm vi ngay trên giao diện: không mở đường mang dữ liệu audit ra ngoài hệ thống ở vòng đầu.
+Thành phần hiển thị: Nút chữ Xuất CSV kèm ngay trong nhãn dòng chữ không đề xuất cho vòng đầu; chữ và viền nhạt hơn.
+Chức năng và logic: Không nhận thao tác. Lý do là FR-AUDIT-02 chỉ đòi tìm kiếm; và phạm vi xuất dữ liệu của yêu cầu khách khoanh vào catalog báo cáo mà audit không thuộc catalog đó.",,,,,,"Nút này giữ ở trạng thái vô hiệu hay bỏ hẳn khỏi giao diện vòng đầu?
+Nếu khách yêu cầu xuất thì cần thêm kiểm soát gì trước khi mở đường đó?"
+"5","img-026","Khối hiệu năng",,"Performance block","others","khối ba ô chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Đưa ngưỡng NFR-PERF-01 vào thân màn thay vì để nó thành chuyện hạ tầng ở cuối tài liệu.
+Thành phần hiển thị: Tiêu đề khối nêu ngưỡng p95 không vượt hai giây là một yêu cầu của màn; ba ô chỉ đọc là phân trang phía server; mỗi tiêu chí một cột lọc được; và kịch bản tìm kiếm tiêu chuẩn.
+Chức năng và logic: Chỉ đọc; ba ô là ba ràng buộc thiết kế; không phải ô nhập.",,,,,,
+"5.1","img-027","Ô Phân trang phía server","サーバー側ページング","Server-side pagination","label","ô chỉ đọc kèm nhãn và dòng nhắc",,,,,,,,,"Mục đích và ngữ cảnh: Ràng buộc thứ nhất của ngưỡng thời gian phản hồi: không bao giờ tải hết rồi lọc ở giao diện.
+Thành phần hiển thị: Nhãn Phân trang phía server; ô chỉ đọc nền xám ghi số dòng mỗi trang và trần kết quả; dòng nhắc nói rõ phân trang từ đầu và bảng audit chỉ tăng chứ không giảm.
+Chức năng và logic: Số dòng mỗi trang và trần kết quả là hai con số chưa có nguồn nên phải chốt với khách.",,,,,"Bảng audit đã tồn tại và là bảng chỉ-thêm nên số dòng chỉ tăng theo thời gian; số dòng nhỏ ở môi trường hiện tại không nói gì về một năm vận hành.","Số dòng mỗi trang và trần kết quả là bao nhiêu; yêu cầu khách không cho con số nào nên cần khách chốt?
+Vượt trần thì chặn hẳn hay vẫn cho xem trang đầu kèm lời nhắc thu hẹp?"
+"5.2","img-028","Ô Mỗi tiêu chí một cột lọc được","各条件に索引可能な列","One filterable column per criterion","label","ô chỉ đọc kèm nhãn và dòng nhắc",,,,,,,,,"Mục đích và ngữ cảnh: Ràng buộc thứ hai; và là chỗ ngưỡng thời gian phản hồi gặp hiện trạng dữ liệu.
+Thành phần hiển thị: Nhãn Mỗi tiêu chí một cột lọc được; ô chỉ đọc nền xám ghi bốn tiêu chí thành bốn đường lọc có index; dòng nhắc nói rõ tiêu chí không có cột thì phải lọc bằng nối bảng hoặc quét bảng; và cả hai đều không đạt ngưỡng khi bảng lớn.
+Chức năng và logic: Đây là ràng buộc độc lập với việc có đủ bốn cột: có đủ cột mà không có index thì vẫn không đạt ngưỡng.",,,"audit_log",,"Bảng audit đã tồn tại nhưng hiện KHÔNG có index nào ngoài khoá chính; nên mọi bộ lọc đều quét toàn bảng. Đây là rào riêng; độc lập với việc thiếu cột ngày nghiệp vụ và cột người tham gia.","Bốn tiêu chí có cần đạt ngưỡng khi dùng riêng lẻ; hay chỉ khi kết hợp đủ để thu hẹp kết quả?"
+"5.3","img-029","Ô Kịch bản tìm kiếm tiêu chuẩn","標準検索シナリオ","Standard search scenario","label","ô chỉ đọc kèm nhãn và dòng nhắc",,,,,,,,,"Mục đích và ngữ cảnh: Ràng buộc thứ ba: ngưỡng chỉ nghiệm thu được nếu định nghĩa được kịch bản đo.
+Thành phần hiển thị: Nhãn Kịch bản tìm kiếm tiêu chuẩn; ô chỉ đọc nền xám ghi phải chốt để load test; dòng nhắc nói rõ nghiệm thu là báo cáo load test nên kịch bản tiêu chuẩn và tải thiết kế baseline phải là con số chốt với khách.
+Chức năng và logic: Không chốt được hai thứ này thì ngưỡng p95 không có cách nào nghiệm thu.",,,,,,"Kịch bản tìm kiếm tiêu chuẩn gồm những truy vấn nào và tải thiết kế baseline là bao nhiêu bản ghi?
+Ngưỡng đo trên môi trường nào; môi trường trình diễn hay môi trường tương đương sản xuất?"
+"6","img-030","Khối trạng thái màn",,"Screen state block","others","khối bảy thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê mọi trạng thái màn phải xử lý; trong đó hai thẻ nói rõ trạng thái nào KHÔNG áp dụng.
+Thành phần hiển thị: Tiêu đề khối; bảy thẻ xếp thành hai hàng; mỗi thẻ có một tiêu đề nhỏ và một đoạn mô tả.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"6.1","img-031","Thẻ trạng thái Rỗng",,"State card empty","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Kết quả rỗng là câu trả lời hợp lệ của một cuộc điều tra; không phải lỗi.
+Thành phần hiển thị: Thẻ có tiêu đề Rỗng và mô tả câu hiển thị không có bản ghi audit nào khớp điều kiện kèm gợi ý đổi bộ lọc.
+Chức năng và logic: Gợi ý đổi bộ lọc là cần thiết vì bốn tiêu chí kết hợp lại rất dễ cho ra rỗng.",,,,,,
+"6.2","img-032","Thẻ trạng thái Đang tải",,"State card loading","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết truy vấn đang chạy; quan trọng vì truy vấn audit có thể chậm.
+Thành phần hiển thị: Thẻ có tiêu đề Đang tải và mô tả skeleton bảng.
+Chức năng và logic: Bộ lọc bị vô hiệu trong lúc tải để không có hai truy vấn chồng nhau.",,,,,,
+"6.3","img-033","Thẻ trạng thái Lỗi tải",,"State card load error","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt lỗi kỹ thuật với kết quả rỗng — hai cái này dẫn tới hai hành động khác nhau.
+Thành phần hiển thị: Thẻ có tiêu đề Lỗi tải và mô tả khối lỗi kèm nút thử lại.
+Chức năng và logic: Giữ nguyên điều kiện đang lọc khi thử lại.",,,,,,
+"6.4","img-034","Thẻ trạng thái Không có quyền",,"State card forbidden","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai mức chặn của màn; đây là màn chạm dữ liệu nhạy nên chặn ở mức vào trang.
+Thành phần hiển thị: Thẻ có tiêu đề Không có quyền và mô tả vai trò không được vào thì nhận trang không tìm thấy chứ không phải lỗi từ chối quyền.
+Chức năng và logic: Chặn vào trang trả trang không tìm thấy là có chủ đích; không lộ sự tồn tại của tài nguyên. Quyền bị thu hồi giữa phiên thì lần điều hướng sau cũng vào trạng thái này.",,,,,,
+"6.5","img-035","Thẻ trạng thái Đang gửi và gửi lỗi — không áp dụng",,"State card not applicable","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Nói rõ hai trạng thái ghi không áp dụng; để phần dựng không thêm form vào một màn chỉ đọc.
+Thành phần hiển thị: Thẻ có tiêu đề Đang gửi và gửi lỗi; mô tả không áp dụng vì màn chỉ đọc và không có form ghi.
+Chức năng và logic: Hệ quả: màn không có mã lỗi nào của đường ghi.",,,,,,
+"6.6","img-036","Thẻ trạng thái Quá nhiều kết quả",,"State card too many results","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái sinh ra trực tiếp từ ngưỡng thời gian phản hồi; không phải một giới hạn tuỳ ý.
+Thành phần hiển thị: Thẻ có tiêu đề Quá nhiều kết quả và mô tả vượt trần thì thông báo cần thu hẹp điều kiện kèm phân trang; và nói rõ đây là ràng buộc NFR-PERF-01.
+Chức năng và logic: Thông báo phải chỉ ra tiêu chí nào nên thu hẹp; không chỉ nói kết quả quá nhiều.",,,,,,
+"6.7","img-037","Thẻ trạng thái Không có read-only vì lock",,"State card no lock read-only","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Đóng lại một giả định dễ sai: audit không thuộc nhóm bảng bị khoá theo ngày.
+Thành phần hiển thị: Thẻ có tiêu đề Không có read-only vì lock và mô tả audit không thuộc nhóm bảng bị lock ngày; màn không ghi gì; nên không bao giờ trả mã lỗi khoá ngày.
+Chức năng và logic: Vì vậy màn không có trạng thái chỉ đọc theo ngày.",,,,,,
+"7","img-038","Khối đối chiếu thiết kế và prototype",,"Design vs prototype block","others","khối bảng ba cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Tách rõ phần thiết kế đòi khỏi hiện trạng; và phân loại đúng bản chất của từng rào.
+Thành phần hiển thị: Tiêu đề khối viết hoa; bảng ba cột tám hàng dữ liệu; một đoạn ghi chú phân loại ba rào khác loại.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"7.1","img-039","Bảng đối chiếu thiết kế và prototype","設計と実装の差分","Design gap table","table","bảng ba cột tám dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Liệt từng hạng mục kèm mức; trong đó phần ghi audit đã đủ còn phần đọc thì còn ba rào.
+Thành phần hiển thị: Ba cột: thiết kế đòi · prototype làm · mức; tám hàng gồm dữ liệu audit để tra · màn tra cứu xuyên thực thể · bốn tiêu chí lần lượt · ngưỡng thời gian phản hồi · kiểm soát truy cập theo vai trò.
+Chức năng và logic: Cột mức có bốn nhãn: đã đủ · một phần · chưa có · xung đột. Hàng đầu là hàng duy nhất ở mức đã đủ.",,,,,,
+"7.1.1","img-040","Hàng tiêu đề bảng đối chiếu",,"Gap table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột của bảng đối chiếu.
+Thành phần hiển thị: Một hàng nền xám nhạt với ba nhãn: Thiết kế đòi · Prototype làm · Mức.
+Chức năng và logic: Tĩnh.",,,,,,
+"7.1.2","img-041","Hàng một hạng mục đối chiếu — đại diện",,"Gap row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng là một hạng mục; tám hàng có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Ba ô: mô tả điều thiết kế đòi · mô tả hiện trạng · thẻ mức; hàng đại diện đang hiện hạng mục có dữ liệu audit để tra với mức đã đủ.
+Chức năng và logic: Chỉ đọc. Thẻ mức ở ô cuối lấy một trong bốn giá trị đã đủ · một phần · chưa có · xung đột.",,,,,,
+"7.2","img-042","Ghi chú ba rào khác loại",,"Three distinct barriers note","label","đoạn nhắc cuối khối",,,,,,,,,"Mục đích và ngữ cảnh: Chặn cách đọc gộp sai rằng màn đạt ba trên bốn tiêu chí; ba rào có bản chất khác nhau và cách sửa khác nhau.
+Thành phần hiển thị: Một đoạn chữ nhỏ: ID giao dịch là chuyện hình dạng truy vấn vì chỉ có một cặp cột thay vì một cột nên sửa được ở tầng đọc; ngày nghiệp vụ và người tham gia là chuyện dữ liệu chưa từng được ghi nên phải sửa phía ghi ở mọi điểm gọi và dữ liệu cũ không lấp lại được; hiệu năng là chuyện index nên độc lập với hai cái trên; và có đủ bốn cột mà không có index thì vẫn không đạt ngưỡng.
+Chức năng và logic: Tĩnh; là kết luận quan trọng nhất của khối đối chiếu và là căn cứ để ước lượng đúng.",,,,,,
+"8","img-043","Chân ghi chú phân quyền; đánh đổi và giả định",,"Permission tradeoff and assumption footer","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Gom năm thứ phải đọc trước khi dựng: ánh xạ vai trò; đánh đổi cần quyết định kiến trúc; quyết định không xuất dữ liệu; bốn giả định và ghi chú bảo mật.
+Thành phần hiển thị: Năm đoạn chữ nhỏ: đoạn phân quyền đề xuất một vai trò cho vòng đầu và nói rõ hai vai trò mà yêu cầu khách gọi tên không có trong bảy vai trò của hệ; đoạn đánh đổi giữa mở đọc và siết đọc; chung một quyết định kiến trúc với màn quản lý file đính kèm; đoạn giải thích vì sao không đề xuất xuất dữ liệu; đoạn bốn giả định cần chốt; đoạn ghi chú bảo mật.
+Chức năng và logic: Tĩnh. Bốn giả định gồm: ai được tra cứu và có siết đọc hay không; tập giá trị loại thao tác cho ô chọn; có ghi audit cho chính hành vi tra cứu audit hay không; số dòng mỗi trang cùng trần kết quả và định nghĩa kịch bản tìm kiếm tiêu chuẩn.",,,,,,

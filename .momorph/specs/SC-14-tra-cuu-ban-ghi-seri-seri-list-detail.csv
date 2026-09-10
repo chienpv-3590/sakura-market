@@ -1,0 +1,172 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn hình",,"Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người dùng và khai chuỗi truy vết của màn
+Thành phần hiển thị: tiêu đề màn; một dòng meta liệt kê mã FE / FN / yêu cầu khách kèm nghiệm thu / actor; và hai thẻ ghi chú
+Chức năng và logic: chỉ hiển thị — không có tương tác nào trong khối này",,,,,,
+"1.1","img-002","Tiêu đề màn hình",,"Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm ""SC-14 · Tra cứu bản ghi せり""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu",,"Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn — dẫn nguyên văn FR-SERI-03 (RFP:655) cùng nghiệm thu của nó
+Thành phần hiển thị: mã FE-019 và nhóm FN-05; ưu tiên P1; nguyên văn FR-SERI-03 kèm nghiệm thu ""tra cứu lại được before/after và lý do chỉnh sửa""; các yêu cầu kế thừa; và actor gồm hai vai
+Chức năng và logic: văn bản tĩnh — nghiệm thu trong dòng này là điều kiện đóng của cả màn",,,,,,"- Dòng meta này là chú thích của wireframe hay nội dung sẽ có trên màn thật? Thiết kế không khai.
+- Hai màn con dùng chung một mã SC- — trên sản phẩm thật đây là hai trang riêng hay một trang có hai khung? Ảnh vẽ chung một trang."
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này đã có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Đã dựng""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"1.4","img-005","Thẻ ghi chú gộp hai màn con",,"Two sub-screen note tag","label","scope_tag",,,,,,,,,"Mục đích và ngữ cảnh: nhắc rằng một mã SC- ứng hai màn con vì cùng phục vụ FE-019
+Thành phần hiển thị: một thẻ chữ nhỏ với chữ ""Một mã SC- ứng hai màn con""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"2","img-006","Khung 1 — Danh sách kết quả せり",,"Seri result list frame","others","list_frame",,,,,,,,,"Mục đích và ngữ cảnh: tra cứu lại bản ghi せり theo lô hàng; kỳ hoặc người thắng — nửa đầu của FR-SERI-03 (RFP:655)
+Thành phần hiển thị: tiêu đề khung; ba tiêu chí tìm kiếm kèm một nhóm nút; một bảng chín cột; và một dòng ghi chú về cột bắt buộc và hiệu năng
+Chức năng và logic: tìm rồi đọc danh sách; mỗi dòng có đường sang chi tiết — thao tác sửa nằm ở khung chi tiết",,,"seri_result",,"Đọc thực thể kết quả đấu giá của miền D-TRADE (RFP:604) kèm mã lô (D-LOT) và tên người tham gia (D-PARTY).",
+"2.1","img-007","Tiêu đề khung danh sách",,"List frame title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khung danh sách
+Thành phần hiển thị: một dòng tiêu đề ""Khung 1 — Danh sách kết quả せり""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"2.2","img-008","Tiêu chí tìm Mã lô hàng","ロット番号","Lot code search input","text_form","text_filter",,"string","false","LOT-<NNNN> hoặc một phần của mã",,,,"Điều kiện: tìm được cả khi nhập MỘT PHẦN mã — thiếu một ký tự không được ra rỗng mà không có lời giải thích.
+Lỗi: ""Không có bản ghi nào khớp mã lô đã nhập."" — nêu rõ tiêu chí đang áp thay vì một danh sách rỗng im lặng.","Mục đích và ngữ cảnh: tìm bản ghi theo mã lô — lô là cái định danh bản ghi kết quả せり
+Thành phần hiển thị: nhãn tiếng Việt kèm ロット番号; một ô nhập chữ; và một dòng chú thích nói rõ phải khớp được một phần mã
+Chức năng và logic: khớp một phần mã chứ không khớp chính xác; khi không có kết quả thì màn phải nói rõ tiêu chí đang áp",,,"seri_result; lot","lot_id; lot_code","Tìm bắc qua khoá ngoại lô của D-TRADE sang mã lô của thực thể lô hàng trong D-LOT.","- Khớp một phần mã có phân biệt hoa thường không? Thiết kế không khai.
+- Có cần chặn ký tự đại diện để một ký tự phần trăm không khớp toàn bộ danh sách không? Thiết kế không khai."
+"2.3","img-009","Tiêu chí tìm Ngày nghiệp vụ","業務日","Business date search input","date_picker","date_filter",,"date","false","YYYY-MM-DD",,,,"Điều kiện: giá trị phải đúng định dạng ngày.
+Lỗi: ""Ngày nghiệp vụ không đúng định dạng."" — báo lỗi nhập tại trường; không được để thành lỗi hệ thống.","Mục đích và ngữ cảnh: tiêu chí của bộ phận đối chiếu — bản ghi thuộc kỳ nào theo FR-SETTLE-01 (RFP:659)
+Thành phần hiển thị: nhãn tiếng Việt kèm 業務日; một ô chọn ngày; và một dòng chú thích nói rõ sai định dạng phải báo lỗi nhập
+Chức năng và logic: lọc theo ngày nghiệp vụ của bản ghi; vì là tiêu chí lọc nên ngày nghiệp vụ BẮT BUỘC phải có mặt trong cột của bảng kết quả","on_click",,"seri_result","business_date","Lọc theo ngày nghiệp vụ của D-TRADE — cùng khoá mà miền D-SETTLE (RFP:606) dùng để lock kỳ.","- Có cần tìm theo khoảng ngày cho bộ phận đối chiếu không? Thiết kế chỉ đòi một ngày.
+- Ngày nghiệp vụ có giá trị mặc định khi vào màn không? Ảnh hiện một ngày cụ thể nhưng thiết kế không khai đó là mặc định."
+"2.4","img-010","Tiêu chí tìm Người thắng","落札者","Winner search input","text_form","text_filter",,"string","false","<tên người tham gia>",,,,,"Mục đích và ngữ cảnh: tìm theo người thắng — phục vụ RPT-10 theo người tham gia và RPT-11 theo loại giao dịch
+Thành phần hiển thị: nhãn tiếng Việt kèm 落札者; một ô nhập chữ; và một dòng chú thích dẫn hai báo cáo mà tiêu chí này phục vụ
+Chức năng và logic: lọc danh sách theo người thắng của bản ghi; là tiêu chí mà báo cáo tháng dựa vào",,,"seri_result; participant","winner_participant_id; name","Tìm bắc qua khoá ngoại người thắng của D-TRADE sang tên của thực thể người tham gia trong D-PARTY (RFP:602).","- Ô tìm khớp chính xác tên hay khớp một phần tên? Thiết kế không khai và hai cách cho hai kết quả khác nhau.
+- Có cần chặn ký tự đại diện trong ô này không? Thiết kế không khai.
+- Có cần tìm theo mã người tham gia thay vì theo tên để tránh trùng tên không?"
+"2.5","img-011","Nhóm nút tìm và nhập mới",,"Search and create action group","others","action_group",,,,,,,,,"Mục đích và ngữ cảnh: gom hai hành động của khung danh sách vào một chỗ cạnh các tiêu chí tìm
+Thành phần hiển thị: hai nút xếp cạnh nhau và một dòng chú thích về điều kiện hiện nút nhập mới
+Chức năng và logic: nút ""Tìm"" áp ba tiêu chí hiện tại; nút ""Nhập kết quả せり"" chỉ hiện với ROLE-TRADE theo TBL-ROLE-01 (RFP:245)",,,,,,
+"2.5.1","img-012","Nút Tìm",,"Search button","button","secondary_action","text_only",,,,,,,,"Mục đích và ngữ cảnh: áp tiêu chí tìm để thu hẹp danh sách
+Thành phần hiển thị: một nút phụ nhãn chữ
+Chức năng và logic: gửi ba tiêu chí và tải lại bảng; giá trị sai định dạng bị chặn trước khi gửi","on_click","Áp ba tiêu chí tìm hiện tại và tải lại danh sách trên cùng màn. NFR-PERF-01 (RFP:807) đòi tìm kiếm thông thường p95 không vượt 2 giây.",,,,"- Tiêu chí tìm đang áp có được giữ lại khi quay về từ màn chi tiết không? Thiết kế không khai."
+"2.5.2","img-013","Nút Nhập kết quả せり",,"Create seri result button","button","primary_action","text_only",,,,,,,"Điều kiện: chỉ hiện với ROLE-TRADE — ROLE-SETTLEMENT sửa được bản ghi đã có nhưng KHÔNG tạo mới được.","Mục đích và ngữ cảnh: đường vào màn nhập kết quả mới cho vai được ghi
+Thành phần hiển thị: một nút chính nhãn chữ
+Chức năng và logic: điều hướng sang SC-13; ROLE-SETTLEMENT và các vai còn lại không thấy nút này và mục đó đổi thành chỉ dẫn","on_click","Dẫn sang SC-13 để nhập một kết quả せり mới. Chỉ hiện với ROLE-TRADE.",,,,"- Với ROLE-SETTLEMENT thì nút biến mất hoàn toàn hay hiện ở dạng tắt kèm chỉ dẫn? Thiết kế nói đổi thành chỉ dẫn ở màn kề."
+"2.6","img-014","Bảng danh sách kết quả せり",,"Seri result list table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: danh sách bản ghi せり khớp tiêu chí tìm — nửa tra cứu của FR-SERI-03 (RFP:655)
+Thành phần hiển thị: bảng chín cột song ngữ: Lô hàng ロット; Người thắng 落札者; Số lượng 数量; Đơn giá 単価; Thời điểm quyết định 決定時刻; Ngày nghiệp vụ 業務日; Trạng thái 状態; Đã sửa 修正; Thao tác 操作 — hai dòng mẫu
+Chức năng và logic: cột Ngày nghiệp vụ bắt buộc có vì nó là tiêu chí lọc; cột Trạng thái gắn thẻ [CHƯA CHỐT] vì cách ánh xạ FIG-012 lên bản ghi せり còn chờ khách chốt; cột Đã sửa là đường vào tự nhiên của FR-SERI-03",,,"seri_result; lot; participant","lot_id; winner_participant_id; qty; unit_price; decided_at; business_date","Đọc thực thể kết quả đấu giá của D-TRADE kèm mã lô của D-LOT và tên người tham gia của D-PARTY. Cột Trạng thái chưa có nguồn dữ liệu vì thực thể hiện có KHÔNG CÓ cột trạng thái nào.","- Cột Đã sửa đếm số lần sửa hay chỉ đánh dấu có hay không? Ảnh hiện số lần nên nghiêng về đếm.
+- Bảng sắp theo tiêu chí nào khi không có yêu cầu sắp riêng? Thiết kế không khai.
+- Khi một lô có hai bản ghi せり thì màn cảnh báo trùng ở đâu? Thiết kế đòi mỗi lô đúng một kết quả nhưng không khai chỗ hiển thị cảnh báo."
+"2.6.1","img-015","Nút Xem chi tiết trên dòng (đại diện)",,"Row detail button (representative)","button","row_action","text_only",,,,,,,,"Mục đích và ngữ cảnh: đường vào chi tiết của một bản ghi — nút này lặp trên mọi dòng nên chỉ đặc tả một lần
+Thành phần hiển thị: một nút phụ nhãn chữ ""Xem chi tiết"" trong ô Thao tác của dòng đầu tiên
+Chức năng và logic: lặp trên hai dòng của bảng; chỉ khác bản ghi đích nên gộp thành một thành phần đại diện","on_click","Mở khung chi tiết của bản ghi せり trên dòng đó. Có mặt trên mọi dòng và với mọi vai vì tra cứu mở cho các vai đang hoạt động.",,,,"- Chi tiết mở trên cùng trang hay trang riêng? Ảnh vẽ hai khung trên một trang."
+"2.7","img-016","Ghi chú cột bắt buộc và hiệu năng",,"Required column and performance note","label","rule_note",,,,,,,,"Điều kiện: lọc theo một trường thì trường đó PHẢI có mặt trong kết quả — người dùng không tự kiểm được nếu thiếu.
+Điều kiện: danh sách phải phân trang và KHÔNG được cắt kết quả trong im lặng.
+Điều kiện: tìm kiếm thông thường phải đạt p95 không vượt 2 giây — NFR-PERF-01 (RFP:807).","Mục đích và ngữ cảnh: khai ba quy tắc áp thẳng lên bảng danh sách — cột bắt buộc; nhãn chưa chốt của cột trạng thái; và ngưỡng hiệu năng
+Thành phần hiển thị: một đoạn ghi chú nêu lý do cột Ngày nghiệp vụ phải có; lý do cột Trạng thái mang nhãn [CHƯA CHỐT]; ý nghĩa cột Đã sửa; và ngưỡng p95
+Chức năng và logic: văn bản tĩnh — là điều kiện nghiệm thu cho bảng phía trên",,,,,,"- Khi kết quả vượt một trang thì màn hiện tổng số bản ghi không? Thiết kế chỉ cấm cắt âm thầm."
+"3","img-017","Khung 2 — Chi tiết bản ghi và lịch sử chỉnh sửa",,"Seri record detail and edit history frame","others","detail_frame",,,,,,,,,"Mục đích và ngữ cảnh: đọc lại đủ năm trường FR-SERI-02 (RFP:654) đòi; sửa có kiểm soát kèm lý do bắt buộc; và đọc lại before/after — nửa sau của FR-SERI-03 (RFP:655)
+Thành phần hiển thị: tiêu đề khung; một trường lô chỉ đọc; năm trường sửa được; một ô lý do chỉnh sửa; một nút lưu hoặc chỉ dẫn; và một bảng lịch sử sáu cột
+Chức năng và logic: vai ROLE-TRADE và ROLE-SETTLEMENT sửa được; các vai còn lại thấy đủ bản ghi và lịch sử với form sửa đổi thành chỉ dẫn",,,"seri_result",,"Đọc và ghi thực thể kết quả đấu giá của D-TRADE. Sửa trực tiếp chỉ hợp lệ khi ngày nghiệp vụ chưa lock.",
+"3.1","img-018","Tiêu đề khung chi tiết",,"Detail frame title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khung chi tiết và nêu ba phần của khung
+Thành phần hiển thị: một dòng tiêu đề ""Khung 2 — Chi tiết bản ghi; sửa có kiểm soát; và lịch sử""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-019","Trường Lô hàng (chỉ đọc)","ロット","Lot (read-only)","label","readonly_field",,,,"LOT-<NNNN> — <tên mặt hàng>",,,,,"Mục đích và ngữ cảnh: lô hàng của bản ghi — là cái định danh bản ghi nên KHÔNG sửa được ở đây
+Thành phần hiển thị: nhãn tiếng Việt kèm ロット; một ô chỉ đọc hiện mã lô cùng tên mặt hàng; và một dòng chú thích nêu đường xử lý khi ghi sai lô
+Chức năng và logic: ghi sai lô thì phải hủy bản ghi và nhập lại theo đường yêu cầu điều chỉnh FR-CORR-01 (RFP:656) chứ không sửa tại chỗ",,,"seri_result; lot","lot_id; lot_code; item","Khoá ngoại tới thực thể lô hàng của D-LOT; hiển thị mã lô và tên mặt hàng thay cho khoá.","- Ghi sai lô đi đường FR-CORR-01 sang SC-20 — có cần một nút chỉ đường ngay tại trường này không? Ảnh chỉ có chú thích chữ."
+"3.3","img-020","Trường Người thắng (sửa được)","落札者","Winner selector (editable)","dropdown","select_single",,"string","true","<tên người tham gia>",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: sửa được và sửa thì PHẢI ghi một dòng before/after — là một trong năm trường FR-SERI-02 (RFP:654) nên nằm trong phạm vi lịch sử chỉnh sửa của FR-SERI-03 (RFP:655).
+Điều kiện: người thắng mới phải còn hiệu lực 許可/承認 — FR-PARTY-02 (RFP:630); BR-PERM-01 (RFP:595).
+Lỗi: ""Người tham gia B đã mất hiệu lực từ <ngày>; không thể lưu thay đổi."" — cùng cửa với SC-13.","Mục đích và ngữ cảnh: sửa người thắng khi số liệu lệch với sổ tay tại sàn — trường này thuộc phạm vi lịch sử chỉnh sửa mà FR-SERI-03 đòi
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select hiện tên người tham gia; và một dòng chú thích nói rõ sửa thì phải có hiệu lực và phải có dòng before/after
+Chức năng và logic: mọi thay đổi phải xuất hiện thành một dòng lịch sử với giá trị trước và sau; không được lưu trong im lặng","on_click",,"seri_result","winner_participant_id","Khoá ngoại tới thực thể người tham gia của D-PARTY. Thiết kế đòi cửa hiệu lực khi sửa — cửa này chưa có trên nhánh せり.","- Danh sách người thắng có lọc bỏ người đã mất hiệu lực không? Thiết kế đặt cửa ở bước lưu nên nghiêng về không lọc.
+- Đổi người thắng có kéo theo thay đổi nào ở đường giao nhận hàng không? Thiết kế không nối bản ghi せり với giao hàng."
+"3.4","img-021","Trường Số lượng (sửa được)","数量","Quantity input (editable)","text_form","number_input",,"number","true","<số> với dấu phẩy thập phân — ảnh cho thấy 2 chữ số lẻ",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: sửa số lượng vẫn phải tôn trọng FR-LOT-03 (RFP:634) và BR-LOT-02 (RFP:596) — không làm số khả dụng của lô âm.
+Lỗi: ""LOT-0003 chỉ còn <số> khả dụng; số lượng mới cần <số>."" — không lưu thay đổi.","Mục đích và ngữ cảnh: sửa số lượng của kết quả đấu giá — thuộc phạm vi lịch sử chỉnh sửa của FR-SERI-03
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập số; và một dòng chú thích nhắc ràng buộc không âm của tồn lô
+Chức năng và logic: thay đổi số lượng phải điều chỉnh lại phần đã trừ vào tồn của lô; ràng buộc không âm áp cả khi sửa chứ không chỉ khi ghi mới",,,"seri_result","qty","Số lượng của kết quả đấu giá trong D-TRADE. Thiết kế đòi phần chênh lệch khi sửa được phản ánh vào số lượng khả dụng của D-LOT.","- Sửa số lượng có tự điều chỉnh phần đã trừ vào tồn lô hay chỉ đổi con số trên bản ghi? Thiết kế đòi không làm tồn âm nhưng không khai cách bù trừ.
+- Sửa số lượng sau khi đã có giao nhận hàng thì xử lý thế nào? Thiết kế không nối bản ghi せり với giao hàng."
+"3.5","img-022","Trường Đơn giá (sửa được)","単価 (JPY)","Unit price input (editable)","text_form","number_input",,"integer","true","<số nguyên JPY> — không có phần thập phân",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: JPY không có phần thập phân nên chỉ nhận số nguyên.","Mục đích và ngữ cảnh: sửa đơn giá thắng khi lệch với sổ tay tại sàn — tình huống mà FR-SERI-03 nhắm tới
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc và một ô nhập số nguyên
+Chức năng và logic: thay đổi phải xuất hiện thành một dòng before/after trong bảng lịch sử",,,"seri_result","unit_price","Đơn giá của kết quả đấu giá trong D-TRADE. Đơn vị JPY và không có phần thập phân là ràng buộc dữ liệu.","- Sửa đơn giá sau khi kỳ đã được đối chiếu nhưng chưa lock thì có cần cảnh báo ảnh hưởng tới bảng đối chiếu ngày không? Thiết kế không khai."
+"3.6","img-023","Trường Thời điểm quyết định (sửa được)","決定時刻","Decided at input (editable)","date_picker","datetime_input",,"date","true","YYYY-MM-DD hh:mm",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: KHÔNG nhận thời điểm tương lai.
+Lỗi: ""Thời điểm quyết định không được ở tương lai.""","Mục đích và ngữ cảnh: sửa thời điểm phiên đấu giá chốt tại sàn — một trong năm trường FR-SERI-02 đòi lưu
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập ngày kèm giờ phút; và một dòng chú thích chặn thời điểm tương lai
+Chức năng và logic: thay đổi phải xuất hiện thành một dòng before/after; giá trị tương lai bị chặn vì một phiên chưa diễn ra thì không có kết quả cuối cùng","on_click",,"seri_result","decided_at","Thời điểm quyết định của kết quả đấu giá trong D-TRADE.","- Sửa thời điểm quyết định có kéo theo đổi ngày nghiệp vụ của bản ghi không? Câu hỏi này gắn với mục [CHƯA CHỐT] về ngày nghiệp vụ ở SC-13."
+"3.7","img-024","Trường Người xác nhận (sửa được)","確認者","Confirmer selector (editable)","dropdown","select_single",,"string","true","<tên tài khoản nội bộ>",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: phải là một tài khoản nội bộ đang hoạt động — không nhận chữ tự do.
+Điều kiện: dòng lịch sử phải gọi trường bằng TÊN NGHIỆP VỤ chứ không phải tên cột kỹ thuật.","Mục đích và ngữ cảnh: sửa người chịu trách nhiệm về kết quả — đổi trường này là đổi người chịu trách nhiệm
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select hiện tên tài khoản nội bộ; và một dòng chú thích đòi dòng lịch sử gọi trường bằng tên nghiệp vụ
+Chức năng và logic: thay đổi phải xuất hiện thành một dòng before/after với tên trường mà người kiểm toán đọc được","on_click",,"seri_result","confirmed_by","Khoá ngoại tới tài khoản nội bộ của D-PARTY — chủ thể chịu trách nhiệm về kết quả.","- Đổi người xác nhận có cần lý do riêng khác với lý do chỉnh sửa chung không? Thiết kế chỉ đòi một lý do cho mỗi lần sửa.
+- Người xác nhận mới có buộc phải thuộc vai nào không? Thiết kế chỉ nói tài khoản nội bộ đang hoạt động."
+"3.8","img-025","Trường Lý do chỉnh sửa","修正理由","Edit reason input","text_form","text_input",,"string","true","<văn bản tự do một dòng>",,,,"Điều kiện: BẮT BUỘC TUYỆT ĐỐI — không có lý do thì không ghi gì.
+Lỗi: ""Phải nhập lý do chỉnh sửa."" — chặn ngay tại trường; không dùng một thông báo lỗi chung.
+Điều kiện: là nửa thứ hai của nghiệm thu FR-SERI-03 (RFP:655) — tra cứu lại được before/after VÀ LÝ DO chỉnh sửa.
+Điều kiện: FR-AUDIT-01 (RFP:710) đòi lý do cho mọi thao tác sửa.","Mục đích và ngữ cảnh: lý do chỉnh sửa — điều kiện đóng của FR-SERI-03 và của FR-AUDIT-01
+Thành phần hiển thị: nhãn tiếng Việt kèm 修正理由 và dấu sao bắt buộc; một ô nhập chữ rộng cả khung; và một dòng chú thích nói rõ không có lý do thì không ghi gì
+Chức năng và logic: lý do đi kèm từng lần sửa và tra cứu lại được trong bảng lịch sử; thiếu lý do thì toàn bộ thay đổi bị chặn chứ không ghi một phần",,,"audit_log","reason","Lý do chỉnh sửa lưu vào dấu vết kiểm toán mà FR-AUDIT-01 đòi chứ không lưu trên chính bản ghi kết quả đấu giá.","- Lý do chỉnh sửa có tập giá trị chọn sẵn hay hoàn toàn tự do? Thiết kế chỉ nói bắt buộc.
+- Có độ dài tối thiểu để chặn lý do rỗng nghĩa như một dấu chấm không? Thiết kế không khai.
+- Ô lý do có được xoá sau mỗi lần lưu thành công để không dùng lại lý do cũ cho lần sửa sau không? Thiết kế không khai."
+"3.9","img-026","Nút Lưu thay đổi",,"Save changes button","button","primary_action","text_only",,,,,,,"Điều kiện: lý do chỉnh sửa phải có giá trị — không có thì không ghi gì.
+Điều kiện: người thắng mới còn hiệu lực và số lượng mới không làm tồn lô âm — FR-PARTY-02 (RFP:630); FR-LOT-03 (RFP:634).
+Điều kiện: ngày nghiệp vụ chưa lock — FR-CORR-03 (RFP:658); BR-CLOSE-01 (RFP:597).
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock; không sửa trực tiếp được; đường ra là SC-20 và SC-21."" — thông báo phải nói ĐÚNG nguyên nhân; lần thử được ghi log.
+Lỗi: ""Không có thay đổi nào."" — khi người dùng lưu mà không đổi gì thì nói thẳng chứ không báo đã lưu và đã ghi lịch sử.
+Điều kiện: bản ghi phải chưa bị người khác sửa từ lúc đọc — nếu đã bị sửa thì buộc đọc lại giá trị mới trước khi ghi.
+Điều kiện: khi đang gửi thì khoá form và chặn gửi trùng.","Mục đích và ngữ cảnh: ghi thay đổi có kiểm soát kèm lý do bắt buộc — thao tác duy nhất có tác dụng ghi trên màn này
+Thành phần hiển thị: một nút chính nhãn chữ đặt cạnh chỉ dẫn dành cho vai chỉ tra cứu
+Chức năng và logic: ghi một dòng lịch sử cho MỖI TRƯỜNG đã đổi kèm giá trị trước và sau và lý do; không lưu im lặng bất kỳ trường nào mà form đã cho sửa","on_click","Ghi thay đổi vào bản ghi rồi làm mới bảng lịch sử để người dùng đọc lại được dòng before/after vừa sinh.","seri_result; audit_log","winner_participant_id; qty; unit_price; decided_at; confirmed_by; before; after; reason","Ghi các cột thật sự đổi trên thực thể kết quả đấu giá của D-TRADE và một bản ghi audit với before/after và lý do theo FR-AUDIT-01.","- Khi hai người sửa cùng một bản ghi đồng thời thì màn của người sau hiện gì? Thiết kế đòi phát hiện được và cho đọc lại giá trị mới nhưng không khai cách hiển thị.
+- Lưu thành công thì màn ở lại chi tiết hay quay về danh sách? Thiết kế nói làm mới lịch sử nên nghiêng về ở lại.
+- Nếu ghi lịch sử thất bại thì thay đổi có bị hoàn lại không? FR-SERI-03 quan tâm nhất tới chỗ này."
+"3.10","img-027","Chỉ dẫn cho vai chỉ tra cứu",,"Read-only role handoff caption","label","handoff_caption",,,,,,,,,"Mục đích và ngữ cảnh: cho vai không được sửa biết ai làm được thao tác này thay vì để một form không có tác dụng
+Thành phần hiển thị: một khối chữ dạng nút tắt với chữ ""Vai ngoài {ROLE-TRADE; ROLE-SETTLEMENT}: chỉ tra cứu""
+Chức năng và logic: thay thế form sửa khi vai hiện tại không thuộc hai vai đó; bản ghi và lịch sử vẫn hiện đủ để đối chiếu chéo",,,,,,"- Vai chỉ tra cứu thấy năm trường ở dạng chỉ đọc hay form biến mất hoàn toàn? Thiết kế nói form sửa đổi thành chỉ dẫn.
+- Quyền sửa theo vai chứ không theo người tạo bản ghi — có cần nói rõ điều đó trên màn không?"
+"3.11","img-028","Tiêu đề mục Lịch sử chỉnh sửa","変更履歴","Edit history section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu mục lịch sử và dẫn thẳng nghiệm thu của FR-SERI-03
+Thành phần hiển thị: một dòng tiêu đề ""Lịch sử chỉnh sửa · 変更履歴 — before/after · FR-SERI-03""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.12","img-029","Bảng lịch sử chỉnh sửa before/after","変更履歴","Before and after edit history table","table","audit_table",,,,,,,,,"Mục đích và ngữ cảnh: nơi nghiệm thu của FR-SERI-03 (RFP:655) được thoả — tra cứu lại được before/after và lý do chỉnh sửa
+Thành phần hiển thị: bảng sáu cột: Thời điểm; Người thực hiện; Trường; Trước; Sau; Lý do — ba dòng mẫu gồm hai lần sửa và một dòng tạo bản ghi
+Chức năng và logic: MỘT DÒNG cho mỗi trường đã đổi; tên trường bằng tiếng nghiệp vụ; mới nhất trước; mọi lần thử ghi vào ngày đã lock cũng phải có mặt ở đây theo FR-CORR-03 (RFP:658)",,,"audit_log","created_at; actor_id; before; after; reason","Đọc dấu vết kiểm toán mà FE-041 và FR-AUDIT-01 (RFP:710) đòi ghi. Vì thực thể kết quả đấu giá không có cột trạng thái nào; bảng này là nguồn duy nhất đáp ứng FR-SERI-03.","- Tên trường trong cột Trường hiện bằng nhãn nghiệp vụ nào cho từng cột dữ liệu? Thiết kế đòi tên hiểu được nhưng không cho danh sách nhãn.
+- Bảng có phân trang khi bản ghi có nhiều lần sửa không? Thiết kế không khai.
+- Dòng tạo bản ghi hiện dấu gạch ở ba cột — có cần nhãn rõ hơn là bản ghi được tạo không? Ảnh dùng dấu gạch."
+"3.13","img-030","Ghi chú quy tắc đọc lịch sử",,"History reading rule note","label","rule_note",,,,,,,,"Điều kiện: một dòng cho MỖI TRƯỜNG đã đổi; tên trường bằng tiếng nghiệp vụ; mới nhất trước.
+Điều kiện: mọi lần thử sửa trực tiếp vào ngày đã lock đều bị chặn VÀ có log — FR-CORR-03 (RFP:658).","Mục đích và ngữ cảnh: khai điều kiện nghiệm thu của bảng lịch sử ngay dưới bảng
+Thành phần hiển thị: một dòng ghi chú nêu quy tắc một dòng cho mỗi trường; quy tắc đặt tên trường; thứ tự dòng; và nghiệm thu của FR-CORR-03
+Chức năng và logic: văn bản tĩnh — là điều kiện nghiệm thu cho bảng phía trên",,,,,,
+"4","img-031","Khối trạng thái màn",,"Screen states section","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê đủ các trạng thái mà hai màn con phải phủ
+Thành phần hiển thị: tiêu đề khối và một lưới mười thẻ trạng thái
+Chức năng và logic: chỉ hiển thị — mỗi thẻ là một nhánh hiển thị mà màn phải có",,,,,,
+"4.1","img-032","Tiêu đề khối trạng thái màn",,"Screen states section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối liệt kê trạng thái màn
+Thành phần hiển thị: một dòng tiêu đề ""Trạng thái màn""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-033","Lưới thẻ trạng thái màn",,"Screen state card grid","others","state_card_grid",,,,,,,,"Điều kiện: trạng thái rỗng của danh sách phải nêu rõ bộ lọc đang áp và cho tìm lại.
+Điều kiện: lỗi tải phải phân biệt được với 0 kết quả và có nút thử lại.
+Lỗi: ""Không tìm thấy bản ghi."" — khi bản ghi không tồn tại ở khung chi tiết.
+Điều kiện: vai ngoài hai vai được sửa thấy đủ bản ghi và lịch sử; form sửa đổi thành chỉ dẫn.
+Điều kiện: khi đang gửi thì khoá form và chặn gửi trùng.
+Lỗi: ""Phải nhập lý do chỉnh sửa."" — chặn ngay tại trường.
+Lỗi: ""Không có thay đổi nào."" — không được báo đã lưu và đã ghi lịch sử khi không ghi gì; đó là báo sai với người đang kiểm toán.
+Điều kiện: bản ghi bị người khác sửa thì phải phát hiện được và cho đọc lại giá trị mới trước khi ghi — nếu không thì chuỗi before/after bị lệch.
+Lỗi: ""Người thắng mới đã mất hiệu lực."" hoặc ""Số lượng mới vượt tồn lô."" — hai lý do nêu RIÊNG BIỆT; cùng hai cửa của SC-13.
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock."" — thông báo phải nói đúng nguyên nhân và chỉ đường SC-20 hoặc SC-21; lần thử được ghi log.","Mục đích và ngữ cảnh: mười nhánh hiển thị của hai màn con: rỗng; đang tải và lỗi tải; không tìm thấy; chỉ tra cứu; đang gửi; thiếu lý do chỉnh sửa; sửa mà không đổi gì; bản ghi đã bị người khác sửa; sửa bị từ chối theo nghiệp vụ; ngày nghiệp vụ đã lock
+Thành phần hiển thị: một lưới bốn cột chứa mười thẻ viền nét đứt — mỗi thẻ một tiêu đề và một đoạn mô tả hành vi
+Chức năng và logic: mười thẻ dùng chung một kết cấu và chỉ khác nội dung nên gộp thành một thành phần đại diện ở mục con; hai thẻ quan trọng nhất cho màn kiểm toán là sửa mà không đổi gì và bản ghi đã bị người khác sửa",,,,,,"- Thẻ bản ghi đã bị người khác sửa đòi phát hiện xung đột — màn hiện giá trị mới cạnh giá trị người dùng đang nhập hay buộc tải lại toàn bộ form?
+- Trạng thái đang tải và lỗi tải gộp trong một thẻ nhưng là hai nhánh khác nhau — có tách không?
+- Trạng thái ngày đã lock có phát hiện được trước khi bấm lưu hay chỉ lộ sau khi bấm? Thiết kế không khai."
+"4.2.1","img-034","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên Rỗng (danh sách) làm đại diện cho cả mười thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả — thẻ đại diện ghi ""Nêu rõ bộ lọc đang áp và cho tìm lại""
+Chức năng và logic: lặp mười lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên chỉ đặc tả một lần",,,,,,
+"5","img-035","Khối đối chiếu prototype",,"Prototype divergence section","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: tách phần hiện trạng thi công ra khỏi phần thiết kế để bản đặc tả không bị hành vi prototype rò vào
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột đối chiếu thiết kế với prototype
+Chức năng và logic: chỉ hiển thị — khối này là phần đối chiếu chứ không phải yêu cầu của màn",,,,,,
+"5.1","img-036","Tiêu đề khối đối chiếu prototype",,"Divergence section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối đối chiếu hiện trạng
+Thành phần hiển thị: một dòng tiêu đề ""Đối chiếu prototype""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"5.2","img-037","Bảng đối chiếu thiết kế và prototype",,"Design versus prototype table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê bảy hạng mục và mức lệch giữa điều thiết kế đòi và điều prototype đang làm
+Thành phần hiển thị: bảng ba cột: Thiết kế đòi; Prototype làm; Mức — bảy dòng với các mức Cần khách chốt; Khác không chủ đích P0; Thiếu mức nhỏ
+Chức năng và logic: chỉ hiển thị — lệch nặng nhất là đổi người thắng bị bỏ im lặng trong khi màn báo thành công; đó là mất thay đổi im lặng ngay trên màn phục vụ kiểm toán",,,,,,"- Trong lúc chờ sửa nhánh đổi người thắng thì bỏ select khỏi form hay chặn gửi trường đó? Hai cách cho hai trải nghiệm khác nhau.
+- Thông báo lỗi đang nói sai nguyên nhân khi ngày đã lock — ưu tiên sửa nhãn thông báo trước hay bổ sung log lần thử trước?"
+"6","img-038","Khối ghi chú phân quyền và đường sửa",,"Permission and edit-path note","label","footer_note",,,,,,,,"Điều kiện: tra cứu mở cho các vai đang hoạt động để đối chiếu chéo.
+Điều kiện: sửa thuộc ROLE-TRADE và ROLE-SETTLEMENT — TBL-ROLE-01 (RFP:245) giao vai thứ hai việc đối chiếu và điều chỉnh quyết toán.
+Điều kiện: quyền theo VAI chứ không theo người tạo bản ghi.
+Điều kiện: sửa trực tiếp chỉ hợp lệ khi ngày nghiệp vụ CHƯA LOCK; sau lock thì FR-CORR-01 (RFP:656) và FR-CORR-02 (RFP:657) là đường duy nhất.","Mục đích và ngữ cảnh: khai phân quyền của màn và ranh giới giữa sửa trực tiếp với đường điều chỉnh sau lock
+Thành phần hiển thị: một khối ghi chú ba đoạn: phân quyền đọc và sửa; lý do gộp hai màn con cùng ranh giới trước và sau lock; và một liên kết tới bản as-built của prototype
+Chức năng và logic: chỉ hiển thị — quyền theo vai nên ai thuộc hai vai đó cũng sửa được bản ghi của người khác",,,,,,"- Quyền theo vai chứ không theo người tạo — có cần một dấu vết riêng cho việc một vai sửa bản ghi của vai khác không? FR-AUDIT-01 đã đòi chủ thể cho mỗi thao tác.
+- Sau lock thì màn có tự đổi nút Lưu thay đổi thành đường sang SC-20 không? Thiết kế chỉ nói đường ra là SC-20 và SC-21."

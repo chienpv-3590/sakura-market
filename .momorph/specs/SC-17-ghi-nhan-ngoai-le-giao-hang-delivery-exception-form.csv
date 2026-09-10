@@ -1,0 +1,120 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu trang màn ghi ngoại lệ giao hàng","配送例外記録ヘッダー","Delivery exception page header","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: neo màn vào chuỗi truy vết FE-023 → FN-06 → FR-DEL-03 và chỉ ra báo cáo tiêu thụ dữ liệu của màn
+Thành phần hiển thị: tiêu đề màn; dòng meta truy vết; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — chỉ định danh màn và phạm vi yêu cầu",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-17 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết và chỉ ra màn này là điều kiện của một báo cáo bắt buộc
+Thành phần hiển thị: mã FE-023; nhóm FN-06; ưu tiên P1; một yêu cầu chức năng; một miền dữ liệu; sơ đồ; mã báo cáo; route đề xuất; actor
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,"Chưa thi công",,"Mục đích và ngữ cảnh: cảnh báo màn này chưa có bản thi công nên không có hiện trạng để đối chiếu từng dòng
+Thành phần hiển thị: một nhãn chữ
+Chức năng và logic: tĩnh — giá trị đến từ trạng thái roster",,,,,,
+"2","img-005","Dải cảnh báo màn thuần thiết kế","設計のみ警告バナー","Design-only callout banner","label","callout",,,,,,,,,"Mục đích và ngữ cảnh: nói thẳng ngay đầu màn rằng nội dung bên dưới là thiết kế đọc từ yêu cầu khách chứ không phải mô tả code
+Thành phần hiển thị: một dải cảnh báo bốn dòng nêu nguồn của thiết kế và bốn chỗ tiêu thụ dữ liệu của màn
+Chức năng và logic: tĩnh; là ghi chú đọc bắt buộc trước khi đọc phần còn lại",,,,,,
+"3","img-006","Khối sơ đồ FIG-014 luồng ngoại lệ khi giao hàng","FIG-014 パネル","FIG-014 panel","others","diagram_panel",,,,,,,,,"Mục đích và ngữ cảnh: đặt màn vào đúng một nhánh của sơ đồ FIG-014 và phân biệt nhánh đó với hai nhánh còn lại
+Thành phần hiển thị: một sơ đồ chữ ba nhánh kèm một chú thích phân vai từng nhánh
+Chức năng và logic: tĩnh; sơ đồ là nguồn của bốn loại ngoại lệ mà màn ghi",,,,,,
+"3.1","img-007","Sơ đồ FIG-014 ba nhánh","FIG-014 フロー図","FIG-014 flow diagram","others","flow_diagram",,,,,,,,,"Mục đích và ngữ cảnh: vẽ đủ ba nhánh của sơ đồ yêu cầu khách kể cả nhánh không có yêu cầu chức năng nào đòi
+Thành phần hiển thị: một sơ đồ chữ với ba nhánh rẽ từ cùng một cổng hỏi số lượng khớp
+Chức năng và logic: tĩnh; nhánh có chênh lệch là nhánh của màn này; nhánh kiểm tra quyền nối sang cơ chế hiệu lực tham gia",,,,,,
+"3.2","img-008","Ghi chú phân vai ba nhánh của FIG-014","三分岐注記","Three-branch note","label","inline_note",,,,,,,,,"Mục đích và ngữ cảnh: chặn việc gộp ba nhánh thành một luồng và nói rõ nhánh nào thuộc màn nào
+Thành phần hiển thị: một đoạn chú thích hai dòng dẫn FE-007 và BR-PERM-01
+Chức năng và logic: tĩnh; là ranh giới phạm vi giữa màn ghi ngoại lệ và cơ chế hiệu lực tham gia",,,,,,"- Nhánh kiểm tra quyền của sơ đồ có phải một loại ngoại lệ giao hàng thứ năm không? Yêu cầu FR-DEL-03 chỉ liệt bốn loại nên hiện không loại nào nhận được tình huống quyền mất hiệu lực giữa lúc giao."
+"4","img-009","Khối form ghi ngoại lệ","例外記録フォーム","Exception record form","others","form_panel",,,,,,,,,"Mục đích và ngữ cảnh: đường ghi duy nhất của FE-023: lưu lý do và người xác nhận cho một trong bốn loại ngoại lệ
+Thành phần hiển thị: tám trường xếp bốn hàng; một nút gửi; một chú thích hậu quả sau khi ghi
+Chức năng và logic: hai trường hệ thống tự đặt; hai trường lấy từ ngữ cảnh; bốn trường người nhập điền; ghi xong thì trạng thái giao hàng chuyển sang ngoại lệ",,,,,,
+"4.1","img-010","Trường giao hàng đang ghi ngoại lệ","配送","Delivery reference","label","readonly_field",,"string","true",,,,"TXN-0001 (lấy từ ngữ cảnh; không nhập)","Điều kiện: phiếu giao hàng trong ngữ cảnh không tồn tại
+Lỗi: ""Không tìm thấy giao hàng này.""","Mục đích và ngữ cảnh: neo bản ghi ngoại lệ về đúng một phiếu giao hàng; đây là quan hệ bắt buộc của bản ghi
+Thành phần hiển thị: nhãn hai ngôn ngữ có dấu bắt buộc và một ô chỉ đọc mang mã giao dịch
+Chức năng và logic: lấy từ ngữ cảnh màn trước; không nhận từ dữ liệu người gửi lên",,,"delivery","id","Prototype có thực thể phiếu giao hàng và khoá chính của nó; chỗ thiếu là phía ngoại lệ chứ không phải phía này.",
+"4.2","img-011","Trường lần giao liên quan","関連回数","Related shipment","dropdown","single_select",,"string","false",,,,"Lần 2 — SHP-0002 · 60.00","Điều kiện: lần giao đã chọn không thuộc phiếu giao hàng đang ghi
+Lỗi: ""Lần giao này không thuộc giao hàng đang xem.""","Mục đích và ngữ cảnh: cho phép ngoại lệ gắn vào một lần giao cụ thể; đây là chiều phân tích mà báo cáo ngoại lệ cần
+Thành phần hiển thị: nhãn hai ngôn ngữ; một danh sách chọn liệt số lần và số lượng; một chú thích nói rõ trường không bắt buộc
+Chức năng và logic: danh sách chỉ liệt lần giao của chính phiếu giao hàng này; để trống nghĩa là ngoại lệ thuộc cấp phiếu giao hàng",,,"delivery_shipment","id; seq","Prototype có sổ từng lần giao và số thứ tự để chọn; chỗ CHƯA TỒN TẠI là cột nối từ bản ghi ngoại lệ sang lần giao.","- Ngoại lệ gắn vào cấp phiếu giao hàng hay cấp một lần giao cụ thể? Yêu cầu FR-DEL-03 chỉ nói lưu lý do và người xác nhận; chọn sai thì báo cáo ngoại lệ mất chiều phân tích theo lần giao.
+- Định dạng nhãn của một lần giao trong danh sách chọn còn thiếu: số lần kèm mã lần giao và số lượng; hay thêm cả ngày nghiệp vụ? Nguồn thiết kế không quy định."
+"4.3","img-012","Trường loại ngoại lệ","例外種別","Exception kind","dropdown","single_select",,"string","true","một trong bốn loại của FR-DEL-03: giao thiếu; giao thừa; hoàn trả; hủy một phần",,,"Giao thiếu","Điều kiện: loại ngoại lệ chưa được chọn
+Lỗi: ""Vui lòng chọn loại ngoại lệ.""
+Điều kiện: loại ngoại lệ không thuộc bốn giá trị của FR-DEL-03
+Lỗi: ""Loại ngoại lệ không hợp lệ.""","Mục đích và ngữ cảnh: phân loại ngoại lệ để bảng đối chiếu và báo cáo nhóm được thay vì đọc chữ tự do
+Thành phần hiển thị: nhãn có dấu bắt buộc; một danh sách chọn; một chú thích chốt đúng bốn giá trị
+Chức năng và logic: đúng bốn giá trị của FR-DEL-03; không có giá trị khác và không có ô nhập tự do thay thế",,,,,"Thiết kế đòi trường này; prototype CHƯA TỒN TẠI bảng hay cột nào lưu ngoại lệ giao hàng nên để trống.","- Có cần một loại thứ năm cho tình huống quyền mất hiệu lực giữa lúc giao mà sơ đồ FIG-014 có vẽ không? Thêm giá trị ngoài bốn loại thì phải được chủ đầu tư chốt vì báo cáo nhóm theo đúng tập này."
+"4.4","img-013","Trường số lượng liên quan","数量","Related quantity","text_form","number_input",,"integer","false","số với hai chữ số thập phân",,,"8.00","Điều kiện: số lượng nhỏ hơn hoặc bằng 0
+Lỗi: ""Số lượng phải lớn hơn 0.""
+Điều kiện: loại là giao thiếu hoặc hoàn trả và số lượng vượt phần đã giao
+Lỗi: ""Số lượng vượt phần đã giao.""
+Điều kiện: loại là hủy một phần và số lượng vượt số lượng còn lại
+Lỗi: ""Số lượng vượt số lượng còn lại.""","Mục đích và ngữ cảnh: cho biết chênh lệch bao nhiêu; là con số bảng đối chiếu ngày dùng để giải thích phần lệch
+Thành phần hiển thị: nhãn hai ngôn ngữ; một ô nhập số; một chú thích quy tắc chặn trên theo từng loại ngoại lệ
+Chức năng và logic: chặn trên phụ thuộc loại ngoại lệ đã chọn; bắt buộc hay không cũng phụ thuộc loại",,,,,"Thiết kế đòi trường này; prototype CHƯA TỒN TẠI bảng hay cột nào lưu ngoại lệ giao hàng nên để trống.","- Với loại nào thì số lượng liên quan là bắt buộc? Giao thiếu và giao thừa hầu như luôn có con số; nhưng hủy một phần trước khi giao thì có thể chưa có số lượng nào để ghi."
+"4.5","img-014","Trường lý do ngoại lệ","理由","Exception reason","textarea","multiline_text",,"string","true",,,"1000","8 thùng hỏng bao bì tại kho; người nhận từ chối nhận phần này","Điều kiện: lý do rỗng hoặc chỉ gồm khoảng trắng
+Lỗi: ""Vui lòng nhập lý do ngoại lệ.""","Mục đích và ngữ cảnh: thoả nghiệm thu của FR-DEL-03 về danh sách lý do; đây là trường mà phía đối chiếu đọc thay cho gọi điện hỏi
+Thành phần hiển thị: nhãn hai ngôn ngữ có dấu bắt buộc; một ô nhập nhiều dòng; một chú thích nói rõ không được để trống
+Chức năng và logic: bắt buộc; cắt khoảng trắng hai đầu trước khi kiểm rỗng",,,,,"Thiết kế đòi trường này; prototype CHƯA TỒN TẠI bảng hay cột nào lưu ngoại lệ giao hàng nên để trống.","- Lý do là chữ tự do; hay chọn từ một danh mục lý do cố định rồi ghi thêm chú thích? Nghiệm thu nói có danh sách lý do nên có thể đang đòi một danh mục chứ không phải ô chữ tự do.
+- Định dạng của ô lý do còn thiếu: chữ tự do không cấu trúc; hay phải theo một khuôn nhất định để báo cáo đọc lại được?"
+"4.6","img-015","Trường người xác nhận ngoại lệ","実施者","Confirmed by","label","readonly_field",,"string","true",,,,"Người dùng B (từ phiên đăng nhập)",,"Mục đích và ngữ cảnh: thoả nửa còn lại của nghiệm thu FR-DEL-03: mỗi ngoại lệ có người chịu trách nhiệm
+Thành phần hiển thị: nhãn hai ngôn ngữ có dấu bắt buộc; một ô chỉ đọc; một chú thích dẫn nghiệm thu
+Chức năng và logic: hệ thống đặt từ phiên đăng nhập; không bao giờ nhận từ dữ liệu người gửi lên",,,,,"Thiết kế đòi trường này; prototype CHƯA TỒN TẠI bảng hay cột nào lưu ngoại lệ giao hàng nên để trống.",
+"4.7","img-016","Trường ngày nghiệp vụ của ngoại lệ","業務日","Business date","label","readonly_field",,"date","true","YYYY-MM-DD",,,"2026-09-09 (JST)",,"Mục đích và ngữ cảnh: quyết định bản ghi ngoại lệ thuộc kỳ nào; đây là trường ảnh hưởng trực tiếp tới số đối chiếu
+Thành phần hiển thị: nhãn hai ngôn ngữ có dấu bắt buộc; một ô chỉ đọc; một chú thích về hệ quả lên bảng đối chiếu
+Chức năng và logic: hệ thống đặt theo ngày nghiệp vụ hiện tại giờ Nhật; không nhận từ dữ liệu người gửi lên",,,,,"Thiết kế đòi trường này; prototype CHƯA TỒN TẠI bảng hay cột nào lưu ngoại lệ giao hàng nên để trống.","- Ngoại lệ phát hiện muộn thì thuộc ngày phát hiện hay ngày của lần giao gốc? Hai cách cho hai bảng đối chiếu khác nhau; và nếu là ngày của lần giao gốc thì ngày đó có thể đã bị khoá."
+"4.8","img-017","Trường ảnh và chứng từ bằng chứng","証拠画像・書類","Evidence image or document","file_or_image","file_upload",,,"false",,,,"Chọn tệp… (không bắt buộc)","Điều kiện: loại tệp không thuộc danh sách loại được phép
+Lỗi: ""Loại tệp không được phép.""
+Điều kiện: kích thước tệp vượt hạn mức cho phép
+Lỗi: ""Tệp vượt kích thước cho phép.""","Mục đích và ngữ cảnh: giữ bằng chứng của chênh lệch để phía đối chiếu và kiểm toán về sau đọc lại được
+Thành phần hiển thị: nhãn; một ô chọn tệp; một chú thích dẫn chính sách lưu trữ và ranh giới phạm vi
+Chức năng và logic: không bắt buộc; kiểm loại tệp và kích thước ở phía máy chủ; không tự phán định chất lượng hàng từ ảnh",,,,,"Thiết kế đòi trường này; prototype CHƯA TỒN TẠI bảng hay cột nào lưu ngoại lệ giao hàng nên để trống.","- Danh sách loại tệp và hạn mức kích thước cho bằng chứng ngoại lệ là gì; và một ngoại lệ đính kèm được bao nhiêu tệp? Nguồn thiết kế nói chính sách lưu trữ nhưng không cho con số nào cho lần tải lên.
+- Định dạng tệp bằng chứng còn thiếu: những loại tệp nào được nhận; và có yêu cầu độ phân giải tối thiểu cho ảnh hiện trường không?"
+"4.9","img-018","Nút ghi ngoại lệ","例外記録ボタン","Record exception button","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: thao tác duy nhất sinh ra dữ liệu ngoại lệ trong toàn hệ thống
+Thành phần hiển thị: một nút chữ
+Chức năng và logic: vô hiệu khi đang gửi; ghi bản ghi ngoại lệ trước rồi mới chuyển trạng thái giao hàng để không mất bằng chứng nếu bước sau thất bại","on_click","Ở lại màn; thêm một dòng vào bảng ngoại lệ đã ghi; chuyển trạng thái giao hàng sang ngoại lệ; khoá đường chốt hoàn tất ở SC-16",,,"Thiết kế đòi đường ghi này; prototype CHƯA TỒN TẠI endpoint hay bảng nào ghi được ngoại lệ nên nút chưa có chỗ để gọi tới.",
+"4.10","img-019","Ghi chú hậu quả sau khi ghi ngoại lệ","記録後注記","Post-record note","label","inline_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt hai hệ quả của thao tác ghi và giải thích vì sao không có đường sửa
+Thành phần hiển thị: một đoạn chú thích hai dòng dẫn FR-CORR-02
+Chức năng và logic: tĩnh; là ràng buộc thiết kế nối SC-17 với SC-16 và với đường điều chỉnh có kiểm soát",,,,,,
+"5","img-020","Khối bảng ngoại lệ đã ghi","記録済み例外パネル","Recorded exception panel","others","list_panel",,,,,,,,,"Mục đích và ngữ cảnh: cho thấy nghiệm thu của FR-DEL-03 đã đạt: có danh sách lý do và người xác nhận đọc lại được
+Thành phần hiển thị: một bảng tám cột kèm một chú thích về hai chỗ tiêu thụ dữ liệu
+Chức năng và logic: chỉ đọc; là nguồn của báo cáo ngoại lệ và của phần ngoại lệ đủ điều kiện trong bảng đối chiếu ngày",,,,,,
+"5.1","img-021","Bảng ngoại lệ tám cột","例外テーブル","Exception table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: bề mặt đọc lại của dữ liệu ngoại lệ; là nơi phía đối chiếu tra khi thấy chênh lệch
+Thành phần hiển thị: tám cột: ngày nghiệp vụ; giao dịch; lần giao; loại; số lượng; lý do; người xác nhận; bằng chứng
+Chức năng và logic: chỉ đọc; lọc được theo ngày nghiệp vụ và loại ngoại lệ vì đó là hai bộ lọc bắt buộc của báo cáo tiêu thụ",,,,,"Thiết kế đòi bảng này; prototype CHƯA TỒN TẠI thực thể ngoại lệ giao hàng nào nên cả tám cột đều chưa có nguồn.","- Bảng này liệt ngoại lệ của một phiếu giao hàng đang xem; hay của cả ngày nghiệp vụ? Bảng ba dòng mẫu trên hình có ba mã giao dịch khác nhau nên đang nghiêng về phạm vi cả ngày."
+"5.1.1","img-022","Hàng tiêu đề bảng ngoại lệ","テーブル見出し行","Table header row","label","table_header",,,,,,,,,"Mục đích và ngữ cảnh: gọi tên tám cột của bảng ngoại lệ
+Thành phần hiển thị: tám ô tiêu đề chữ tiếng Việt
+Chức năng và logic: tĩnh; không sắp xếp được theo cột ở bản thiết kế này",,,,,,
+"5.1.2","img-023","Dòng ngoại lệ (đại diện cho ba dòng mẫu)","例外行","Exception row","label","table_row",,,,"ngày YYYY-MM-DD; số lượng hai chữ số thập phân",,,,,"Mục đích và ngữ cảnh: một dòng là một ngoại lệ đã ghi; đọc ngang là biết loại; số lượng; lý do và ai xác nhận
+Thành phần hiển thị: tám ô dữ liệu; ô lần giao là dấu gạch khi ngoại lệ thuộc cấp phiếu giao hàng; ô bằng chứng đếm số tệp
+Chức năng và logic: chỉ đọc; ba dòng mẫu trên hình gộp làm một dòng đại diện vì chỉ khác giá trị",,,,,"Ba dòng mẫu chỉ khác giá trị nên gộp thành một dòng đại diện; prototype CHƯA TỒN TẠI bảng ngoại lệ nên dòng này chưa có nguồn.",
+"5.2","img-024","Ghi chú hai chỗ tiêu thụ dữ liệu ngoại lệ","消費先注記","Downstream consumer note","label","inline_note",,,,,,,,,"Mục đích và ngữ cảnh: chỉ ra hai chỗ phụ thuộc dữ liệu của màn để thấy rõ hệ quả khi màn chưa có
+Thành phần hiển thị: một đoạn chú thích một dòng dẫn RPT-04 và FR-SETTLE-01
+Chức năng và logic: tĩnh; là ràng buộc phụ thuộc giữa SC-17; SC-18 và danh mục báo cáo",,,,,,
+"6","img-025","Khối trạng thái màn","画面状態パネル","Screen state panel","others","state_panel",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ trạng thái màn phải xử lý gồm cả loại ngoại lệ không ghi được bằng đường lần giao
+Thành phần hiển thị: sáu thẻ trạng thái xếp hai hàng
+Chức năng và logic: tĩnh; là phần đặc tả đi kèm màn",,,,,,
+"6.1","img-026","Thẻ trạng thái Chưa có lần giao nào","配送実績なし","No shipment yet state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: cho phép ghi ngoại lệ trước khi có lần giao nào
+Thành phần hiển thị: điều kiện và loại ngoại lệ áp dụng được
+Chức năng và logic: trường lần giao liên quan để trống; ngoại lệ gắn vào cấp phiếu giao hàng",,,,,,
+"6.2","img-027","Thẻ trạng thái Giao hàng đã hoàn tất","配送完了済み","Delivery completed state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: bảo toàn số đã chốt
+Thành phần hiển thị: form ở chế độ đọc kèm lời giải thích và đường đi tiếp
+Chức năng và logic: chặn ghi khi phiếu giao hàng ở trạng thái cuối; chuyển người dùng sang đường yêu cầu điều chỉnh",,,,,,
+"6.3","img-028","Thẻ trạng thái Ngày của lần giao đã lock","配送日ロック済み","Shipment day locked state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: giữ số của ngày đã chốt bất biến
+Thành phần hiển thị: một câu quy tắc và đường đi tiếp
+Chức năng và logic: chặn ghi khi ngày nghiệp vụ của ngoại lệ đã bị khoá; đường ra là yêu cầu điều chỉnh có phê duyệt",,,,,,
+"6.4","img-029","Thẻ trạng thái Giao thừa","過剰配送","Over-delivery state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: giải thích vì sao giao thừa bắt buộc phải là một loại ngoại lệ
+Thành phần hiển thị: một câu quy tắc nối với chặn trên của đường ghi lần giao
+Chức năng và logic: đường ghi lần giao chặn số lượng vượt số lượng đặt nên giao thừa chỉ vào hệ thống qua màn này",,,,,,
+"6.5","img-030","Thẻ trạng thái Đang gửi và Gửi lỗi","送信中・送信エラー","Submitting and submit error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: không để người dùng nhập lại cả form khi gửi lỗi
+Thành phần hiển thị: nút vô hiệu khi đang gửi; thông báo lỗi gắn với trường sai
+Chức năng và logic: giữ nguyên dữ liệu đã nhập qua lần gửi lỗi; chỉ rõ trường nào sai chứ không báo lỗi chung",,,,,,
+"6.6","img-031","Thẻ trạng thái Không có quyền","権限なし","No permission state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: phân biệt trục ghi và trục đọc của màn
+Thành phần hiển thị: một câu quy tắc cho từng trục
+Chức năng và logic: trục ghi chặn theo vai trò; trục đọc mở cho mọi vai đang hoạt động",,,,,,
+"7","img-032","Khối đối chiếu thiết kế và prototype","プロトタイプ差分パネル","Prototype divergence panel","others","comparison_panel",,,,,,,,,"Mục đích và ngữ cảnh: gom mọi chỗ bản thi công lệch thiết kế vào một chỗ để không lẫn thiết kế với hiện trạng
+Thành phần hiển thị: một bảng ba cột: thiết kế đòi; prototype làm; mức
+Chức năng và logic: tĩnh; phần đối chiếu nằm ngoài phạm vi hành vi màn",,,,,,
+"7.1","img-033","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: khai sáu chỗ lệch của màn ghi ngoại lệ kèm mức độ
+Thành phần hiển thị: ba cột và sáu dòng; cột mức phân ba loại lệch
+Chức năng và logic: tĩnh; chỉ liệt chỗ lệch chứ không liệt chỗ khớp",,,,,,
+"8","img-034","Ghi chú chân màn về phân quyền đề xuất và phụ thuộc","画面フッター注記","Screen footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: khai phân quyền đề xuất và vẽ rõ hai đầu phụ thuộc của màn
+Thành phần hiển thị: hai đoạn: phân quyền đề xuất; phụ thuộc vào và ra kèm đường dẫn tới bản spec
+Chức năng và logic: tĩnh; là chú thích thiết kế",,,,,,

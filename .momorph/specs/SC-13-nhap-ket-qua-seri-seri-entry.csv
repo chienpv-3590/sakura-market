@@ -1,0 +1,150 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn hình",,"Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người dùng và khai chuỗi truy vết của màn
+Thành phần hiển thị: tiêu đề màn; một dòng meta liệt kê mã FE / FN / yêu cầu khách / ràng buộc phạm vi / actor; và hai thẻ ghi chú
+Chức năng và logic: chỉ hiển thị — không có tương tác nào trong khối này",,,,,,
+"1.1","img-002","Tiêu đề màn hình",,"Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm ""SC-13 · Nhập kết quả せり""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu",,"Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn — khai cả bốn yêu cầu kế thừa từ tầng nghiệp vụ vì chúng viết trung tính về kênh
+Thành phần hiển thị: mã FE-018 và nhóm FN-05; ưu tiên P0; hai yêu cầu FR-SERI; ràng buộc phạm vi SCOPE-OUT-02; bốn yêu cầu kế thừa; và actor kèm vai ROLE-TRADE
+Chức năng và logic: văn bản tĩnh — dòng này là căn cứ để màn せり áp cùng hai cửa kiểm với màn 相対取引",,,,,,"- Dòng meta này là chú thích của wireframe hay nội dung sẽ có trên màn thật? Thiết kế không khai.
+- TBL-ROLE-01 (RFP:245) giao ROLE-TRADE cả việc ""ghi nhận kết quả đấu giá"" — có cần tách một vai người điều hành đấu giá riêng không? Thiết kế dùng chung một vai."
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này đã có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Đã dựng""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"1.4","img-005","Thẻ ghi chú ranh giới số hóa",,"Digitisation boundary tag","label","scope_tag",,,,,,,,,"Mục đích và ngữ cảnh: nhắc ranh giới phạm vi ngay ở đầu màn — chỉ nhập tay và không nhận dạng tự động
+Thành phần hiển thị: một thẻ chữ nhỏ với chữ ""Chỉ nhập tay · không nhận dạng""
+Chức năng và logic: nhãn tĩnh — bám SCOPE-OUT-02 (RFP:405) và FR-SERI-01 (RFP:653)",,,,,,
+"2","img-006","Khối form nhập tay kết quả cuối cùng",,"Final result manual input section","others","form_section",,,,,,,,,"Mục đích và ngữ cảnh: toàn bộ phần nhập tay của màn — năm trường mà FR-SERI-02 (RFP:654) đòi lưu cho một kết quả せり cộng trường lô hàng
+Thành phần hiển thị: tiêu đề khối; sáu trường xếp hai cột mỗi trường kèm một dòng chú thích quy tắc; và một nút lưu
+Chức năng và logic: người vận hành nhập kết quả đã chốt tại sàn; FR-SERI-01 (RFP:653) chỉ cho ghi nhận kết quả CUỐI CÙNG do người nhập — không có đường nhận dạng tự động nào",,,"seri_result",,"Ghi vào thực thể kết quả đấu giá của miền D-TRADE (RFP:604) — thực thể riêng khác với thực thể giao dịch 相対取引.",
+"2.1","img-007","Tiêu đề khối form nhập tay",,"Manual input section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ khối này chứa đúng năm trường mà yêu cầu khách đòi và chỉ nhận nhập tay
+Thành phần hiển thị: một dòng tiêu đề ""Form nhập tay kết quả cuối cùng — năm trường FR-SERI-02 đòi""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"2.2","img-008","Trường Lô hàng","ロット","Lot selector","dropdown","select_single",,"string","true","LOT-<NNNN> — <tên mặt hàng>",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: option chỉ gồm lô đang ở chặng bán được của FIG-011 (RFP:616).
+Điều kiện: một lô có ĐÚNG MỘT kết quả せり cuối cùng — FR-SERI-01 (RFP:653) chỉ cho ghi nhận kết quả cuối cùng nên tính duy nhất phải là ràng buộc dữ liệu chứ không phải một lần đọc trước khi ghi.
+Lỗi: ""Lô LOT-0003 đã có kết quả せり; hãy chỉnh sửa bản ghi hiện có thay vì tạo mới."" — chỉ đường sang SC-14.","Mục đích và ngữ cảnh: chọn lô hàng vừa đấu giá xong — lô là cái định danh bản ghi kết quả
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select hiện mã lô và tên mặt hàng; và một dòng chú thích về tính duy nhất theo lô
+Chức năng và logic: hai người nhập cùng một lô cùng lúc thì đúng một người ghi được; tính duy nhất theo lô là ràng buộc dữ liệu chứ không phải quy tắc ở tầng ứng dụng","on_click",,"seri_result","lot_id","Khoá ngoại tới thực thể lô hàng của miền D-LOT (RFP:603). Thiết kế đòi tính duy nhất theo lô là ràng buộc dữ liệu — ràng buộc này CHƯA TỒN TẠI trên thực thể hiện có.","- Danh sách lô có lọc theo chặng bán được của FIG-011 giống SC-11 không? Thiết kế nói có nhưng cần xác nhận vì hai màn dùng hai tiêu chí khác nhau ở bản thi công.
+- Option có cần hiện số lượng khả dụng còn lại để người nhập tự cân số lượng không? Thiết kế không khai.
+- Lô đã có kết quả せり thì bị loại khỏi danh sách hay vẫn hiện kèm cảnh báo? Thiết kế chỉ nói chặn tạo mới."
+"2.3","img-009","Trường Người thắng","落札者","Winner selector","dropdown","select_single",,"string","true","<tên người tham gia>",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: người thắng phải có 許可 hoặc 承認 CÒN HIỆU LỰC tại thời điểm chốt kết quả — BR-PERM-01 (RFP:595) và FR-PARTY-02 (RFP:630) viết ở tầng quy tắc nghiệp vụ và không giới hạn kênh.
+Lỗi: ""Người tham gia B đã mất hiệu lực từ <ngày>; không thể ghi kết quả せり."" — không ghi bản ghi.","Mục đích và ngữ cảnh: người thắng phiên đấu giá — một trong năm trường FR-SERI-02 (RFP:654) đòi lưu
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select hiện tên người tham gia; và một dòng chú thích nói rõ vì sao cửa hiệu lực áp cho cả kênh せり
+Chức năng và logic: ghi kết quả せり đúng là một lần chốt giao dịch nên cửa hiệu lực 許可/承認 áp y như ở SC-11; lý do từ chối phải nêu tên người tham gia và ngày mất hiệu lực","on_click",,"seri_result","winner_participant_id","Khoá ngoại tới thực thể người tham gia của miền D-PARTY (RFP:602). Thiết kế đòi cửa hiệu lực tại thời điểm chốt kết quả — cửa này CHƯA CÓ trên nhánh せり của bản thi công.","- Danh sách có lọc theo phân loại người tham gia nào không? FR-PARTY-01 (RFP:629) đòi bốn phân loại không được gộp nhưng thiết kế màn này không nói phân loại nào được thắng đấu giá.
+- Người tham gia mất hiệu lực có bị loại khỏi danh sách hay vẫn hiện rồi bị từ chối ở bước lưu? Thiết kế đặt cửa ở thời điểm chốt kết quả.
+- Danh sách dài thì select có tìm theo tên không? Thiết kế không khai."
+"2.4","img-010","Trường Số lượng","数量","Quantity input","text_form","number_input",,"number","true","<số> với dấu phẩy thập phân — ảnh cho thấy 2 chữ số lẻ",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: không vượt số lượng khả dụng của lô và không làm số đó âm — FR-LOT-03 (RFP:634) đòi kiểm trước khi cho phép giao dịch; BR-LOT-02 (RFP:596) đòi truy vết được.
+Lỗi: ""LOT-0003 chỉ còn <số> khả dụng; kết quả せり cần <số>."" — không ghi bản ghi.","Mục đích và ngữ cảnh: số lượng của kết quả đấu giá — một trong năm trường FR-SERI-02 đòi lưu
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập số; và một dòng chú thích nói rõ tồn của lô là tồn dùng chung cho cả hai kênh bán
+Chức năng và logic: tồn của lô dùng chung nên số lượng ghi ở kênh せり phải trừ vào cùng một số khả dụng mà kênh 相対取引 đang dùng — nếu không thì một lô bán được hai lần",,,"seri_result","qty","Số lượng của kết quả đấu giá trong D-TRADE. Thiết kế đòi trừ vào số lượng khả dụng của thực thể lô hàng (D-LOT) — đường trừ này CHƯA CÓ trên nhánh せり.","- Đơn vị đo có hiện cạnh ô nhập không? Thiết kế không khai.
+- Số chữ số thập phân tối đa là bao nhiêu? Ảnh cho thấy hai chữ số nhưng thiết kế không khai ngưỡng.
+- Một lô có thể đấu giá một phần rồi bán phần còn lại qua 相対取引 không? Thiết kế nói tồn dùng chung nhưng không khai có được chia lô theo kênh hay không."
+"2.5","img-011","Trường Đơn giá","単価 (JPY)","Unit price input","text_form","number_input",,"integer","true","<số nguyên JPY> — không có phần thập phân",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: JPY không có phần thập phân nên chỉ nhận số nguyên.
+Điều kiện: là giá thắng CUỐI CÙNG của phiên — màn không tính hay suy ra giá.","Mục đích và ngữ cảnh: giá thắng cuối cùng của phiên đấu giá — một trong năm trường FR-SERI-02 đòi lưu
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập số nguyên; và một dòng chú thích nói rõ đây là giá thắng cuối cùng
+Chức năng và logic: chỉ nhận số nguyên JPY; giá hình thành ở sàn đấu giá chứ không do hệ thống suy ra",,,"seri_result","unit_price","Đơn giá của kết quả đấu giá trong D-TRADE. Đơn vị JPY và không có phần thập phân là ràng buộc dữ liệu.","- Ô nhập có tự định dạng nhóm nghìn khi gõ như giá trị 2 400 trong ảnh hay chỉ nhận số trần?
+- Có ngưỡng trên nào cho đơn giá cần cảnh báo nhập sai không? Thiết kế không khai."
+"2.6","img-012","Trường Thời điểm quyết định","決定時刻","Decided at input","date_picker","datetime_input",,"date","true","YYYY-MM-DD hh:mm",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: KHÔNG nhận thời điểm tương lai.
+Lỗi: ""Thời điểm quyết định không được ở tương lai.""
+Điều kiện: có thể sớm hơn lúc nhập liệu vì phiên đấu giá chạy trước khi người vận hành nhập.","Mục đích và ngữ cảnh: thời điểm phiên đấu giá chốt tại sàn — một trong năm trường FR-SERI-02 đòi lưu và là nửa của cặp người xác nhận cộng thời điểm
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập ngày kèm giờ phút; và một dòng chú thích nói rõ giá trị có thể sớm hơn lúc nhập liệu
+Chức năng và logic: do người vận hành nhập chứ không lấy đồng hồ hệ thống; thời điểm tương lai bị chặn vì một phiên chưa diễn ra thì không có kết quả cuối cùng","on_click",,"seri_result","decided_at","Thời điểm quyết định của kết quả đấu giá trong D-TRADE — mốc mà cửa hiệu lực 許可/承認 của BR-PERM-01 nên được đánh giá theo.","- Thời điểm quyết định nhập theo múi giờ nào? BR-INC-01 (RFP:598) dùng JST cho ngày nghiệp vụ nhưng thiết kế không khai múi giờ của trường này.
+- Có giới hạn nhập bù về quá khứ không? Thiết kế chỉ chặn tương lai.
+- Thời điểm quyết định có phải nằm trong khung giờ dịch vụ 02:00–10:00 JST của FIG-020 (RFP:819) không? Thiết kế không đòi."
+"2.7","img-013","Trường Người xác nhận","確認者","Confirmer selector","dropdown","select_single",,"string","true","<tên tài khoản nội bộ>",,,"người đang đăng nhập","Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: phải là một tài khoản nội bộ ĐANG HOẠT ĐỘNG — không nhận chữ tự do.
+Điều kiện: giá trị đầu là người đang đăng nhập.","Mục đích và ngữ cảnh: người chịu trách nhiệm về kết quả — FR-SERI-02 (RFP:654) nhắc tên cặp người xác nhận cộng thời điểm
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select hiện tên tài khoản nội bộ với giá trị đầu là người đang đăng nhập; và một dòng chú thích nói rõ đây không phải chữ tự do
+Chức năng và logic: là một tham chiếu tới tài khoản nội bộ chứ không phải văn bản; đổi người xác nhận là đổi người chịu trách nhiệm nên thao tác này thuộc phạm vi lịch sử chỉnh sửa của FR-SERI-03 (RFP:655)","on_click",,"seri_result","confirmed_by","Khoá ngoại tới tài khoản nội bộ của miền D-PARTY (RFP:602) — chủ thể chịu trách nhiệm về kết quả.","- Người xác nhận có buộc phải là người đang đăng nhập hay được chọn một tài khoản khác? Ảnh cho chọn nên nghiêng về được chọn.
+- Người xác nhận có buộc phải thuộc vai nào không? Thiết kế chỉ nói tài khoản nội bộ đang hoạt động."
+"2.8","img-014","Nút Lưu kết quả せり",,"Save seri result button","button","primary_action","text_only",,,,,,,"Điều kiện: cả sáu trường bắt buộc phải có giá trị.
+Điều kiện: người thắng còn hiệu lực 許可/承認 — FR-PARTY-02 (RFP:630); BR-PERM-01 (RFP:595).
+Điều kiện: lô còn đủ số lượng khả dụng — FR-LOT-03 (RFP:634); BR-LOT-02 (RFP:596).
+Điều kiện: lô chưa có kết quả せり nào — FR-SERI-01 (RFP:653).
+Điều kiện: ngày nghiệp vụ chưa lock — FR-CORR-03 (RFP:658); BR-CLOSE-01 (RFP:597).
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock; không thể ghi bản ghi mới."" — mọi lần thử đều bị chặn và có log; đường ra là SC-20 và SC-21.
+Điều kiện: khi đang gửi thì khoá form và chặn gửi trùng.","Mục đích và ngữ cảnh: ghi kết quả đấu giá cuối cùng vào hệ thống
+Thành phần hiển thị: một nút chính nhãn chữ đặt ở đáy khối form
+Chức năng và logic: gửi sáu trường của khối; hệ thống gán ngày nghiệp vụ và kênh; ghi logical audit theo FR-AUDIT-01 (RFP:710) với chủ thể và timestamp và before/after và lý do","on_click","Ghi bản ghi kết quả せり rồi chuyển sang chi tiết bản ghi ở SC-14 để người vận hành đọc lại.","seri_result","lot_id; winner_participant_id; qty; unit_price; decided_at; confirmed_by; business_date","Ghi một bản ghi mới vào thực thể kết quả đấu giá của D-TRADE kèm một bản ghi audit. Thiết kế đòi thao tác này trừ số lượng khả dụng của D-LOT — đường trừ đó chưa có.","- Sau khi lưu thành công màn chuyển sang SC-14 — có cần thông báo thành công trước khi chuyển không? Thiết kế chỉ nói chuyển sang chi tiết.
+- Sáu trường có giữ lại giá trị vừa nhập khi gửi thất bại không? Thiết kế không khai.
+- Luồng này có cần dùng được bằng bàn phím như NFR-USE-01 (RFP:816) đòi cho luồng chốt giao dịch không? FE-018 không nhắc NFR-USE-01."
+"3","img-015","Khối trường hệ thống gán",,"System-assigned field section","others","readonly_section",,,,,,,,,"Mục đích và ngữ cảnh: hai giá trị hệ thống tự quyết — nêu tường minh để người vận hành không đi tìm chỗ nhập
+Thành phần hiển thị: tiêu đề khối và hai trường chỉ đọc: ngày nghiệp vụ và kênh
+Chức năng và logic: chỉ hiển thị — không nhận giá trị từ người dùng ở bất kỳ trường nào trong khối",,,"seri_result",,"Hai giá trị do hệ thống gán trên thực thể kết quả đấu giá của D-TRADE.",
+"3.1","img-016","Tiêu đề khối hệ thống gán",,"System-assigned section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ ranh giới giữa phần người nhập và phần hệ thống quyết
+Thành phần hiển thị: một dòng tiêu đề ""Hệ thống gán — không nhập tay""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-017","Trường Ngày nghiệp vụ (chỉ đọc)","業務日","Business date (read-only)","label","readonly_field",,,,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: ngày nghiệp vụ mà bản ghi thuộc về — đơn vị của kỳ đối chiếu FR-SETTLE-01 (RFP:659) và của lock FR-SETTLE-02 (RFP:660)
+Thành phần hiển thị: nhãn tiếng Việt kèm 業務日; một ô chỉ đọc hiện ngày; và một dòng chú thích mang nhãn [CHƯA CHỐT]
+Chức năng và logic: hệ thống gán ngày nghiệp vụ; thiết kế KHÔNG nói ngày này bám thời điểm quyết định hay bám lúc nhập liệu nên trường vẫn ở dạng chỉ đọc",,,"seri_result","business_date","Ngày nghiệp vụ của bản ghi trong D-TRADE — cũng là khoá mà miền D-SETTLE (RFP:606) dùng để lock kỳ.","- Ngày nghiệp vụ bám thời điểm quyết định hay bám lúc nhập liệu? Thiết kế ghi [CHƯA CHỐT]; đấu giá chạy sáng sớm rồi nhập bù thì hai cách cho hai kỳ đối chiếu khác nhau.
+- Nếu bám thời điểm quyết định thì nhập bù vào một ngày đã lock sẽ bị chặn ngay — người vận hành cần biết trước điều đó ở trường nào?
+- FIG-002 (RFP:220) đặt việc ghi nhận kết quả đấu giá ở 06:30 và quyết toán ngày ở 10:00 — khoảng nhập bù cho phép là bao lâu?"
+"3.3","img-018","Trường Kênh giao dịch (chỉ đọc)","取引区分","Trade channel (read-only)","label","readonly_field",,,,"せり",,,"せり",,"Mục đích và ngữ cảnh: cho biết bản ghi thuộc kênh せり — luồng phụ trợ bên cạnh kênh chính 相対取引
+Thành phần hiển thị: nhãn tiếng Việt kèm 取引区分; một ô chỉ đọc hiện せり; và một dòng chú thích trỏ kênh 相対取引 sang SC-11
+Chức năng và logic: hai kênh khác nhau ở cách hình thành giá và giống nhau ở chỗ đều là một lần bán hàng cho người tham gia",,,"seri_result",,"Không có cột kênh trên thực thể kết quả đấu giá — kênh suy ra từ chính thực thể vì bản ghi せり nằm ở một thực thể riêng khác với bản ghi 相対取引.","- Ở các màn tra cứu và báo cáo gộp hai kênh (RPT-11 theo loại giao dịch) thì kênh hiện bằng nhãn nào và lấy từ đâu? Thiết kế không khai.
+- Trường chỉ có một giá trị trên màn này — có cần giữ trên UI để người vận hành đọc hay bỏ đi?"
+"4","img-019","Khối vòng đời bản ghi せり",,"Seri record lifecycle section","others","lifecycle_section",,,,,,,,,"Mục đích và ngữ cảnh: khai vòng đời FIG-012 (RFP:637) mà tiêu đề hình nói phủ CẢ 相対取引 VÀ せり — một vòng đời dùng chung cho hai kênh
+Thành phần hiển thị: tiêu đề khối; một bảng bốn cột liệt kê các cạnh chuyển trạng thái; và một khối ghi chú [CHƯA CHỐT]
+Chức năng và logic: chỉ hiển thị — cách ánh xạ FIG-012 lên bản ghi せり còn chờ khách chốt vì ba dòng yêu cầu của FN-05 không nhắc trạng thái nào",,,"seri_result",,"Thiết kế đòi một trục trạng thái cho bản ghi kết quả đấu giá trong D-TRADE. Thực thể hiện có KHÔNG CÓ cột trạng thái nào — thiếu cả trục chứ không thiếu một giá trị.",
+"4.1","img-020","Tiêu đề khối vòng đời",,"Lifecycle section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: định vị nguồn của vòng đời và nói rõ hình phủ cả hai kênh
+Thành phần hiển thị: một dòng tiêu đề ""Vòng đời bản ghi せり — FIG-012 phủ cả hai kênh (RFP:637)""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-021","Bảng chuyển trạng thái FIG-012 cho kênh せり","状態遷移","FIG-012 transition table for seri","table","transition_table",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê các cạnh chuyển trạng thái của FIG-012 áp cho bản ghi せり kèm ghi chú thiết kế cho từng cạnh
+Thành phần hiển thị: bảng bốn cột: Từ trạng thái; Sự kiện; Tới trạng thái; Ghi chú thiết kế — bốn dòng và hai thẻ [CHƯA CHỐT] gắn vào chặng Chờ xác nhận
+Chức năng và logic: các cạnh sau khi chốt đi qua yêu cầu điều chỉnh ở SC-20 và phê duyệt ở SC-21; FR-SERI-03 (RFP:655) đòi tra cứu lại được sau khi có đính chính nên đường ra là SC-14",,,"seri_result",,"Tập trạng thái mà thiết kế đòi cho D-TRADE theo FIG-012. Không có cột trạng thái nào trên thực thể hiện có nên FR-SERI-03 chỉ đáp ứng được bằng dấu vết kiểm toán chứ không bằng trạng thái bản ghi.","- Một kết quả đấu giá đã chốt tại sàn thì vào hệ thống ở chặng Nháp hay vào thẳng Đã chốt? FIG-012 (RFP:637) nói vòng đời dùng chung nhưng FR-SERI-01 (RFP:653) nói せり chỉ ghi nhận kết quả CUỐI CÙNG.
+- Nếu có chặng Chờ xác nhận cho kênh せり thì ai duyệt và trong bao lâu? Không yêu cầu nào định nghĩa vai duyệt hay SLA duyệt cho kênh này.
+- Câu hỏi này phải hỏi cùng lúc với câu hỏi Chờ xác nhận của SC-11 vì hai kênh dùng chung một vòng đời."
+"4.3","img-022","Ghi chú ánh xạ vòng đời chưa chốt",,"Unresolved lifecycle mapping note","label","open_decision_note",,,,,,,,,"Mục đích và ngữ cảnh: khai thẳng chỗ tài liệu khách chưa đủ để ánh xạ vòng đời lên bản ghi せり
+Thành phần hiển thị: một khối ghi chú nền nhạt dẫn nguyên văn tiêu đề FIG-012 rồi nêu rằng ba dòng yêu cầu của FN-05 không nhắc trạng thái nào
+Chức năng và logic: văn bản tĩnh — chặn việc tự quyết ánh xạ trạng thái và buộc hỏi cùng lúc với câu hỏi của SC-11",,,,,,"- Nếu khách chốt là bản ghi せり không có trạng thái thì cột Trạng thái ở màn tra cứu SC-14 bỏ đi — có đúng không?
+- FIG-012 ghi ""Đây là các trạng thái thuộc đối tượng kiểm toán"" — nếu bản ghi せり không có trạng thái thì nghĩa vụ kiểm toán của nó được thoả bằng gì?"
+"5","img-023","Khối ngoài phạm vi — cố ý không có trên màn",,"Out-of-scope declaration section","others","scope_out_section",,,,,,,,,"Mục đích và ngữ cảnh: khai tường minh những gì CỐ Ý không có trên màn để đề xuất về sau không bị hiểu là hoàn thiện màn
+Thành phần hiển thị: tiêu đề khối và một đoạn văn nêu ba điều bị cấm: không upload ảnh; không OCR; không nhận dạng ký hiệu tay 手やり — kèm nghiệm thu của FR-SERI-01
+Chức năng và logic: chỉ hiển thị — SCOPE-OUT-02 (RFP:405) và FR-SERI-01 (RFP:653) cấm bằng chữ; nghiệm thu là không tồn tại chức năng OCR hay suy luận kết quả từ hình ảnh hoặc ký hiệu",,,,,,"- Có cần chỗ nào trên màn ghi chú cho người vận hành biết vì sao không có đường nhận ảnh không? Ảnh chỉ khai trong tài liệu.
+- Chứng từ giấy của phiếu kết quả せり (FIG-026 · RFP:1380) lưu ở đâu nếu màn này không nhận file? SC-31 quản lý file đính kèm nhưng thiết kế không nối hai màn."
+"5.1","img-024","Tiêu đề khối ngoài phạm vi",,"Out-of-scope section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối khai ranh giới phạm vi
+Thành phần hiển thị: một dòng tiêu đề ""Ngoài phạm vi — cố ý không có trên màn""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"6","img-025","Khối trạng thái màn",,"Screen states section","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê đủ các trạng thái màn phải phủ để không sót nhánh nào khi thi công
+Thành phần hiển thị: tiêu đề khối và một lưới mười thẻ trạng thái
+Chức năng và logic: chỉ hiển thị — mỗi thẻ là một nhánh hiển thị mà màn phải có",,,,,,
+"6.1","img-026","Tiêu đề khối trạng thái màn",,"Screen states section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối liệt kê trạng thái màn
+Thành phần hiển thị: một dòng tiêu đề ""Trạng thái màn""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"6.2","img-027","Lưới thẻ trạng thái màn",,"Screen state card grid","others","state_card_grid",,,,,,,,"Điều kiện: trạng thái rỗng phải nêu lý do và đường đi tiếp (SC-08 tiếp nhận; SC-10 công bố) thay vì để form không chọn được gì.
+Điều kiện: lỗi tải phải phân biệt được với trạng thái rỗng và có nút thử lại.
+Điều kiện: ngoài ROLE-TRADE thì không ghi được — TBL-ROLE-01 (RFP:245).
+Lỗi: ""Người tham gia B đã mất hiệu lực từ <ngày>."" — cùng một cửa với SC-11 theo FR-PARTY-02 (RFP:630).
+Lỗi: ""LOT-0003 chỉ còn <số> khả dụng."" — cùng một cửa với SC-11 theo FR-LOT-03 (RFP:634).
+Lỗi: ""Lô này đã có kết quả せり."" — chặn tạo mới và chỉ đường sang SC-14 theo FR-SERI-01 (RFP:653).
+Điều kiện: lỗi nhập báo tại TỪNG TRƯỜNG và nói rõ trường nào sai — không dùng một thông báo chung.
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock."" — FR-CORR-03 (RFP:658) và BR-CLOSE-01 (RFP:597); mọi lần thử đều bị chặn và có log.","Mục đích và ngữ cảnh: mười nhánh hiển thị của màn: mặc định; rỗng; đang tải và lỗi tải; không có quyền và đang gửi; từ chối vì hết hiệu lực; từ chối vì không đủ số lượng; lô đã có kết quả; lỗi nhập trường; lưu thành công; ngày nghiệp vụ đã lock
+Thành phần hiển thị: một lưới bốn cột chứa mười thẻ viền nét đứt — mỗi thẻ một tiêu đề và một đoạn mô tả hành vi
+Chức năng và logic: mười thẻ dùng chung một kết cấu và chỉ khác nội dung nên gộp thành một thành phần đại diện ở mục con; ba thẻ từ chối là ba cửa kiểm khác nhau và phải hiện lý do riêng biệt",,,,,,"- Trạng thái đang tải và lỗi tải gộp trong một thẻ nhưng là hai nhánh khác nhau trên màn thật — có tách không?
+- Khi vai không có quyền thì màn trả không tìm thấy để không lộ sự tồn tại tài nguyên hay báo thẳng là thiếu quyền? Thiết kế chỉ nói không ghi được.
+- Trạng thái ngày nghiệp vụ đã lock có phát hiện được trước khi bấm lưu hay chỉ lộ ra sau khi bấm? Thiết kế không khai."
+"6.2.1","img-028","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên Mặc định làm đại diện cho cả mười thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả — thẻ đại diện ghi ""Năm trường trống hoặc có giá trị đầu; người xác nhận mặc định là người đang đăng nhập""
+Chức năng và logic: lặp mười lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên chỉ đặc tả một lần",,,,,,"- Thẻ Mặc định nói năm trường nhưng khối form có sáu trường tính cả lô hàng — cách đếm nào là đúng cho màn thật?"
+"7","img-029","Khối đối chiếu prototype",,"Prototype divergence section","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: tách phần hiện trạng thi công ra khỏi phần thiết kế để bản đặc tả không bị hành vi prototype rò vào
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột đối chiếu thiết kế với prototype
+Chức năng và logic: chỉ hiển thị — khối này là phần đối chiếu chứ không phải yêu cầu của màn",,,,,,
+"7.1","img-030","Tiêu đề khối đối chiếu prototype",,"Divergence section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối đối chiếu hiện trạng
+Thành phần hiển thị: một dòng tiêu đề ""Đối chiếu prototype""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"7.2","img-031","Bảng đối chiếu thiết kế và prototype",,"Design versus prototype table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê sáu hạng mục và mức lệch giữa điều thiết kế đòi và điều prototype đang làm
+Thành phần hiển thị: bảng ba cột: Thiết kế đòi; Prototype làm; Mức — sáu dòng với các mức Cần khách chốt; Khác không chủ đích P0; Khớp
+Chức năng và logic: chỉ hiển thị — bốn lệch P0 trên nhánh せり là mất trục trạng thái; thiếu cửa hiệu lực; không trừ tồn lô; và thiếu ràng buộc duy nhất theo lô",,,,,,"- Trong lúc chờ bổ sung hai cửa kiểm cho nhánh せり thì màn có cần cảnh báo trước khi lưu rằng kết quả chưa được kiểm hiệu lực và chưa trừ tồn không?
+- Lô có hai bản ghi せり do thiếu ràng buộc duy nhất thì màn tra cứu SC-14 cảnh báo trùng ở đâu? Thiết kế không khai chỗ hiển thị cảnh báo."
+"8","img-032","Khối ghi chú phân quyền và audit",,"Permission and audit note","label","footer_note",,,,,,,,"Điều kiện: ghi kết quả せり thuộc ROLE-TRADE — TBL-ROLE-01 (RFP:245).
+Điều kiện: sửa bản ghi đã có mở thêm cho ROLE-SETTLEMENT — hai việc khác nhau nên hai danh sách vai khác nhau.
+Điều kiện: mọi lần ghi phải để lại logical audit gồm chủ thể; timestamp; before/after và lý do — FR-AUDIT-01 (RFP:710).","Mục đích và ngữ cảnh: khai phân quyền của màn và nghĩa vụ audit — cùng nói rõ vì sao quyền ghi mới và quyền sửa là hai danh sách vai khác nhau
+Thành phần hiển thị: một khối ghi chú ba đoạn: phân quyền ghi và sửa; nghĩa vụ logical audit; và một liên kết tới bản as-built của prototype
+Chức năng và logic: chỉ hiển thị — quyền sửa bản ghi đã có được đặc tả ở SC-14 chứ không ở màn này",,,,,,"- ROLE-SETTLEMENT sửa được nhưng không tạo mới được — có cần chỉ dẫn trên màn này để vai đó biết đường sang SC-14 không?
+- Audit của lần ghi bị chặn vì ngày đã lock có cùng dạng bản ghi với audit của lần ghi thành công không? FR-CORR-03 chỉ đòi có log."

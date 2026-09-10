@@ -1,0 +1,106 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Đầu trang màn danh sách người tham gia","参加者一覧ヘッダー","Participant list page header","others","page_header",,,,,,,,,"Mục đích và ngữ cảnh: khối đầu trang neo màn vào chuỗi truy vết FE-005 → FN-02 → FR-PARTY-01 để người đọc biết màn phải thoả yêu cầu nào
+Thành phần hiển thị: tiêu đề màn; dòng meta yêu cầu; nhãn trạng thái thi công
+Chức năng và logic: tĩnh — không có thao tác; chỉ định danh màn và phạm vi yêu cầu",,,,,,"- Đầu trang có cần hiện tổng số người tham gia đang có hiệu lực hôm nay không? Thiết kế không khai con số tổng nào ở đây."
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","heading",,,,,,,,,"Mục đích và ngữ cảnh: định danh màn trong bộ 32 màn của thiết kế
+Thành phần hiển thị: mã màn SC-05 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース行","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: khai chuỗi truy vết để không ai đọc màn này như một danh sách chung chung
+Thành phần hiển thị: mã FE-005; nhóm FN-02; ưu tiên P0; yêu cầu FR-PARTY-01; loại màn List; actor đọc và actor ghi
+Chức năng và logic: văn bản tĩnh — actor ghi tách khỏi actor đọc vì hai trục quyền khác nhau",,,,,,"- Dòng meta này là chú thích của wireframe hay nội dung sẽ có trên màn thật? Thiết kế không khai."
+"1.3","img-004","Nhãn trạng thái thi công","実装状況タグ","Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn đã có bản thi công để đối chiếu; không phải một trạng thái nghiệp vụ
+Thành phần hiển thị: một nhãn chữ ngắn
+Chức năng và logic: tĩnh — không đổi theo dữ liệu",,,,,,
+"2","img-005","Khối bốn phân loại là bốn ranh giới","四区分の境界ブロック","Four-category boundary block","others","reference_block",,,,,,,,,"Mục đích và ngữ cảnh: đặt ngay đầu màn quy tắc gốc của FN-02 — bốn phân loại là bốn ranh giới pháp lý; RFP §02-08 cấm gộp 許可 và 承認 thành một quy tắc chung
+Thành phần hiển thị: tiêu đề khối; bảng bốn dòng phân loại theo FIG-004; ghi chú về dòng còn thiếu của 買出人
+Chức năng và logic: khối tham chiếu chỉ đọc — nó là căn cứ cho việc bộ lọc và bảng danh sách không được có giá trị gộp",,,,,,
+"2.1","img-006","Bảng căn cứ tham gia theo FIG-004","参加根拠マトリクス","Participation basis matrix","table","reference_matrix",,,,,,,,,"Mục đích và ngữ cảnh: chép nguyên bảng FIG-004 để người dùng thấy ba trục khác nhau của một phân loại; đây là căn cứ để cột Căn cứ tham gia trong bảng danh sách không nhập tự do
+Thành phần hiển thị: bốn cột — Phân loại; Điều kiện tham gia; Thực hiện giao dịch; Gỡ tạm ngừng — và bốn dòng phân loại
+Chức năng và logic: chỉ đọc; ba ô của dòng 買出人 mang nhãn chưa chốt vì FIG-004 không có dòng cho phân loại đó",,,"participant","category; license_type","Cột Phân loại ứng với thực thể người tham gia; cột Điều kiện tham gia ứng với căn cứ tham gia. Prototype có `participant.category` với CHECK bốn giá trị và `participant.license_type` nhưng không có CHECK — cặp chỉ được kiểm ở tầng ứng dụng.","- Ba ô chưa chốt của 買出人 hiện là nhãn tĩnh; khi khách chốt xong thì màn cập nhật bằng cấu hình hay bằng bản phát hành mới? Thiết kế không khai."
+"2.1.1","img-007","Hàng phân loại (đại diện cho bốn hàng)","区分行","Category row","label","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một phân loại và ba trục của nó; bốn hàng lặp cùng cấu trúc nên gộp thành một hàng đại diện
+Thành phần hiển thị: tên phân loại tiếng Nhật; căn cứ tham gia; thủ tục thực hiện giao dịch; thủ tục gỡ tạm ngừng
+Chức năng và logic: chỉ đọc; thủ tục gỡ tạm ngừng khác nhau theo phân loại — đó là điều kiện tiền đề trên một cạnh trạng thái duy nhất chứ không phải nhiều cạnh",,,"participant","category","Bốn phân loại 卸売業者/仲卸/売買参加者/買出人 khớp CHECK của `participant.category` trong prototype.",
+"2.1.2","img-008","Nhãn chưa chốt của dòng 買出人 (đại diện cho ba ô)","未確定タグ","Undecided tag","label","open_question_tag",,,,,,,,,"Mục đích và ngữ cảnh: đánh dấu chỗ tài liệu khách không có dữ liệu; thay vì lấp bằng suy luận; ba ô của dòng 買出人 dùng cùng một nhãn nên gộp một đại diện
+Thành phần hiển thị: một nhãn chữ ngắn trong ô bảng
+Chức năng và logic: chỉ đọc; ô mang nhãn này không được dùng làm giá trị mặc định ở bất kỳ chỗ nào khác của màn",,,,,,"- 買出人 dùng thủ tục nào cho ba trục của FIG-004? Câu này phải khách trả lời trước khi màn hiện giá trị thật thay cho nhãn chưa chốt."
+"2.2","img-009","Ghi chú FIG-004 không có dòng cho 買出人","FIG-004 欠落行の注記","Note on the missing FIG-004 row","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: nói thẳng chỗ tài liệu khách thiếu để không ai suy ra căn cứ của 買出人 từ dòng gần giống
+Thành phần hiển thị: một đoạn ghi chú dưới bảng tham chiếu
+Chức năng và logic: tĩnh; kèm hệ quả cho màn — bộ lọc không có lựa chọn gộp kiểu tất cả các loại đối tác vì bốn phân loại luôn đứng riêng",,,,,,
+"3","img-010","Khối bộ lọc","絞り込みブロック","Filter block","others","filter_bar",,,,,,,,,"Mục đích và ngữ cảnh: thu hẹp danh sách theo phân loại; trạng thái hiệu lực; và tên — ba trục tra cứu của nhân viên vận hành
+Thành phần hiển thị: ba trường lọc nằm ngang; mỗi trường có nhãn song ngữ và một dòng gợi ý hành vi
+Chức năng và logic: đổi bộ lọc thì nạp lại danh sách; ba trục kết hợp bằng phép và; không có giá trị gộp cho phân loại",,,,,,
+"3.1","img-011","Bộ lọc phân loại","区分フィルタ","Category filter","dropdown","multi_select",,"string","false","một hoặc nhiều giá trị trong tập bốn phân loại",,,"Tất cả","Điều kiện: giá trị nằm ngoài tập bốn phân loại của FR-PARTY-01
+Lỗi: ""Phân loại không hợp lệ.""","Mục đích và ngữ cảnh: chọn phân loại cần xem; bốn giá trị rời vì FR-PARTY-01 cấm gộp các loại có bản chất khác nhau
+Thành phần hiển thị: nhãn song ngữ Phân loại · 区分; ô chọn với lựa chọn Tất cả cộng bốn phân loại; dòng gợi ý nói rõ chọn được nhiều và không có giá trị gộp
+Chức năng và logic: chọn nhiều giá trị thì lọc theo phép hoặc trong cùng trục; lựa chọn Tất cả nghĩa là không lọc trục này và không phải một giá trị gộp mới","on_click","Ở lại màn; nạp lại bảng danh sách theo bộ lọc mới","participant","category","Prototype có CHECK bốn giá trị trên cột này nên tập giá trị lọc khớp tầng dữ liệu; giá trị lạ ở tham số URL hiện bị bỏ qua im lặng trên trang nhưng bị từ chối ở API — hai đường lệch nhau.","- Chọn nhiều phân loại cùng lúc thì bộ lọc ghi vào địa chỉ trang thế nào để chia sẻ lại được? Thiết kế không khai cách mã hoá nhiều giá trị."
+"3.2","img-012","Bộ lọc trạng thái hiệu lực","有効状態フィルタ","Eligibility status filter","dropdown","single_select",,"string","false","một giá trị trong tập bốn trạng thái của FIG-010",,,"Tất cả","Điều kiện: giá trị nằm ngoài bốn trạng thái của FIG-010
+Lỗi: ""Trạng thái hiệu lực không hợp lệ.""","Mục đích và ngữ cảnh: lọc theo trạng thái vòng đời hiệu lực để tách nhóm đang tạm ngừng hoặc đã mất hiệu lực khỏi nhóm còn hiệu lực
+Thành phần hiển thị: nhãn song ngữ Trạng thái hiệu lực · 有効状態; ô chọn; dòng gợi ý liệt đúng bốn trạng thái của FIG-010
+Chức năng và logic: đúng bốn giá trị có hiệu lực; tạm ngừng; mất hiệu lực; xét lại — không có giá trị thứ năm và không có giá trị suy ra","on_click","Ở lại màn; nạp lại bảng danh sách theo bộ lọc mới","participant","status","Prototype có CHECK bốn giá trị FIG-010 trên cột này; đường đi giữa các trạng thái thì chỉ được kiểm ở tầng ứng dụng.","- Lọc trạng thái có cần thêm một lựa chọn dẫn xuất kiểu đang có hiệu lực hôm nay không? Trạng thái đã lưu và kết luận hiệu lực theo ngày là hai thứ khác nhau."
+"3.3","img-013","Ô tìm theo tên","名称検索","Name search box","text_form","search",,"string","false",,"1","100",,"Điều kiện: chuỗi tìm kiếm dài hơn giới hạn của trường tên
+Lỗi: ""Từ khoá tìm kiếm quá dài.""","Mục đích và ngữ cảnh: tìm nhanh một người tham gia theo tên khi nhân viên đã biết tên nhưng không biết phân loại
+Thành phần hiển thị: nhãn song ngữ Tên · 名称; một ô nhập với chữ gợi ý Tìm theo tên; dòng gợi ý về cách khớp
+Chức năng và logic: khớp một phần và không phân biệt hoa thường; chữ gợi ý trong ô không phải giá trị mặc định",,"Ở lại màn; nạp lại bảng danh sách theo từ khoá","participant","name","Ứng với cột tên của thực thể người tham gia; prototype có cột `participant.name` không rỗng nhưng chưa có đường lọc theo tên trên màn.","- Khớp một phần áp cho cả chuỗi tiếng Nhật lẫn tiếng Việt thế nào; và có cần chuẩn hoá dấu trước khi so không? Thiết kế chỉ nói không phân biệt hoa thường."
+"4","img-014","Khối bảng danh sách người tham gia","一覧テーブルブロック","List table block","others","content_block",,,,,,,,,"Mục đích và ngữ cảnh: phần chịu lực của nghiệm thu FR-PARTY-01 — mở màn là thấy được phân loại và trạng thái hiệu lực của từng profile
+Thành phần hiển thị: tiêu đề khối gắn tiêu chí nghiệm thu; bảng sáu cột; hai đoạn ghi chú về cột và về ý nghĩa của badge trạng thái
+Chức năng và logic: đọc theo bộ lọc đang chọn; có phân trang và đếm tổng số dòng khớp bộ lọc",,,,,,
+"4.1","img-015","Bảng sáu cột người tham gia","参加者テーブル","Participant table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: một dòng một profile; sáu cột là bộ tối thiểu để trả lời ai thuộc loại nào và hiệu lực đến khi nào
+Thành phần hiển thị: sáu cột tiêu đề song ngữ Việt–Nhật; các dòng dữ liệu; badge cho cột trạng thái
+Chức năng và logic: cột Tên là đường dẫn sang màn chi tiết SC-06; cột Căn cứ tham gia luôn suy từ phân loại theo FIG-004 và không nhập tự do; danh sách phân trang và đếm tổng để không cắt trần im lặng","on_click","Bấm ô Tên mở màn SC-06 chi tiết và vòng đời hiệu lực của đúng profile đó","participant","name; category; license_type; status; valid_from; valid_to","Sáu cột ánh xạ thẳng sáu cột của thực thể người tham gia; prototype có đủ sáu cột này nhưng `license_type` là chuỗi tự do không có CHECK.","- Sắp xếp mặc định của bảng theo trục nào; và người dùng đổi được thứ tự sắp xếp không? Thiết kế chỉ đòi phân trang và đếm tổng."
+"4.1.1","img-016","Dòng dữ liệu người tham gia (đại diện cho bốn dòng mẫu)","参加者行","Participant row","label","table_row",,"string",,"ngày theo YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: một profile người tham gia; bốn dòng mẫu trên wireframe cùng cấu trúc nên gộp thành một dòng đại diện
+Thành phần hiển thị: tên; phân loại; căn cứ tham gia; badge trạng thái; ngày hiệu lực từ; ngày hiệu lực đến
+Chức năng và logic: ngày hiệu lực đến để trống nghĩa là vô hạn hạn và hiển thị Không giới hạn theo tiếng Việt hoặc 無期限 theo tiếng Nhật; ngày hiển thị theo múi giờ Nhật vì ngày nghiệp vụ neo theo múi giờ đó","on_click","Mở SC-06 cho profile của dòng","participant","name; category; license_type; status; valid_from; valid_to","Prototype cho phép cột hiệu lực đến rỗng nghĩa là vô hạn; không có tác vụ định kỳ nào lật trạng thái khi qua ngày đó.","- Dòng có cặp phân loại và căn cứ tham gia lệch FIG-004 thì hiện thế nào ở đây; đánh dấu tại dòng hay gom vào một khối riêng? Thiết kế nói đánh dấu là dữ liệu cần đối chiếu."
+"4.1.2","img-017","Badge trạng thái hiệu lực (đại diện)","有効状態バッジ","Eligibility status badge","label","status_badge",,,,,,,,,"Mục đích và ngữ cảnh: hiện trạng thái vòng đời đã lưu của profile theo FIG-010; các badge trên bốn dòng mẫu cùng dạng nên gộp một đại diện
+Thành phần hiển thị: một nhãn ngắn mang một trong bốn trạng thái
+Chức năng và logic: chỉ đọc; là giá trị đã lưu chứ không phải kết luận hôm nay giao dịch được hay không — kết luận đó tính lại ở thời điểm chốt giao dịch",,,"participant","status","Prototype có CHECK bốn giá trị trên cột này; badge đọc thẳng cột nên không phản ánh việc đã qua ngày hết hiệu lực.",
+"4.2","img-018","Ghi chú cột và phân trang","列と改ページの注記","Column and pagination note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ba quy tắc dễ mất của bảng — đường dẫn của cột Tên; nghĩa của ngày hiệu lực đến rỗng; và việc căn cứ tham gia luôn suy từ phân loại
+Thành phần hiển thị: một đoạn ghi chú dưới bảng
+Chức năng và logic: tĩnh; đòi có phân trang và đếm tổng số dòng khớp bộ lọc để không cắt trần dữ liệu im lặng",,,,,,
+"4.3","img-019","Ghi chú badge trạng thái không phải kết luận hiệu lực","有効性判断の注記","Note on eligibility conclusion","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chặn cách đọc sai nguy hiểm nhất của màn — coi badge trạng thái là giấy phép giao dịch hôm nay
+Thành phần hiển thị: một đoạn ghi chú dưới bảng
+Chức năng và logic: tĩnh; chỉ sang FE-007 và FR-PARTY-02 ở màn SC-11 — nơi hiệu lực được kiểm tại đúng thời điểm chốt giao dịch",,,,,,
+"5","img-020","Khối hành động","操作ブロック","Action block","others","action_bar",,,,,,,,,"Mục đích và ngữ cảnh: gom các thao tác của màn và đối chiếu với phạm vi FE-005 đòi bốn phép tạo; đọc; sửa; xoá
+Thành phần hiển thị: hai nút hành động; ghi chú phân quyền; khối câu hỏi mở về phép xoá
+Chức năng và logic: nút ghi chỉ hiện cho vai được phép ghi; vai chỉ đọc thấy dòng nhắc ai làm được việc đó thay vì một nút chết",,,,,,
+"5.1","img-021","Nút tạo mới người tham gia","新規作成","Create new","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: đường tạo profile mới — phép tạo trong bộ CRUD của FE-005
+Thành phần hiển thị: một nút chữ nổi bật ở đầu khối hành động
+Chức năng và logic: chỉ hiện cho vai được phép ghi profile; vai không được phép thì không thấy nút và cũng bị chặn ở tầng dịch vụ chứ không chỉ ở tầng hiển thị","on_click","Mở màn tạo profile người tham gia mới","participant",,"Thao tác tạo ghi một dòng mới vào thực thể người tham gia kèm một dòng audit theo FR-AUDIT-01.","- Form tạo mới cho chọn phân loại rồi tự điền căn cứ tham gia theo FIG-004; hay cho nhập cả hai rồi kiểm cặp? Thiết kế chỉ nói căn cứ luôn suy từ phân loại."
+"5.2","img-022","Nút mở chi tiết hoặc sửa","詳細・編集","Open detail or edit","button",,"text_only",,,,,,,,"Mục đích và ngữ cảnh: đường sang màn chi tiết; nơi thực hiện phép đọc và phép sửa của FE-005
+Thành phần hiển thị: một nút chữ phụ cạnh nút tạo mới
+Chức năng và logic: mở SC-06; quyền sửa được kiểm lại ở màn đó chứ không suy ra từ việc nút này hiện","on_click","Mở SC-06 chi tiết và vòng đời hiệu lực của profile đang chọn",,,,
+"5.3","img-023","Ghi chú phân quyền hành động","操作権限の注記","Action permission note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ hai trục quyền của màn — đọc mở cho vai vận hành; ghi thuộc vai quản trị người tham gia
+Thành phần hiển thị: một đoạn ghi chú dưới hai nút
+Chức năng và logic: tĩnh; đòi vai chỉ đọc nhìn thấy một dòng nói rõ ai làm được việc đó thay vì bị ẩn im lặng hoặc thấy nút chết",,,,,,
+"5.4","img-024","Khối câu hỏi mở về phép xoá profile","削除の未確定事項","Open question on delete","label","open_question",,,,,,,,,"Mục đích và ngữ cảnh: FE-005 ghi CRUD nhưng người tham gia đã có giao dịch thì xoá thật sẽ mất dấu vết; điều đó trái FR-AUDIT-01
+Thành phần hiển thị: một khối câu hỏi mở có nhãn chưa chốt và phần diễn giải
+Chức năng và logic: không có nút xoá nào trên màn cho tới khi khách chốt; màn không tự chọn cách hiểu",,,,,,"- Phép xoá của FE-005 là xoá thật hay chỉ chuyển sang trạng thái mất hiệu lực? Chọn sai thì hoặc mất dấu vết giao dịch cũ; hoặc thiếu một phép mà Feature List đã cam kết."
+"6","img-025","Khối trạng thái màn","画面状態ブロック","Screen state block","others","state_matrix",,,,,,,,,"Mục đích và ngữ cảnh: liệt các trạng thái màn phải xử lý để không bỏ sót đường lỗi và đường không có quyền
+Thành phần hiển thị: sáu ô trạng thái; mỗi ô có tên và mô tả hành vi mong đợi
+Chức năng và logic: tĩnh trên wireframe nhưng là hợp đồng hành vi cho tầng hiển thị",,,,,,
+"6.1","img-026","Trạng thái rỗng","空状態","Empty state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: phân biệt bảng rỗng thật với bảng rỗng vì bộ lọc; hai chuyện dẫn tới hai hành động khác nhau
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: nói rõ nguyên nhân là do bộ lọc và kèm đường xoá lọc; vai có quyền ghi vẫn thấy nút tạo mới",,,,,,
+"6.2","img-027","Trạng thái đang tải","読み込み中","Loading state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: giữ bố cục ổn định khi dữ liệu về; màn dùng ở quầy nên nhảy bố cục làm mất chỗ đang đọc
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: khung xương giữ đúng số cột của bảng",,,,,,
+"6.3","img-028","Trạng thái lỗi tải","読み込みエラー","Load error state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: cho người dùng thử lại mà không phải nhập lại bộ lọc
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: hiện khối lỗi kèm nút thử lại và giữ nguyên bộ lọc đang chọn",,,,,,
+"6.4","img-029","Trạng thái chỉ đọc","読み取り専用","Read-only state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: vai không có quyền ghi vẫn cần đọc đủ để làm việc; chặn nằm ở hành động ghi chứ không ở việc đọc
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: bảng và bộ lọc đầy đủ; hai hành động ghi đổi thành một dòng nhắc vai trò phụ trách",,,,,,
+"6.5","img-030","Trạng thái dòng có căn cứ lệch","根拠不整合行","Mismatched basis row state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: dữ liệu cũ hoặc nhập tay có thể mang cặp phân loại và căn cứ không khớp FIG-004; màn phải phơi ra chứ không che
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: đánh dấu dòng là dữ liệu cần đối chiếu; không tự sửa và không xếp bừa vào một phân loại nào",,,,,,
+"6.6","img-031","Trạng thái ngày nghiệp vụ đã lock","業務日ロック","Locked business day state","label","state_card",,,,,,,,,"Mục đích và ngữ cảnh: khai rõ màn này không có trạng thái chỉ đọc vì lock kỳ; profile người tham gia trải nhiều ngày nghiệp vụ
+Thành phần hiển thị: tên trạng thái và mô tả hành vi
+Chức năng và logic: màn không bao giờ trả lỗi khoá kỳ; lock kỳ của FR-SETTLE-02 áp cho bản ghi thuộc một ngày nghiệp vụ chứ không cho vòng đời hiệu lực",,,,,,
+"7","img-032","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_block",,,,,,,,,"Mục đích và ngữ cảnh: đặt cạnh nhau thiết kế đòi gì và bản thi công hiện làm gì để phần đọc spec không lẫn hai chuyện
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột
+Chức năng và logic: chỉ đọc; là phần đối chiếu chứ không phải phần thiết kế",,,,,,
+"7.1","img-033","Bảng đối chiếu ba cột","差分テーブル","Divergence table","table","comparison_table",,,,,,,,,"Mục đích và ngữ cảnh: năm hạng mục lệch giữa thiết kế và bản thi công; mỗi dòng gắn một mức để phân biệt lệch có chủ đích với lệch phải sửa
+Thành phần hiển thị: ba cột Thiết kế đòi; Prototype làm; Mức — và năm dòng hạng mục
+Chức năng và logic: chỉ đọc; mức cần khách chốt nghĩa là không tự quyết ở tầng thi công",,,,,,
+"8","img-034","Ghi chú chân màn về phân quyền và audit","フッター注記","Footer note","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt hai điều dễ trôi — chặn phải nằm ở tầng dịch vụ chứ không ở việc ẩn nút; và mọi lần tạo hoặc sửa profile phải ghi audit
+Thành phần hiển thị: hai dòng ghi chú và một đường dẫn tới file spec của màn
+Chức năng và logic: tĩnh; nói rõ cảnh báo sắp hết hiệu lực là màn riêng SC-07 chứ không nhồi vào bảng này",,,,,,"- Ghi audit cho thao tác đọc danh sách có cần không? FR-AUDIT-01 chỉ liệt tạo; sửa; phê duyệt; lock và đổi quyền."

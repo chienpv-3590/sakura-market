@@ -1,0 +1,176 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn trạng thái vận hành suy giảm",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh thành phần và chuỗi truy vết; khai ngay rằng đây là Component cắt ngang chứ không phải một trang có route.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt FE-045 · FN-14 · ưu tiên P1 · mã yêu cầu NFR-AVL-02 · loại Component · actor là người dùng tại hiện trường · một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác nào.",,,,,,
+"1.1","img-002","Tiêu đề màn","縮退運転ステータス","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người đọc biết thành phần này là chỉ báo trạng thái vận hành suy giảm của hệ.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã SC-32 và tên thành phần.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối thành phần về FE-045 và mã yêu cầu duy nhất chi phối nó; khai luôn rằng không có URL để mở.
+Thành phần hiển thị: Hai dòng chữ nhỏ liệt tên tính năng · nhóm chức năng · ưu tiên P1 · NFR-AVL-02 · chữ Component kèm ghi chú không có route riêng và không có URL để mở · bốn vai trò hiện trường · một thẻ trạng thái.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,"Bốn vai trò hiện trường ghi ở dòng metadata có phải danh sách đóng của người thấy banner trong màn không?"
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết thành phần chưa có bản thi công nào để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng metadata với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu chứ không từ dữ liệu nghiệp vụ.",,,,,,
+"2","img-005","Dải chú thích yêu cầu và ranh giới thành phần cắt ngang",,"Requirement and boundary notice","label","dải chú thích đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Ghim nguyên văn yêu cầu duy nhất của thành phần; và khai ranh giới quan trọng nhất là đây là Component chồng lên màn khác.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt ba đoạn: đoạn khai chưa thi công và nói hiện trạng code dồn xuống khối đối chiếu cuối trang; đoạn dẫn nguyên văn NFR-AVL-02 gồm hai nửa là tối thiểu tiếp tục thực hiện tác vụ khi kết nối bị ngắt trong thời gian ngắn và cách đồng bộ lại khi dịch vụ trở lại; kèm nghiệm thu là kịch bản diễn tập business continuity cho từng tác vụ quan trọng; đoạn khai đây là Component không phải trang nên wireframe vẽ chồng lên khung giả lập của SC-16.
+Chức năng và logic: Tĩnh. Kết luận của đoạn thứ ba là ràng buộc thiết kế: không có route; không có 404 riêng; và cả hai nửa của yêu cầu đều phải thấy được trên thành phần.",,,,,,"Hai nửa của yêu cầu có cùng một phạm vi nghiệm thu; hay nửa đồng bộ lại được nghiệm thu riêng?"
+"3","img-006","Khối danh sách tác vụ quan trọng",,"Critical task scope block","others","khối bảng bốn cột kèm hai ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Khai danh sách tác vụ cần chạy được khi mất kết nối; và khai luôn rằng danh sách này là suy ra chứ không phải trích dẫn.
+Thành phần hiển thị: Tiêu đề khối nói yêu cầu không liệt kê tác vụ nào và ba tác vụ dưới đây cần khách xác nhận; một bảng bốn cột ba hàng dữ liệu; hai đoạn ghi chú về nguồn của con số ba và về hai màn nhập tại chỗ không được gọi tên.
+Chức năng và logic: Chỉ đọc; nội dung là phạm vi nghiệm thu đề xuất của thành phần.",,,,,,"Danh sách tác vụ quan trọng là cấu hình được hay cố định trong bản dựng?"
+"3.1","img-007","Bảng ba tác vụ quan trọng","重要業務一覧表","Critical task table","table","bảng bốn cột ba dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy chính xác ba tác vụ được đề xuất tính là tác vụ quan trọng và rủi ro đồng bộ lại của từng tác vụ.
+Thành phần hiển thị: Bốn cột: tác vụ · màn · vì sao là tác vụ hiện trường · đồng bộ lại; ba hàng dữ liệu cho nhập lô hàng; chốt giao dịch và ghi nhận giao hàng.
+Chức năng và logic: Chỉ đọc; mỗi hàng gắn một màn có ghi dữ liệu và một ca đồng bộ lại có thể thất bại.",,,,,,"Nếu khách chốt thêm tác vụ thì bảng này và phạm vi banner sinh lại theo cấu hình hay phải sửa mã?"
+"3.1.1","img-008","Hàng tiêu đề bảng tác vụ",,"Task table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên bốn cột để đọc được ba hàng dữ liệu bên dưới.
+Thành phần hiển thị: Bốn ô tiêu đề: Tác vụ · Màn · Vì sao là tác vụ hiện trường · Đồng bộ lại.
+Chức năng và logic: Tĩnh; không sắp xếp được.",,,,,,
+"3.1.2","img-009","Hàng tác vụ Nhập lô hàng",,"Lot intake task row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Tác vụ thứ nhất trong danh sách suy ra; gắn với màn tiếp nhận lô hàng.
+Thành phần hiển thị: Bốn ô: tên tác vụ Nhập lô hàng; màn SC-08 với route tạo lô; lý do là lô đến trong khung dịch vụ 02:00–10:00 JST và nhập ngay tại bến; rủi ro đồng bộ lại là cấp mã lô thuộc server nên trùng mã khi replay phải chặn được.
+Chức năng và logic: Chỉ đọc. Hàng này nói ra một ràng buộc thật: mã lô do server cấp nên thao tác nằm trong hàng đợi chưa có mã cho tới khi đồng bộ thành công.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Khi mất kết nối thì mã lô hàng hiển thị tạm cho người dùng là gì; và đổi sang mã thật lúc đồng bộ ra sao?"
+"3.1.3","img-010","Hàng tác vụ Chốt giao dịch",,"Trade confirmation task row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Tác vụ thứ hai; gắn với màn tạo giao dịch trực tiếp.
+Thành phần hiển thị: Bốn ô: tên tác vụ Chốt giao dịch; màn SC-11 với route tạo giao dịch; lý do là chốt giá tại sàn và không chờ được; rủi ro đồng bộ lại là số lượng khả dụng có thể đã đổi lúc replay nên xung đột là thật và không tự giải được.
+Chức năng và logic: Chỉ đọc. Hàng này là ca xung đột nặng nhất của danh sách: một giao dịch hợp lệ lúc nhập có thể vô hiệu lúc đồng bộ.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Người dùng thấy gì khi giao dịch trong hàng đợi bị từ chối vì số lượng đã hết; và ai chịu trách nhiệm nhập lại?"
+"3.1.4","img-011","Hàng tác vụ Ghi nhận giao hàng",,"Delivery recording task row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Tác vụ thứ ba; gắn với màn chi tiết giao hàng và các lần giao.
+Thành phần hiển thị: Bốn ô: tên tác vụ Ghi nhận giao hàng; màn SC-16 với route chi tiết giao hàng; lý do là ghi từng lần giao ngoài hiện trường trên tablet; rủi ro đồng bộ lại là lần giao thuộc ngày nghiệp vụ lúc nhập và ngày đó có thể đã lock lúc replay.
+Chức năng và logic: Chỉ đọc. Hàng này là nguồn của field số bảy: phải giữ ngày nghiệp vụ lúc nhập mới trả lời được thao tác thuộc ngày nào.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Thao tác nhập trước 10:00 mà chỉ đồng bộ được sau đó thì hiển thị thuộc ngày nghiệp vụ nào trên màn?"
+"3.2","img-012","Ghi chú nguồn của ba tác vụ",,"Provenance note for the three tasks","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Khai đúng bản chất của con số ba để không ai đọc danh sách như thể yêu cầu khách đã liệt kê.
+Thành phần hiển thị: Một đoạn chữ nhỏ: NFR-AVL-02 chỉ nói tối thiểu tiếp tục thực hiện tác vụ và nghiệm thu cho từng tác vụ quan trọng; RFP không liệt kê và không nói con số ba; con số ba đến từ Feature List FE-045; chỗ duy nhất gọi tên đúng ba luồng hiện trường là NFR-USE-01 với nhập lô hàng · chốt giao dịch và ghi nhận giao hàng; câu chốt là đây là suy luận không phải trích dẫn nên phải chốt với khách trước khi lấy làm phạm vi nghiệm thu.
+Chức năng và logic: Tĩnh; là ghi chú phạm vi nghiệm thu phải chốt trước khi lấy làm căn cứ.",,,,,,
+"3.3","img-013","Ghi chú hai màn nhập tại chỗ ngoài danh sách",,"Out-of-list on-site screens note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Nói ra hệ quả nếu khách mở rộng danh sách tác vụ quan trọng.
+Thành phần hiển thị: Một dòng chữ nhỏ: SC-09 ghi nhận kết quả thẩm định và SC-13 nhập kết quả đấu giá cũng là thao tác tại chỗ nhưng NFR-USE-01 không gọi tên; tính vào thì danh sách thành năm và ngân sách đổi theo.
+Chức năng và logic: Tĩnh.",,,,,,"Hai màn nhập tại chỗ này có được tính vào danh sách tác vụ quan trọng không?"
+"4","img-014","Khối lớp một chỉ báo toàn cục",,"Global indicator layer block","others","khối khung giả lập thanh đầu trang kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Vẽ lớp thứ nhất của thành phần: một chỉ báo có mặt trên mọi màn sau khi đăng nhập.
+Thành phần hiển thị: Tiêu đề khối nói chỉ báo toàn cục nằm ở thanh đầu trang trên mọi màn sau khi đăng nhập; một khung giả lập thanh đầu trang; một đoạn ghi chú về tiền lệ chỗ treo.
+Chức năng và logic: Chỉ đọc. Lớp này luôn có mặt nhưng chỉ đổi hình thái khi mất kết nối hoặc còn thao tác chờ.",,,,,,
+"4.1","img-015","Khung giả lập thanh đầu trang",,"Top header mockup","others","khung giả lập thanh đầu trang bốn phần",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy chỉ báo mới nằm cạnh chỉ báo nào và ở phần nào của thanh đầu trang.
+Thành phần hiển thị: Bốn phần trên một hàng: nhãn tên hệ và điều hướng ở bên trái; thẻ ngày nghiệp vụ; thẻ chỉ báo kết nối; nhãn người dùng có dấu mở menu ở bên phải.
+Chức năng và logic: Giả lập; chỉ thẻ chỉ báo kết nối thuộc thành phần này.",,,,,,"Chỉ báo toàn cục cập nhật theo thời gian thực khi số thao tác chờ đổi; hay chỉ cập nhật khi tải lại màn?"
+"4.1.1","img-016","Thẻ ngày nghiệp vụ","業務日タグ","Business day tag","label","thẻ chữ nhỏ trong thanh đầu trang",,,,,,,,,"Mục đích và ngữ cảnh: Chỉ báo cắt ngang đã có sẵn; đặt cạnh chỉ báo mới để thấy tiền lệ đúng khuôn.
+Thành phần hiển thị: Một thẻ chữ nhỏ với nhãn Ngày nghiệp vụ; một chỗ trống dạng năm tháng ngày; và trạng thái đã lock.
+Chức năng và logic: Không thuộc thành phần này; vẽ để đối chiếu chỗ treo. Trạng thái đã lock của thẻ này chính là điều kiện làm hỏng việc đồng bộ lại ở lớp hai.",,,,,,"Định dạng ngày trên thẻ theo chuẩn nào; ảnh chỉ cho thấy chỗ trống dạng năm tháng ngày?"
+"4.1.2","img-017","Thẻ chỉ báo mất kết nối và số thao tác chờ","接続状態バッジ","Connection status badge","label","thẻ chữ nhỏ trong thanh đầu trang",,,,,,,,"Điều kiện: đang online và không còn thao tác chờ thì ẩn hoàn toàn.","Mục đích và ngữ cảnh: Là lớp thứ nhất của thành phần; cho người đang làm việc biết ngay kết nối còn hay đã mất và bao nhiêu thao tác chưa tới được server.
+Thành phần hiển thị: Một thẻ chữ nhỏ gộp hai thông tin trên cùng một dòng: trạng thái kết nối và số thao tác chờ đồng bộ.
+Chức năng và logic: Hiện trên mọi màn sau khi đăng nhập; không lọc theo vai trò vì mất kết nối là sự kiện của thiết bị chứ không của quyền. Đang online và hàng đợi rỗng thì ẩn hoàn toàn.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng chuỗi trên thẻ là gì; ảnh chỉ cho thấy một ca là chữ Mất kết nối cộng dấu phân cách cộng số thao tác chờ?
+Trạng thái Rỗng để mở hai lựa chọn là ẩn hoàn toàn hoặc một dấu hiệu tối giản — chọn cái nào?
+Thẻ có bấm được để mở danh sách thao tác chờ không; ảnh không cho thấy nó là nút."
+"4.2","img-018","Ghi chú tiền lệ chỗ treo chỉ báo cắt ngang",,"Mount point precedent note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Giải trình vì sao chỉ báo này thuộc thanh đầu trang chứ không thuộc từng màn.
+Thành phần hiển thị: Một đoạn chữ nhỏ: chỉ báo ngày nghiệp vụ là tiền lệ đúng khuôn vì gần như mọi màn ghi đều từ chối input khi ngày đã lock; layout sau đăng nhập là điểm treo duy nhất cho một thành phần toàn cục; câu chốt là không còn thao tác chờ và đang online thì ẩn hoàn toàn.
+Chức năng và logic: Tĩnh.",,,,,,
+"5","img-019","Khối lớp hai banner trong màn",,"In-screen banner layer block","others","khối khung giả lập màn nền kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Vẽ lớp thứ hai của thành phần: một banner chỉ hiện trên màn có ghi dữ liệu.
+Thành phần hiển thị: Tiêu đề khối nói banner được vẽ chồng lên khung giả lập màn SC-16 chi tiết giao hàng; khung giả lập màn nền đó; một đoạn ghi chú danh sách màn có banner.
+Chức năng và logic: Chỉ đọc. Lớp này là chỗ nửa đồng bộ lại của yêu cầu trở thành một hành động bấm được.",,,,,,
+"5.1","img-020","Khung giả lập màn nền SC-16",,"Host screen mockup","others","khung giả lập một màn nền",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy banner đặt ở đâu trong ngữ cảnh một màn thật; vì thành phần không có trang riêng.
+Thành phần hiển thị: Tiêu đề màn nền kèm thẻ khai đây chỉ là giả lập; banner mất kết nối cùng hai nút; một hàng form giả lập ba ô; một đoạn ghi chú vị trí banner.
+Chức năng và logic: Giả lập; chỉ banner và hai nút thuộc thành phần này.",,,,,,
+"5.1.1","img-021","Tiêu đề màn nền kèm thẻ giả lập",,"Host screen title with mock tag","label","tiêu đề khối kèm thẻ nhỏ",,,,,,,,,"Mục đích và ngữ cảnh: Nói rõ khung dưới đây là màn khác; không phải một phần của thành phần.
+Thành phần hiển thị: Một dòng tiêu đề mã và tên màn SC-16; kèm một thẻ chữ nhỏ ghi màn nền chỉ giả lập.
+Chức năng và logic: Tĩnh.",,,,,,
+"5.1.2","img-022","Banner mất kết nối và số thao tác chờ","オフライン通知バナー","Offline notice banner","label","dải chú thích đầu vùng nội dung",,,,,,,,"Điều kiện: chỉ hiện khi màn có ghi dữ liệu và đang mất kết nối hoặc còn thao tác chờ của chính màn đó.","Mục đích và ngữ cảnh: Chống ca tệ nhất: người dùng nhập xong; tưởng đã lưu; đi làm việc khác và số liệu ngày nghiệp vụ thiếu một dòng.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt đặt đầu vùng nội dung trên form; nội dung gồm trạng thái Mất kết nối; số thao tác của chính người dùng chưa tới được server; thời điểm thao tác chờ lâu nhất; ngày nghiệp vụ lúc nhập; và hai nút.
+Chức năng và logic: Chỉ hiện khi màn có ghi dữ liệu và đang mất kết nối hoặc còn thao tác chờ của chính màn đó; không phải hộp thoại chặn.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng thời điểm và ngày trên banner là gì; ảnh chỉ cho thấy chỗ trống dạng năm tháng ngày giờ phút và năm tháng ngày?
+Banner đếm thao tác chờ của chính màn đó hay của cả hàng đợi; câu chữ nói ba thao tác của bạn nhưng điều kiện hiện lại theo màn.
+Form phía dưới vẫn nhận input khi banner đang hiện hay bị chặn?"
+"5.1.3","img-023","Nút Đồng bộ lại","再同期ボタン","Resync button","button","nút phụ trong banner","text_only",,,,,,,,"Mục đích và ngữ cảnh: Là nửa thứ hai của yêu cầu — cách đồng bộ lại khi dịch vụ trở lại — nên phải có mặt ngay cạnh chỗ người dùng vừa nhập.
+Thành phần hiển thị: Một nút chữ nhỏ nằm trong banner với nhãn Đồng bộ lại.
+Chức năng và logic: Bấm thì chạy lại việc gửi các thao tác đang chờ; kết quả có thể là thành công; xung đột số lượng; hoặc bị chặn vì ngày nghiệp vụ đã lock.","on_click","Chạy lại việc gửi các thao tác đang chờ; ở lại màn hiện tại và chuyển banner sang trạng thái đang đồng bộ.",,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Nút này bấm được khi đang mất kết nối hay chỉ mở khi đã có mạng lại?
+Có tự động đồng bộ khi mạng trở lại; hay bắt buộc người dùng bấm?
+Bấm liên tiếp nhiều lần thì chặn gửi trùng ở phía màn thế nào?"
+"5.1.4","img-024","Nút Xem thao tác chờ","保留操作の確認ボタン","View pending operations button","button","nút phụ trong banner","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng xem đúng những thao tác nào chưa tới được server; vì một con số đếm không đủ để xử lý.
+Thành phần hiển thị: Một nút chữ nhỏ nằm trong banner với nhãn Xem thao tác chờ.
+Chức năng và logic: Bấm thì mở danh sách thao tác đang chờ; ảnh chỉ cho thấy nút chứ không cho thấy màn hay hộp thoại đích.","on_click","Mở danh sách các thao tác đang chờ đồng bộ; ảnh không cho thấy danh sách đó nằm ở đâu.",,,,"Danh sách thao tác chờ mở dạng hộp thoại trong màn hay một màn riêng?
+Trong danh sách đó người dùng bỏ được một thao tác chờ không; và bỏ thao tác có cần nhập lý do?"
+"5.1.5","img-025","Hàng form giả lập của màn nền",,"Host screen form row mockup","others","hàng ba ô của màn nền",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy banner nằm trên form chứ không chèn giữa form.
+Thành phần hiển thị: Ba ô trên một hàng: ô Lô hàng chỉ đọc với một mã mẫu; ô Số lượng lần giao này với giá trị 0; và một nút Ghi nhận lần giao.
+Chức năng và logic: Giả lập của màn nền; không thuộc thành phần này. Nút ghi của màn nền chính là chỗ sinh ra thao tác xếp vào hàng đợi.",,,,,,"Nút ghi của màn nền có đổi nhãn hay đổi trạng thái khi đang mất kết nối để người dùng biết thao tác chỉ vào hàng đợi?"
+"5.1.6","img-026","Ghi chú vị trí và điều kiện hiện banner",,"Banner placement note","label","đoạn nhắc dưới khung giả lập",,,,,,,,,"Mục đích và ngữ cảnh: Chốt vị trí và điều kiện hiện của banner để không ai đặt nó thành một hộp thoại chặn.
+Thành phần hiển thị: Một đoạn chữ nhỏ: banner nằm đầu vùng nội dung trên form; chỉ hiện khi màn có ghi dữ liệu và đang mất kết nối hoặc còn thao tác chờ của chính màn đó; nút Đồng bộ lại là nửa thứ hai của yêu cầu nên phải nằm ngay cạnh chỗ người dùng vừa nhập.
+Chức năng và logic: Tĩnh.",,,,,,
+"5.2","img-027","Ghi chú danh sách màn có banner trong màn",,"Banner host screens note","label","đoạn nhắc cuối khối",,,,,,,,,"Mục đích và ngữ cảnh: Nối lớp hai về đúng danh sách tác vụ quan trọng ở khối trên.
+Thành phần hiển thị: Một đoạn chữ nhỏ: các màn có banner là ba tác vụ quan trọng SC-08 · SC-11 · SC-16; cộng SC-17 nếu tính vì chưa dựng và cùng bối cảnh SC-16; câu chốt là form vẫn nhận input hay bị chặn là tuỳ phương án ở khối cuối.
+Chức năng và logic: Tĩnh; nói rõ wireframe không quyết thay.",,,,,,"SC-17 có thuộc phạm vi banner không; và nếu có thì dùng chung điều kiện hiện với SC-16?"
+"6","img-028","Khối bảng field dẫn xuất",,"Derived field block","others","khối bảng bốn cột kèm tiêu đề",,,,,,,,,"Mục đích và ngữ cảnh: Liệt toàn bộ dữ liệu thành phần này hiển thị; và khai rằng không có ô nhập nào.
+Thành phần hiển thị: Tiêu đề khối nói không có field nhập và toàn bộ dẫn xuất từ hàng đợi cục bộ cùng trạng thái mạng; một bảng bốn cột bảy hàng dữ liệu.
+Chức năng và logic: Chỉ đọc; mỗi hàng là một giá trị dẫn xuất kèm ràng buộc riêng.",,,,,,
+"6.1","img-029","Bảng bảy field dẫn xuất","導出項目一覧表","Derived field table","table","bảng bốn cột bảy dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Là bảng field của thành phần; và cũng là chỗ khai rằng mọi giá trị đều dẫn xuất chứ không nhập.
+Thành phần hiển thị: Bốn cột: số thứ tự · nhãn · kiểu · nguồn dẫn xuất và ràng buộc; bảy hàng dữ liệu.
+Chức năng và logic: Chỉ đọc; không sắp xếp được và không lọc được.",,,,,,
+"6.1.1","img-030","Hàng tiêu đề bảng field",,"Field table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên bốn cột để đọc được bảy hàng field bên dưới.
+Thành phần hiển thị: Bốn ô tiêu đề: dấu số · Nhãn · Kiểu · Nguồn dẫn xuất và ràng buộc.
+Chức năng và logic: Tĩnh.",,,,,,
+"6.1.2","img-031","Hàng field một Trạng thái kết nối","接続状態","Connection state","label","hàng field dẫn xuất chỉ đọc",,,,,,,,"Điều kiện: không tin cờ online của trình duyệt một mình; phải có thêm một lần ping thật tới server.","Mục đích và ngữ cảnh: Giá trị dẫn xuất số một; là nguồn của thẻ chỉ báo ở lớp một và của banner ở lớp hai.
+Thành phần hiển thị: Bốn ô: số 1; nhãn Trạng thái kết nối; kiểu badge; nguồn là cờ online của trình duyệt cộng một lần ping thật tới server.
+Chức năng và logic: Chỉ đọc. Ràng buộc khai ngay trong ảnh: tablet nối wifi của chợ mà đường ra internet chết vẫn báo online nên không tin cờ online một mình.",,,,,"CHƯA TỒN TẠI: chưa có đường ping nào ở phía máy chủ để xác nhận kết nối thật.","Tập giá trị của badge gồm những giá trị nào và nhãn hiển thị của từng giá trị là gì; ảnh chỉ cho thấy một ca là Mất kết nối?
+Ping thật lặp lại theo chu kỳ bao lâu; và bao nhiêu lần thất bại thì kết luận mất kết nối?"
+"6.1.3","img-032","Hàng field hai Số thao tác chờ đồng bộ","同期待ち件数","Pending sync count","label","hàng field dẫn xuất chỉ đọc",,,,,,,,"Điều kiện: bằng 0 thì ẩn chỉ báo.","Mục đích và ngữ cảnh: Giá trị dẫn xuất số hai; là con số người dùng cần để biết sẽ mất bao nhiêu việc nếu bỏ đi.
+Thành phần hiển thị: Bốn ô: số 2; nhãn Số thao tác chờ đồng bộ; kiểu number; nguồn là đếm bản ghi trong hàng đợi cục bộ.
+Chức năng và logic: Chỉ đọc; bằng 0 thì ẩn chỉ báo nên đây cũng là điều kiện của trạng thái Rỗng.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng con số khi vượt một ngưỡng hiển thị là gì; ảnh chỉ cho thấy một ca là số 3?
+Đếm theo thao tác hay theo bản ghi nghiệp vụ; một thao tác chạm nhiều bản ghi thì tính là mấy?"
+"6.1.4","img-033","Hàng field ba Thao tác chờ lâu nhất","最古の待機操作","Oldest pending operation","label","hàng field dẫn xuất chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Giá trị dẫn xuất số ba; là dấu hiệu duy nhất cho biết hàng đợi đã ứ quá lâu.
+Thành phần hiển thị: Bốn ô: số 3; nhãn Thao tác chờ lâu nhất; kiểu datetime; nguồn là hàng đợi cục bộ.
+Chức năng và logic: Chỉ đọc; cảnh báo mạnh hơn khi vượt ngưỡng. Ảnh khai rõ rằng khoảng thời gian ngắn của yêu cầu chưa được định lượng nên ngưỡng chưa có.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng thời điểm hiển thị là gì; ảnh chỉ cho thấy chỗ trống dạng năm tháng ngày giờ phút?
+Ngưỡng cảnh báo mạnh hơn là bao lâu và cấu hình được không?
+Vượt ngưỡng thì thành phần chỉ cảnh báo hay chặn nhập thêm?"
+"6.1.5","img-034","Hàng field bốn Trạng thái đồng bộ","同期状態","Sync state","label","hàng field dẫn xuất chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Giá trị dẫn xuất số bốn; là nửa đồng bộ lại của yêu cầu thể hiện thành một trạng thái thấy được.
+Thành phần hiển thị: Bốn ô: số 4; nhãn Trạng thái đồng bộ; kiểu badge; nguồn là tiến trình đồng bộ lại hàng đợi.
+Chức năng và logic: Chỉ đọc; là trạng thái nghiệm thu của nửa sau yêu cầu nên phải phân biệt được đang chờ với đang gửi.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Tập giá trị badge gồm những giá trị nào; ảnh chỉ cho thấy nhãn Đang đồng bộ ở thẻ trạng thái?
+Có hiển thị tiến độ theo số thao tác đã gửi không; thẻ trạng thái nói có tiến độ nhưng bảng field không nói dạng nào."
+"6.1.6","img-035","Hàng field năm Thao tác đồng bộ thất bại","同期失敗件数","Failed sync count","label","hàng field dẫn xuất chỉ đọc",,,,,,,,"Điều kiện: thao tác đồng bộ thất bại không tự xoá; phải người dùng xử lý.","Mục đích và ngữ cảnh: Giá trị dẫn xuất số năm; đếm những thao tác bị phía máy chủ từ chối khi đồng bộ lại.
+Thành phần hiển thị: Bốn ô: số 5; nhãn Thao tác đồng bộ thất bại; kiểu number; nguồn là bản ghi bị server từ chối khi đồng bộ lại.
+Chức năng và logic: Chỉ đọc; không tự xoá vì tự xoá là mất dữ liệu im lặng.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng con số và ca bằng 0 hiển thị thế nào; ảnh không cho thấy ca rỗng của field này?
+Thao tác thất bại giữ tối đa bao lâu trước khi buộc người dùng xử lý?"
+"6.1.7","img-036","Hàng field sáu Lý do thất bại","失敗理由","Failure reason","label","hàng field dẫn xuất chỉ đọc",,,,,,,,"Điều kiện: giữ nguyên mã lỗi gốc 409 hoặc 423 hoặc 422; không quy về lỗi không xác định.","Mục đích và ngữ cảnh: Giá trị dẫn xuất số sáu; là thứ duy nhất cho người dùng biết phải làm gì tiếp với một thao tác thất bại.
+Thành phần hiển thị: Bốn ô: số 6; nhãn Lý do thất bại; kiểu text; nguồn là mã lỗi cộng thông điệp của phía máy chủ ở lần đồng bộ lại.
+Chức năng và logic: Chỉ đọc; giữ nguyên mã lỗi gốc để phân biệt ba ca có ba cách xử lý khác nhau.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng chuỗi hiển thị là mã lỗi cộng thông điệp hay chỉ thông điệp đã dịch; ảnh chỉ liệt ba mã số?
+Mỗi mã lỗi kèm hành động gợi ý nào cho người dùng; ba mã trong ảnh có ba cách xử lý khác nhau."
+"6.1.8","img-037","Hàng field bảy Ngày nghiệp vụ lúc nhập","登録時の業務日","Business day at capture","label","hàng field dẫn xuất chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Giá trị dẫn xuất số bảy; là chỗ trả lời câu hỏi thao tác thuộc ngày nghiệp vụ nào khi nhập và đồng bộ rơi vào hai ngày khác nhau.
+Thành phần hiển thị: Bốn ô: số 7; nhãn Ngày nghiệp vụ lúc nhập; kiểu date; nguồn là ngày nghiệp vụ JST tại thời điểm xếp vào hàng đợi.
+Chức năng và logic: Chỉ đọc; phía máy chủ so lại với ngày nghiệp vụ hiện tại và trạng thái lock của ngày đó khi đồng bộ.",,,,,"CHƯA TỒN TẠI: bảng hàng đợi đồng bộ chưa tồn tại ở phía máy chủ; mọi giá trị của thành phần đọc từ hàng đợi cục bộ trên thiết bị.","Định dạng ngày hiển thị là gì; ảnh chỉ cho thấy chỗ trống dạng năm tháng ngày?
+Thiết bị đang mất kết nối thì lấy ngày nghiệp vụ ở đâu; giá trị lưu lại lúc còn mạng hay tính từ giờ của máy?"
+"7","img-038","Khối trạng thái màn",,"Screen state block","others","khối tám thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt đủ trạng thái của thành phần; kể cả trạng thái không áp dụng để không ai dựng thêm.
+Thành phần hiển thị: Tiêu đề khối Trạng thái; một lưới tám thẻ; mỗi thẻ một tiêu đề và một đoạn mô tả.
+Chức năng và logic: Chỉ đọc.",,,,,,
+"7.1","img-039","Thẻ trạng thái Rỗng","空状態","Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái mặc định; là trạng thái thành phần ở phần lớn thời gian.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng mặc định; nội dung nói đang online và hàng đợi rỗng thì ẩn hoàn toàn hoặc một dấu hiệu tối giản.
+Chức năng và logic: Không có hành động.",,,,,,"Ẩn hoàn toàn hay giữ một dấu hiệu tối giản; ảnh để mở cả hai lựa chọn."
+"7.2","img-040","Thẻ trạng thái Đang tải","読み込み中","Loading state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khoảng thời gian giữa lúc mở màn và lúc biết được trạng thái kết nối thật.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải; nội dung nói đang đọc hàng đợi cục bộ khi khởi động và chỉ báo trung tính không báo online sớm.
+Chức năng và logic: Không có hành động. Ràng buộc là không được báo online trước khi biết chắc.",,,,,,"Bao lâu không đọc xong hàng đợi thì chuyển sang trạng thái lỗi tải?"
+"7.3","img-041","Thẻ trạng thái Lỗi tải","読み込みエラー","Load error state card","label","thẻ trạng thái",,,,,,,,"Điều kiện: không đọc được hàng đợi cục bộ thì chế độ suy giảm không khả dụng và phải chặn ghi.","Mục đích và ngữ cảnh: Ca chế độ suy giảm im lặng không hoạt động; là ca nguy hiểm nhất vì người dùng vẫn nhập.
+Thành phần hiển thị: Thẻ tiêu đề Lỗi tải; nội dung nói không đọc được hàng đợi vì bộ nhớ cục bộ bị chặn hoặc đầy; cảnh báo chế độ suy giảm không khả dụng; và chặn ghi thay vì để người dùng nhập vào chỗ không lưu được.
+Chức năng và logic: Chặn ghi là hành động của trạng thái này; không phải một tuỳ chọn.",,,,,,"Chặn ghi ở mức nào; vô hiệu nút ghi của màn nền hay chỉ cảnh báo trước khi gửi?"
+"7.4","img-042","Thẻ trạng thái Không có quyền","権限なし","No permission state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai một trạng thái không áp dụng để không ai dựng 404 riêng cho thành phần.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền; nội dung nói không áp dụng vì thành phần không có route riêng và màn chứa nó giữ nguyên cơ chế 404 của mình.
+Chức năng và logic: Không có hành động; là một ràng buộc thiết kế.",,,,,,
+"7.5","img-043","Thẻ trạng thái Mất kết nối","接続断","Offline state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái kích hoạt cả hai lớp của thành phần.
+Thành phần hiển thị: Thẻ tiêu đề Mất kết nối; nội dung nói ping server thất bại thì hiện thẻ chỉ báo cộng banner trên màn có ghi dữ liệu.
+Chức năng và logic: Điều kiện vào trạng thái là ping thất bại; không phải cờ online của trình duyệt.",,,,,,
+"7.6","img-044","Thẻ trạng thái Đang đồng bộ lại","再同期中","Resyncing state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Là trạng thái nghiệm thu của nửa sau yêu cầu.
+Thành phần hiển thị: Thẻ tiêu đề Đang đồng bộ lại; nội dung nói đang gửi lại hàng đợi với badge Đang đồng bộ kèm tiến độ.
+Chức năng và logic: Vào trạng thái này khi người dùng bấm Đồng bộ lại; cơ chế tự động chưa được ảnh khai.",,,,,,"Người dùng có huỷ được giữa lúc đang đồng bộ lại không?"
+"7.7","img-045","Thẻ trạng thái Đồng bộ thất bại","同期失敗","Sync failed state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Ca thao tác đã nhập nhưng không vào được hệ; cần người xử lý.
+Thành phần hiển thị: Thẻ tiêu đề Đồng bộ thất bại; nội dung nói replay bị server từ chối thì hiện badge cộng danh sách thao tác thất bại; ba hành động là xem lý do; nhập lại tay; bỏ thao tác.
+Chức năng và logic: Ba hành động của thẻ là ba đường ra duy nhất; không có đường tự giải quyết.",,,,,,"Bỏ một thao tác thất bại có bắt buộc nhập lý do không; và có bước xác nhận thứ hai không?"
+"7.8","img-046","Thẻ trạng thái Read-only vì ngày đã lock","業務日ロックによる読み取り専用","Locked business day state card","label","thẻ trạng thái",,,,,,,,"Điều kiện: đồng bộ lại chạm một ngày nghiệp vụ đã lock thì thao tác không vào được; đường còn lại là yêu cầu điều chỉnh ở SC-20 với mã 423.","Mục đích và ngữ cảnh: Ràng buộc nặng nhất của thành phần; nói rằng việc đồng bộ lại không thể vô điều kiện.
+Thành phần hiển thị: Thẻ tiêu đề Read-only vì ngày đã lock; nội dung nói replay chạm một ngày nghiệp vụ đã lock thì nêu rõ thao tác không vào được và phải đi đường điều chỉnh SC-20 với mã 423.
+Chức năng và logic: Không có đường tự động vượt qua; người dùng phải nhập lại tay qua màn yêu cầu điều chỉnh.",,"Chỉ sang màn tạo yêu cầu điều chỉnh SC-20; người dùng nhập lại tay ở đó.",,,,"Thành phần tự mở màn yêu cầu điều chỉnh kèm dữ liệu đã nhập; hay chỉ chỉ đường và người dùng nhập lại từ đầu?"
+"8","img-047","Khối đối chiếu thiết kế và prototype",,"Design versus prototype block","others","khối bảng ba cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Dồn hiện trạng code xuống một chỗ để phần trên chỉ nói cái thiết kế đòi.
+Thành phần hiển thị: Tiêu đề khối ĐỐI CHIẾU PROTOTYPE; một bảng ba cột chín hàng dữ liệu; một đoạn ghi chú về hai dòng xung đột.
+Chức năng và logic: Chỉ đọc.",,,,,,
+"8.1","img-048","Bảng đối chiếu ba cột","設計と試作の差分表","Design versus prototype table","table","bảng ba cột chín dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy khoảng cách giữa thiết kế và bản đã dựng; và phân loại từng khoảng cách.
+Thành phần hiển thị: Ba cột: thiết kế đòi · prototype làm · mức; chín hàng dữ liệu với thẻ mức là chưa có; một phần; hoặc xung đột.
+Chức năng và logic: Chỉ đọc; không sắp xếp được.",,,,,,
+"8.1.1","img-049","Hàng tiêu đề bảng đối chiếu",,"Comparison table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột để đọc được chín hàng bên dưới.
+Thành phần hiển thị: Ba ô tiêu đề: Thiết kế đòi · Prototype làm · Mức.
+Chức năng và logic: Tĩnh.",,,,,,
+"8.1.2","img-050","Hàng hạng mục chưa có — đại diện",,"Missing item row - representative","others","hàng dữ liệu bảng — đại diện cho năm hàng cùng khuôn",,,,,,,,,"Mục đích và ngữ cảnh: Đại diện cho nhóm hạng mục mà thiết kế đòi nhưng bản đã dựng chưa có gì.
+Thành phần hiển thị: Ba ô: thiết kế đòi là tiếp tục thực hiện tác vụ khi mất kết nối ngắn; prototype làm là không có gì trong hướng này với không service worker; không manifest; không lưu trữ hàng đợi trên client; một thẻ mức chưa có.
+Chức năng và logic: Chỉ đọc. Năm hàng cùng khuôn gộp về hàng này: tiếp tục tác vụ; đồng bộ lại; cache dữ liệu tham chiếu; ping thật; và vết audit cho thao tác trong hàng đợi.",,,,,,"Nhóm chưa có này có thứ tự thi công bắt buộc không; cache dữ liệu tham chiếu là tiền đề của việc nhập được khi mất kết nối?"
+"8.1.3","img-051","Hàng hạng mục xung đột — đại diện",,"Conflicting item row - representative","others","hàng dữ liệu bảng — đại diện cho ba hàng cùng khuôn",,,,,,,,,"Mục đích và ngữ cảnh: Đại diện cho nhóm hạng mục mà bản đã dựng đang chạy đúng một yêu cầu khác và vì thế chặn thiết kế của thành phần này.
+Thành phần hiển thị: Ba ô: thiết kế đòi là đồng bộ lại xử lý được ca ngày nghiệp vụ đã lock; prototype làm là khoá ngày đã chạy thật và chặn ghi trên các bảng theo ngày nên đồng bộ lại sẽ bị từ chối và không có đường tự động nào vượt qua; một thẻ mức xung đột.
+Chức năng và logic: Chỉ đọc. Ba hàng cùng khuôn gộp về hàng này: ca ngày đã lock; ca số lượng đã đổi; và ca danh sách tác vụ quan trọng chưa chốt.",,,,,,"Ba ca xung đột này giải bằng cách thu phạm vi hay bằng cách để người dùng nhập lại tay; ảnh nói phải chọn nhưng không chọn."
+"8.2","img-052","Ghi chú hai dòng xung đột không phải lỗi prototype",,"Conflict interpretation note","label","đoạn nhắc cuối khối",,,,,,,,,"Mục đích và ngữ cảnh: Không cho ai đọc hai dòng xung đột thành lỗi của bản đã dựng.
+Thành phần hiển thị: Một đoạn chữ nhỏ: hai rào đó là hai yêu cầu khác đang chạy đúng gồm chốt kỳ và chặn bán vượt số lượng; chúng nói rằng việc đồng bộ lại không thể vô điều kiện; nên thiết kế phải chọn hoặc chấp nhận người dùng nhập lại tay qua SC-20 hoặc thu phạm vi về suy giảm chỉ đọc.
+Chức năng và logic: Tĩnh.",,,,,,
+"9","img-053","Chân ghi chú phân quyền hai phương án và giả định",,"Footer note on roles tradeoffs assumptions","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Gom ba thứ phải đọc trước khi dựng: phân quyền; hai phương án cần quyết định; và năm giả định chưa chốt.
+Thành phần hiển thị: Một đoạn chú thích nhiều dòng: phân quyền không lọc theo vai trò với cả bảy vai trò thấy chỉ báo toàn cục và bốn vai trò hiện trường thấy thêm banner trong màn; hai phương án là suy giảm chỉ đọc và hàng đợi ghi cộng đồng bộ lại kèm đánh đổi từng phương án; rủi ro riêng của hàng đợi là nó nằm trên thiết bị nên nằm ngoài mọi lớp phân quyền và audit của hệ; năm giả định cần chốt; một liên kết tới file đặc tả.
+Chức năng và logic: Tĩnh. Câu chốt là quyết định thuộc ADR chứ không thuộc thành phần này.",,,,,,"Chọn phương án nào; suy giảm chỉ đọc chỉ thoả một phần yêu cầu còn hàng đợi ghi thì đúng chữ nhưng xung đột với chốt kỳ và chặn bán vượt số lượng?
+Hàng đợi khoá theo người dùng trên thiết bị dùng chung được thi hành thế nào ở phía giao diện?"

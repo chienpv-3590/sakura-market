@@ -1,0 +1,158 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn","画面ヘッダー","Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người đọc — màn nào; thoả tính năng nào; ai là actor
+Thành phần hiển thị: một tiêu đề màn; một dòng meta truy vết yêu cầu; và một thẻ trạng thái thi công
+Chức năng và logic: chỉ hiển thị — không có tương tác và không có trường nhập",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm gồm mã màn SC-03 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース情報","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn theo Feature List — màn này và SC-04 cùng thoả một FE-003
+Thành phần hiển thị: mã FE-003; nhóm FN-01; ưu tiên P0; yêu cầu khách FR-IAM-02; loại màn List; và actor là quản trị hệ thống
+Chức năng và logic: văn bản tĩnh — các mã không phải liên kết điều hướng",,,,,,
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này chưa có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Chưa thi công""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"2","img-005","Khối chú dẫn nền thiết kế và ranh giới tài liệu","設計根拠と文書範囲の注記","Design ground and document scope note","label","scope_note",,,,,,,,,"Mục đích và ngữ cảnh: nói rõ màn vẽ theo nền thiết kế; và nói rõ những gì cố ý KHÔNG vẽ vì đây là tài liệu công khai
+Thành phần hiển thị: một khối chú dẫn nền vàng gồm mã FR-IAM-02; nội dung yêu cầu; câu khẳng định yêu cầu còn hiệu lực; và ba thứ không vẽ
+Chức năng và logic: ba thứ không vẽ: cấu hình khoá; bí mật của tài khoản; dữ liệu định danh thật — dữ liệu trên bảng mẫu là giá trị minh hoạ",,,,,,"- Dữ liệu định danh trên bảng mẫu là giá trị minh hoạ — màn thật hiện định danh đầy đủ hay che một phần? Đây là thông tin cá nhân theo RFP §09-06 (RFP:886) nên cách hiển thị phải chốt."
+"3","img-006","Khối vòng đời quyền tài khoản","アカウント権限ライフサイクル","Account permission lifecycle block","others","lifecycle_section",,,,,,,,,"Mục đích và ngữ cảnh: khai đúng ba chuyển tiếp mà FR-IAM-02 (RFP:628) đòi: cấp; tạm ngừng; mở lại quyền tài khoản
+Thành phần hiển thị: một nhãn khối; một bảng bốn cột với ba hàng chuyển tiếp; và một dòng ghi chú tách khoá tạm ra khỏi vòng đời
+Chức năng và logic: ba chuyển tiếp này là hợp đồng trạng thái của quyền tài khoản; đổi vai trò KHÔNG nằm ở màn này vì cần trang before/after nên thuộc SC-04",,,"app_user","is_active","Cột trạng thái quyền của thực thể tài khoản nội bộ trong miền D-PARTY (RFP:602); đã tồn tại thật. Trạng thái quyền chỉ có hai giá trị nên ba chuyển tiếp chạy trên cùng một cột.",
+"3.1","img-007","Tiêu đề khối vòng đời quyền tài khoản",,"Lifecycle block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm số lượng chuyển tiếp mà yêu cầu khách đòi
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và cụm ""ba chuyển tiếp FR-IAM-02 đòi""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-008","Bảng ba chuyển tiếp vòng đời quyền","権限遷移表","Permission transition table","table","transition_table",,,,,,,,,"Mục đích và ngữ cảnh: ba chuyển tiếp của quyền tài khoản; kèm trạng thái nguồn; trạng thái đích; và những gì bắt buộc phải kèm mỗi lần chuyển
+Thành phần hiển thị: một bảng bốn cột với hàng tiêu đề ""Chuyển tiếp""; ""Từ""; ""Sang""; ""Bắt buộc kèm""; và ba hàng: Cấp quyền; Tạm ngừng; Mở lại
+Chức năng và logic: cột ""Bắt buộc kèm"" là chỗ nghiệm thu FR-IAM-02 (RFP:628) rơi vào: mỗi chuyển tiếp phải có chủ thể và thời điểm; hàng cấp quyền thêm vai trò",,,"app_user","is_active; role","Hai cột trạng thái quyền và vai trò của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật. Bảng lưu lịch sử ba chuyển tiếp này thì CHƯA tồn tại — đề xuất ở SC-04.","- Cột ""Bắt buộc kèm"" liệt lý do cho cả ba chuyển tiếp; nhưng FR-IAM-02 (RFP:628) chỉ đòi before/after; chủ thể và timestamp — KHÔNG đòi lý do. Lý do ở đây suy từ FR-AUDIT-01 (RFP:710). Chủ đầu tư có đòi lý do bắt buộc không; hay đây là mức chặt hơn RFP?
+- Có chuyển tiếp nào đưa tài khoản ra khỏi hệ thống hoàn toàn không — thu hồi vĩnh viễn? Bảng chỉ có ba chuyển tiếp và không có trạng thái kết thúc.
+- Cấp quyền cho một định danh đã từng bị tạm ngừng thì tính là ""Cấp quyền"" mới hay ""Mở lại""? Hai hàng có yêu cầu kèm khác nhau."
+"3.2.1","img-009","Dòng chuyển tiếp vòng đời (đại diện)",,"Lifecycle transition row (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng chuyển tiếp — lấy hàng đầu tiên ""Cấp quyền"" làm đại diện cho cả ba hàng có cùng kết cấu
+Thành phần hiển thị: bốn ô: tên chuyển tiếp; trạng thái nguồn; trạng thái đích; và danh sách nội dung bắt buộc kèm
+Chức năng và logic: lặp ba lần với ba chuyển tiếp khác nhau; kết cấu giống nhau nên gộp về một hàng đại diện",,,,,,
+"3.3","img-010","Ghi chú khoá tạm là trục độc lập",,"Lock as independent axis note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt hai điều dễ sai nhất: khoá tạm không phải một trạng thái của vòng đời quyền; và đổi vai trò không thuộc màn này
+Thành phần hiển thị: một đoạn chú thích ba câu: khoá tạm sinh từ đâu và tự hết ra sao; một tài khoản đang hoạt động vẫn có thể đang bị khoá tạm; và lý do đổi vai trò thuộc SC-04
+Chức năng và logic: hai trục phải hiển thị tách nhau và lọc được độc lập; gộp hai trục thành một cột là mất khả năng đọc đúng trạng thái tài khoản",,,,,,"- Tài khoản đã tạm ngừng mà vẫn còn mốc khoá tạm chưa hết thì hiển thị thế nào? Hai trục độc lập nên có thể cùng bật; thiết kế không khai thứ tự ưu tiên khi hiển thị."
+"4","img-011","Khối bộ lọc","絞り込みブロック","Filter block","others","filter_section",,,,,,,,,"Mục đích và ngữ cảnh: thu hẹp danh sách để quản trị tìm nhanh tài khoản cần xử lý
+Thành phần hiển thị: một nhãn khối và bốn bộ lọc xếp một hàng: vai trò; quyền tài khoản; đang bị khoá tạm; và ô tìm theo tên hoặc định danh
+Chức năng và logic: bốn bộ lọc áp đồng thời; hai trục quyền tài khoản và khoá tạm lọc độc lập nhau theo ghi chú ở khối 1",,,,,,
+"4.1","img-012","Tiêu đề khối bộ lọc",,"Filter block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm vị trí đặt bộ lọc
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối và cụm ""nằm trên bảng""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-013","Bộ lọc Vai trò","ロール絞り込み","Role filter","dropdown","select_single",,"string","false","Tất cả | một trong 7 vai trò nội bộ",,,"Tất cả","Điều kiện: không bắt buộc — mặc định Tất cả.
+Điều kiện: tập giá trị đúng 7 vai trò nội bộ của TBL-ROLE-01 (RFP:245).
+Điều kiện: giá trị lạ thì BỎ QUA bộ lọc và trả danh sách đầy đủ — không báo lỗi hệ thống.","Mục đích và ngữ cảnh: lọc danh sách theo vai trò nội bộ
+Thành phần hiển thị: nhãn không dấu sao; một select mặc định Tất cả; và một dòng chú thích về tập giá trị và cách xử lý giá trị lạ
+Chức năng và logic: giá trị lạ không được làm màn lỗi — bộ lọc là tiện ích đọc nên phải suy biến an toàn","on_click",,"app_user","role","Cột vai trò của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật với ràng buộc đúng 7 giá trị của TBL-ROLE-01 (RFP:245).","- Bộ lọc có cho chọn nhiều vai trò cùng lúc không? Ảnh cho thấy một select đơn nên mặc định là một giá trị."
+"4.3","img-014","Bộ lọc Quyền tài khoản","アカウント権限絞り込み","Account permission filter","dropdown","select_single",,"string","false","Tất cả | đang hoạt động | đã tạm ngừng",,,"Tất cả","Điều kiện: không bắt buộc — mặc định Tất cả.
+Điều kiện: đúng ba giá trị Tất cả; đang hoạt động; đã tạm ngừng — khớp hai trạng thái của vòng đời ở khối 1.","Mục đích và ngữ cảnh: lọc theo trục quyền tài khoản — trục do ba chuyển tiếp của FR-IAM-02 (RFP:628) điều khiển
+Thành phần hiển thị: nhãn không dấu sao; một select mặc định Tất cả; và một dòng chú thích liệt ba giá trị
+Chức năng và logic: trục này độc lập với trục khoá tạm nên hai bộ lọc phải áp được đồng thời","on_click",,"app_user","is_active","Cột trạng thái quyền của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật.",
+"4.4","img-015","Bộ lọc Đang bị khoá tạm","一時ロック絞り込み","Temporary lock filter","dropdown","select_single",,"string","false","Tất cả | đang khoá | không khoá",,,"Tất cả","Điều kiện: không bắt buộc — mặc định Tất cả.
+Điều kiện: lọc độc lập với bộ lọc quyền tài khoản — hai trục áp đồng thời chứ không loại nhau.","Mục đích và ngữ cảnh: lọc theo trục khoá tạm — trục do NFR-SEC-03 (RFP:811) sinh ra và tự hết theo thời gian
+Thành phần hiển thị: nhãn không dấu sao; một select mặc định Tất cả; và một dòng chú thích nêu rõ đây là trục thứ hai
+Chức năng và logic: giá trị suy từ mốc hết khoá so với thời điểm hiện tại nên kết quả lọc đổi theo thời gian mà dữ liệu không đổi","on_click",,"app_user","locked_until","Suy từ cột mốc hết khoá tạm của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); cột đã tồn tại thật. Đây là giá trị dẫn xuất theo thời điểm đọc chứ không phải cột trạng thái riêng.","- Kết quả lọc trục khoá tạm đổi theo thời gian dù dữ liệu không đổi — danh sách có tự làm mới không; hay người dùng phải tải lại? Thiết kế không khai."
+"4.5","img-016","Ô Tìm theo tên hoặc định danh","名前または識別子で検索","Name or identifier search input","text_form","search_input",,"string","false","khớp một phần — không phân biệt đầu hay giữa chuỗi",,,,"Điều kiện: không bắt buộc.
+Điều kiện: khớp một phần trên cả tên hiển thị và định danh.
+Điều kiện: ký tự đặc biệt của cú pháp tìm kiếm phải được xử lý trước khi ghép truy vấn — người dùng không được điều khiển được truy vấn.
+Điều kiện: độ dài tối đa là giả định cần chốt — thiết kế khai thẳng như vậy.","Mục đích và ngữ cảnh: tìm nhanh một tài khoản theo tên hiển thị hoặc định danh
+Thành phần hiển thị: nhãn không dấu sao; một ô nhập chữ với giá trị gợi ý; và một dòng chú thích về cách khớp và về độ dài tối đa còn treo
+Chức năng và logic: khớp một phần nên chuỗi ngắn trả về nhiều dòng; NFR-PERF-01 (RFP:807) đặt p95 không vượt 2 giây cho tìm kiếm thông thường nên ô này cần chỉ mục hoặc ngưỡng độ dài tối thiểu",,,"app_user","display_name; email","Hai cột tên hiển thị và định danh của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật. Định danh là thông tin cá nhân theo RFP §09-06 (RFP:886) nên tìm theo định danh là một đường đọc dữ liệu cá nhân.","- Độ dài tối đa và độ dài tối thiểu của ô tìm kiếm là bao nhiêu? Thiết kế khai thẳng là giả định cần chốt; NFR-PERF-01 (RFP:807) chỉ đặt ngưỡng thời gian chứ không đặt ngưỡng độ dài.
+- Tìm kiếm có phân biệt chữ hoa chữ thường không? Thiết kế không khai.
+- Có gõ là tìm ngay; hay bấm mới tìm? Thiết kế không vẽ nút tìm nên mặc định là tìm theo thay đổi giá trị — điều đó đổi số lần truy vấn."
+"5","img-017","Khối danh sách tài khoản nội bộ","内部アカウント一覧ブロック","Internal account list block","others","list_section",,,,,,,,,"Mục đích và ngữ cảnh: cho quản trị thấy toàn bộ tài khoản nội bộ trong một danh sách lọc được — và là cửa vào SC-04
+Thành phần hiển thị: một nhãn khối; một bảng chín cột; và một dòng ghi chú về hai cột đặc biệt
+Chức năng và logic: mỗi dòng là một tài khoản; hai trục quyền tài khoản và khoá tạm hiển thị ở hai cột tách nhau",,,"app_user",,"Thực thể tài khoản người dùng nội bộ của miền D-PARTY (RFP:602); bảng đã tồn tại thật và phủ được bảy trong chín cột. Hai cột còn lại chưa có nguồn — xem từng cột.",
+"5.1","img-018","Tiêu đề khối danh sách",,"List block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối danh sách
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối và tên khối
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"5.2","img-019","Bảng danh sách tài khoản","アカウント一覧表","Account list table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: chín cột phủ đủ những gì quản trị cần để biết ai đang hoạt động; ai giữ vai trò nào; tài khoản nào đang bị khoá tạm; và lần đổi quyền gần nhất của từng tài khoản
+Thành phần hiển thị: một bảng chín cột với hàng tiêu đề và ba hàng dữ liệu mẫu; các ô trạng thái mang thẻ nhãn; ô hành động mang một nút
+Chức năng và logic: cột ""Thay đổi quyền gần nhất"" đưa phần nghiệm thu của FR-IAM-02 (RFP:628) lên tận danh sách để người kiểm không phải mở từng tài khoản; cột ""Yếu tố xác thực"" phải phân biệt ba giá trị theo NFR-SEC-01 (RFP:809)",,,"app_user","display_name; email; role; is_active; locked_until; created_at","Sáu cột trên thực thể tài khoản nội bộ của D-PARTY (RFP:602) đã tồn tại thật. Cột ""Thay đổi quyền gần nhất"" đọc từ bảng lịch sử quyền — bảng đó CHƯA tồn tại; đề xuất ở SC-04. Cột ""Yếu tố xác thực"" chưa có nguồn vì phụ thuộc SC-02.","- Số dòng mỗi trang là bao nhiêu và phân trang theo kiểu nào? Thiết kế không vẽ phân trang; NFR-PERF-01 (RFP:807) đặt p95 không vượt 2 giây nên số dòng phải có ngưỡng.
+- Bảng có sắp xếp được theo cột không; và mặc định sắp theo cột nào? Thiết kế không khai.
+- Cột định danh hiện đầy đủ hay che một phần? Đây là thông tin cá nhân của toàn bộ nhân sự nội bộ theo RFP §09-06 (RFP:886).
+- Cột ""Thay đổi quyền gần nhất"" cần bảng lịch sử quyền chưa tồn tại — trước khi bảng đó có thì cột này hiện gì?"
+"5.2.1","img-020","Dòng tài khoản (đại diện)",,"Account row (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một dòng tài khoản — lấy dòng đầu tiên làm đại diện cho cả ba dòng mẫu có cùng kết cấu
+Thành phần hiển thị: chín ô theo đúng thứ tự cột; ba ô trạng thái mang thẻ nhãn; ô cuối mang một nút hành động thay đổi theo tình trạng của dòng
+Chức năng và logic: lặp theo số tài khoản; kết cấu giống nhau nên gộp về một dòng đại diện — điểm khác duy nhất giữa ba dòng mẫu là giá trị và nút hành động phù hợp tình trạng",,,"app_user",,"Một dòng ứng với một bản ghi của thực thể tài khoản nội bộ trong D-PARTY (RFP:602).","- Nút ở ô hành động đổi theo tình trạng của dòng (Mở chi tiết; Mở khoá tạm; Mở lại) — quy tắc chọn nút nào là gì khi một dòng thoả nhiều tình trạng cùng lúc? Thiết kế không khai thứ tự ưu tiên."
+"5.2.2","img-021","Nút Mở chi tiết trong dòng",,"Open detail row button","button","row_action","text_only",,,,,,,,"Mục đích và ngữ cảnh: đường duy nhất từ danh sách sang màn chi tiết tài khoản
+Thành phần hiển thị: một nút phụ nhãn chữ đặt ở ô hành động của dòng
+Chức năng và logic: chỉ điều hướng; không ghi dữ liệu và không đổi trạng thái tài khoản nào","on_click","Mở SC-04 cho tài khoản của dòng — nơi xem lịch sử quyền before/after và nơi đổi vai trò.",,,,"- Định danh tài khoản có xuất hiện trên đường dẫn của SC-04 không? Nếu có thì định danh lọt vào lịch sử trình duyệt và log truy cập; đây là thông tin cá nhân theo RFP §09-06 (RFP:886)."
+"5.2.3","img-022","Thẻ quyền tài khoản trong dòng (đại diện)","アカウント権限バッジ","Account permission badge (representative)","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: hiển thị trạng thái quyền của tài khoản ở dạng thẻ để đọc nhanh cả bảng
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo; hai giá trị Đang hoạt động và Đã tạm ngừng — lấy thẻ của dòng đầu làm đại diện
+Chức năng và logic: chỉ hiển thị trục quyền tài khoản; trục khoá tạm nằm ở cột riêng bên cạnh nên hai thẻ không được gộp",,,"app_user","is_active","Cột trạng thái quyền của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật.",
+"5.2.4","img-023","Thẻ yếu tố xác thực trong dòng (đại diện)","認証要素バッジ","Authentication factor badge (representative)","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho quản trị biết tài khoản có thuộc diện bắt buộc yếu tố xác thực thứ hai và đã đăng ký chưa — nghiệm thu NFR-SEC-01 (RFP:809) đòi kiểm tra được cấu hình
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với ba giá trị: Không thuộc diện; Bắt buộc · đã đăng ký; Bắt buộc · chưa đăng ký — lấy thẻ của dòng đầu làm đại diện
+Chức năng và logic: giá trị ""Bắt buộc · chưa đăng ký"" là cảnh báo tuân thủ; phải phân biệt được với ""Không thuộc diện"" chứ không gộp thành hai trạng thái",,,,,"Suy từ diện bắt buộc MFA cộng dữ liệu của nhà cung cấp xác thực. Thực thể tài khoản nội bộ của D-PARTY (RFP:602) CHƯA có nguồn cho cả hai nửa — phụ thuộc SC-02.","- Ba giá trị của thẻ này cần diện bắt buộc MFA đã chốt; nhưng RFP không liệt vai nào có quyền phê duyệt nên diện đó còn treo. Trước khi chốt thì cột này hiện gì?
+- Quản trị thấy được tài khoản người khác đã đăng ký yếu tố hay chưa — đây là thông tin về mức phòng thủ của tài khoản đó; có được phép hiện không?"
+"5.3","img-024","Ghi chú hai cột đặc biệt của danh sách",,"Note on two special columns","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: giải thích vì sao hai cột này không cắt được: một cột đưa nghiệm thu lên danh sách; một cột phục vụ kiểm tra tuân thủ
+Thành phần hiển thị: một đoạn chú thích hai câu: cột thay đổi quyền gần nhất và cột yếu tố xác thực
+Chức năng và logic: nghiệm thu FR-IAM-02 (RFP:628) phải thấy được ngay từ danh sách chứ không bắt người kiểm mở từng tài khoản",,,,,,"- Cột thay đổi quyền gần nhất chỉ hiện thời điểm và chủ thể — có cần hiện cả loại thay đổi không? Thiết kế không đòi; nhưng thiếu loại thay đổi thì người kiểm vẫn phải mở SC-04 để biết chuyện gì đã xảy ra."
+"6","img-025","Khối hành động của màn","画面アクションブロック","Screen actions block","others","action_section",,,,,,,,,"Mục đích và ngữ cảnh: bốn hành động màn này chịu trách nhiệm: ba chuyển tiếp quyền của FR-IAM-02 (RFP:628) cộng mở khoá tạm của NFR-SEC-03 (RFP:811)
+Thành phần hiển thị: một nhãn khối; bốn nút xếp một hàng; và một dòng ghi chú về lý do bắt buộc và về dấu vết
+Chức năng và logic: ba hành động quyền đều sinh một dòng lịch sử before/after xem được ở SC-04; mở khoá tạm không phải thay đổi quyền nhưng vẫn phải để lại dấu vết",,,"app_user",,"Ghi vào thực thể tài khoản nội bộ của D-PARTY (RFP:602) cộng một dòng ở bảng lịch sử quyền — bảng lịch sử CHƯA tồn tại; đề xuất ở SC-04.",
+"6.1","img-026","Tiêu đề khối hành động",,"Actions block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối hành động
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối và tên khối
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"6.2","img-027","Nút Cấp tài khoản",,"Create account button","button","primary_action","text_only",,,,,,,"Điều kiện: phải chọn vai trò cho tài khoản mới — hàng ""Cấp quyền"" ở khối 1 đòi vai trò.
+Điều kiện: định danh phải chưa tồn tại trong danh bạ người dùng nội bộ.
+Điều kiện: bắt buộc kèm lý do — suy từ FR-AUDIT-01 (RFP:710); FR-IAM-02 (RFP:628) không đòi lý do.
+Lỗi: ""Định danh này đã có tài khoản."" — không tạo thêm bản ghi.
+Lỗi: ""Phải nhập lý do cấp quyền."" — không ghi gì.","Mục đích và ngữ cảnh: cấp quyền cho một người dùng nội bộ mới — chuyển tiếp thứ nhất của FR-IAM-02 (RFP:628)
+Thành phần hiển thị: một nút chính nhãn chữ đặt đầu hàng nút của khối
+Chức năng và logic: sinh tài khoản kèm vai trò và một dòng lịch sử quyền loại ""cấp quyền""; tính duy nhất của định danh phải là ràng buộc dữ liệu chứ không phải một lần đọc trước khi ghi","on_click",,"app_user","email; role; is_active; display_name","Ghi một bản ghi mới vào thực thể tài khoản nội bộ của D-PARTY (RFP:602) — bảng đã tồn tại thật và cột định danh mang ràng buộc duy nhất. Kèm một dòng ở bảng lịch sử quyền; bảng đó CHƯA tồn tại.","- Tài khoản mới nhận bí mật xác thực ban đầu qua đường nào? Là màn bảo mật nên thiết kế cố ý không vẽ; nhưng không có kênh phát thì không cấp được tài khoản.
+- Cấp tài khoản chạm cả danh bạ xác thực và thực thể tài khoản nội bộ — hai nơi ghi phải cùng thành công hoặc cùng không; thiết kế không khai cách bảo đảm điều đó.
+- Cấp tài khoản mở ngay ở màn này bằng một hộp thoại; hay chuyển sang màn riêng? Thiết kế chỉ vẽ nút."
+"6.3","img-028","Nút Mở lại",,"Reactivate button","button","secondary_action","text_only",,,,,,,"Điều kiện: tài khoản phải đang ở trạng thái đã tạm ngừng — chuyển tiếp ""Mở lại"" ở khối 1 chỉ đi từ trạng thái đó.
+Điều kiện: bắt buộc kèm lý do — suy từ FR-AUDIT-01 (RFP:710).
+Lỗi: ""Phải nhập lý do mở lại quyền."" — không ghi thay đổi.
+Lỗi: ""Tài khoản đang hoạt động; không cần mở lại."" — không ghi thay đổi.","Mục đích và ngữ cảnh: mở lại quyền cho một tài khoản đã bị tạm ngừng — chuyển tiếp thứ ba của FR-IAM-02 (RFP:628)
+Thành phần hiển thị: một nút phụ nhãn chữ đặt sau nút Cấp tài khoản
+Chức năng và logic: sinh một dòng lịch sử quyền loại ""mở lại"" mang giá trị trước và sau; đọc lại giá trị cũ trước khi ghi để dòng lịch sử không rỗng nửa","on_click",,"app_user","is_active","Đổi cột trạng thái quyền của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); cột đã tồn tại thật. Kèm một dòng ở bảng lịch sử quyền — bảng đó CHƯA tồn tại.","- Mở lại một tài khoản có phục hồi vai trò cũ; hay buộc chọn lại vai trò? Thiết kế đặt đổi vai trò ở SC-04 nên mặc định là giữ vai trò cũ; cần xác nhận."
+"6.4","img-029","Nút Mở khoá tạm",,"Unlock button","button","secondary_action","text_only",,,,,,,"Điều kiện: tài khoản phải đang trong thời gian khoá tạm.
+Lỗi: ""Tài khoản không đang bị khoá tạm."" — không ghi thay đổi.","Mục đích và ngữ cảnh: gỡ khoá tạm cho một tài khoản trước khi khoá tự hết — thuộc NFR-SEC-03 (RFP:811) chứ không phải một chuyển tiếp quyền
+Thành phần hiển thị: một nút phụ nhãn chữ đặt sau nút Mở lại
+Chức năng và logic: không đổi trạng thái quyền tài khoản; nhưng vẫn để lại dấu vết vì RFP §02-08 (RFP:310) liệt lock/unlock tài khoản là thao tác độ nhạy cao bắt buộc truy vết","on_click",,"app_user","failed_login_count; locked_until","Đặt lại hai cột đếm số lần sai và mốc hết khoá trên thực thể tài khoản nội bộ của D-PARTY (RFP:602); cả hai đã tồn tại thật. Dấu vết ghi cùng chỗ với lịch sử quyền để người kiểm chỉ phải đọc một dòng thời gian — bảng đó CHƯA tồn tại.","- Mở khoá tạm có bắt buộc kèm lý do không? Đây không phải thay đổi quyền nên FR-IAM-02 (RFP:628) không phủ; nhưng RFP §02-08 (RFP:310) đòi truy vết. Bắt buộc lý do thì thao tác thường ngày nặng tay.
+- Người bị mở khoá có được thông báo không? Thiết kế không khai."
+"6.5","img-030","Nút Tạm ngừng",,"Suspend button","button","danger_action","text_only",,,,,,,"Điều kiện: tài khoản phải đang hoạt động — chuyển tiếp ""Tạm ngừng"" ở khối 1 chỉ đi từ trạng thái đó.
+Điều kiện: bắt buộc kèm lý do — suy từ FR-AUDIT-01 (RFP:710).
+Điều kiện: KHÔNG cho tự tạm ngừng chính mình.
+Điều kiện: KHÔNG cho tạm ngừng tài khoản quản trị đang hoạt động cuối cùng.
+Lỗi: ""Không thể tạm ngừng tài khoản của chính bạn."" — không ghi thay đổi.
+Lỗi: ""Không thể tạm ngừng tài khoản quản trị đang hoạt động cuối cùng."" — không ghi thay đổi.
+Lỗi: ""Phải nhập lý do tạm ngừng quyền."" — không ghi thay đổi.","Mục đích và ngữ cảnh: tạm ngừng quyền của một tài khoản — chuyển tiếp thứ hai của FR-IAM-02 (RFP:628)
+Thành phần hiển thị: một nút mang sắc thái cảnh báo nhãn chữ đặt cuối hàng nút của khối
+Chức năng và logic: hai cửa chặn cứng phải nằm ở tầng ghi chứ không chỉ ẩn nút: tự tạm ngừng chính mình và tạm ngừng tài khoản quản trị cuối cùng — mất cả hai là mất đường quản trị hệ thống","on_click",,"app_user","is_active","Đổi cột trạng thái quyền của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); cột đã tồn tại thật. Kèm một dòng ở bảng lịch sử quyền — bảng đó CHƯA tồn tại.","- Tài khoản đang có phiên sống bị tạm ngừng thì phiên đó chấm dứt ngay; hay chỉ hết ở lần điều hướng kế tiếp? SC-01 vẽ đường đẩy người đó về cổng vào kèm lý do nhưng không khai thời điểm.
+- ""Tài khoản quản trị đang hoạt động cuối cùng"" đếm theo vai trò ROLE-SYS-ADMIN — nếu chủ đầu tư chốt thêm một vai quản trị nhân sự riêng thì cách đếm này còn đúng không?
+- Tạm ngừng có ảnh hưởng dữ liệu nghiệp vụ tài khoản đó đã tạo không? Thiết kế không đòi xoá gì; nhưng yêu cầu xoá dữ liệu cá nhân theo RFP §09-06 (RFP:887) có thể đòi khác."
+"6.6","img-031","Ghi chú lý do bắt buộc và dấu vết",,"Mandatory reason and audit note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: nối bốn hành động của khối về đúng phần nghiệm thu; và tách mở khoá tạm ra khỏi ba chuyển tiếp quyền
+Thành phần hiển thị: một đoạn chú thích hai câu: ba hành động quyền và dấu vết của chúng; rồi mở khoá tạm và lý do vẫn phải để lại dấu vết
+Chức năng và logic: phần ""ghi nhận lịch sử thay đổi"" của FR-IAM-02 (RFP:628) do SC-04 hiển thị; màn này chỉ sinh dòng lịch sử",,,,,,"- ""Bắt buộc kèm lý do"" chặt hơn FR-IAM-02 (RFP:628) — điều khoản đó chỉ đòi before/after; chủ thể và timestamp. Lý do đến từ FR-AUDIT-01 (RFP:710). Chủ đầu tư có xác nhận mức chặt này không?"
+"7","img-032","Khối trạng thái màn","画面状態ブロック","Screen states block","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ các trạng thái màn phải xử lý — phần dễ bị cắt nhất khi thi công
+Thành phần hiển thị: một nhãn khối và một lưới 8 thẻ trạng thái
+Chức năng và logic: chỉ mô tả yêu cầu; không có tương tác",,,,,,
+"7.1","img-033","Tiêu đề khối trạng thái màn",,"States block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối trạng thái
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""Trạng thái""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"7.2","img-034","Lưới thẻ trạng thái màn",,"State card grid","others","state_card_grid",,,,,,,,,"Mục đích và ngữ cảnh: 8 trạng thái màn xếp thành lưới 4 cột 2 hàng — mỗi thẻ là một trạng thái phải xử lý được
+Thành phần hiển thị: 8 thẻ có cùng kết cấu: Rỗng; Đang tải; Lỗi tải; Không có quyền; Đang gửi; Thiếu lý do; Bị chặn theo quy tắc; Gửi lỗi
+Chức năng và logic: màn này không chạm dữ liệu bị khoá theo ngày nghiệp vụ nên KHÔNG có trạng thái chỉ-đọc-vì-đã-chốt-kỳ; trạng thái Không có quyền trả 404 chứ không 403 — có chủ đích để không lộ sự tồn tại của màn quản trị tài khoản",,,,,,"- Trạng thái ""Bị chặn theo quy tắc"" gộp hai quy tắc khác nhau (tự tạm ngừng chính mình; tạm ngừng quản trị cuối) — hai ca có hai câu thông báo riêng không? Người dùng cần biết mình vướng quy tắc nào.
+- Trạng thái ""Lỗi tải"" phải không hiện bảng rỗng như thể không có tài khoản nào — điều này áp cả khi chỉ một phần dữ liệu đọc được không? Cột thay đổi quyền gần nhất đọc từ nguồn khác nên có thể lỗi riêng."
+"7.2.1","img-035","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên ""Rỗng"" làm đại diện cho cả 8 thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả; thẻ đại diện đòi nói rõ danh sách rỗng là do lọc và kèm nút xoá lọc
+Chức năng và logic: lặp 8 lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên gộp về một thẻ đại diện",,,,,,
+"8","img-036","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: chỗ duy nhất trên màn nói về bản thi công — và là chỗ đặt lý do hoãn màn này
+Thành phần hiển thị: một nhãn khối và một bảng ba cột: thiết kế đòi; prototype làm; và mức lệch
+Chức năng và logic: lý do hoãn là PHẠM VI PROTOTYPE và đi cùng quyết định của SC-02; FR-IAM-02 (RFP:628) vẫn còn hiệu lực nên mục thiết kế của màn vẫn đủ",,,,,,
+"8.1","img-037","Tiêu đề khối đối chiếu prototype",,"Divergence block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối đối chiếu
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""ĐỐI CHIẾU PROTOTYPE""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"8.2","img-038","Bảng đối chiếu thiết kế và prototype","設計とプロトタイプの差分表","Design vs prototype divergence table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: 4 điểm bản thi công làm khác thiết kế; kèm mức lệch của từng điểm
+Thành phần hiển thị: một bảng ba cột với hàng tiêu đề ""Thiết kế đòi""; ""Prototype làm""; ""Mức""; và 4 hàng dữ liệu; ô mức mang một thẻ nhãn kèm câu giải thích
+Chức năng và logic: hàng thứ ba là hàng nặng nhất: chặn ở tầng trang không che được dữ liệu; RFP §09-06 (RFP:886) đòi kiểm soát truy cập theo vai trò cho thông tin cá nhân bằng chữ nên đây là điểm phải quyết trước khi dựng",,,,,,"- Hàng thứ ba của bảng nói phạm vi đọc rộng hiện tại là một quyết định thiết kế của bản thi công; RFP §02-08 (RFP:311) giao cho bên dự thầu ĐỀ XUẤT cơ chế phân tách quyền chứ không bắt đọc rộng. Chủ đầu tư chốt vai nào được đọc bảng tài khoản?"
+"8.2.1","img-039","Dòng đối chiếu kèm thẻ mức lệch (đại diện)",,"Divergence row with level tag (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng đối chiếu — lấy hàng đầu tiên làm đại diện cho cả 4 hàng có cùng kết cấu
+Thành phần hiển thị: ba ô: điều thiết kế đòi; điều bản thi công làm; và một thẻ nhãn mức lệch kèm câu giải thích
+Chức năng và logic: hàng đại diện mang lý do hoãn cả màn và nói rõ lý do là phạm vi prototype chứ không phải lý do thiết kế",,,,,,
+"9","img-040","Khối ghi chú phân quyền và yêu cầu khách","権限と顧客要件の注記","Permission and requirement footnote","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt phân quyền của màn; nêu giới hạn của lớp chặn 404; và nối từng khối về phần nghiệm thu của FR-IAM-02 (RFP:628)
+Thành phần hiển thị: ba đoạn chú thích: phân quyền và giới hạn của nó; yêu cầu khách màn này thoả kèm nguyên văn nghiệm thu; và liên kết tới bản as-built
+Chức năng và logic: trả 404 thay 403 là quyết định có chủ đích để không lộ sự tồn tại tài nguyên — nhưng nó che TRANG chứ không che DỮ LIỆU; ai gọi thẳng tầng dữ liệu bằng phiên hợp lệ vẫn đọc được nếu phạm vi đọc không bị siết",,,"app_user",,"Phạm vi đọc thực thể tài khoản nội bộ của D-PARTY (RFP:602) là một ĐỀ XUẤT thiết kế — RFP §02-08 (RFP:311) giao cho bên dự thầu đề xuất cơ chế phân tách quyền và truy vết. Đề xuất đọc rộng hiện tại đá với RFP §09-06 (RFP:886) đòi kiểm soát truy cập theo vai trò cho thông tin cá nhân.","- Vai nào được ĐỌC bảng tài khoản nội bộ? Đây là quyết định của bên dự thầu theo RFP §02-08 (RFP:311); và RFP §09-06 (RFP:886) đòi kiểm soát truy cập theo vai trò cho thông tin cá nhân bằng chữ — nên đề xuất đọc rộng phải sửa hoặc phải được khách chấp nhận có điều kiện.
+- Chỉ ROLE-SYS-ADMIN vào được là suy từ trách nhiệm ""Quản lý tài khoản; quyền; log vận hành"" ở TBL-ROLE-01 (RFP:255). Nếu chủ đầu tư có bộ phận hành chính cấp tài khoản mà không phải quản trị hệ thống thì thiếu một vai trò.
+- Người bị từ chối khi gọi API ghi nhận mã nào — cùng 404 như vào trang; hay một mã khác? Dùng hai mã khác nhau là để người ngoài suy ra sự tồn tại của tài nguyên."

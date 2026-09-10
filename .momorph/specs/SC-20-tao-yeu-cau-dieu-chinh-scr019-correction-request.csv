@@ -1,0 +1,124 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn tạo yêu cầu điều chỉnh",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết của nó; cho biết đây là điểm vào của nhóm điều chỉnh sau khi chốt.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-028 · FN-08 · ưu tiên P0 · FR-CORR-01 cùng các ràng buộc kèm và actor; dòng tham chiếu phụ nêu mã thi công · loại màn · route và một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác.",,,,,,
+"1.1","img-002","Tiêu đề màn","修正依頼の作成","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn tạo yêu cầu điều chỉnh cho một giao dịch thuộc ngày đã chốt.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-20 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về đúng tính năng và điều khoản yêu cầu; nêu rõ FR-CORR-01 là yêu cầu chính và ba mã còn lại là ràng buộc kèm.
+Thành phần hiển thị: Hai dòng chữ nhỏ: dòng tính năng · ưu tiên · yêu cầu và actor; dòng tham chiếu phụ nêu mã thi công · loại màn Form · route và thẻ trạng thái.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn đã có bản thi công để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng tham chiếu phụ với nội dung Đã dựng.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu.",,,,,,
+"2","img-005","Khối thiết kế đòi theo cột nghiệm thu",,"Acceptance-criteria block","others","khối bảng hai cột",,,,,,,,,"Mục đích và ngữ cảnh: Dịch cột nghiệm thu của yêu cầu khách hàng thành điều phải thấy được trên màn; là bảng kiểm khi nghiệm thu màn này.
+Thành phần hiển thị: Tiêu đề khối; bên dưới là bảng hai cột ba dòng cho FR-CORR-01 · cặp FR-CORR-03 và BR-CLOSE-01 · FR-AUDIT-01.
+Chức năng và logic: Chỉ đọc; nội dung là ràng buộc phạm vi áp lên ba khối bước bên dưới.",,,,,,
+"2.1","img-006","Bảng yêu cầu và điều phải thấy trên màn",,"Requirement-to-screen mapping table","table","bảng hai cột",,,,,,,,,"Mục đích và ngữ cảnh: Neo từng khối của màn về đúng câu chữ nghiệm thu để không thiết kế thêm hay bớt.
+Thành phần hiển thị: Ba dòng: FR-CORR-01 đòi bản ghi yêu cầu riêng kèm lý do · bằng chứng đính kèm · trạng thái phê duyệt và giao dịch gốc không đổi trước khi được phê duyệt; FR-CORR-03 cùng BR-CLOSE-01 đòi yêu cầu điều chỉnh là đường ghi hợp lệ duy nhất sau khi chốt kỳ; FR-AUDIT-01 đòi thao tác tạo truy được chủ thể · thời điểm · lý do và bằng chứng.
+Chức năng và logic: Chỉ đọc; cụm giao dịch gốc không bị thay đổi và cụm đường ghi hợp lệ duy nhất là hai bất biến của màn.",,,"correction_request","target_txn_id; reason; evidence_path; status; requested_by; created_at","Miền dữ liệu D-SETTLE và D-TRADE. Bảng thi công có thật và khớp thiết kế: bản ghi yêu cầu điều chỉnh là bản ghi riêng; INSERT vào bảng này không chịu tầng chặn ghi theo ngày lock.",
+"3","img-007","Khối Bước 1 — chọn giao dịch đã chốt",,"Step 1 transaction lookup block","others","khối tra mã",,,,,,,,,"Mục đích và ngữ cảnh: Bước đầu của luồng: tìm ra giao dịch đích. Không có giao dịch đích thì không có gì để điều chỉnh nên hai khối sau chưa hiện.
+Thành phần hiển thị: Tiêu đề khối; một ô nhập mã giao dịch chiếm gần hết chiều ngang và một nút Tra mã ở mép phải.
+Chức năng và logic: Kết quả tra quyết định màn ở trạng thái rỗng hay đã có giao dịch đích.",,,,,,
+"3.1","img-008","Ô nhập Mã giao dịch","取引番号","Transaction code","text_form","ô nhập một dòng",,"string","true","TXN-NNNN theo mẫu hiển thị TXN-0001",,,,"Điều kiện: mã phải khớp đúng một giao dịch có thật.
+Lỗi: ""Không tìm thấy giao dịch với mã này."" / 「この取引番号は見つかりません。」 — hiện ngay tại chỗ chứ không điều hướng.","Mục đích và ngữ cảnh: Chỗ người quyết toán nhập mã giao dịch cần điều chỉnh; mã này là khoá duy nhất để tìm ra bản ghi đích.
+Thành phần hiển thị: Nhãn Mã giao dịch kèm dấu sao bắt buộc; ô nhập một dòng hiện mẫu TXN-0001; dòng nhắc bên dưới nêu thông báo lỗi khi không tìm thấy ở cả tiếng Việt và tiếng Nhật.
+Chức năng và logic: Tra không khớp bản ghi nào thì hiện lỗi ngay tại ô nhập; người dùng sửa mã rồi tra lại mà không mất ngữ cảnh.",,,"transaction","txn_code","Mã giao dịch là khoá duy nhất dùng để tra ra giao dịch đích. Màn chỉ ĐỌC theo cột này và không bao giờ ghi vào bảng giao dịch.","Mã giao dịch có buộc đúng mẫu TXN-NNNN hay chấp nhận mã tự do?
+Có cần chặn độ dài và ký tự lạ ngay tại ô nhập trước khi gửi tra không?
+Tra không thấy thì có giữ lại giá trị vừa nhập trong ô để sửa tiếp không?"
+"3.2","img-009","Nút Tra mã","照会","Lookup button","button","nút phụ trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Kích hoạt việc tra cứu giao dịch đích; đây là hành động duy nhất khả dụng khi màn còn ở trạng thái rỗng.
+Thành phần hiển thị: Nút chữ Tra mã đặt ngang hàng với ô nhập mã giao dịch ở mép phải khối Bước 1.
+Chức năng và logic: Không đổi dữ liệu; chỉ nạp giao dịch đích để hiện hai khối sau.","on_click","Tra giao dịch theo mã đã nhập. Tìm thấy thì Bước 2 và Bước 3 hiện ra; không tìm thấy thì chỉ hiện lỗi ngay tại ô nhập.",,,,"Bấm Tra mã khi ô nhập còn rỗng thì hiện lỗi gì hay bỏ qua không làm gì?
+Trong lúc tra có cần trạng thái đang tải riêng cho nút này không?"
+"4","img-010","Khối Bước 2 — giao dịch đích chỉ đọc",,"Step 2 read-only target block","others","khối ba ô chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Hiện giá trị hiện tại của giao dịch đích để người lập nhìn thấy mình đang đề nghị sửa cái gì; toàn khối chỉ đọc vì thiết kế cấm sửa giao dịch gốc.
+Thành phần hiển thị: Tiêu đề khối dẫn FR-CORR-01; một hàng ba ô chỉ đọc nền xám là Số lượng gốc · Đơn giá gốc · Ngày nghiệp vụ; một đoạn ghi chú cuối khối.
+Chức năng và logic: Không có ô nào ghi vào giao dịch gốc; điều này đúng cả trước khi yêu cầu được duyệt.",,,"transaction","qty; unit_price; business_date","Chỉ đọc từ bảng giao dịch của miền D-TRADE; không có đường ghi nào từ màn này vào bảng đó.","Ngoài số lượng · đơn giá · ngày nghiệp vụ thì người lập còn cần thấy trường nào của giao dịch gốc để viết lý do chính xác?"
+"4.1","img-011","Ô hiển thị Số lượng gốc","元の数量","Original quantity","label","ô chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Cho người lập thấy số lượng đang được ghi nhận của giao dịch đích.
+Thành phần hiển thị: Nhãn Số lượng gốc và ô chỉ đọc nền xám hiện mẫu 120.00 với hai chữ số thập phân.
+Chức năng và logic: Chỉ đọc; là một trong hai số mà người duyệt ở SC-21 dùng để tính lại phần chênh lệch.",,,"transaction","qty","Chỉ đọc; giá trị này không đổi cho tới khi yêu cầu điều chỉnh được duyệt.",
+"4.2","img-012","Ô hiển thị Đơn giá gốc","元の単価","Original unit price","label","ô chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Cho người lập thấy đơn giá đang được ghi nhận của giao dịch đích.
+Thành phần hiển thị: Nhãn Đơn giá gốc và ô chỉ đọc nền xám hiện mẫu 1 850 JPY.
+Chức năng và logic: Chỉ đọc; đơn giá là số nguyên JPY nên mọi phần chênh lệch đơn giá cũng phải là số nguyên.",,,"transaction","unit_price","Chỉ đọc; đơn giá tính bằng JPY và không có phần lẻ.",
+"4.3","img-013","Ô hiển thị Ngày nghiệp vụ của giao dịch đích","業務日","Business date","label","ô chỉ đọc",,,,"YYYY-MM-DD",,,,"Điều kiện: chỉ giao dịch thuộc ngày nghiệp vụ ĐÃ chốt kỳ đi qua màn này.
+Lỗi: ngày chưa chốt thì không nhận yêu cầu và chỉ đường về màn giao dịch để sửa trực tiếp.","Mục đích và ngữ cảnh: Trường quyết định màn có nhận yêu cầu hay không; đây là điều kiện đảo ngược so với các màn sửa trực tiếp.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ và ô chỉ đọc hiện ngày kèm nhãn đã chốt kỳ; dòng nhắc bên dưới nói rõ ngày chưa chốt thì sửa thẳng ở màn giao dịch.
+Chức năng và logic: Điều kiện bắt buộc là ngày đã chốt; đường điều chỉnh chỉ mở SAU khi ngày đã lock chứ không phải trước.",,,"transaction","business_date","Ngày nghiệp vụ của giao dịch đích được đối chiếu với bảng lock kỳ của miền D-SETTLE: phải có dòng lock cho ngày đó mới nhận yêu cầu.","Người lập vào màn khi ngày chưa chốt thì màn chỉ hiện thông báo hay điều hướng thẳng sang màn giao dịch?"
+"4.4","img-014","Ghi chú khối chỉ đọc",,"Read-only block note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Nhấn lại bất biến của FR-CORR-01 ngay tại chỗ dễ cài sai nhất: một ô nhập lọt vào khối này là phá bất biến.
+Thành phần hiển thị: Một đoạn chữ nhỏ cuối khối Bước 2.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc áp lên ba ô chỉ đọc của khối.",,,,,,
+"5","img-015","Khối Bước 3 — nội dung yêu cầu",,"Step 3 request content block","others","khối form ba trường và nút gửi",,,,,,,,,"Mục đích và ngữ cảnh: Nơi nhập nội dung yêu cầu điều chỉnh: lý do và bằng chứng; hai thứ FR-CORR-01 và FR-AUDIT-01 cùng đòi.
+Thành phần hiển thị: Tiêu đề khối; vùng văn bản Lý do; ô chọn tệp Bằng chứng đính kèm; ô chỉ đọc Trạng thái phê duyệt khi tạo; hai nút gửi ở hai trạng thái.
+Chức năng và logic: Nút gửi chỉ kích hoạt khi có đủ lý do và bằng chứng; trạng thái phê duyệt do hệ thống đặt.",,,"correction_request","reason; evidence_path; status","Ba trường ghi vào bảng yêu cầu điều chỉnh; bảng chỉ thêm dòng nên một yêu cầu đã gửi thì không sửa lại.",
+"5.1","img-016","Ô nhập Lý do","理由","Reason","textarea","vùng văn bản nhiều dòng",,"string","true","none",,"1000",,"Điều kiện: bỏ khoảng trắng hai đầu rồi phải còn nội dung.
+Lỗi: trắng hoặc chỉ khoảng trắng thì không gửi được; thông báo phải nói rõ là thiếu lý do.","Mục đích và ngữ cảnh: Giải thích tại sao phải điều chỉnh; đây đúng là trường lý do mà FR-AUDIT-01 đòi lưu cùng dấu vết kiểm toán.
+Thành phần hiển thị: Nhãn Lý do kèm dấu sao bắt buộc; vùng văn bản rộng hết khối hiện một câu mẫu; dòng nhắc bên dưới nêu điều kiện không được để trống.
+Chức năng và logic: Bắt buộc; là một trong hai điều kiện kích hoạt nút gửi cùng với bằng chứng đính kèm.",,,"correction_request","reason","Cột bắt buộc không rỗng; là trường lý do mà FR-AUDIT-01 đòi lưu cùng dấu vết kiểm toán của thao tác tạo.","Lý do có giới hạn độ dài tối đa nào do khách chốt không?
+Có cần một danh mục nhóm lý do điều chỉnh kèm văn bản tự do để báo cáo RPT-08 tổng hợp được không?"
+"5.2","img-017","Ô chọn tệp Bằng chứng đính kèm","添付証拠（画像またはPDF）","Evidence attachment","file_or_image","ô chọn tệp",,,"true","none",,,,"Điều kiện: bắt buộc phải có tệp theo FR-CORR-01.
+Điều kiện: định dạng và dung lượng được kiểm ở phía hệ thống; giới hạn của trình duyệt chỉ là gợi ý chứ không phải hàng rào.
+Lỗi: thiếu tệp · tệp sai định dạng · tệp quá dung lượng phải là ba thông báo phân biệt được.","Mục đích và ngữ cảnh: Bằng chứng cho đề nghị sửa; FR-CORR-01 đòi bằng chứng đính kèm nên trường này bắt buộc chứ không tuỳ chọn.
+Thành phần hiển thị: Nhãn Bằng chứng đính kèm (ảnh hoặc PDF) kèm dấu sao bắt buộc; ô chọn tệp hiện trạng thái chưa chọn tệp nào; dòng nhắc nêu việc kiểm định dạng và dung lượng ở phía hệ thống.
+Chức năng và logic: Bắt buộc; hàng rào thật nằm ở phía hệ thống vì gợi ý của trình duyệt bị bỏ qua được.",,,"correction_request","evidence_path","Cột bắt buộc không rỗng; tệp lưu trong kho riêng tư và đường dẫn tệp không bao giờ ra file xuất. Xem tệp chỉ qua liên kết có hạn giờ ở SC-21.","Định dạng và dung lượng tối đa của tệp bằng chứng là bao nhiêu; TBL-ATTACH-01 và DR-IMAGE-01 chỉ quy định thời hạn lưu chứ không quy định ngưỡng nhận tệp.
+Một yêu cầu kèm được nhiều tệp hay chỉ đúng một tệp?
+Tải tệp xong mà bước ghi bản ghi thất bại thì tệp đã tải có được dọn không?"
+"5.3","img-018","Ô hiển thị Trạng thái phê duyệt khi tạo","承認状態","Approval status on create","label","ô chỉ đọc",,,,,,,"Chờ duyệt","Điều kiện: trạng thái khi tạo do hệ thống đặt là Chờ duyệt.
+Lỗi: giá trị gửi từ phía người dùng phải bị bỏ qua; người tạo không chọn trạng thái.","Mục đích và ngữ cảnh: Cho người lập thấy yêu cầu của mình sẽ nằm ở đâu trong vòng đời phê duyệt; và nói rõ trạng thái không phải thứ người lập chọn.
+Thành phần hiển thị: Nhãn Trạng thái phê duyệt khi tạo và ô chỉ đọc nền xám hiện Chờ duyệt kèm chú thích hệ thống đặt; dòng nhắc nêu vòng đời ba trạng thái và nói quyết định thuộc SC-21.
+Chức năng và logic: Luôn là Chờ duyệt khi tạo; hai trạng thái còn lại chỉ đến từ quyết định của người duyệt ở SC-21.",,,"correction_request","status","Cột trạng thái nhận đúng ba giá trị chờ duyệt · đã duyệt · bị từ chối; giá trị khi tạo do phía hệ thống ghi cứng.","Người lập có xem được danh sách yêu cầu mình đã gửi và trạng thái của chúng ngay trên màn này không?"
+"5.4","img-019","Nút Gửi yêu cầu","依頼を送信","Submit request button","button","nút hành động chính","text_only",,,,,,,"Điều kiện: phải có lý do và có tệp bằng chứng.
+Điều kiện: ngày nghiệp vụ của giao dịch đích phải đã chốt kỳ.
+Điều kiện: nút vô hiệu trong lúc đang gửi để không gửi trùng.
+Lỗi: thông báo lỗi phải nói rõ trường nào chưa đạt — thiếu lý do · thiếu bằng chứng · tệp sai định dạng · tệp quá dung lượng.","Mục đích và ngữ cảnh: Hành động chính của màn: sinh bản ghi yêu cầu điều chỉnh riêng — đường ghi hợp lệ duy nhất sau khi chốt kỳ.
+Thành phần hiển thị: Nút chữ nền đậm đặt cuối khối Bước 3.
+Chức năng và logic: Chỉ kích hoạt khi đủ lý do và bằng chứng; ghi bản ghi yêu cầu ở trạng thái chờ duyệt và không chạm vào giao dịch gốc.","on_click","Gửi yêu cầu điều chỉnh. Thành công thì form đóng lại và hiện câu ""Đã gửi yêu cầu điều chỉnh; đang chờ duyệt.""; quyết định tiếp theo thuộc SC-21.","correction_request","target_txn_id; reason; evidence_path; status; requested_by; created_at","Thêm đúng một dòng; giao dịch gốc không bị chạm. Thao tác tạo phải sinh một dấu vết kiểm toán mang chủ thể · thời điểm · lý do và bằng chứng theo FR-AUDIT-01.","Một giao dịch được phép có bao nhiêu yêu cầu chờ duyệt cùng lúc; nếu là một thì phải chặn ngay ở màn này.
+Gửi xong thì màn ở lại trạng thái đã gửi hay điều hướng sang danh sách yêu cầu ở SC-21?"
+"5.5","img-020","Nút Gửi yêu cầu ở trạng thái vô hiệu","依頼を送信（無効状態）","Submit request button - disabled state","button","nút hành động vô hiệu","text_only",,,,,,,"Điều kiện: thiếu lý do hoặc thiếu tệp bằng chứng thì nút ở trạng thái vô hiệu.
+Lỗi: không gửi được và không hiện thông báo lỗi vì chưa có thao tác gửi nào.","Mục đích và ngữ cảnh: Minh hoạ trạng thái vô hiệu của nút gửi ngay trên wireframe để người cài biết chính xác điều kiện chặn.
+Thành phần hiển thị: Nút chữ mờ đặt cạnh nút gửi thường; nhãn nêu rõ điều kiện làm nút vô hiệu.
+Chức năng và logic: Là biến thể trạng thái của cùng một nút chứ không phải một nút thứ hai trên bản chạy thật.",,,,,,
+"6","img-021","Khối bất biến thiết kế",,"Design invariants block","label","khối đoạn văn",,,,,,,,,"Mục đích và ngữ cảnh: Viết rõ ba bất biến để không ai cài ngược: hai bản ghi tách rời; hai bảng chỉ thêm; đường dẫn tệp không ra file xuất.
+Thành phần hiển thị: Khối tiêu đề Bất biến thiết kế và hai đoạn văn: đoạn về quan hệ giữa yêu cầu và giao dịch gốc; đoạn về việc chỉ thêm không sửa và về đường dẫn tệp.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc kiến trúc áp lên toàn màn và lên màn phê duyệt SC-21.",,,"correction_request; transaction_adjustment","target_txn_id","Hai bảng của miền D-SETTLE đều chỉ thêm dòng; cả hai trỏ về giao dịch đích bằng khoá ngoại và không bảng nào sửa giao dịch gốc.","Một yêu cầu đã gửi thì không sửa lại được — muốn đổi phải gửi yêu cầu mới. Có cần thêm đường thu hồi yêu cầu chờ duyệt không?"
+"7","img-022","Khối trạng thái màn",,"Screen states block","others","khối mười thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê các trạng thái màn phải xử lý được; hai thẻ về ngày đã chốt và ngày chưa chốt là cặp điều kiện đảo ngược dễ cài sai nhất.
+Thành phần hiển thị: Mười thẻ xếp ba hàng; mỗi thẻ có tiêu đề trạng thái và một đoạn mô tả hành vi mong đợi.
+Chức năng và logic: Chỉ trình bày; nội dung là đặc tả hành vi cho ba khối bước và cho nút gửi.",,,,,,
+"7.1","img-023","Thẻ trạng thái Rỗng",,"Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái mở màn: chưa có giao dịch đích nên chưa có gì để nhập.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng và một đoạn mô tả ngắn.
+Chức năng và logic: Chỉ hiện khối Bước 1; hai khối sau chưa render.",,,,,,
+"7.2","img-024","Thẻ trạng thái Đang tải",,"Loading state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái trong lúc tra giao dịch đích.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải và một đoạn mô tả ngắn.
+Chức năng và logic: Khung trang hiện trước rồi dữ liệu vào sau để người dùng không thấy trang trắng.",,,,,,
+"7.3","img-025","Thẻ trạng thái Lỗi tải",,"Load error state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt lỗi hạ tầng với việc không tìm thấy giao dịch; hai thứ này có cách xử lý khác nhau.
+Thành phần hiển thị: Thẻ tiêu đề Lỗi tải và một đoạn mô tả ngắn.
+Chức năng và logic: Hiện thông báo kèm nút tải lại chứ không hiện lỗi không tìm thấy.",,,,,,
+"7.4","img-026","Thẻ trạng thái Không có quyền",,"Forbidden state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai ranh giới phân quyền của màn và nói rõ chặn ở cả hai đường: vào màn và gọi đường ghi.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền và một đoạn mô tả ngắn.
+Chức năng và logic: Chỉ bộ phận quyết toán vào được màn; vai khác cũng không gửi được yêu cầu bằng cách gọi đường ghi trực tiếp.",,,,,,
+"7.5","img-027","Thẻ trạng thái Không tìm thấy giao dịch",,"Transaction not found state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái thường gặp nhất khi tra mã; phải sửa được ngay tại chỗ.
+Thành phần hiển thị: Thẻ tiêu đề Không tìm thấy giao dịch và một đoạn mô tả ngắn.
+Chức năng và logic: Lỗi hiện ngay tại ô nhập; người dùng sửa mã rồi tra lại mà không mất ngữ cảnh.",,,,,,
+"7.6","img-028","Thẻ trạng thái Ngày đã chốt",,"Locked date state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Điều kiện bắt buộc để màn hoạt động; nói rõ đây là đường ghi hợp lệ duy nhất sau khi chốt kỳ.
+Thành phần hiển thị: Thẻ tiêu đề Ngày đã chốt — điều kiện bắt buộc và một đoạn mô tả ngắn.
+Chức năng và logic: Form nội dung ở khối Bước 3 hiện đủ và nút gửi khả dụng.",,,,,,
+"7.7","img-029","Thẻ trạng thái Ngày chưa chốt — từ chối",,"Not-locked rejection state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Thẻ quan trọng nhất của màn: chiều điều kiện ở đây ĐẢO NGƯỢC so với các màn sửa trực tiếp và rất dễ bị cài ngược lại.
+Thành phần hiển thị: Thẻ tiêu đề Ngày chưa chốt — từ chối; cụm Điều kiện đảo ngược in đậm.
+Chức năng và logic: Ngày chưa chốt thì màn không nhận yêu cầu và chỉ đường về màn giao dịch để sửa trực tiếp; đường điều chỉnh chỉ mở SAU khi ngày đã lock.",,,,,,"Thông báo từ chối khi ngày chưa chốt viết ra sao ở cả tiếng Việt và tiếng Nhật; và có kèm liên kết sang màn giao dịch không?"
+"7.8","img-030","Thẻ trạng thái Đang gửi",,"Submitting state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chống gửi trùng trên một thao tác chỉ thêm dòng; gửi trùng sẽ sinh hai yêu cầu cho cùng một việc.
+Thành phần hiển thị: Thẻ tiêu đề Đang gửi và một đoạn mô tả ngắn.
+Chức năng và logic: Nút gửi vô hiệu trong lúc đang gửi.",,,,,,
+"7.9","img-031","Thẻ trạng thái Gửi lỗi",,"Submit error state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chốt yêu cầu về chất lượng thông báo lỗi: gom mọi lỗi vào một câu thì người dùng không biết sửa gì.
+Thành phần hiển thị: Thẻ tiêu đề Gửi lỗi và một đoạn mô tả liệt bốn nhóm lý do.
+Chức năng và logic: Mỗi nhóm lý do có một thông báo riêng chỉ đúng trường chưa đạt.",,,,,,"Bốn thông báo lỗi này cần bản tiếng Nhật tương ứng; nội dung từng câu do ai chốt?"
+"7.10","img-032","Thẻ trạng thái Đã gửi",,"Submitted state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái kết thúc luồng tạo; form đóng lại để không gửi thêm một yêu cầu trùng.
+Thành phần hiển thị: Thẻ tiêu đề Đã gửi và một đoạn mô tả nêu câu thông báo cụ thể.
+Chức năng và logic: Form bị thay thế bằng thông báo; muốn gửi yêu cầu khác thì tra mã lại từ đầu.",,,,,,
+"8","img-033","Dải câu hỏi chưa chốt",,"Open questions banner","label","dải cảnh báo cuối màn",,,,,,,,,"Mục đích và ngữ cảnh: Khai hai chỗ yêu cầu khách hàng chưa nói và hệ quả của từng chỗ; đây là hai câu hỏi phải trả lời trước khi cài.
+Thành phần hiển thị: Dải chữ nhỏ nền vàng nhạt viền nét đứt; nhãn [CHƯA CHỐT] in đậm và hai câu hỏi được đánh số.
+Chức năng và logic: Chỉ trình bày; nội dung là hai ràng buộc còn thiếu ảnh hưởng tới nút gửi và tới ô chọn tệp.",,,,,,"Một giao dịch được phép có bao nhiêu yêu cầu chờ duyệt cùng lúc; nếu nhiều thì SC-21 cần cách gộp.
+Ngưỡng định dạng và dung lượng tệp bằng chứng là quy tắc của khách chứ không phải lựa chọn kỹ thuật."
+"9","img-034","Khối đối chiếu prototype",,"Design versus prototype comparison block","table","bảng ba cột trong khối chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Khối chú thích tài liệu; không phải thành phần của sản phẩm. Nó đặt cạnh nhau điều thiết kế đòi và điều bản thi công hiện làm.
+Thành phần hiển thị: Khối viền nét đứt tiêu đề ĐỐI CHIẾU PROTOTYPE chứa bảng ba cột năm dòng; cột Mức phân loại Khớp · Chưa đạt · Chưa chốt · Hở.
+Chức năng và logic: Chỉ đọc; không có thao tác nào và không tham gia luồng nghiệp vụ của màn.",,,,,,
+"10","img-035","Chân ghi chú phân quyền và tệp bằng chứng",,"Permission and evidence footnote","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Chốt hai ranh giới của màn: quyền vào màn và quyền đọc tệp bằng chứng; tệp bằng chứng là chỗ duy nhất trong nhóm này chặn cả đường đọc.
+Thành phần hiển thị: Hai đoạn chữ nhỏ cuối màn: đoạn phân quyền và một liên kết sang bản đặc tả as-built của màn.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc phân quyền áp lên nút gửi và lên ô chọn tệp.",,,,,,"Người duyệt ở SC-21 và người lập ở SC-20 cùng thuộc bộ phận quyết toán; ranh giới giữa hai vai này là ràng buộc maker-checker chứ không phải vai trò khác nhau. Khách có cần tách thành hai vai riêng không?"

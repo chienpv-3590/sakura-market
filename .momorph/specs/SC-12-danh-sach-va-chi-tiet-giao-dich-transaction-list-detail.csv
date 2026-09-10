@@ -1,0 +1,190 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn hình",,"Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người dùng và khai chuỗi truy vết của màn
+Thành phần hiển thị: tiêu đề màn; một dòng meta liệt kê mã FE / FN / yêu cầu khách / state machine / actor; và hai thẻ ghi chú
+Chức năng và logic: chỉ hiển thị — không có tương tác nào trong khối này",,,,,,
+"1.1","img-002","Tiêu đề màn hình",,"Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm ""SC-12 · Danh sách và chi tiết giao dịch""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu",,"Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn theo Feature List — ba mã tính năng và các yêu cầu khách mà màn phải thoả
+Thành phần hiển thị: ba mã FE kèm ưu tiên; nhóm FN-04; danh sách mã yêu cầu khách; tham chiếu FIG-012; và actor kèm phân vai hành động so với tra cứu
+Chức năng và logic: văn bản tĩnh — các phần tách nhau bằng dấu chấm giữa",,,,,,"- Dòng meta này là chú thích của wireframe hay nội dung sẽ có trên màn thật? Thiết kế không khai.
+- Hai màn con dùng chung một mã SC- — trên sản phẩm thật đây là hai trang riêng hay một trang có hai khung? Ảnh vẽ chung một trang."
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này đã có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Đã dựng""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"1.4","img-005","Thẻ ghi chú gộp hai màn con",,"Two sub-screen note tag","label","scope_tag",,,,,,,,,"Mục đích và ngữ cảnh: nhắc rằng một mã SC- ứng hai màn con vì cùng phục vụ FE-017
+Thành phần hiển thị: một thẻ chữ nhỏ với chữ ""Một mã SC- ứng hai màn con""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"2","img-006","Khung 1 — Danh sách giao dịch",,"Transaction list frame","others","list_frame",,,,,,,,,"Mục đích và ngữ cảnh: điểm vào hằng ngày của ROLE-TRADE — tra cứu và theo dõi giao dịch theo FE-017 và FR-AITAI-01 (RFP:650)
+Thành phần hiển thị: tiêu đề khung; ba bộ lọc kèm một nhóm nút; một bảng tám cột; và một dòng ghi chú về phân trang và hiệu năng
+Chức năng và logic: lọc rồi đọc danh sách; mỗi dòng có đường sang chi tiết — thao tác ghi nằm ở khung chi tiết",,,"transaction",,"Đọc thực thể giao dịch của miền D-TRADE (RFP:604) kèm tên lô hàng (D-LOT) và tên người tham gia (D-PARTY).",
+"2.1","img-007","Tiêu đề khung danh sách",,"List frame title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khung danh sách và dẫn mã tính năng tương ứng
+Thành phần hiển thị: một dòng tiêu đề ""Khung 1 — Danh sách giao dịch · FE-017""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"2.2","img-008","Bộ lọc Ngày nghiệp vụ","業務日","Business date filter","date_picker","date_filter",,"date","false","YYYY-MM-DD",,,,"Điều kiện: giá trị phải đúng định dạng ngày.
+Lỗi: ""Ngày nghiệp vụ không đúng định dạng."" — báo lỗi nhập tại trường; không được để thành lỗi hệ thống.","Mục đích và ngữ cảnh: tiêu chí lọc chính — ngày nghiệp vụ là đơn vị của kỳ đối chiếu theo FR-SETTLE-01 (RFP:659)
+Thành phần hiển thị: nhãn tiếng Việt kèm 業務日; một ô chọn ngày; và một dòng chú thích nói rõ giá trị sai định dạng phải báo lỗi nhập
+Chức năng và logic: lọc danh sách theo ngày nghiệp vụ của bản ghi; giá trị sai định dạng bị chặn ngay tại trường chứ không đẩy xuống tầng dưới","on_click",,"transaction","business_date","Lọc theo ngày nghiệp vụ của thực thể giao dịch trong D-TRADE — cùng khoá mà miền D-SETTLE dùng để lock kỳ.","- Ngày nghiệp vụ có giá trị mặc định là ngày đang mở khi vào màn không? Ảnh hiện một ngày cụ thể nhưng thiết kế không khai đó là mặc định.
+- Có cần lọc theo khoảng ngày cho bộ phận đối chiếu không? Thiết kế chỉ đòi một ngày."
+"2.3","img-009","Bộ lọc Trạng thái","状態","Status filter","dropdown","select_single",,"string","false","Tất cả | Nháp | Chờ xác nhận | Đã chốt | Hủy / Đính chính",,,"Tất cả","Điều kiện: option phải phủ đủ các trạng thái của FIG-012 (RFP:637) — kể cả Chờ xác nhận nếu khách chốt là có bước duyệt.
+Lỗi: ""Giá trị trạng thái không hợp lệ."" — giá trị lạ phải báo lỗi; không được im lặng trả về tất cả bản ghi.","Mục đích và ngữ cảnh: lọc danh sách theo chặng của vòng đời FIG-012 để theo dõi tiến độ trong ngày
+Thành phần hiển thị: nhãn tiếng Việt kèm 状態; một select với giá trị đầu Tất cả; và một dòng chú thích về tập option và cách xử lý giá trị lạ
+Chức năng và logic: tập option bám đúng FIG-012; một giá trị ngoài tập phải bị báo lỗi vì trả về tất cả trong im lặng làm người dùng tưởng đang lọc","on_click",,"transaction","status","Lọc theo trạng thái của D-TRADE. Giá trị Chờ xác nhận của FIG-012 CHƯA TỒN TẠI trong ràng buộc trạng thái hiện có nên option này phụ thuộc quyết định của khách.","- Bộ lọc có cho chọn nhiều trạng thái cùng lúc không? Ảnh chỉ cho thấy một select đơn.
+- Nếu khách chốt là không có bước duyệt thì option Chờ xác nhận bỏ khỏi bộ lọc — có cần một đường di dữ liệu nào không? Chưa có bản ghi nào ở chặng đó."
+"2.4","img-010","Bộ lọc Người mua","買出人","Buyer filter","text_form","text_filter",,"string","false","<tên người tham gia>",,,,,"Mục đích và ngữ cảnh: lọc theo 買出人 — phục vụ RPT-01 giao dịch theo ngày và RPT-10 theo người tham gia
+Thành phần hiển thị: nhãn tiếng Việt kèm 買出人; một ô nhập chữ; và một dòng chú thích dẫn hai báo cáo mà bộ lọc phục vụ
+Chức năng và logic: lọc danh sách theo người mua của bản ghi; là tiêu chí mà bộ phận đối chiếu và báo cáo tháng đều dùng",,,"transaction; participant","buyer_participant_id; name","Lọc bắc qua khoá ngoại người mua của D-TRADE sang tên của thực thể người tham gia trong D-PARTY (RFP:602).","- Ô lọc khớp chính xác tên hay khớp một phần tên? Thiết kế không khai và hai cách cho hai kết quả khác nhau.
+- Có cần lọc theo mã người tham gia thay vì theo tên để tránh trùng tên không? Thiết kế chỉ nói theo người mua.
+- Có cần lọc theo phân loại người tham gia không? FR-PARTY-01 (RFP:629) đòi bốn phân loại không được gộp."
+"2.5","img-011","Nhóm nút lọc và tạo mới",,"Filter and create action group","others","action_group",,,,,,,,,"Mục đích và ngữ cảnh: gom hai hành động của khung danh sách vào một chỗ cạnh các bộ lọc
+Thành phần hiển thị: hai nút xếp cạnh nhau và một dòng chú thích về điều kiện hiện nút tạo mới
+Chức năng và logic: nút ""Lọc"" áp bộ lọc hiện tại; nút ""Tạo mới"" chỉ hiện với ROLE-TRADE theo TBL-ROLE-01 (RFP:245)",,,,,,
+"2.5.1","img-012","Nút Lọc",,"Apply filter button","button","secondary_action","text_only",,,,,,,,"Mục đích và ngữ cảnh: áp bộ lọc để thu hẹp danh sách theo tiêu chí đã nhập
+Thành phần hiển thị: một nút phụ nhãn chữ
+Chức năng và logic: gửi ba tiêu chí lọc và tải lại bảng; giá trị lọc sai định dạng bị chặn trước khi gửi","on_click","Áp ba bộ lọc hiện tại và tải lại danh sách trên cùng màn. NFR-PERF-01 (RFP:807) đòi tìm kiếm thông thường p95 không vượt 2 giây.",,,,"- Bộ lọc có tự áp khi người dùng đổi giá trị hay chỉ áp khi bấm nút? Ảnh có nút riêng nên nghiêng về bấm nút.
+- Tiêu chí lọc đang áp có được giữ lại khi quay về từ màn chi tiết không? Thiết kế không khai."
+"2.5.2","img-013","Nút Tạo mới",,"Create new button","button","primary_action","text_only",,,,,,,"Điều kiện: chỉ hiện với ROLE-TRADE — TBL-ROLE-01 (RFP:245) giao việc chốt giao dịch cho vai này.","Mục đích và ngữ cảnh: đường vào màn tạo giao dịch mới cho vai được ghi
+Thành phần hiển thị: một nút chính nhãn chữ
+Chức năng và logic: điều hướng sang SC-11; các vai còn lại không thấy nút này và mục thao tác đổi thành chỉ dẫn","on_click","Dẫn sang SC-11 để tạo giao dịch 相対取引 mới. Chỉ hiện với ROLE-TRADE.",,,,"- Với vai không được ghi thì nút biến mất hoàn toàn hay hiện ở dạng tắt kèm chỉ dẫn? Thiết kế nói chỉ hiện với ROLE-TRADE.
+- Sau khi tạo xong ở SC-11 thì quay lại danh sách với bộ lọc cũ hay danh sách mặc định? Thiết kế không khai."
+"2.6","img-014","Bảng danh sách giao dịch",,"Transaction list table","table","data_table",,,,,,,,,"Mục đích và ngữ cảnh: danh sách giao dịch của kỳ đang lọc — thoả FE-017 tra cứu và theo dõi trạng thái theo FIG-012
+Thành phần hiển thị: bảng tám cột song ngữ: Mã giao dịch 取引番号; Lô hàng ロット; Người mua 買出人; Số lượng 数量; Đơn giá 単価; Ngày nghiệp vụ 業務日; Trạng thái 状態; Thao tác 操作 — bốn dòng mẫu phủ bốn chặng của FIG-012
+Chức năng và logic: mã lô luôn hiện dạng người đọc được chứ không phải khoá nội bộ; cột trạng thái hiện chặng của bản ghi kèm thẻ [CHƯA CHỐT] ở chặng Chờ xác nhận; cột thao tác chỉ bật nút ghi cho ROLE-TRADE",,,"transaction; lot; participant","txn_code; lot_id; buyer_participant_id; qty; unit_price; business_date; status","Đọc thực thể giao dịch của D-TRADE và lấy mã lô của D-LOT cùng tên người tham gia của D-PARTY để hiện dạng người đọc được.","- Bảng sắp theo tiêu chí nào khi không có yêu cầu sắp riêng? Thiết kế không khai.
+- Các cột có sắp xếp được bằng cách bấm tiêu đề không? Ảnh không có dấu hiệu sắp xếp.
+- Ở ngày cao điểm 1.200 giao dịch (FIG-LOAD-01 · RFP:829) thì phân trang hay tải thêm? Ghi chú dưới bảng chỉ nói phải có một trong hai."
+"2.6.1","img-015","Nút Xem trên dòng (đại diện)",,"Row view button (representative)","button","row_action","text_only",,,,,,,,"Mục đích và ngữ cảnh: đường vào chi tiết của một giao dịch — nút này lặp trên mọi dòng nên chỉ đặc tả một lần
+Thành phần hiển thị: một nút phụ nhãn chữ ""Xem"" trong ô Thao tác của dòng đầu tiên
+Chức năng và logic: lặp trên bốn dòng của bảng; chỉ khác bản ghi đích nên gộp thành một thành phần đại diện","on_click","Mở khung chi tiết của giao dịch trên dòng đó. Có mặt trên mọi dòng và với mọi vai vì tra cứu mở cho các vai đang hoạt động.",,,,"- Bấm vào mã giao dịch có mở chi tiết được như nút Xem không? Ảnh chỉ vẽ nút.
+- Chi tiết mở trên cùng trang hay trang riêng? Ảnh vẽ hai khung trên một trang."
+"2.6.2","img-016","Nút Hủy trên dòng",,"Row cancel button","button","row_destructive_action","text_only",,,,,,,"Điều kiện: chỉ hủy được giao dịch chưa lock — FR-AITAI-03 (RFP:652) và BR-CLOSE-01 (RFP:597).
+Điều kiện: chỉ ROLE-TRADE thấy nút này — TBL-ROLE-01 (RFP:245).
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock; dùng luồng yêu cầu điều chỉnh."" — đường ra là SC-20 và SC-21.","Mục đích và ngữ cảnh: hành động hủy đặt ngay trên dòng để xử lý sai sót trước khi chốt kỳ
+Thành phần hiển thị: một nút màu cảnh báo nhãn chữ ""Hủy"" — chỉ xuất hiện ở dòng đầu tiên vì dòng đó còn hủy được
+Chức năng và logic: chỉ hiện trên dòng còn trong phạm vi hủy của FE-016; lý do hủy là trường bắt buộc và được nhập ở khung chi tiết","on_click","Mở đường hủy giao dịch của FE-016. Chỉ có mặt trên dòng còn hủy được và chỉ với ROLE-TRADE.","transaction","status; cancel_reason","Chuyển trạng thái của D-TRADE sang chặng Hủy / Đính chính của FIG-012 và lưu lý do hủy. Số lượng khả dụng của lô (D-LOT) phải được hoàn lại chính xác.","- Nút Hủy trên dòng có mở hộp xác nhận có ô lý do ngay tại danh sách hay bắt buộc đi qua khung chi tiết? Ảnh đặt ô lý do ở khung chi tiết.
+- Dòng nào được coi là còn hủy được? Ảnh chỉ bật nút ở dòng Nháp nhưng FE-016 nói phạm vi là chưa lock."
+"2.7","img-017","Ghi chú phân trang và hiệu năng",,"Paging and performance note","label","rule_note",,,,,,,,"Điều kiện: danh sách phải có phân trang hoặc tải thêm và KHÔNG được cắt kết quả trong im lặng.
+Điều kiện: tìm kiếm thông thường phải đạt p95 không vượt 2 giây — NFR-PERF-01 (RFP:807).
+Điều kiện: phải theo dõi được tới 1.200 giao dịch/ngày của profile tải FIG-LOAD-01 (RFP:829) — NFR-PERF-02 (RFP:808).","Mục đích và ngữ cảnh: khai ràng buộc phi chức năng áp thẳng lên bảng danh sách — cắt kết quả mà không nói là mất nghiệp vụ
+Thành phần hiển thị: một dòng ghi chú nêu quy tắc hiện mã lô dạng người đọc được; ngưỡng tải cao điểm; và ngưỡng thời gian tìm kiếm
+Chức năng và logic: văn bản tĩnh — là điều kiện nghiệm thu cho bảng phía trên",,,,,,"- Khi kết quả vượt một trang thì màn hiện tổng số bản ghi để người dùng biết mình đang xem phần nào không? Thiết kế chỉ cấm cắt âm thầm.
+- Ngưỡng p95 2 giây đo trên tải nào? NFR-PERF-01 nói tải thiết kế baseline còn FIG-LOAD-01 cho hai profile khác nhau."
+"3","img-018","Khung 2 — Chi tiết giao dịch và thao tác",,"Transaction detail frame","others","detail_frame",,,,,,,,,"Mục đích và ngữ cảnh: nơi đặt hai thao tác nặng nhất của luồng 相対取引 — chốt và hủy — cùng toàn bộ dữ liệu để đối chiếu
+Thành phần hiển thị: tiêu đề khung; một dải vòng đời; tám trường chỉ đọc; một ô lý do hủy; một dòng số lượng khả dụng trước và sau; ba nút hoặc chỉ dẫn; và một bảng lịch sử
+Chức năng và logic: vai ROLE-TRADE thao tác được; các vai còn lại thấy đủ dữ liệu và mục thao tác đổi thành chỉ dẫn",,,"transaction",,"Đọc và ghi thực thể giao dịch của D-TRADE; thao tác chốt và hủy đều chạm số lượng khả dụng của D-LOT.",
+"3.1","img-019","Tiêu đề khung chi tiết",,"Detail frame title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khung chi tiết và dẫn hai mã tính năng tương ứng
+Thành phần hiển thị: một dòng tiêu đề ""Khung 2 — Chi tiết giao dịch và thao tác · FE-016 · FE-017""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-020","Dải vòng đời bản ghi","状態遷移","Lifecycle progress strip","label","progress_strip",,,,"Nháp | Chờ xác nhận | Đã chốt | Hủy / Đính chính",,,,,"Mục đích và ngữ cảnh: cho người vận hành thấy bản ghi đang ở chặng nào của FIG-012 (RFP:637) mà không phải suy từ một nhãn trạng thái đơn
+Thành phần hiển thị: nhãn tiếng Việt kèm 状態遷移; một dải chỉ đọc vẽ đủ các chặng và các sự kiện của FIG-012 với chặng hiện tại được đánh dấu; và một dòng chú thích về mâu thuẫn tài liệu
+Chức năng và logic: vẽ đúng FIG-012 kể cả cạnh từ chối quay từ Chờ xác nhận về Nháp; chặng Chờ xác nhận gắn nhãn [CHƯA CHỐT] vì bảng yêu cầu của luồng không nhắc bước phê duyệt nào",,,"transaction","status","Dải vẽ từ trạng thái của D-TRADE. Giá trị Chờ xác nhận chưa có trong ràng buộc trạng thái hiện có.","- Dải vòng đời có hiện cả chặng chưa đi qua như ảnh hay chỉ hiện chặng đã đi qua? Ảnh vẽ đủ chuỗi.
+- Nếu khách chốt là không có bước duyệt thì dải rút còn ba chặng — có cần giữ chỗ trống cho chặng đã bỏ không?"
+"3.3","img-021","Trường Mã giao dịch (chỉ đọc)","取引番号","Transaction code (read-only)","label","readonly_field",,,,"TXN-<NNNN>",,,,,"Mục đích và ngữ cảnh: định danh nghiệp vụ của bản ghi đang mở — nghiệm thu FR-AITAI-01 (RFP:650) đòi mã duy nhất
+Thành phần hiển thị: nhãn tiếng Việt kèm 取引番号 và một ô chỉ đọc hiện mã
+Chức năng và logic: chỉ hiển thị — mã do hệ thống cấp ở bước tạo tại SC-11",,,"transaction","txn_code","Mã giao dịch của D-TRADE; tính duy nhất là ràng buộc dữ liệu.",
+"3.4","img-022","Trường Lô hàng (chỉ đọc)","ロット","Lot (read-only)","label","readonly_field",,,,"LOT-<NNNN> — <tên mặt hàng>",,,,,"Mục đích và ngữ cảnh: lô hàng của giao dịch — gốc truy vết theo FR-LOT-01 (RFP:632)
+Thành phần hiển thị: nhãn tiếng Việt kèm ロット và một ô chỉ đọc hiện mã lô cùng tên mặt hàng
+Chức năng và logic: chỉ hiển thị — mã lô luôn ở dạng người đọc được chứ không phải khoá nội bộ",,,"transaction; lot","lot_id; lot_code; item","Khoá ngoại tới thực thể lô hàng của D-LOT; hiển thị mã lô và tên mặt hàng thay cho khoá.",
+"3.5","img-023","Trường Người mua (chỉ đọc)","買出人","Buyer (read-only)","label","readonly_field",,,,"<tên người tham gia>",,,,,"Mục đích và ngữ cảnh: người mua của giao dịch — đúng phân loại 買出人 của FR-PARTY-01 (RFP:629)
+Thành phần hiển thị: nhãn tiếng Việt kèm 買出人 và một ô chỉ đọc hiện tên người tham gia
+Chức năng và logic: chỉ hiển thị — hiệu lực của người mua được kiểm ở thời điểm chốt chứ không ở màn tra cứu",,,"transaction; participant","buyer_participant_id; name","Khoá ngoại tới thực thể người tham gia của D-PARTY; hiển thị tên thay cho khoá.","- Chi tiết có cần hiện trạng thái hiệu lực hiện tại của người mua để bộ phận đối chiếu tự kiểm không? Ảnh chỉ hiện tên.
+- Tên người mua có dẫn được sang chi tiết người tham gia ở SC-06 không? Ảnh không vẽ liên kết."
+"3.6","img-024","Trường Số lượng (chỉ đọc)","数量","Quantity (read-only)","label","readonly_field",,,,"<số> với dấu phẩy thập phân — ảnh cho thấy 2 chữ số lẻ",,,,,"Mục đích và ngữ cảnh: số lượng của giao dịch — con số bị trừ khỏi số lượng khả dụng của lô khi chốt
+Thành phần hiển thị: nhãn tiếng Việt kèm 数量 và một ô chỉ đọc hiện số lượng
+Chức năng và logic: chỉ hiển thị — cùng đơn vị đo với số lượng ban đầu của lô",,,"transaction","qty","Số lượng của D-TRADE; trừ vào số lượng khả dụng của D-LOT khi chốt và hoàn lại khi hủy.",
+"3.7","img-025","Trường Đơn giá (chỉ đọc)","単価 (JPY)","Unit price (read-only)","label","readonly_field",,,,"<số nguyên JPY> — không có phần thập phân",,,,,"Mục đích và ngữ cảnh: đơn giá đã thống nhất của giao dịch
+Thành phần hiển thị: nhãn tiếng Việt kèm 単価 (JPY) và một ô chỉ đọc hiện đơn giá
+Chức năng và logic: chỉ hiển thị — JPY không có phần thập phân",,,"transaction","unit_price","Đơn giá của D-TRADE; đơn vị JPY không có phần thập phân.","- Chi tiết có cần hiện tổng tiền bằng số lượng nhân đơn giá để đối chiếu với bảng ngày không? Ảnh không có trường tổng tiền."
+"3.8","img-026","Trường Ngày nghiệp vụ (chỉ đọc)","業務日","Business date (read-only)","label","readonly_field",,,,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: ngày nghiệp vụ mà bản ghi thuộc về — quyết định bản ghi vào kỳ đối chiếu nào và có bị lock chưa
+Thành phần hiển thị: nhãn tiếng Việt kèm 業務日 và một ô chỉ đọc hiện ngày
+Chức năng và logic: chỉ hiển thị — là khoá mà FR-SETTLE-02 (RFP:660) dùng để lock kỳ và FR-CORR-03 (RFP:658) dùng để chặn sửa trực tiếp",,,"transaction","business_date","Ngày nghiệp vụ của D-TRADE; cũng là khoá của bản ghi lock kỳ trong D-SETTLE.","- Chi tiết có hiện luôn trạng thái đã lock của ngày nghiệp vụ để người dùng biết trước khi bấm không? Ảnh không có dấu hiệu lock."
+"3.9","img-027","Trường Người chốt (chỉ đọc)","確定者","Confirmed by (read-only)","label","readonly_field",,,,"<tên tài khoản nội bộ>",,,,,"Mục đích và ngữ cảnh: trả lời ""ai chốt"" ngay trên chi tiết — FR-AITAI-01 (RFP:650) và FR-AUDIT-01 (RFP:710) đều dựa vào cặp người chốt và thời điểm chốt
+Thành phần hiển thị: nhãn tiếng Việt kèm 確定者; một ô chỉ đọc hiện tên người chốt; và một dòng chú thích nói rõ vì sao trường này phải đọc được ngay
+Chức năng và logic: chỉ hiển thị — không được buộc người dùng suy lại từ bảng lịch sử",,,"transaction","confirmed_by","Chủ thể chốt giao dịch trong D-TRADE — một tài khoản nội bộ của D-PARTY.","- Trường hiện gì khi bản ghi còn ở chặng Nháp và chưa ai chốt? Thiết kế không khai giá trị rỗng.
+- Nếu khách chốt là có bước phê duyệt thì cần thêm cặp người duyệt và thời điểm duyệt tách khỏi người chốt — có đúng không?"
+"3.10","img-028","Trường Thời điểm chốt (chỉ đọc)","確定時刻","Confirmed at (read-only)","label","readonly_field",,,,"YYYY-MM-DD hh:mm",,,,,"Mục đích và ngữ cảnh: trả lời ""chốt lúc nào"" — nửa còn lại của cặp mà FR-AITAI-01 và FR-AUDIT-01 dựa vào
+Thành phần hiển thị: nhãn tiếng Việt kèm 確定時刻 và một ô chỉ đọc hiện ngày kèm giờ phút
+Chức năng và logic: chỉ hiển thị — thời điểm chốt là mốc mà cửa hiệu lực người mua được đánh giá theo",,,"transaction","confirmed_at","Thời điểm chốt trong D-TRADE — mốc mà BR-PERM-01 (RFP:595) dùng để đánh giá hiệu lực 許可/承認.","- Thời điểm hiện theo múi giờ nào? BR-INC-01 (RFP:598) dùng JST cho ngày nghiệp vụ nhưng thiết kế không khai múi giờ hiển thị.
+- Có cần hiện giây không? Ảnh chỉ hiện giờ và phút."
+"3.11","img-029","Trường Lý do hủy","取消理由","Cancel reason input","text_form","text_input",,"string","true","<văn bản tự do một dòng>",,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ; FR-AITAI-03 (RFP:652) đòi hủy KÈM LÝ DO.
+Lỗi: ""Phải nhập lý do hủy."" — chặn ngay tại trường; không dùng một thông báo lỗi chung cho cả màn.
+Điều kiện: chỉ hủy được khi ngày nghiệp vụ chưa lock — BR-CLOSE-01 (RFP:597).
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock; dùng luồng yêu cầu điều chỉnh ở SC-20."" — mọi lần thử đều bị chặn và có log theo FR-CORR-03 (RFP:658).","Mục đích và ngữ cảnh: lý do hủy — nửa bắt buộc của FE-016 và của nghiệm thu FR-AITAI-03 rằng lịch sử hủy được lưu
+Thành phần hiển thị: nhãn tiếng Việt kèm 取消理由 và dấu sao bắt buộc; một ô nhập chữ; và một dòng chú thích nêu điều kiện hủy
+Chức năng và logic: lý do được lưu vào lịch sử và tra cứu lại được; sau khi ngày nghiệp vụ đã lock thì đường duy nhất là yêu cầu điều chỉnh theo FR-CORR-01 (RFP:656)",,,"transaction","cancel_reason","Lý do hủy lưu trên thực thể giao dịch của D-TRADE và cũng vào bản ghi audit của FR-AUDIT-01.","- Lý do hủy có tập giá trị chọn sẵn hay hoàn toàn tự do? Thiết kế chỉ nói kèm lý do.
+- Có độ dài tối thiểu để chặn lý do rỗng nghĩa như một dấu chấm không? Thiết kế không khai.
+- Ô lý do có hiện thường trực như ảnh hay chỉ hiện sau khi bấm nút hủy? Ảnh hiện thường trực."
+"3.12","img-030","Trường Số lượng khả dụng trước và sau khi hủy",,"Lot available quantity before and after cancel","label","readonly_field",,,,"LOT-<NNNN>: <số trước> → <số sau> (hoàn lại đúng <số>)",,,,,"Mục đích và ngữ cảnh: cho người vận hành THẤY số hoàn lại để tự kiểm — nghiệm thu FR-AITAI-03 (RFP:652) là ""số lượng khả dụng được hồi phục chính xác""
+Thành phần hiển thị: nhãn tiếng Việt; một ô chỉ đọc hiện mã lô kèm số khả dụng trước và sau cùng phần hoàn lại; và một dòng chú thích dẫn nghiệm thu
+Chức năng và logic: chỉ hiển thị — cũng là bằng chứng cho ràng buộc BR-LOT-02 (RFP:596) rằng mọi điều chỉnh số lượng truy vết được",,,"lot","available_qty","Số lượng khả dụng của thực thể lô hàng trong D-LOT. BR-LOT-02 đòi giá trị này không âm và truy vết được tới lịch sử điều chỉnh.","- Số trước và sau hiện dạng dự kiến trước khi bấm hủy hay dạng kết quả sau khi hủy xong? Ảnh vẽ như một dòng thông tin thường trực.
+- Khi hủy một bản ghi chưa từng bị trừ số lượng thì dòng này hiện gì? Thiết kế không khai."
+"3.13","img-031","Nút Chốt",,"Confirm button","button","primary_action","text_only",,,,,,,"Điều kiện: 買出人 phải còn hiệu lực 許可/承認 tại thời điểm chốt — FR-PARTY-02 (RFP:630); BR-PERM-01 (RFP:595).
+Lỗi: ""Người tham gia A đã mất hiệu lực từ <ngày>; không thể chốt giao dịch.""
+Điều kiện: số lượng khả dụng của lô phải đủ — FR-LOT-03 (RFP:634); BR-LOT-02 (RFP:596).
+Lỗi: ""LOT-0001 chỉ còn <số> khả dụng; giao dịch cần <số>.""
+Điều kiện: ngày nghiệp vụ chưa lock — BR-CLOSE-01 (RFP:597).
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock."" — lần thử phải được ghi log theo FR-CORR-03 (RFP:658).
+Điều kiện: khi đang gửi thì khoá cả hai nút và chặn gửi trùng.","Mục đích và ngữ cảnh: thao tác chốt giao dịch — điểm mà hai cửa kiểm của FE-015 được đánh giá
+Thành phần hiển thị: một nút chính nhãn chữ đặt cạnh nút hủy
+Chức năng và logic: hai lý do từ chối phải hiện riêng biệt theo nghiệm thu FR-AITAI-02 (RFP:651); ghi logical audit với chủ thể và timestamp và before/after theo FR-AUDIT-01 (RFP:710)","on_click","Phát sự kiện chốt của FIG-012 để đưa bản ghi tới chặng Đã chốt. Trừ đúng số lượng khả dụng của lô theo nghiệm thu FR-AITAI-01 (RFP:650).","transaction; lot","status; confirmed_by; confirmed_at; available_qty","Đổi trạng thái của D-TRADE sang Đã chốt kèm chủ thể và thời điểm; trừ số lượng khả dụng của D-LOT. Chi tiết cơ chế chống trừ hai lần thuộc spec BE.","- Chốt có hộp xác nhận trước khi thực hiện không? Ảnh chỉ vẽ nút.
+- Sau khi chốt thành công màn tự làm mới tại chỗ hay điều hướng đi đâu? Thiết kế không khai.
+- Nếu khách chốt là có bước phê duyệt thì nút này đổi nghĩa thành gửi xác nhận — nhãn nút có đổi theo không?"
+"3.14","img-032","Nút Xác nhận hủy",,"Confirm cancel button","button","destructive_action","text_only",,,,,,,"Điều kiện: lý do hủy phải có giá trị — FR-AITAI-03 (RFP:652).
+Lỗi: ""Phải nhập lý do hủy."" — chặn tại trường lý do.
+Điều kiện: chỉ hủy được giao dịch chưa lock — BR-CLOSE-01 (RFP:597).
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock; đường ra là SC-20 và SC-21."" — lần thử được ghi log theo FR-CORR-03 (RFP:658).
+Điều kiện: chỉ hủy được khi bản ghi còn trong phạm vi hủy của FE-016; ngoài phạm vi thì nút không bật.","Mục đích và ngữ cảnh: thao tác hủy giao dịch chưa lock kèm lý do bắt buộc và hoàn lại số lượng
+Thành phần hiển thị: một nút màu cảnh báo nhãn chữ đặt cạnh nút chốt
+Chức năng và logic: hoàn lại đúng số lượng đã trừ; lịch sử hủy được lưu kèm lý do để tra cứu lại theo nghiệm thu FR-AITAI-03","on_click","Phát sự kiện hủy để đưa bản ghi tới chặng Hủy / Đính chính của FIG-012 và hoàn lại chính xác số lượng khả dụng của lô.","transaction; lot","status; cancel_reason; available_qty","Đổi trạng thái của D-TRADE và lưu lý do; hoàn lại số lượng khả dụng của D-LOT đúng bằng số đã trừ.","- Hủy hai lần liên tiếp thì lần thứ hai hiện gì và số lượng có bị hoàn hai lần không? Thiết kế chỉ đòi hoàn chính xác.
+- Bản ghi đã hủy còn hiện nút nào không hay mục thao tác biến mất? Thiết kế không khai."
+"3.15","img-033","Chỉ dẫn cho vai chỉ tra cứu",,"Read-only role handoff caption","label","handoff_caption",,,,,,,,,"Mục đích và ngữ cảnh: cho vai không được ghi biết ai làm được thao tác này thay vì để một nút bấm không có tác dụng
+Thành phần hiển thị: một khối chữ dạng nút tắt với chữ ""Vai khác ROLE-TRADE: chỉ tra cứu; mục thao tác đổi thành chỉ dẫn""
+Chức năng và logic: thay thế hai nút thao tác khi vai hiện tại không phải ROLE-TRADE; tra cứu vẫn mở cho các vai đang hoạt động để đối chiếu chéo",,,,,,"- Chỉ dẫn có nêu tên vai cần liên hệ hay chỉ nói chung là không có quyền? Ảnh nêu tên vai.
+- Vai chỉ tra cứu có thấy ô lý do hủy ở dạng chỉ đọc hay ô đó biến mất? Thiết kế không khai."
+"3.16","img-034","Tiêu đề mục Lịch sử","履歴","History section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu mục lịch sử của bản ghi
+Thành phần hiển thị: một dòng tiêu đề ""Lịch sử · 履歴""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.17","img-035","Bảng lịch sử thao tác","履歴","Operation history table","table","audit_table",,,,,,,,,"Mục đích và ngữ cảnh: dấu vết kiểm toán của bản ghi — FR-AUDIT-01 (RFP:710) đòi chủ thể; timestamp; before/after và lý do cho mọi thao tác nhạy cảm
+Thành phần hiển thị: bảng năm cột: Thời điểm; Người thực hiện; Hành động; Lý do; Thay đổi — mới nhất trước; cột Thay đổi ghi cả chuyển trạng thái và số lượng khả dụng trước sau
+Chức năng và logic: mỗi dòng là một thao tác đã xảy ra; mọi lần thử ghi vào ngày đã lock cũng phải có mặt ở đây theo nghiệm thu FR-CORR-03 (RFP:658)",,,"audit_log","created_at; actor_id; action; reason; before; after","Bảng lịch sử đọc từ dấu vết kiểm toán mà FE-041 và FR-AUDIT-01 đòi ghi cho tạo; sửa; phê duyệt; lock và đổi quyền.","- Tên trường trong cột Thay đổi hiện bằng tên nghiệp vụ hay tên cột kỹ thuật? Nghiệm thu FR-SERI-03 ở màn kề đòi tên hiểu được nên cần thống nhất.
+- Bảng lịch sử có phân trang khi bản ghi có nhiều thao tác không? Thiết kế không khai.
+- Lần thử ghi bị chặn vì ngày đã lock hiện ở cột Hành động bằng nhãn gì? Thiết kế chỉ đòi có mặt."
+"3.18","img-036","Ghi chú nghĩa vụ audit",,"Audit obligation note","label","rule_note",,,,,,,,"Điều kiện: mỗi dòng lịch sử phải có chủ thể; timestamp; before/after và lý do — FR-AUDIT-01 (RFP:710).
+Điều kiện: mọi lần thử sửa trực tiếp vào ngày đã lock đều bị chặn VÀ có log — FR-CORR-03 (RFP:658).","Mục đích và ngữ cảnh: khai điều kiện nghiệm thu của bảng lịch sử ngay dưới bảng
+Thành phần hiển thị: một dòng ghi chú dẫn FR-AUDIT-01 kèm mã tính năng FE-041 và nghiệm thu của FR-CORR-03
+Chức năng và logic: văn bản tĩnh — là điều kiện nghiệm thu cho bảng phía trên",,,,,,
+"4","img-037","Khối trạng thái màn",,"Screen states section","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê đủ các trạng thái mà hai màn con phải phủ
+Thành phần hiển thị: tiêu đề khối và một lưới chín thẻ trạng thái
+Chức năng và logic: chỉ hiển thị — mỗi thẻ là một nhánh hiển thị mà màn phải có",,,,,,
+"4.1","img-038","Tiêu đề khối trạng thái màn",,"Screen states section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối liệt kê trạng thái màn
+Thành phần hiển thị: một dòng tiêu đề ""Trạng thái màn""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-039","Lưới thẻ trạng thái màn",,"Screen state card grid","others","state_card_grid",,,,,,,,"Điều kiện: trạng thái rỗng của danh sách phải nêu rõ bộ lọc đang áp và cho lọc lại.
+Điều kiện: lỗi tải phải phân biệt được với 0 kết quả và có nút thử lại.
+Lỗi: ""Không tìm thấy giao dịch."" — khi mã giao dịch không tồn tại ở khung chi tiết.
+Điều kiện: vai ngoài ROLE-TRADE thấy đủ dữ liệu và mục thao tác đổi thành chỉ dẫn.
+Điều kiện: khi đang gửi thì khoá hai nút và chặn gửi trùng.
+Điều kiện: hai lý do từ chối chốt của FE-015 phải hiện RIÊNG BIỆT kèm tên người tham gia hoặc số còn khả dụng.
+Lỗi: ""Phải nhập lý do hủy."" — chặn ngay tại trường; không dùng thông báo lỗi chung.
+Điều kiện: ngoài phạm vi hủy của FE-016 thì nút không bật và màn chỉ đường sang SC-20.
+Lỗi: ""Ngày nghiệp vụ <ngày> đã lock."" — cả chốt và hủy đều bị chặn; lần thử được ghi log.","Mục đích và ngữ cảnh: chín nhánh hiển thị của hai màn con: rỗng; đang tải và lỗi tải; không tìm thấy; chỉ tra cứu; đang gửi; chốt bị từ chối; hủy thiếu lý do; không hủy được vì đã qua chặng; ngày nghiệp vụ đã lock
+Thành phần hiển thị: một lưới bốn cột chứa chín thẻ viền nét đứt — mỗi thẻ một tiêu đề và một đoạn mô tả hành vi
+Chức năng và logic: chín thẻ dùng chung một kết cấu và chỉ khác nội dung nên gộp thành một thành phần đại diện ở mục con",,,,,,"- Trạng thái đang tải và lỗi tải gộp trong một thẻ nhưng là hai nhánh khác nhau trên màn thật — có tách không?
+- Khung danh sách và khung chi tiết có trạng thái riêng của từng khung hay dùng chung một vùng thông báo? Ảnh trộn thẻ của hai khung vào một lưới.
+- Trạng thái ngày đã lock có phát hiện được trước khi bấm hay chỉ lộ sau khi bấm? Thiết kế không khai."
+"4.2.1","img-040","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên Rỗng (danh sách) làm đại diện cho cả chín thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả — thẻ đại diện ghi ""Nêu rõ bộ lọc đang áp và cho lọc lại""
+Chức năng và logic: lặp chín lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên chỉ đặc tả một lần",,,,,,
+"5","img-041","Khối đối chiếu prototype",,"Prototype divergence section","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: tách phần hiện trạng thi công ra khỏi phần thiết kế để bản đặc tả không bị hành vi prototype rò vào
+Thành phần hiển thị: tiêu đề khối và một bảng ba cột đối chiếu thiết kế với prototype
+Chức năng và logic: chỉ hiển thị — khối này là phần đối chiếu chứ không phải yêu cầu của màn",,,,,,
+"5.1","img-042","Tiêu đề khối đối chiếu prototype",,"Divergence section title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: mở đầu khối đối chiếu hiện trạng
+Thành phần hiển thị: một dòng tiêu đề ""Đối chiếu prototype""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"5.2","img-043","Bảng đối chiếu thiết kế và prototype",,"Design versus prototype table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: liệt kê năm hạng mục và mức lệch giữa điều thiết kế đòi và điều prototype đang làm
+Thành phần hiển thị: bảng ba cột: Thiết kế đòi; Prototype làm; Mức — năm dòng với các mức Cần khách chốt; Khác không chủ đích; Thiếu mức nhỏ
+Chức năng và logic: chỉ hiển thị — hai lệch đáng chú ý nhất là danh sách không phân trang ở ngày cao điểm và nhánh chốt không ghi log lần thử bị lock",,,,,,"- Danh sách hiện cắt cứng ở 100 dòng — trong lúc chờ phân trang thì màn có cần cảnh báo là kết quả đã bị cắt không?
+- Cặp ""ai chốt / chốt lúc nào"" đã có dữ liệu nhưng chưa hiện ở màn nào — đưa lên chi tiết là việc của FE-017 hay của một mã tính năng khác?"
+"6","img-044","Khối ghi chú phân quyền và gộp màn",,"Permission and screen-merge note","label","footer_note",,,,,,,,"Điều kiện: tra cứu mở cho các vai đang hoạt động để đối chiếu chéo.
+Điều kiện: chốt và hủy thuộc ROLE-TRADE — TBL-ROLE-01 (RFP:245).","Mục đích và ngữ cảnh: khai phân quyền của màn và lý do một mã SC- ứng hai màn con
+Thành phần hiển thị: một khối ghi chú ba đoạn: phân quyền đọc so với ghi; lý do gộp hai màn con; và một liên kết tới bản as-built của prototype
+Chức năng và logic: chỉ hiển thị — siết quyền đọc ở các bảng có thông tin cá nhân thuộc một quyết định kiến trúc riêng chứ không thuộc màn này",,,,,,"- Danh sách là điểm vào hằng ngày của ROLE-TRADE — các vai khác vào màn này từ đâu? Thiết kế không khai đường vào cho vai tra cứu."

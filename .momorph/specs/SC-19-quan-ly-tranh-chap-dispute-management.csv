@@ -1,0 +1,161 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn quản lý tranh chấp",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết của nó; cho biết đây là nhánh quản lý tồn đọng của nhóm đối chiếu và chốt kỳ.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-027 · FN-07 · ưu tiên P1 · FR-SETTLE-03 · miền dữ liệu D-SETTLE · báo cáo tiêu thụ RPT-09 · thông báo FR-NOTIFY-01; dòng tham chiếu phụ nêu chưa có mã thi công và route đề xuất cùng một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác.",,,,,,
+"1.1","img-002","Tiêu đề màn","紛争管理","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn mở · theo dõi và đóng tranh chấp phát sinh khi rà số cuối ngày.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-19 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về đúng tính năng và điều khoản yêu cầu; đồng thời khai route còn là đề xuất chứ chưa phải đường thật.
+Thành phần hiển thị: Hai dòng chữ nhỏ: dòng tính năng · ưu tiên · yêu cầu · miền dữ liệu · báo cáo và thông báo; dòng tham chiếu phụ nêu chưa có mã thi công cùng route đề xuất và actor.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn chưa có bản thi công nào để đối chiếu; mọi mô tả trên màn là thiết kế phải dựng.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng tham chiếu phụ với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu.",,,,,,
+"2","img-005","Dải cảnh báo màn chưa có bản thi công",,"Not-yet-built banner","label","dải cảnh báo đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Nói thẳng khoảng trống: mọi trường trên màn đọc từ FR-SETTLE-03 và cột nghiệm thu của nó chứ không từ một bản cài đặt nào.
+Thành phần hiển thị: Dải chữ nhỏ nền vàng nhạt viền nét đứt nằm ngay dưới khối đầu màn; câu đầu in đậm.
+Chức năng và logic: Chỉ trình bày; là ghi chú tài liệu chứ không phải thành phần sản phẩm.",,,,,,
+"3","img-006","Khối 1 — sáu trường FR-SETTLE-03 đòi",,"Required field inventory block","others","khối bảng ba cột",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê đủ các trường FR-SETTLE-03 và cột nghiệm thu của nó đòi; đây là bảng kiểm để không thiết kế thiếu trường nào.
+Thành phần hiển thị: Khối viền nét đứt tiêu đề dẫn FR-SETTLE-03; bên dưới là bảng ba cột Trường · Nguồn · Vì sao có với sáu dòng.
+Chức năng và logic: Chỉ đọc; nội dung là ràng buộc phạm vi áp lên khối chi tiết tranh chấp và khối lịch sử cập nhật.",,,,,,
+"3.1","img-007","Bảng sáu trường và nguồn yêu cầu",,"Field-to-requirement mapping table","table","bảng ba cột",,,,,,,,,"Mục đích và ngữ cảnh: Truy từng trường về đúng câu chữ của yêu cầu khách hàng; bốn trường lấy từ thân yêu cầu và hai trường lấy từ cột nghiệm thu.
+Thành phần hiển thị: Sáu dòng: Trạng thái tranh chấp · Nguyên nhân · Người phụ trách xử lý đến từ FR-SETTLE-03; Ngày dự kiến xử lý và Lịch sử cập nhật đến từ nghiệm thu FR-SETTLE-03; Kết quả cuối cùng đến từ FR-SETTLE-03.
+Chức năng và logic: Chỉ đọc; kết luận quan trọng nhất của bảng là Lịch sử cập nhật phải là một bảng con chỉ thêm chứ không phải một ô ghi chú.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Nghiệm thu FR-SETTLE-03 đòi danh sách tranh chấp đang mở nên trạng thái tối thiểu phải phân biệt đang mở với đã đóng; tập giá trị đầy đủ do khách chốt."
+"4","img-008","Khối 2 — danh sách tranh chấp đang mở",,"Open dispute list block","others","khối lọc và bảng danh sách",,,,,,,,,"Mục đích và ngữ cảnh: Hàng đợi việc của bộ phận đối chiếu; nghiệm thu FR-SETTLE-03 đòi đúng chữ danh sách tranh chấp đang mở nên đây là hạng mục bắt buộc chứ không phải tiện ích.
+Thành phần hiển thị: Khối viền nét đứt gồm một hàng bốn ô lọc; bảng tám cột ba dòng mẫu; hai nút Lọc và Mở tranh chấp mới; một đoạn ghi chú nguồn tiêu thụ.
+Chức năng và logic: Mặc định lọc theo trạng thái đang mở; là nguồn dữ liệu của báo cáo RPT-09 và của thông báo tranh chấp đang mở thuộc phạm vi FR-NOTIFY-01.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Danh sách có phân trang không; và sắp xếp mặc định theo ngày dự kiến gần nhất hay theo số ngày tồn đọng lớn nhất?"
+"4.1","img-009","Ô lọc Trạng thái","状態","Status filter","dropdown","ô chọn một giá trị",,"string","false",,,,"Đang mở","Điều kiện: chỉ nhận giá trị thuộc tập trạng thái tranh chấp đã chốt với chủ đầu tư.
+Lỗi: giá trị ngoài tập phải bị từ chối và nói rõ là lọc sai chứ không trả danh sách rỗng im lặng.","Mục đích và ngữ cảnh: Chọn nhóm tranh chấp cần xem; mặc định là đang mở vì màn này là hàng đợi việc chứ không phải kho lưu trữ.
+Thành phần hiển thị: Nhãn Trạng thái; ô chọn hiện Đang mở kèm mũi tên; dòng nhắc bên dưới giải thích lý do chọn mặc định đó.
+Chức năng và logic: Giá trị mặc định đang mở; tập giá trị đầy đủ chưa được yêu cầu khách hàng liệt nên phải chốt trước khi cài.","on_click","Đổi giá trị rồi bấm Lọc thì tải lại bảng danh sách theo trạng thái mới; không rời màn.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Tập giá trị trạng thái tranh chấp gồm những giá trị nào; yêu cầu khách hàng không liệt tập này ở đâu.
+Bộ lọc có nhớ lựa chọn lần trước khi người dùng trở lại màn không?"
+"4.2","img-010","Ô lọc Ngày nghiệp vụ","業務日","Business date filter","date_picker","ô chọn ngày một dòng",,"date","false","YYYY-MM-DD",,,,"Điều kiện: đúng định dạng YYYY-MM-DD và là một ngày thật.
+Lỗi: định dạng sai thì báo lỗi tại ô lọc và giữ nguyên danh sách cũ.","Mục đích và ngữ cảnh: Khoanh danh sách về một ngày nghiệp vụ cụ thể khi cần rà lại số của ngày đó.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ · 業務日 và ô nhập ngày hiện mẫu 2026-09-08.
+Chức năng và logic: Không bắt buộc; bỏ trống thì danh sách không giới hạn theo ngày.","on_click","Lọc danh sách theo ngày nghiệp vụ của tranh chấp; không rời màn.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Lọc theo một ngày duy nhất là đủ hay cần lọc theo khoảng ngày cho việc rà tồn đọng nhiều ngày?"
+"4.3","img-011","Ô lọc Nguồn phát sinh","発生元","Source type filter","dropdown","ô chọn một giá trị",,"string","false",,,,"Tất cả","Điều kiện: chỉ nhận ba loại nguồn của bảng đối chiếu ngày — giao dịch thoả thuận · đấu giá · giao hàng — hoặc giá trị Tất cả.
+Lỗi: giá trị khác phải bị từ chối.","Mục đích và ngữ cảnh: Cho phép tách tranh chấp theo nơi phát sinh vì cách xử lý ba nhánh khác nhau.
+Thành phần hiển thị: Nhãn Nguồn phát sinh; ô chọn hiện Tất cả; dòng nhắc liệt ba nguồn của bảng đối chiếu ngày FE-025.
+Chức năng và logic: Tập giá trị lấy đúng ba nguồn của bảng đối chiếu ngày để tranh chấp luôn trỏ về một dòng có thật.","on_click","Lọc danh sách theo loại nguồn phát sinh; không rời màn.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Ngoài ba nguồn của bảng đối chiếu ngày có nguồn tranh chấp nào khác cần mở không; ví dụ tranh chấp về tiền thưởng?"
+"4.4","img-012","Ô lọc Người phụ trách","担当者","Assignee filter","dropdown","ô chọn một giá trị",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Cho người phụ trách xem đúng phần việc của mình và cho người quản lý xem tải của từng người.
+Thành phần hiển thị: Nhãn Người phụ trách và ô chọn hiện Tất cả.
+Chức năng và logic: Danh sách chọn chỉ gồm tài khoản đang hoạt động; hiện tên hiển thị chứ không hiện email.","on_click","Lọc danh sách theo người phụ trách xử lý; không rời màn.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Có cần một lựa chọn nhanh chỉ việc của tôi ngoài danh sách chọn từng người không?"
+"4.5","img-013","Bảng danh sách tranh chấp tám cột","紛争一覧","Dispute list table","table","bảng tám cột",,,,,,,,,"Mục đích và ngữ cảnh: Hiện đủ thông tin để quyết định việc nào làm trước: ai chịu trách nhiệm · hạn dự kiến và đã tồn đọng bao lâu.
+Thành phần hiển thị: Tám cột; ba dòng mẫu phủ ba nguồn phát sinh; cột Trạng thái là nhãn màu; cột Tồn đọng hiện số ngày.
+Chức năng và logic: Chỉ đọc; nội dung theo bốn ô lọc phía trên; cột Tồn đọng và nhãn quá hạn là giá trị dẫn xuất tính từ ngày hiện tại theo JST.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Cột Tồn đọng đếm từ ngày mở tranh chấp hay từ ngày nghiệp vụ phát sinh chênh lệch?
+Dòng đã đóng có nên xuất hiện trong danh sách mặc định không; ảnh mẫu có một dòng đã đóng trong khi bộ lọc để đang mở."
+"4.5.1","img-014","Nhãn trạng thái tranh chấp trong dòng",,"Dispute status badge","label","nhãn trong ô bảng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết ngay tình trạng của một tranh chấp; là cột người dùng quét mắt đầu tiên.
+Thành phần hiển thị: Nhãn chữ nhỏ viền tròn trong ô cột Trạng thái; ba dòng mẫu cho ba giá trị Đang xử lý · Quá hạn dự kiến · Đã đóng. Ba nhãn gộp thành một hạng mục vì cùng cấu trúc và cùng vai trò.
+Chức năng và logic: Chỉ đọc; nhãn Quá hạn dự kiến là giá trị dẫn xuất khi ngày dự kiến đã qua mà tranh chấp chưa đóng chứ không phải một trạng thái người dùng đặt.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Quá hạn dự kiến là một trạng thái riêng trong tập giá trị hay chỉ là nhãn phủ lên trạng thái đang mở?"
+"4.6","img-015","Nút Lọc","絞り込み","Apply filter button","button","nút phụ","text_only",,,,,,,,"Mục đích và ngữ cảnh: Áp bộ lọc đã chọn lên danh sách.
+Thành phần hiển thị: Nút chữ trung tính đặt ngay dưới bảng danh sách.
+Chức năng và logic: Không đổi dữ liệu; chỉ đổi tập dòng hiện trên bảng.","on_click","Tải lại bảng danh sách theo bốn ô lọc hiện tại; không rời màn.",,,,"Bộ lọc áp ngay khi đổi ô chọn hay phải bấm nút này; nếu phải bấm thì có cần nhắc khi người dùng đổi ô mà chưa bấm không?"
+"4.7","img-016","Nút Mở tranh chấp mới","紛争を新規登録","Open new dispute button","button","nút hành động chính","text_only",,,,,,,"Điều kiện: chỉ bộ phận đối chiếu mở được tranh chấp mới.
+Lỗi: vai trò khác không thấy nút và cũng không gọi được đường ghi tương ứng.","Mục đích và ngữ cảnh: Điểm vào của việc ghi nhận một chênh lệch mới phát hiện; FR-SETTLE-03 lấy chủ thể là bộ phận đối chiếu khi phát hiện chênh lệch.
+Thành phần hiển thị: Nút chữ nền đậm đặt cạnh nút Lọc.
+Chức năng và logic: Mở form chi tiết ở chế độ tạo; nguồn phát sinh phải trỏ về một dòng có thật của bảng đối chiếu ngày.","on_click","Mở khối chi tiết và cập nhật một tranh chấp ở chế độ tạo mới; màn không cần dữ liệu tiền đề nên nút này khả dụng cả khi danh sách rỗng.",,,,"Mở tranh chấp mới là màn riêng hay khối mở ra ngay trong màn danh sách?
+Một dòng của bảng đối chiếu ngày được phép có nhiều tranh chấp mở cùng lúc không?"
+"4.8","img-017","Ghi chú nguồn tiêu thụ danh sách",,"Downstream consumer note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Nêu hai chỗ tiêu thụ dữ liệu của màn để thấy màn này là điều kiện để báo cáo RPT-09 và thông báo vận hành chạy thật.
+Thành phần hiển thị: Một đoạn chữ nhỏ dưới bảng; mã RPT-09 và FR-NOTIFY-01 in đậm.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc phạm vi dữ liệu áp lên hạng mục bảng danh sách.",,,,,,
+"5","img-018","Khối 3 — chi tiết và cập nhật một tranh chấp",,"Dispute detail and update block","others","khối form nhiều trường",,,,,,,,,"Mục đích và ngữ cảnh: Nơi ghi và cập nhật đủ các trường FR-SETTLE-03 đòi cho một tranh chấp; cũng là nơi đóng tranh chấp và là nơi bắc sang đường điều chỉnh sau lock.
+Thành phần hiển thị: Khối viền nét đứt gồm bốn ô ngang ở hàng đầu; ô nguyên nhân dạng vùng văn bản; ba ô ngang ở hàng thứ hai; ô kết quả cuối cùng; ô chọn tệp bằng chứng; ba nút hành động và một đoạn ghi chú phân biệt hai luồng.
+Chức năng và logic: Ghi được kể cả khi ngày nghiệp vụ đã lock vì bản ghi tranh chấp nói VỀ một ngày chứ không phải bản ghi CỦA ngày đó.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Người phụ trách xử lý được cập nhật những trường nào; và có bị chặn ở trường Kết quả cuối cùng để chỉ bộ phận đối chiếu đóng tranh chấp không?"
+"5.1","img-019","Ô chọn Trạng thái tranh chấp","状態","Dispute status","dropdown","ô chọn một giá trị",,"string","true","none",,,,"Điều kiện: chỉ nhận giá trị thuộc tập trạng thái đã chốt với chủ đầu tư; tối thiểu phân biệt được đang mở với đã đóng.
+Điều kiện: chuyển sang trạng thái đóng thì trường Kết quả cuối cùng bắt buộc phải có nội dung.
+Lỗi: đóng mà Kết quả cuối cùng còn trống thì từ chối lưu.","Mục đích và ngữ cảnh: Trường FR-SETTLE-03 đòi đầu tiên; là cơ sở của danh sách tranh chấp đang mở mà nghiệm thu đòi.
+Thành phần hiển thị: Nhãn Trạng thái kèm dấu sao bắt buộc; ô chọn hiện Đang xử lý; dòng nhắc nói rõ tập giá trị chưa được yêu cầu khách hàng liệt.
+Chức năng và logic: Đổi trạng thái là hành vi được ghi lịch sử; chuyển sang đóng thì kéo theo ràng buộc bắt buộc ở trường Kết quả cuối cùng.","on_click","Mỗi lần đổi trạng thái sinh một dòng mới trong bảng Lịch sử cập nhật ở khối 4.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Tập trạng thái tranh chấp gồm đúng những giá trị nào và đường đi hợp lệ giữa chúng ra sao; yêu cầu khách hàng không liệt.
+Tranh chấp đã đóng có mở lại được không; nếu có thì mở lại là một dòng lịch sử mới chứ không xoá kết quả cũ."
+"5.2","img-020","Ô chọn Nguồn phát sinh","発生元","Dispute source","dropdown","ô chọn một giá trị",,"string","true","none",,,,"Điều kiện: cặp loại nguồn và mã chứng từ phải trỏ về một dòng có thật của bảng đối chiếu ngày.
+Lỗi: không tìm được dòng nguồn thì từ chối lưu; tranh chấp không được treo lơ lửng.","Mục đích và ngữ cảnh: Neo tranh chấp vào đúng một dòng chứng từ của bảng đối chiếu ngày để chênh lệch luôn truy được về số gốc.
+Thành phần hiển thị: Nhãn Nguồn phát sinh kèm dấu sao bắt buộc; ô chọn hiện loại nguồn và mã chứng từ; dòng nhắc nói tranh chấp không treo lơ lửng.
+Chức năng và logic: Tập giá trị lấy từ ba nguồn của bảng đối chiếu ngày; giá trị gồm hai phần là loại nguồn và mã bản ghi nguồn.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Chọn nguồn bằng cách tra mã chứng từ hay bằng cách mở tranh chấp từ chính dòng của bảng đối chiếu ngày SC-18?"
+"5.3","img-021","Ô nhập Ngày nghiệp vụ của tranh chấp","業務日","Business date","date_picker","ô chọn ngày một dòng",,"date","true","YYYY-MM-DD",,,,"Điều kiện: đúng định dạng YYYY-MM-DD và là một ngày thật.
+Điều kiện: phải khớp ngày nghiệp vụ của dòng nguồn đã chọn.
+Lỗi: lệch với dòng nguồn thì từ chối lưu.","Mục đích và ngữ cảnh: Gắn tranh chấp vào ngày nghiệp vụ mà chênh lệch phát sinh; là khoá để báo cáo RPT-09 tổng hợp theo ngày.
+Thành phần hiển thị: Nhãn Ngày nghiệp vụ kèm dấu sao bắt buộc và ô nhập ngày hiện mẫu 2026-09-08.
+Chức năng và logic: Giá trị phải nhất quán với ngày nghiệp vụ của dòng nguồn; ghi được cả khi ngày đó đã lock.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.",
+"5.4","img-022","Ô chọn Người tham gia liên quan","参加者","Related participant","dropdown","ô chọn một giá trị",,"string","false","none",,,,,"Mục đích và ngữ cảnh: Ghi người tham gia dính vào chênh lệch để liên hệ và để tổng hợp theo đối tác.
+Thành phần hiển thị: Nhãn Người tham gia liên quan và ô chọn hiện Người tham gia A.
+Chức năng và logic: Không bắt buộc vì có chênh lệch chỉ thuộc nội bộ; giá trị lấy từ danh mục người tham gia và chỉ hiện tên hiển thị.",,,"participant","id","Người tham gia lấy từ danh mục người tham gia của miền D-PARTY; bảng tranh chấp giữ tham chiếu tới danh mục này nhưng bản thi công CHƯA có bảng tranh chấp nào.","Trường này để trống được thì báo cáo RPT-09 tổng hợp theo người tham gia xử lý dòng trống ra sao?"
+"5.5","img-023","Ô nhập Nguyên nhân","理由","Cause","textarea","vùng văn bản nhiều dòng",,"string","true","none",,"1000",,"Điều kiện: bỏ khoảng trắng hai đầu rồi phải còn nội dung.
+Lỗi: trống hoặc chỉ khoảng trắng thì từ chối lưu.","Mục đích và ngữ cảnh: Trường FR-SETTLE-03 đòi: chênh lệch phải giải thích được chứ không chỉ được đánh dấu.
+Thành phần hiển thị: Nhãn Nguyên nhân kèm dấu sao bắt buộc và một vùng văn bản rộng hết khối.
+Chức năng và logic: Bắt buộc ngay từ lúc mở tranh chấp; nội dung đi vào báo cáo RPT-09 nên phải viết được thành câu.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Nguyên nhân là văn bản tự do hay cần thêm một danh mục nhóm nguyên nhân để tổng hợp được?"
+"5.6","img-024","Ô chọn Người phụ trách xử lý","実施者","Assignee","dropdown","ô chọn một giá trị",,"string","true","none",,,,"Điều kiện: chỉ nhận tài khoản đang hoạt động.
+Điều kiện: người phụ trách bị vô hiệu giữa lúc tranh chấp còn mở thì vẫn phải gán lại được.
+Lỗi: chọn tài khoản đã vô hiệu thì từ chối lưu.","Mục đích và ngữ cảnh: Trường FR-SETTLE-03 đòi; lý do chính đáng của yêu cầu này là truy vết trách nhiệm.
+Thành phần hiển thị: Nhãn Người phụ trách xử lý kèm dấu sao bắt buộc; ô chọn hiện Người dùng B; dòng nhắc nêu chỉ tài khoản đang hoạt động và không hiện email.
+Chức năng và logic: Hiện tên hiển thị chứ không hiện email; luôn phải gán lại được kể cả khi người đang phụ trách bị vô hiệu.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Đổi người phụ trách có sinh một dòng trong Lịch sử cập nhật như đổi trạng thái không?
+Có phát thông báo cho người vừa được gán không; FR-NOTIFY-01 chỉ liệt event tranh chấp đang mở."
+"5.7","img-025","Ô nhập Ngày dự kiến xử lý","対応予定日","Due date","date_picker","ô chọn ngày một dòng",,"date","true","YYYY-MM-DD",,,,"Điều kiện: đúng định dạng YYYY-MM-DD và là một ngày thật.
+Điều kiện: không sớm hơn ngày nghiệp vụ của tranh chấp.
+Lỗi: sớm hơn ngày nghiệp vụ thì từ chối lưu.","Mục đích và ngữ cảnh: Trường nghiệm thu FR-SETTLE-03 đòi; là cơ sở duy nhất để nói một việc đã quá hạn dự kiến.
+Thành phần hiển thị: Nhãn Ngày dự kiến xử lý kèm dấu sao bắt buộc; ô nhập ngày hiện mẫu 2026-09-11; dòng nhắc nói rõ nhập tay và thiết kế không tự đặt con số.
+Chức năng và logic: Nhập tay vì yêu cầu khách hàng không cho ngưỡng SLA nào; hệ thống chỉ so ngày dự kiến với ngày hiện tại để gắn nhãn quá hạn.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Yêu cầu khách hàng dùng đúng chữ SLA xử lý ở RPT-09 nhưng không cho con số; ngưỡng SLA theo mức độ nghiêm trọng có tồn tại không.
+Ngày dự kiến có được sửa nhiều lần không; nếu có thì mỗi lần sửa có vào Lịch sử cập nhật không?"
+"5.8","img-026","Ô hiển thị Chênh lệch liên quan","関連差異","Related variance","label","ô chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Cho người xử lý thấy ngay con số đang tranh chấp mà không phải quay lại bảng đối chiếu.
+Thành phần hiển thị: Nhãn Chênh lệch liên quan và một ô chỉ đọc nền xám hiện giá trị âm mẫu kèm chú thích nguồn.
+Chức năng và logic: Dẫn xuất từ dòng nguồn đã chọn; theo đúng quy tắc của SC-18 là không so được thì ghi không áp dụng chứ không hiện 0 hay dấu gạch.",,,"reconciliation_line","variance","Giá trị chỉ đọc lấy từ cột chênh lệch của nguồn bảng đối chiếu ngày; không so được thì hiện ""không áp dụng"" chứ không hiện 0.","Chênh lệch được chốt lại tại thời điểm mở tranh chấp hay đọc lại mỗi lần mở màn?"
+"5.9","img-027","Ô nhập Kết quả cuối cùng","最終結果","Final resolution","textarea","vùng văn bản nhiều dòng",,"string","false","none",,"1000",,"Điều kiện: bắt buộc khi chuyển tranh chấp sang trạng thái đóng.
+Lỗi: đóng mà trường này còn trống thì từ chối; đóng tranh chấp không ghi kết quả là mất kết luận nghiệp vụ.","Mục đích và ngữ cảnh: Trường FR-SETTLE-03 đòi; là kết luận nghiệp vụ của tranh chấp và là thứ báo cáo RPT-09 tổng hợp lại.
+Thành phần hiển thị: Nhãn Kết quả cuối cùng kèm dấu sao và chú thích khi đóng; một vùng văn bản rộng hết khối.
+Chức năng và logic: Không bắt buộc trong lúc còn xử lý nhưng bắt buộc tại thời điểm đóng; đây là ràng buộc theo trạng thái chứ không phải ràng buộc cố định.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Kết quả cuối cùng có cần một danh mục phân loại kết luận kèm theo văn bản tự do không?"
+"5.10","img-028","Ô chọn tệp Ảnh hoặc chứng từ bằng chứng","証拠画像・書類","Evidence attachment","file_or_image","ô chọn tệp",,,"false","none",,,,"Điều kiện: kiểm định dạng và dung lượng ở phía hệ thống; giới hạn của trình duyệt chỉ là gợi ý.
+Lỗi: định dạng không nhận hoặc quá dung lượng thì từ chối và nói rõ trường nào chưa đạt.","Mục đích và ngữ cảnh: Cho phép kèm ảnh hoặc chứng từ chứng minh chênh lệch; không bắt buộc vì nhiều tranh chấp chỉ cần đối chiếu số.
+Thành phần hiển thị: Nhãn Ảnh / chứng từ bằng chứng và ô chọn tệp hiện Chọn tệp… kèm chú thích không bắt buộc; dòng nhắc dẫn TBL-ATTACH-01 và DR-IMAGE-01.
+Chức năng và logic: Tệp lưu theo policy 3 năm online rồi chuyển cold storage; đường dẫn tệp không bao giờ ra CSV và chỉ mở được qua liên kết có hạn giờ.",,,,,"Bằng chứng tranh chấp thuộc diện lưu 3 năm theo DR-IMAGE-01 và quản lý theo TBL-ATTACH-01; kho tệp là kho riêng tư. Đường dẫn tệp không bao giờ ra file xuất CSV.","Định dạng và dung lượng tối đa của tệp bằng chứng là bao nhiêu; yêu cầu khách hàng chỉ quy định thời hạn lưu chứ không quy định ngưỡng nhận tệp.
+Một tranh chấp kèm được nhiều tệp hay chỉ một tệp?"
+"5.11","img-029","Nút Lưu tiến độ","進捗を保存","Save progress button","button","nút hành động chính","text_only",,,,,,,"Điều kiện: các trường bắt buộc trạng thái · nguồn phát sinh · ngày nghiệp vụ · nguyên nhân · người phụ trách · ngày dự kiến phải hợp lệ.
+Lỗi: thông báo phải nói rõ trường nào chưa đạt.","Mục đích và ngữ cảnh: Ghi tiến độ xử lý mà chưa kết luận; giữ tranh chấp ở trạng thái đang mở.
+Thành phần hiển thị: Nút chữ nền đậm đầu hàng ba nút cuối khối 3.
+Chức năng và logic: Không đóng tranh chấp; không đòi Kết quả cuối cùng.","on_click","Lưu các trường đang sửa và sinh một dòng trong Lịch sử cập nhật khi trạng thái đổi; ở lại màn.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Lưu tiến độ có đòi một ghi chú cho dòng lịch sử không; bảng lịch sử có cột Ghi chú."
+"5.12","img-030","Nút Đóng tranh chấp","紛争を終了","Close dispute button","button","nút phụ","text_only",,,,,,,"Điều kiện: trường Kết quả cuối cùng phải có nội dung.
+Điều kiện: chỉ một kết quả được ghi khi hai người đóng cùng lúc.
+Lỗi: Kết quả cuối cùng trống thì từ chối; người đóng sau nhận thông báo trạng thái đã đổi chứ không ghi đè kết luận của người trước.","Mục đích và ngữ cảnh: Kết thúc một tranh chấp kèm kết luận; là chỗ duy nhất trên màn ép trường Kết quả cuối cùng.
+Thành phần hiển thị: Nút chữ trung tính đặt giữa hàng ba nút.
+Chức năng và logic: Không tự động đóng theo bất kỳ điều kiện dữ liệu nào; con người phải quyết định và ghi kết quả.","on_click","Chuyển tranh chấp sang trạng thái đóng và sinh một dòng trong Lịch sử cập nhật; sau đó khối chi tiết về chế độ chỉ đọc.",,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.","Ai được đóng tranh chấp; bộ phận đối chiếu hay cả người được gán phụ trách. Ranh giới này chưa được yêu cầu khách hàng chốt."
+"5.13","img-031","Nút Tạo yêu cầu điều chỉnh","修正依頼を作成","Create correction request button","button","nút phụ dẫn sang màn khác","text_only",,,,,,,,"Mục đích và ngữ cảnh: Bắc từ nhánh tranh chấp sang nhánh điều chỉnh sau lock khi kết luận là phải sửa số.
+Thành phần hiển thị: Nút chữ trung tính cuối hàng ba nút; nhãn nêu rõ màn đích SC-20.
+Chức năng và logic: Tranh chấp có thể dẫn tới một yêu cầu điều chỉnh nhưng không thay thế nó; sửa số vẫn phải qua maker-checker của nhóm FN-08.","on_click","Chuyển sang màn tạo yêu cầu điều chỉnh SC-20 kèm ngữ cảnh chứng từ nguồn; tranh chấp vẫn ở trạng thái hiện tại và không tự đóng.",,,,"Yêu cầu điều chỉnh sinh từ đây có lưu liên kết ngược về tranh chấp để RPT-09 và RPT-08 khớp nhau không?
+Nút này có bị vô hiệu khi ngày nghiệp vụ của chứng từ nguồn còn chưa lock không; SC-20 chỉ nhận ngày đã lock."
+"5.14","img-032","Ghi chú hai luồng khác nhau",,"Two distinct flows note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Chặn một cách hiểu sai thường gặp: gộp tranh chấp vào yêu cầu điều chỉnh sẽ mất phần theo dõi tồn đọng và làm hỏng maker-checker.
+Thành phần hiển thị: Một đoạn chữ nhỏ cuối khối 3; cụm hai luồng khác nhau in đậm.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc kiến trúc áp lên hạng mục nút Tạo yêu cầu điều chỉnh.",,,,,,
+"6","img-033","Khối 4 — lịch sử cập nhật chỉ thêm",,"Append-only update history block","others","khối bảng năm cột",,,,,,,,,"Mục đích và ngữ cảnh: Thoả phần nghiệm thu FR-SETTLE-03 đòi lịch sử cập nhật; là chỗ giữ dấu vết ai đổi gì và lúc nào.
+Thành phần hiển thị: Khối viền nét đứt tiêu đề nêu append-only; bên dưới là bảng năm cột hai dòng mẫu và một đoạn ghi chú nguyên tắc.
+Chức năng và logic: Chỉ đọc; mỗi lần đổi trạng thái ở khối 3 sinh một dòng mới ở đây.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn.",
+"6.1","img-034","Bảng lịch sử cập nhật năm cột","状態変更履歴","Update history table","table","bảng năm cột",,,,,,,,,"Mục đích và ngữ cảnh: Trả lời câu hỏi tranh chấp này đã đi qua những bước nào và ai chịu trách nhiệm từng bước.
+Thành phần hiển thị: Năm cột Thời điểm · Từ trạng thái · Đến trạng thái · Ghi chú · Người ghi; hai dòng mẫu xếp mới nhất trước; dòng mở tranh chấp có cột Từ trạng thái là dấu gạch.
+Chức năng và logic: Chỉ thêm dòng; không sửa và không xoá dòng cũ theo cùng nguyên tắc bảo toàn lịch sử của FR-CORR-02.",,,,,"Miền dữ liệu D-SETTLE. Thiết kế đòi trường này nhưng bản thi công CHƯA có bảng tranh chấp nào nên không có bảng và cột thật để dẫn. Thiết kế đòi đây là một bảng con chỉ thêm chứ không phải một cột ghi chú.","Ghi chú cho mỗi dòng lịch sử là bắt buộc hay tuỳ chọn?
+Lịch sử có ghi cả lần đổi người phụ trách và lần đổi ngày dự kiến hay chỉ ghi lần đổi trạng thái?"
+"6.2","img-035","Ghi chú nguyên tắc chỉ thêm",,"Append-only principle note","label","đoạn nhắc dưới bảng",,,,,,,,,"Mục đích và ngữ cảnh: Nêu rõ nguyên tắc bảo toàn lịch sử của bảng và dẫn nguồn nguyên tắc đó về FR-CORR-02.
+Thành phần hiển thị: Một đoạn chữ nhỏ dưới bảng lịch sử.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc áp lên hạng mục bảng lịch sử cập nhật.",,,,,,
+"7","img-036","Khối 5 — trạng thái màn",,"Screen states block","others","khối sáu thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê các trạng thái màn phải xử lý được; thẻ về ngày nghiệp vụ đã lock là thẻ dễ cài ngược nhất.
+Thành phần hiển thị: Sáu thẻ xếp hai hàng; mỗi thẻ có tiêu đề trạng thái và một đoạn mô tả hành vi mong đợi.
+Chức năng và logic: Chỉ trình bày; nội dung là đặc tả hành vi cho khối danh sách và khối chi tiết.",,,,,,
+"7.1","img-037","Thẻ trạng thái Rỗng",,"Empty state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái tốt của màn: không còn việc tồn đọng. Vẫn phải mở được tranh chấp mới.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng và một đoạn mô tả nêu câu thông báo cụ thể.
+Chức năng và logic: Nút Mở tranh chấp mới vẫn khả dụng; màn không có dữ liệu tiền đề nào.",,,,,,
+"7.2","img-038","Thẻ trạng thái Quá hạn dự kiến",,"Overdue state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái đáng chú ý nhất của một hàng đợi việc; là thứ báo cáo RPT-09 và thông báo vận hành cần.
+Thành phần hiển thị: Thẻ tiêu đề Quá hạn dự kiến và một đoạn mô tả ngắn.
+Chức năng và logic: Điều kiện là ngày dự kiến đã qua mà tranh chấp chưa đóng; hệ quả là nhãn cảnh báo trên dòng và một event thông báo thuộc phạm vi FR-NOTIFY-01.",,,,,,"Thông báo quá hạn gửi cho ai và gửi mấy lần; FR-NOTIFY-03 cho cấu hình người nhận và thời điểm gửi."
+"7.3","img-039","Thẻ trạng thái Đã đóng",,"Closed state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái kết thúc; khai luôn một câu hỏi chưa được yêu cầu khách hàng trả lời.
+Thành phần hiển thị: Thẻ tiêu đề Đã đóng và một đoạn mô tả ngắn.
+Chức năng và logic: Khối chi tiết về chế độ chỉ đọc; kết quả cuối cùng và toàn bộ lịch sử vẫn hiện đủ.",,,,,,"Tranh chấp đã đóng có mở lại được không; nếu có thì ai được mở lại."
+"7.4","img-040","Thẻ trạng thái Ngày nghiệp vụ đã lock",,"Locked business date state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chặn một cách cài sai nghiêm trọng: áp tầng chặn ghi sau lock lên bản ghi tranh chấp sẽ làm màn vô dụng đúng lúc cần nhất.
+Thành phần hiển thị: Thẻ tiêu đề Ngày nghiệp vụ đã lock; cụm Vẫn ghi được in đậm.
+Chức năng và logic: Bản ghi tranh chấp nói VỀ một ngày nghiệp vụ chứ không phải bản ghi CỦA ngày đó nên không chịu tầng chặn ghi theo ngày lock; cùng lối với bảng yêu cầu điều chỉnh.",,,,,"Bảng tranh chấp và bảng lịch sử cập nhật KHÔNG mang tầng chặn ghi theo ngày lock; đây là quyết định thiết kế cần khai rõ để không cài ngược.",
+"7.5","img-041","Thẻ trạng thái Hai người đóng cùng lúc",,"Concurrent close state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Xử lý tranh chấp đồng thời trên hành động đóng; ghi đè kết luận của người khác là mất kết luận nghiệp vụ.
+Thành phần hiển thị: Thẻ tiêu đề Hai người đóng cùng lúc và một đoạn mô tả ngắn.
+Chức năng và logic: Chỉ một kết quả được ghi; người đóng sau nhận thông báo trạng thái đã đổi.",,,,,,
+"7.6","img-042","Thẻ trạng thái Đang tải · Lỗi tải · Không có quyền",,"Loading error and forbidden state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Gom ba trạng thái hạ tầng của màn và khai luôn ranh giới đọc.
+Thành phần hiển thị: Thẻ tiêu đề gộp ba trạng thái và một đoạn mô tả ngắn.
+Chức năng và logic: Đang tải hiện khung bảng trước; lỗi tải kèm nút thử lại; quyền đọc mở cho vai đối chiếu và cho người được gán phụ trách.",,,,,,"Người được gán phụ trách thuộc vai khác bộ phận đối chiếu thì vào được màn ở mức nào; chỉ xem việc của mình hay xem cả danh sách?"
+"8","img-043","Khối đối chiếu prototype",,"Design versus prototype comparison block","table","bảng ba cột trong khối chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Khối chú thích tài liệu; không phải thành phần của sản phẩm. Nó đặt cạnh nhau điều thiết kế đòi và điều bản thi công hiện có để thấy khoảng trống.
+Thành phần hiển thị: Khối viền nét đứt tiêu đề ĐỐI CHIẾU PROTOTYPE chứa bảng ba cột sáu dòng; cột Mức phân loại khác không chủ đích và cần khách chốt.
+Chức năng và logic: Chỉ đọc; không có thao tác nào và không tham gia luồng nghiệp vụ của màn.",,,,,,
+"9","img-044","Chân ghi chú phân quyền và phụ thuộc",,"Permission and dependency footnote","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Khai ranh giới phân quyền còn là đề xuất và liệt các màn phụ thuộc hai chiều của màn này.
+Thành phần hiển thị: Ba đoạn chữ nhỏ cuối màn: đoạn phân quyền đề xuất; đoạn phụ thuộc nêu SC-18 · SC-20 · SC-21 · RPT-09 · SC-28; và một liên kết sang bản đặc tả của màn.
+Chức năng và logic: Chỉ trình bày; nội dung là ràng buộc phân quyền áp lên các hạng mục nút của khối 3 và là bản đồ phụ thuộc dữ liệu.",,,,,,"Ranh giới mở · cập nhật · đóng chưa được yêu cầu khách hàng chốt; ba mức quyền này do khách quyết định."

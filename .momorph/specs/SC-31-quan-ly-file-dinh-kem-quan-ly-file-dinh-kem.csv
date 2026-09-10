@@ -1,0 +1,185 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn quản lý file đính kèm",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết; cho biết đây là màn quản lý chứng từ xuyên lô hàng.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-044 · FN-14 · ưu tiên P1 · ba mã yêu cầu · các mục tham chiếu · loại màn List và Detail · hai route đề xuất · actor · một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác nào.",,,,,,
+"1.1","img-002","Tiêu đề màn","添付ファイル管理","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở màn quản lý toàn bộ file đính kèm của hệ.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-31 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về FE-044 và ba mã yêu cầu; khai luôn rằng màn chạm mục bảo vệ thông tin cá nhân.
+Thành phần hiển thị: Hai dòng chữ nhỏ liệt tính năng · nhóm chức năng · ưu tiên · TBL-ATTACH-01 · DR-RET-01 · DR-IMAGE-01 · các mục tham chiếu · loại màn · hai route đề xuất · actor là bộ phận đối chiếu · thẻ trạng thái.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn chưa có bản thi công nào để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn cuối dòng metadata với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu chứ không từ dữ liệu nghiệp vụ.",,,,,,
+"2","img-005","Dải chú thích ba mã yêu cầu và ranh giới phán định",,"Requirement and boundary notice","label","dải chú thích đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Ghim ba mã yêu cầu chi phối màn; và khai một ranh giới quan trọng: không có phân loại tự động.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt ba đoạn: đoạn khai màn chưa thi công; đoạn dẫn TBL-ATTACH-01 và DR-RET-01 với policy bảy năm và ba năm rồi chuyển tầng nguội kèm nghiệm thu là kiểm tra policy lưu trữ và diễn tập phục hồi; đoạn dẫn DR-IMAGE-01 nêu yêu cầu khách không đòi phán định chất lượng tự động và mọi gán nhãn phải giữ yêu cầu con người xác nhận.
+Chức năng và logic: Tĩnh. Kết luận của đoạn thứ ba là ràng buộc thiết kế: phân loại tài liệu do người đặt và người xác nhận; không suy tự động.",,,,,,
+"3","img-006","Khối policy lưu trữ hai tầng",,"Two-tier retention policy block","others","khối bảng bốn cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Trích nguyên văn bảng policy lưu trữ của yêu cầu khách; là nguồn của bốn field trên màn.
+Thành phần hiển thị: Tiêu đề khối dẫn TBL-ATTACH-01 và nêu rõ đây là nguồn của field số 3 · 4 · 11 · 12; bảng bốn cột ba hàng dữ liệu; một đoạn ghi chú về lý do màn tồn tại.
+Chức năng và logic: Chỉ đọc; nội dung là ràng buộc phạm vi áp lên bộ lọc và danh sách bên dưới.",,,,,,
+"3.1","img-007","Bảng policy lưu trữ","保管ポリシー表","Retention policy table","table","bảng bốn cột ba dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Cho thấy chính xác ba nhóm tài liệu mà yêu cầu khách chia; và nhóm nào thuộc phạm vi màn.
+Thành phần hiển thị: Bốn cột: loại tài liệu · thời gian lưu online · sau đó · trong phạm vi màn này; ba hàng dữ liệu cho nhóm bảy năm; nhóm ba năm và nhóm hồ sơ dự án.
+Chức năng và logic: Chỉ đọc. Cột cuối là phần khoanh phạm vi của chúng tôi chứ không phải nội dung của yêu cầu khách.",,,,,,
+"3.1.1","img-008","Hàng tiêu đề bảng policy",,"Retention table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên bốn cột của bảng policy lưu trữ.
+Thành phần hiển thị: Một hàng nền xám nhạt với bốn nhãn: Loại tài liệu · Thời gian lưu online · Sau đó · Trong phạm vi màn này.
+Chức năng và logic: Tĩnh.",,,,,,
+"3.1.2","img-009","Hàng nhóm lưu trữ bảy năm",,"Seven-year retention row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Nhóm thứ nhất của policy: chứng từ nghiệp vụ giữ online lâu nhất.
+Thành phần hiển thị: Bốn ô: phiếu tiếp nhận và phiếu giao dịch và bảng đối chiếu · bảy năm in đậm · theo policy lưu trữ của Chủ đầu tư · Có thuộc nhóm bảy năm.
+Chức năng và logic: Chỉ đọc. Hết bảy năm thì yêu cầu khách để ngỏ bước sau nên màn không tự quyết bước đó.",,,,,"CHƯA TỒN TẠI: bảng đính kèm đã có thật nhưng không có cột phân loại tài liệu nào; nên hiện không phân biệt được nhóm bảy năm với nhóm ba năm.","Ba loại tài liệu của nhóm này có phải là ba giá trị riêng biệt hay là một nhóm chung khi người dùng chọn?
+Hết bảy năm thì màn hiện trạng thái gì; yêu cầu khách chỉ nói theo policy của Chủ đầu tư."
+"3.1.3","img-010","Hàng nhóm lưu trữ ba năm",,"Three-year retention row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Nhóm thứ hai của policy; và là nhóm duy nhất có vòng đời chuyển tầng thật.
+Thành phần hiển thị: Bốn ô: hình ảnh và chứng từ phụ trợ về tranh chấp hoặc giao hàng · ba năm in đậm · tầng nguội in đậm kèm mốc phục hồi trong tối đa hai ngày làm việc · Có thuộc nhóm ba năm.
+Chức năng và logic: Chỉ đọc. Mốc tối đa hai ngày làm việc là con số của yêu cầu khách và là lý do tầng lưu trữ phải thấy được trên từng file.",,,,,"CHƯA TỒN TẠI: không có cột tầng lưu trữ và không có mốc chuyển tầng nào trên bảng đính kèm đã có.","Hai ngày làm việc tính theo lịch nào; lịch ngày nghiệp vụ của chợ hay lịch hành chính?
+Một file thuộc cả tranh chấp và giao hàng thì xếp nhóm nào?"
+"3.1.4","img-011","Hàng nhóm ngoài phạm vi màn",,"Out-of-scope retention row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Khoanh rõ nhóm thứ ba nằm ngoài phạm vi màn; để không ai mở rộng màn sang hồ sơ dự án.
+Thành phần hiển thị: Bốn ô: tài liệu diễn tập chuyển đổi và hồ sơ nghiệm thu · theo vòng đời dự án · theo phương châm lưu trữ của dự án · Không in đậm kèm lý do là hồ sơ dự án chứ không phải dữ liệu chạy trong hệ.
+Chức năng và logic: Chỉ đọc. Đây là quyết định khoanh phạm vi của chúng tôi và cần khách xác nhận.",,,,,,"Nhóm hồ sơ dự án có cần một chỗ quản lý trong hệ không; hay giữ ngoài hệ như đề xuất?"
+"3.2","img-012","Ghi chú lý do màn tồn tại",,"Why-this-screen note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Nêu hệ quả của việc không phân loại được tài liệu; đây là lý lẽ chính để dựng màn.
+Thành phần hiển thị: Một đoạn chữ nhỏ: hai tầng lưu trữ là lý do màn tồn tại vì không phân loại được thì không biết file nào thuộc nhóm nào; tức không thi hành được DR-RET-01; xếp sai nhóm là hoặc chuyển tầng nguội sớm bốn năm và mất bằng chứng không lấy lại được; hoặc giữ online quá hạn.
+Chức năng và logic: Tĩnh; là căn cứ ưu tiên; không phải mô tả giao diện.",,,,,,
+"4","img-013","Khối bộ lọc file đính kèm",,"Attachment filter block","others","khối bộ lọc sáu điều kiện và ba nút",,,,,,,,,"Mục đích và ngữ cảnh: Nơi người đối chiếu tìm chứng từ xuyên lô hàng và xuyên loại tài liệu.
+Thành phần hiển thị: Tiêu đề khối nêu phạm vi field số 1 tới số 6; hai hàng sáu điều kiện; ba nút hành động cuối khối.
+Chức năng và logic: Mọi điều kiện đều không bắt buộc. Nút thứ ba là một bộ lọc nhanh cho nhóm quá hạn online mà chưa chuyển tầng nguội.",,,,,,
+"4.1","img-014","Ô Ngày tải lên từ","アップロード日 開始","Upload date from","date_picker","ô chọn ngày kèm nhãn và dòng nhắc",,"date","false","YYYY-MM-DD",,,,"Điều kiện: phải nhỏ hơn hoặc bằng Ngày tải lên đến.
+Lỗi: ""Khoảng ngày không hợp lệ.""","Mục đích và ngữ cảnh: Mốc đầu của khoảng ngày tải lên; là trục thời gian tự nhiên nhất khi tìm một chứng từ đã nộp.
+Thành phần hiển thị: Nhãn Ngày tải lên từ; ô chọn ngày hiện mẫu YYYY-MM-DD; dòng nhắc ghi field số 1 với ràng buộc nhỏ hơn hoặc bằng đến ngày.
+Chức năng và logic: Lọc theo ngày tải lên chứ không theo ngày nghiệp vụ; vì chứng từ có thể nộp muộn hơn ngày phát sinh.","on_click",,"lot_attachment","created_at","Cột thời điểm tải lên đã tồn tại thật trên bảng đính kèm.","Chỉ nhập từ ngày mà bỏ trống đến ngày thì hiểu là mở đến hôm nay hay báo lỗi?
+Khoảng ngày có bị giới hạn độ dài tối đa để giữ ngưỡng thời gian phản hồi không?"
+"4.2","img-015","Ô Ngày tải lên đến","アップロード日 終了","Upload date to","date_picker","ô chọn ngày kèm nhãn và dòng nhắc",,"date","false","YYYY-MM-DD",,,,"Điều kiện: phải lớn hơn hoặc bằng Ngày tải lên từ.
+Lỗi: ""Khoảng ngày không hợp lệ.""","Mục đích và ngữ cảnh: Mốc cuối của khoảng ngày tải lên.
+Thành phần hiển thị: Nhãn Ngày tải lên đến; ô chọn ngày hiện mẫu YYYY-MM-DD; dòng nhắc ghi field số 2 với ràng buộc lớn hơn hoặc bằng từ ngày.
+Chức năng và logic: Khoảng ngày bao gồm cả hai đầu mút.","on_click",,"lot_attachment","created_at","Cùng cột với ô từ ngày; cột đã tồn tại thật.","Để trống đến ngày mà có từ ngày thì mặc định lấy tới đâu?"
+"4.3","img-016","Ô chọn Loại tài liệu","書類種別","Document type filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Field quan trọng nhất của màn: phân loại tài liệu là điều kiện để thi hành được policy lưu trữ.
+Thành phần hiển thị: Nhãn Loại tài liệu; ô chọn hiện Tất cả kèm mũi chỉ xuống; dòng nhắc ghi field số 3 với tập giá trị lấy từ cột thứ nhất của bảng policy; do người đặt; và nói rõ không phán định tự động theo DR-IMAGE-01.
+Chức năng và logic: Tập giá trị lấy từ bảng policy ở khối trên. Giá trị do người đặt và người xác nhận; không có đường suy tự động từ nội dung file.","on_click",,,,"CHƯA TỒN TẠI: bảng đính kèm đã có thật nhưng không có cột phân loại tài liệu nào; nên hiện không phân biệt được nhóm bảy năm với nhóm ba năm.","Tập giá trị loại tài liệu gồm những giá trị nào; yêu cầu khách chia ba nhóm nhưng không cho tập giá trị dữ liệu?
+Ai được đặt và đổi loại tài liệu của một file đã tải lên?
+Đổi loại tài liệu có làm đổi nhóm lưu trữ và hạn online của file đó không?
+Định dạng giá trị gửi lên là chuỗi tiếng Việt hiển thị hay một mã cố định; ảnh chỉ cho thấy dòng Tất cả."
+"4.4","img-017","Ô chọn Nhóm lưu trữ","保管グループ","Retention group filter","dropdown","ô chọn một giá trị dẫn xuất kèm nhãn và dòng nhắc",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Cho người dùng lọc thẳng theo nhóm bảy năm hay ba năm mà không phải nhớ loại tài liệu nào thuộc nhóm nào.
+Thành phần hiển thị: Nhãn Nhóm lưu trữ; ô chọn hiện Tất cả kèm hai giá trị bảy năm và ba năm; dòng nhắc ghi field số 4 là dẫn xuất từ field số 3 theo bảng policy và nói rõ không nhập tay để hai giá trị không lệch nhau.
+Chức năng và logic: Là giá trị dẫn xuất; không có ô nhập riêng ở phía ghi. Đây là cách chặn rủi ro hai nguồn chân lý giữa loại tài liệu và nhóm lưu trữ.","on_click",,,,"CHƯA TỒN TẠI: bảng đính kèm đã có thật nhưng không có cột phân loại tài liệu nào; nên hiện không phân biệt được nhóm bảy năm với nhóm ba năm. Nhóm lưu trữ là giá trị dẫn xuất từ loại tài liệu nên cũng chưa có nguồn.","Nhóm lưu trữ có bao giờ khác kết quả suy từ loại tài liệu không; nếu có thì lấy giá trị nào?
+Định dạng nhãn hai nhóm là bảy năm và ba năm; hay dùng mã nội bộ; ảnh cho thấy nhãn tiếng Việt."
+"4.5","img-018","Ô chọn Lô hàng","ロット","Lot filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false","LOT-NNNN theo mẫu hiển thị LOT-0001",,,,"Điều kiện: mã lô không tồn tại thì trả danh sách rỗng.
+Lỗi: không trả lỗi 4xx cho mã lô lạ.","Mục đích và ngữ cảnh: Đường tra khi người dùng đã biết chứng từ mình cần thuộc lô hàng nào.
+Thành phần hiển thị: Nhãn Lô hàng; ô chọn hiện mẫu LOT-0001 kèm mũi chỉ xuống; dòng nhắc ghi field số 5 và nói rõ mã không tồn tại thì trả danh sách rỗng.
+Chức năng và logic: Mã lô lạ trả rỗng chứ không báo lỗi; cùng nguyên tắc với các ô tra mã khác của hệ.","on_click",,"lot_attachment","lot_id","Cột khoá ngoại tới lô hàng đã tồn tại thật. Sắc thái: mọi chứng từ hiện đều buộc phải gắn một lô hàng; nên chứng từ không thuộc lô nào thì chưa có chỗ lưu.","Chứng từ không gắn lô hàng nào — ví dụ bảng đối chiếu ngày — thì màn này quản thế nào?
+Danh sách chọn lô hàng lấy toàn bộ lô hay chỉ lô có chứng từ?"
+"4.6","img-019","Ô chọn Người tải lên","アップロード者","Uploader filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,,,"Mục đích và ngữ cảnh: Tiêu chí phụ; dùng khi cần truy lại ai đã nộp một chứng từ.
+Thành phần hiển thị: Nhãn Người tải lên; ô chọn hiện Chọn kèm mũi chỉ xuống; dòng nhắc ghi field số 6 với ràng buộc hiện tên hiển thị và không hiện thư điện tử theo mục bảo vệ thông tin cá nhân; và rỗng thì hiện chữ không rõ chứ không ẩn dòng.
+Chức năng và logic: Không hiện thư điện tử là ràng buộc bảo mật áp cho toàn màn. Người tải lên rỗng vẫn hiện dòng vì file vẫn là bằng chứng.","on_click",,"lot_attachment","uploaded_by","Cột đã tồn tại thật và trỏ tới bảng người dùng nội bộ; chỉ lấy tên hiển thị. Cột cho phép rỗng nên phía đọc phải chịu được ca rỗng.","Danh sách chọn có bao gồm tài khoản đã bị vô hiệu không?
+Định dạng nhãn hiển thị một người tải lên là gì; ảnh chỉ cho thấy dòng mặc định."
+"4.7","img-020","Nút Tra cứu","照会","Search button","button","nút hành động chính cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Kích hoạt tra cứu; là hành động duy nhất làm đổi nội dung khối danh sách.
+Thành phần hiển thị: Nút chữ Tra cứu ở đầu hàng nút cuối khối bộ lọc.
+Chức năng và logic: Không đổi dữ liệu; chỉ đọc. Trong lúc tra cứu thì khối danh sách vào trạng thái đang tải.","on_click","Nạp lại khối danh sách theo các điều kiện đang đặt; ở lại cùng màn.",,,,"Bấm Tra cứu khi chưa đặt điều kiện nào thì trả toàn bộ hay yêu cầu tối thiểu một điều kiện?
+Điều kiện tra cứu có được giữ lại trên đường dẫn để chia sẻ lại kết quả không; nếu có thì có rủi ro gì với dữ liệu nhạy?"
+"4.8","img-021","Nút Xoá điều kiện","条件クリア","Clear filter button","button","nút phụ cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng bắt đầu lại một câu hỏi mới mà không phải sửa từng ô.
+Thành phần hiển thị: Nút chữ Xoá điều kiện cạnh nút Tra cứu; kiểu nút phụ.
+Chức năng và logic: Đặt các ô ngày về rỗng và các ô chọn về giá trị Tất cả.","on_click","Trả mọi điều kiện về giá trị mặc định.",,,,"Xoá điều kiện có tự tra cứu lại ngay hay chỉ xoá rồi chờ người dùng bấm Tra cứu?"
+"4.9","img-022","Nút Chỉ hiện quá hạn online mà chưa chuyển tầng nguội","オンライン期限切れのみ表示","Overdue-only filter button","button","nút lọc nhanh cuối khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường vào công việc thật của policy lưu trữ: gom đúng những file đang vi phạm hạn online.
+Thành phần hiển thị: Nút chữ Chỉ hiện quá hạn online mà chưa chuyển cold ở cuối hàng nút; kiểu nút phụ.
+Chức năng và logic: Là một bộ lọc dựng sẵn chứ không phải một hành động ghi. Không hiện được nhóm này thì policy lưu trữ chỉ là chữ trên giấy.","on_click","Đặt bộ lọc về đúng nhóm file đã quá hạn online mà chưa được đánh dấu chuyển tầng nguội.",,,"CHƯA TỒN TẠI: không có cột tầng lưu trữ và không có mốc chuyển tầng nào trên bảng đính kèm đã có. Điều kiện lọc này cần cả hạn online dẫn xuất và tầng lưu trữ; nên hiện chưa có nguồn.","Nút này là bộ lọc bật tắt hay một chế độ xem riêng?
+Bật nút này có bỏ qua các điều kiện đang đặt hay cộng thêm vào chúng?"
+"5","img-023","Khối danh sách file đính kèm",,"Attachment list block","others","khối bảng mười cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Nơi trả lời câu hỏi của người đối chiếu; khối chạm dữ liệu nhạy nên chỉ vẽ khung và nhãn.
+Thành phần hiển thị: Tiêu đề khối nêu phạm vi field số 7 tới số 13 và nói rõ chỉ vẽ khung và nhãn; bảng mười cột với ba hàng mẫu ở ba trạng thái vòng đời khác nhau; một đoạn ghi chú.
+Chức năng và logic: Danh sách chỉ đọc với ba hành động theo hàng tuỳ trạng thái. Phải phân trang từ đầu vì số file tăng theo số lô nhân số chứng từ mỗi lô.",,,,,,
+"5.1","img-024","Bảng danh sách file","添付ファイル一覧","Attachment list table","table","bảng mười cột chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Trình bày từng file trên một hàng; đủ để người đối chiếu biết trước file mở được ngay hay phải chờ phục hồi.
+Thành phần hiển thị: Mười cột: tên file · loại tài liệu · nhóm lưu trữ · loại MIME · dung lượng · ngày tải lên · hết hạn lưu online · tầng lưu trữ · thời gian truy xuất · ô hành động; ba hàng mẫu chỉ chứa nhãn dạng.
+Chức năng và logic: Bảng cố ý KHÔNG có cột nào cho đường dẫn lưu trữ của file. Cột hết hạn lưu online là giá trị dẫn xuất từ ngày tải lên cộng hạn của nhóm lưu trữ.",,,"lot_attachment","file_name; mime_type; file_size; created_at; lot_id; uploaded_by","Sáu cột này đã tồn tại thật trên bảng đính kèm; dung lượng có ràng buộc lớn hơn 0. Bảng cũng có một cột đường dẫn lưu trữ; nhưng cột đó CỐ Ý không ánh xạ ra bất kỳ cột giao diện nào và không ra bất kỳ bản xuất nào. Bốn cột loại tài liệu · nhóm lưu trữ · hết hạn online · tầng lưu trữ thì CHƯA TỒN TẠI.","Bảng phân trang bao nhiêu dòng một trang và có trần kết quả không?
+Có cho đổi cách sắp xếp theo cột không; nếu có thì cột nào?
+Định dạng hiển thị dung lượng là byte thuần hay quy đổi sang đơn vị đọc được?"
+"5.1.1","img-025","Hàng tiêu đề bảng danh sách",,"List table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên mười cột của bảng danh sách.
+Thành phần hiển thị: Một hàng nền xám nhạt với chín nhãn cột và một ô cuối để trống dành cho các nút hành động.
+Chức năng và logic: Tĩnh. Không có nhãn nào cho đường dẫn lưu trữ của file — đây là chủ đích; không phải thiếu sót.",,,,,,
+"5.1.2","img-026","Hàng file nhóm bảy năm còn online",,"Seven-year online file row","others","hàng dữ liệu bảng",,,,"YYYY-MM-DD hh:mm",,,,,"Mục đích và ngữ cảnh: Ca thông thường: một chứng từ nghiệp vụ còn trong hạn online nên mở được ngay.
+Thành phần hiển thị: Chín ô mang nhãn dạng: tên file · loại tài liệu phiếu tiếp nhận · nhóm lưu trữ bảy năm · loại MIME · dung lượng theo byte · ngày tải lên dạng YYYY-MM-DD hh:mm · hết hạn lưu online dạng YYYY-MM-DD kèm chú thích dẫn xuất · thẻ online · thời gian truy xuất là ngay; ô cuối có nút xem file.
+Chức năng và logic: Thời gian truy xuất bằng ngay là hệ quả của tầng online. Hết hạn lưu online là giá trị dẫn xuất chứ không nhập tay.",,,"lot_attachment","file_name; mime_type; file_size; created_at","Bốn cột này đã tồn tại thật. Ba ô loại tài liệu · nhóm lưu trữ · hết hạn online và ô tầng lưu trữ thì CHƯA TỒN TẠI.","Tên file dài quá thì cắt bớt hay xuống dòng?
+Hết hạn lưu online của nhóm bảy năm hiện thế nào khi ngày đó còn rất xa?"
+"5.1.3","img-027","Nút Xem file","ファイルを見る","View file button","button","nút phụ trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường duy nhất đọc nội dung file; chỉ hiện cho file đang ở tầng online.
+Thành phần hiển thị: Nút chữ Xem file ở ô hành động cuối hàng; kiểu nút phụ.
+Chức năng và logic: Mọi đường xem file đi qua một đường dẫn có chữ ký do máy chủ sinh; thời hạn ngắn; kho lưu riêng tư. Một đường dẫn hỏng không làm sập cả trang: dòng vẫn hiện tên và loại và dung lượng và ngày; chỉ mất liên kết.","on_click","Mở file qua một đường dẫn có chữ ký do máy chủ sinh với thời hạn ngắn.","lot_attachment",,"Bảng đính kèm đã tồn tại và đường đọc lại bằng đường dẫn có chữ ký thời hạn ngắn đã chạy thật. Cột đường dẫn lưu trữ chỉ dùng ở phía máy chủ để sinh đường dẫn có chữ ký; không bao giờ ra giao diện.","Thời hạn của đường dẫn có chữ ký là bao nhiêu; và có được nới ra so với giá trị đang dùng ở màn chi tiết lô hàng không?
+Có ghi vết mỗi lần mở file không; nếu ghi thì mỗi lần dựng danh sách sinh bao nhiêu dòng?
+Phân biệt chưa sinh được liên kết với file không còn tồn tại bằng thông báo nào?"
+"5.1.4","img-028","Hàng file nhóm ba năm quá hạn online chưa chuyển tầng",,"Overdue three-year file row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Ca vi phạm policy: file nhóm ba năm đã hết hạn online mà chưa ai đánh dấu chuyển tầng nguội.
+Thành phần hiển thị: Chín ô: tên file · loại tài liệu ảnh ngoại lệ giao hàng · nhóm lưu trữ ba năm · loại MIME · dung lượng · ngày tải lên · hết hạn lưu online kèm một thẻ riêng quá hạn và chưa chuyển · thẻ online · thời gian truy xuất là ngay; ô cuối có nút đánh dấu chuyển tầng nguội.
+Chức năng và logic: Thẻ quá hạn và chưa chuyển là một trạng thái riêng; không gộp vào tầng lưu trữ. Nhóm này gom được thành một danh sách bằng nút lọc nhanh ở khối bộ lọc.",,,,,"CHƯA TỒN TẠI: không có cột tầng lưu trữ và không có mốc chuyển tầng nào trên bảng đính kèm đã có. Trạng thái quá hạn cần cả hạn online dẫn xuất và tầng lưu trữ nên hiện chưa có nguồn.","Ai chịu trách nhiệm đánh dấu chuyển tầng nguội; và có cần một quy trình nhắc tự động không?
+File quá hạn mà chưa chuyển thì có bị chặn xem không; hay vẫn mở được như bình thường?"
+"5.1.5","img-029","Nút Đánh dấu chuyển tầng nguội","コールドへ移行","Mark move to cold button","button","nút hành động chính trong hàng","text_only",,,,,,,"Điều kiện: chỉ bấm được khi file đã được phân loại.
+Lỗi: ""File chưa phân loại nên chưa suy được nhóm lưu trữ.""
+Điều kiện: chỉ bấm được khi file đã quá hạn online.
+Lỗi: ""File còn trong hạn lưu online.""","Mục đích và ngữ cảnh: Hành động ghi duy nhất của vòng đời lưu trữ; và là lý do duy nhất cần một đường ghi hẹp trên bảng đính kèm.
+Thành phần hiển thị: Nút chữ Đánh dấu chuyển cold ở ô hành động của hàng quá hạn; kiểu nút hành động chính.
+Chức năng và logic: Không xoá file: chứng từ là bằng chứng nghiệp vụ nên hết hạn online thì chuyển tầng lưu trữ chứ không xoá. Lỗi ghi thì báo trên đúng dòng và không đổi trạng thái.","on_click","Ghi tầng lưu trữ của file thành tầng nguội cùng thời điểm chuyển; dòng đó vào trạng thái chờ trong lúc ghi.",,,"CHƯA TỒN TẠI: không có cột tầng lưu trữ và không có mốc chuyển tầng nào trên bảng đính kèm đã có. Bảng đính kèm hiện là bảng chỉ-thêm tuyệt đối nên hành động này cần một đường ghi hẹp đúng hai cột; cố ý hẹp chứ không mở đường ghi chung.","Hành động này chạy tay từng file hay có đường chạy theo lô?
+Có cần bước xác nhận trước khi chuyển tầng không; chuyển rồi thì thời gian truy xuất tăng lên tối đa hai ngày làm việc.
+Có ghi vết cho hành động này không; và có bắt ghi lý do không?"
+"5.1.6","img-030","Hàng file đã ở tầng nguội",,"Cold-tier file row","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Ca sau khi chuyển tầng: file vẫn còn nhưng không mở ngay được nữa.
+Thành phần hiển thị: Chín ô: tên file · loại tài liệu ảnh chứng từ tranh chấp · nhóm lưu trữ ba năm · loại MIME · dung lượng · ngày tải lên · hết hạn lưu online · thẻ cold · thời gian truy xuất là tối đa hai ngày làm việc in đậm; ô cuối có nút yêu cầu phục hồi.
+Chức năng và logic: Không còn liên kết xem trực tiếp. Thời gian truy xuất tối đa hai ngày làm việc là con số của yêu cầu khách nên phải hiện trước khi người dùng bấm; không phải sau.",,,,,"CHƯA TỒN TẠI: không có cột tầng lưu trữ và không có mốc chuyển tầng nào trên bảng đính kèm đã có.","File ở tầng nguội có còn hiện dung lượng và loại MIME đầy đủ không?
+Hết cả hạn ba năm và đã ở tầng nguội thì màn hiện trạng thái gì?"
+"5.1.7","img-031","Nút Yêu cầu phục hồi","復元を依頼","Request restore button","button","nút phụ trong hàng","text_only",,,,,,,"Điều kiện: không cho yêu cầu trùng khi đã có một yêu cầu đang chờ.
+Lỗi: ""Đã có yêu cầu phục hồi đang chờ cho file này.""","Mục đích và ngữ cảnh: Đường duy nhất lấy lại một file đã chuyển tầng nguội; và là chỗ mốc hai ngày làm việc trở thành cam kết với người dùng.
+Thành phần hiển thị: Nút chữ Yêu cầu phục hồi ở ô hành động của hàng đã ở tầng nguội; kiểu nút phụ.
+Chức năng và logic: Đã yêu cầu rồi thì hiện thời điểm yêu cầu và hạn dự kiến; không cho yêu cầu trùng. Mốc hạn dự kiến tính theo tối đa hai ngày làm việc của yêu cầu khách.","on_click","Tạo một yêu cầu phục hồi cho file đó và hiện thời điểm yêu cầu cùng hạn dự kiến.",,,"CHƯA TỒN TẠI: thiết kế đòi một chỗ ghi yêu cầu phục hồi kèm thời điểm yêu cầu và hạn dự kiến; nhưng bảng đính kèm đã có không có cột nào cho việc này và cũng chưa có tầng lưu trữ nguội.","Hai ngày làm việc tính theo lịch nào và mốc bắt đầu là thời điểm yêu cầu hay đầu ngày làm việc kế tiếp?
+Phục hồi xong thì file trở lại tầng online vĩnh viễn hay chỉ trong một khoảng thời gian?
+Ai được yêu cầu phục hồi; và có thông báo cho người yêu cầu khi file đã sẵn sàng không?"
+"5.2","img-032","Ghi chú tầng lưu trữ và các field dẫn xuất",,"Storage tier and derived field note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Giải thích vì sao tầng lưu trữ phải là một cột thấy được; và chốt cách tính hai field dẫn xuất.
+Thành phần hiển thị: Một đoạn chữ nhỏ: tầng lưu trữ là thuộc tính thấy được của file chứ không phải chi tiết hạ tầng vì nó đổi hẳn thời gian truy xuất từ mở ngay sang tối đa hai ngày làm việc; và người đối chiếu cần biết trước khi bấm chứ không sau; field số 11 hết hạn online dẫn xuất từ ngày tải lên cộng hạn của nhóm lưu trữ; field số 9 dung lượng theo byte và phải lớn hơn 0; field số 13 mọi đường xem file đi qua đường dẫn có chữ ký do máy chủ sinh với thời hạn ngắn.
+Chức năng và logic: Tĩnh; là bảng kiểm cho phần dựng bảng danh sách.",,,,,,
+"6","img-033","Khối ba quy tắc cứng về đường dẫn file",,"Hard rules on file path block","others","khối ba thẻ quy tắc",,,,,,,,,"Mục đích và ngữ cảnh: Gom ba ràng buộc bảo mật không thương lượng của màn vào một chỗ; để phần dựng không phải suy đoán.
+Thành phần hiển thị: Tiêu đề khối nêu ba quy tắc cứng và ghi rõ không thương lượng; ba thẻ; mỗi thẻ một quy tắc kèm lý do.
+Chức năng và logic: Chỉ đọc; là ràng buộc thiết kế; không phải khuyến nghị.",,,,,,
+"6.1","img-034","Thẻ quy tắc đường dẫn không bao giờ ra ngoài",,"Rule card path never exposed","label","thẻ quy tắc",,,,,,,,,"Mục đích và ngữ cảnh: Quy tắc thứ nhất và là quy tắc chặt nhất: đường dẫn lưu trữ của file không ra khỏi phía máy chủ.
+Thành phần hiển thị: Thẻ có tiêu đề đánh số một và tên Đường dẫn không bao giờ ra ngoài; mô tả nói rõ đường dẫn không bao giờ hiện lên giao diện và không bao giờ ra bản xuất; đây là quy tắc đã áp ở một báo cáo và giữ y nguyên; và bảng danh sách cố ý không có cột nào cho nó.
+Chức năng và logic: Hệ quả kiểm được: không cột giao diện nào và không bản xuất nào mang đường dẫn lưu trữ.",,,"lot_attachment",,"Bảng đính kèm có một cột đường dẫn lưu trữ và cột đó đang được giữ đúng: không phơi ra giao diện; và đã bị loại khỏi bản xuất của báo cáo liên quan. Quy tắc này giữ nguyên.","Quy tắc này có áp cho cả bản ghi vết không; tức đường dẫn có được phép xuất hiện trong nội dung trước sau của một dòng vết không?"
+"6.2","img-035","Thẻ quy tắc mọi đường xem đi qua liên kết có chữ ký",,"Rule card signed URL only","label","thẻ quy tắc",,,,,,,,,"Mục đích và ngữ cảnh: Quy tắc thứ hai: không có đường đọc file nào khác ngoài liên kết có chữ ký do máy chủ sinh.
+Thành phần hiển thị: Thẻ có tiêu đề đánh số hai và tên Mọi đường xem file đi qua signed URL; mô tả nói rõ máy chủ sinh; thời hạn ngắn; kho lưu riêng tư; và thời hạn ngắn là biện pháp duy nhất đang có chống chia sẻ lại liên kết nên không nới cho tiện.
+Chức năng và logic: Hệ quả: kho lưu phải giữ ở chế độ riêng tư và không có đường công khai nào.",,,,,"Đường đọc lại bằng liên kết có chữ ký thời hạn ngắn trên kho lưu riêng tư đã chạy thật; quy tắc này là giữ nguyên hiện trạng chứ không phải yêu cầu mới.","Thời hạn của liên kết là bao nhiêu và có cần khác nhau giữa file nhóm bảy năm và nhóm ba năm không?
+Người dùng mở file trên thiết bị hiện trường có cần thời hạn dài hơn không; nếu có thì bù bằng biện pháp nào?"
+"6.3","img-036","Thẻ quy tắc một liên kết hỏng không làm sập trang",,"Rule card graceful link failure","label","thẻ quy tắc",,,,,,,,,"Mục đích và ngữ cảnh: Quy tắc thứ ba; về độ bền của giao diện: mất liên kết không được làm mất cả danh sách.
+Thành phần hiển thị: Thẻ có tiêu đề đánh số ba và tên Một link hỏng không làm sập cả trang; mô tả nói rõ dòng vẫn hiện tên và loại và dung lượng và ngày; chỉ mất liên kết; và phải phân biệt chưa sinh được liên kết với file không còn tồn tại.
+Chức năng và logic: Hai ca đó dẫn tới hai hành động khác nhau nên không được hiện giống nhau.",,,,,,"Chưa sinh được liên kết thì hiện thông báo gì và có nút thử lại riêng cho dòng đó không?
+File không còn tồn tại trong kho lưu thì dòng đó hiện trạng thái gì; và có gom được thành danh sách file mồ côi không?"
+"7","img-037","Khối trạng thái màn",,"Screen state block","others","khối chín thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê mọi trạng thái màn phải xử lý; trong đó bốn thẻ là trạng thái riêng của vòng đời lưu trữ.
+Thành phần hiển thị: Tiêu đề khối; chín thẻ xếp thành ba hàng; mỗi thẻ có một tiêu đề nhỏ và một đoạn mô tả.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"7.1","img-038","Thẻ trạng thái Rỗng",,"State card empty","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Kết quả rỗng là câu trả lời hợp lệ; không phải lỗi.
+Thành phần hiển thị: Thẻ có tiêu đề Rỗng và câu hiển thị không có file đính kèm nào khớp điều kiện.
+Chức năng và logic: Bộ lọc vẫn dùng được để đổi điều kiện.",,,,,,
+"7.2","img-039","Thẻ trạng thái Đang tải và lỗi tải",,"State card loading and error","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Gộp hai trạng thái đọc vào một thẻ vì cùng một hành vi giao diện.
+Thành phần hiển thị: Thẻ có tiêu đề Đang tải và lỗi tải; mô tả skeleton bảng; và lỗi thì hiện khối lỗi kèm nút thử lại.
+Chức năng và logic: Lỗi tải không rơi về danh sách rỗng — hai cái này dẫn tới hai hành động khác nhau.",,,,,,
+"7.3","img-040","Thẻ trạng thái Không có quyền",,"State card forbidden","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai mức chặn của màn; đây là màn chạm dữ liệu nhạy nên chặn ở mức vào trang.
+Thành phần hiển thị: Thẻ có tiêu đề Không có quyền và mô tả vai trò không được vào thì nhận trang không tìm thấy chứ không phải lỗi từ chối quyền.
+Chức năng và logic: Chặn vào trang trả trang không tìm thấy là có chủ đích; không lộ sự tồn tại của tài nguyên.",,,,,,
+"7.4","img-041","Thẻ trạng thái Đang gửi và gửi lỗi",,"State card submitting and failed","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái của hai hành động vòng đời trên từng hàng.
+Thành phần hiển thị: Thẻ có tiêu đề Đang gửi và gửi lỗi; mô tả bấm hành động vòng đời thì dòng đó vào trạng thái chờ; lỗi báo trên đúng dòng và không đổi trạng thái.
+Chức năng và logic: Là trạng thái của một hàng chứ không của cả bảng; các hàng khác vẫn dùng được.",,,,,,
+"7.5","img-042","Thẻ trạng thái Chưa phân loại",,"State card unclassified","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Ca chặn quan trọng nhất: chưa phân loại thì không suy được nhóm lưu trữ nên không tính được hạn.
+Thành phần hiển thị: Thẻ có tiêu đề Chưa phân loại; mô tả loại tài liệu rỗng thì không suy ra nhóm lưu trữ và không tính hạn; hiện nhãn cần phân loại và chặn hành động vòng đời.
+Chức năng và logic: Chặn hành động vòng đời là bắt buộc: đánh dấu chuyển tầng cho một file chưa biết thuộc nhóm nào là đúng cách xếp sai nhóm.",,,,,,
+"7.6","img-043","Thẻ trạng thái Quá hạn online chưa chuyển tầng nguội",,"State card overdue online","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Trạng thái là thước đo policy lưu trữ có được thi hành hay không.
+Thành phần hiển thị: Thẻ có tiêu đề Quá hạn online và chưa chuyển cold; mô tả nhóm ba năm đã hết hạn mà chưa ai đánh dấu thì hiện nhãn riêng và gom được thành danh sách; và nói rõ không hiện được nhóm này thì DR-RET-01 chỉ là chữ trên giấy.
+Chức năng và logic: Gom thành danh sách là điều kiện để có người xử lý; không có danh sách thì không ai biết còn bao nhiêu file quá hạn.",,,,,,
+"7.7","img-044","Thẻ trạng thái Đã chuyển tầng nguội và đang chờ phục hồi",,"State card cold and restoring","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Hai trạng thái sau khi chuyển tầng; nơi mốc hai ngày làm việc thành cam kết thấy được.
+Thành phần hiển thị: Thẻ có tiêu đề Đã chuyển cold và đang chờ phục hồi; mô tả không còn liên kết xem trực tiếp và chỉ còn yêu cầu phục hồi kèm mốc tối đa hai ngày làm việc; đã yêu cầu rồi thì hiện thời điểm yêu cầu và hạn dự kiến và không cho yêu cầu trùng.
+Chức năng và logic: Chặn yêu cầu trùng là cần thiết vì mỗi yêu cầu phục hồi là một chi phí thật ở tầng lưu trữ.",,,,,,
+"7.8","img-045","Thẻ trạng thái Link hết hạn",,"State card link expired","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Hệ quả trực tiếp của quy tắc thời hạn ngắn: liên kết sẽ hết hạn trong lúc người dùng còn ở trên trang.
+Thành phần hiển thị: Thẻ có tiêu đề Link hết hạn; mô tả quá thời hạn hoặc sinh lỗi thì dòng vẫn hiện và liên kết thay bằng nút tạo lại link.
+Chức năng và logic: Tạo lại liên kết là hành động chỉ đọc; không đổi dữ liệu của file.",,,,,,
+"7.9","img-046","Thẻ trạng thái Không có read-only vì lock",,"State card no lock read-only","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Đóng lại một giả định dễ sai; kèm lý do nghiệp vụ thật.
+Thành phần hiển thị: Thẻ có tiêu đề Không có read-only vì lock; mô tả đính kèm được miễn khoá ngày có chủ đích vì một lô nhận vào ngày đã lock vẫn bán ngày sau; nên không bao giờ trả mã lỗi khoá ngày.
+Chức năng và logic: Vì vậy màn không có trạng thái chỉ đọc theo ngày.",,,,,,
+"8","img-047","Khối đối chiếu thiết kế và prototype",,"Design vs prototype block","others","khối bảng ba cột",,,,,,,,,"Mục đích và ngữ cảnh: Tách rõ phần đã chạy thật khỏi phần còn thiếu; đây là màn có nhiều hạng mục đã đủ nhất trong nhóm.
+Thành phần hiển thị: Tiêu đề khối viết hoa; bảng ba cột mười hàng dữ liệu với cột cuối phân mức.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"8.1","img-048","Bảng đối chiếu thiết kế và prototype","設計と実装の差分","Design gap table","table","bảng ba cột mười dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Liệt từng hạng mục kèm mức; ba hàng đầu ở mức đã đủ và đó là điểm khác biệt lớn nhất so với các màn khác của nhóm.
+Thành phần hiển thị: Ba cột: thiết kế đòi · prototype làm · mức; mười hàng gồm upload và lưu trữ và đọc lại · quy tắc đường dẫn · không phán định tự động · màn quản lý xuyên lô · phân loại tài liệu · tầng lưu trữ · chuyển tầng và phục hồi · hành động vòng đời · phạm vi policy · kiểm soát truy cập.
+Chức năng và logic: Cột mức có bốn nhãn: đã đủ · chưa có · một phần · xung đột.",,,,,,
+"8.1.1","img-049","Hàng tiêu đề bảng đối chiếu",,"Gap table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột của bảng đối chiếu.
+Thành phần hiển thị: Một hàng nền xám nhạt với ba nhãn: Thiết kế đòi · Prototype làm · Mức.
+Chức năng và logic: Tĩnh.",,,,,,
+"8.1.2","img-050","Hàng một hạng mục đối chiếu — đại diện",,"Gap row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng là một hạng mục; mười hàng có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Ba ô: mô tả điều thiết kế đòi · mô tả hiện trạng · thẻ mức; hàng đại diện đang hiện hạng mục upload và lưu trữ và đọc lại chứng từ với mức đã đủ.
+Chức năng và logic: Chỉ đọc. Thẻ mức ở ô cuối lấy một trong bốn giá trị đã đủ · chưa có · một phần · xung đột.",,,,,,
+"9","img-051","Chân ghi chú phân quyền; đánh đổi và giả định",,"Permission tradeoff and assumption footer","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Gom năm thứ phải đọc trước khi dựng: phân quyền; đánh đổi cần quyết định kiến trúc; quyết định không xoá file; sáu giả định và ba ghi chú thi hành.
+Thành phần hiển thị: Năm đoạn chữ nhỏ: đoạn phân quyền đề xuất hai vai trò và nói rõ vai trò tiếp nhận không vào được vì đó là vai ghi đính kèm chứ không phải vai quản lý lưu trữ; đoạn đánh đổi về kiểm soát truy cập chứng từ; chung một quyết định kiến trúc với màn tra cứu vết; đoạn giải thích vì sao không đề xuất xoá file; đoạn sáu giả định cần chốt; đoạn ghi chú về phân trang; đối chiếu kho lưu với cơ sở dữ liệu và ranh giới vẽ khung.
+Chức năng và logic: Tĩnh. Sáu giả định gồm: tập giá trị loại tài liệu; màn quản một kho hay hai kho; ai được duyệt toàn bộ chứng từ và có siết đọc hay không; có ghi vết cho hành vi mở hoặc tạo lại liên kết hay không; thời hạn của liên kết có chữ ký; hai ngày làm việc theo lịch nào.",,,,,,

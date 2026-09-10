@@ -1,0 +1,150 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối tiêu đề màn","画面ヘッダー","Screen header block","others","screen_header",,,,,,,,,"Mục đích và ngữ cảnh: dải đầu trang định vị người đọc — màn nào; thoả tính năng nào; ai là actor
+Thành phần hiển thị: một tiêu đề màn; một dòng meta truy vết yêu cầu; và một thẻ trạng thái thi công
+Chức năng và logic: chỉ hiển thị — không có tương tác và không có trường nhập",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","page_title",,,,,,,,,"Mục đích và ngữ cảnh: tên màn đặt ngay đầu trang
+Thành phần hiển thị: một dòng chữ đậm gồm mã màn SC-04 và tên màn tiếng Việt
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"1.2","img-003","Dòng meta truy vết yêu cầu","要件トレース情報","Requirement trace meta line","label","screen_meta",,,,,,,,,"Mục đích và ngữ cảnh: chuỗi truy vết của màn theo Feature List — màn này và SC-03 cùng thoả một FE-003 nhưng chia nhau hai nửa của FR-IAM-02
+Thành phần hiển thị: mã FE-003; nhóm FN-01; ưu tiên P0; yêu cầu khách FR-IAM-02; loại màn Detail; và actor là quản trị hệ thống
+Chức năng và logic: văn bản tĩnh — các mã không phải liên kết điều hướng",,,,,,
+"1.3","img-004","Thẻ trạng thái thi công",,"Build status tag","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: cho biết màn này chưa có bản thi công để đối chiếu
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với chữ ""Chưa thi công""
+Chức năng và logic: nhãn tĩnh — không tương tác",,,,,,
+"2","img-005","Khối chú dẫn ràng buộc hiển thị before/after","before/after表示要件の注記","Before/after display constraint note","label","scope_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ràng buộc cứng của màn — before/after là yêu cầu HIỂN THỊ nên khối lịch sử không được cắt
+Thành phần hiển thị: một khối chú dẫn nền vàng gồm nguyên văn nghiệm thu FR-IAM-02 (RFP:628); nhắc lại ràng buộc từ Screen List; và câu nói rõ đây là màn bảo mật nên chỉ vẽ khung và nhãn
+Chức năng và logic: khối 2 là phần không được cắt của màn này; cắt nó đi là màn không thoả nghiệm thu dù dữ liệu có được lưu đầy đủ",,,,,,"- Ràng buộc ""bắt buộc hiển thị before/after"" có áp cho cả người kiểm ngoài quản trị hệ thống không? Nếu bộ phận kiểm toán nội bộ phải xem được thì diện đọc màn này rộng hơn diện ghi."
+"3","img-006","Khối thông tin tài khoản và thay đổi quyền","アカウント情報と権限変更ブロック","Account info and permission change block","others","form_section",,,,,,,,,"Mục đích và ngữ cảnh: xem một tài khoản nội bộ ở mức chi tiết; và thực hiện thay đổi quyền cho tài khoản đó
+Thành phần hiển thị: một nhãn khối; năm trường bên trái gồm cả ô lý do; ba trường chỉ đọc và ba nút bên phải
+Chức năng và logic: mỗi lần thay đổi quyền sinh một dòng lịch sử ở khối 2; đọc giá trị cũ trước khi ghi để dòng lịch sử có đủ cặp trước và sau",,,"app_user",,"Thực thể tài khoản người dùng nội bộ của miền D-PARTY (RFP:602); bảng đã tồn tại thật và phủ được sáu trong tám trường của khối.",
+"3.1","img-007","Tiêu đề khối thông tin tài khoản",,"Account info block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm hai việc khối này làm
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối và tên khối
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"3.2","img-008","Trường Định danh người dùng nội bộ (chỉ đọc)","内部利用者ID","Internal user identifier (read-only)","label","readonly_field",,,,,,,,,"Mục đích và ngữ cảnh: cho quản trị biết đang xem tài khoản nào — khoá nhận dạng của cả màn
+Thành phần hiển thị: nhãn; một vùng chỉ đọc mang định danh; và một dòng chú thích giải thích vì sao không cho đổi ở đây
+Chức năng và logic: chỉ đọc có chủ đích: đổi định danh là đổi danh tính chứ không phải đổi quyền; để ở đây thì lịch sử quyền lẫn với lịch sử đổi danh tính",,,"app_user","email","Cột định danh của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật với ràng buộc duy nhất. Là thông tin cá nhân theo RFP §09-06 (RFP:883).","- Có luồng đổi định danh nội bộ không; và nếu có thì màn nào? Thiết kế đóng cửa ở đây nhưng không chỉ ra cửa khác.
+- Định danh hiện đầy đủ trên màn chi tiết — có che một phần không? Đây là thông tin cá nhân theo RFP §09-06 (RFP:883)."
+"3.3","img-009","Trường Tên hiển thị","表示名","Display name input","text_form","text_input",,"string","false",,,,"Nhân viên B","Điều kiện: không bắt buộc — nhãn không có dấu sao.
+Điều kiện: bỏ khoảng trắng đầu và cuối trước khi ghi.
+Điều kiện: sửa tên hiển thị KHÔNG sinh dòng lịch sử quyền — chỉ vào vết thao tác chung theo FR-AUDIT-01 (RFP:710).
+Điều kiện: độ dài tối đa là giả định cần chốt — RFP không khai.","Mục đích và ngữ cảnh: tên người đọc được của tài khoản; dùng ở cột chủ thể của mọi bảng lịch sử trong hệ thống
+Thành phần hiển thị: nhãn không dấu sao; một ô nhập chữ mang giá trị hiện tại; và một dòng chú thích tách rõ đây không phải thay đổi quyền
+Chức năng và logic: sửa trường này đi vào vết thao tác chung chứ không vào lịch sử quyền — gộp hai loại vết làm bảng lịch sử quyền loãng và mất ý nghĩa kiểm toán",,,"app_user","display_name","Cột tên hiển thị của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật và cho phép rỗng.","- Độ dài tối đa của tên hiển thị là bao nhiêu? RFP không khai nên cột định dạng để trống; nhưng không chặn thì cột chủ thể của các bảng lịch sử bị kéo dài vô hạn.
+- Tên hiển thị có bắt buộc duy nhất không? Nếu không thì hai người cùng tên làm cột chủ thể của lịch sử quyền khó đọc."
+"3.4","img-010","Trường Vai trò","ロール","Role selector","dropdown","select_single",,"string","true","một trong 7 vai trò nội bộ",,,"ROLE-INTAKE","Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: tập giá trị đúng 7 vai trò nội bộ của TBL-ROLE-01 (RFP:245); ràng buộc dữ liệu là chốt cuối và tầng ứng dụng không tự nới.
+Điều kiện: đổi vai trò là THAY ĐỔI QUYỀN nên bắt buộc sinh một dòng lịch sử mang cặp trước và sau — FR-IAM-02 (RFP:628).
+Điều kiện: KHÔNG cho tự đổi vai trò của chính mình ra khỏi ROLE-SYS-ADMIN.
+Lỗi: ""Vai trò không hợp lệ."" — không ghi thay đổi.
+Lỗi: ""Không thể tự đổi vai trò của chính bạn ra khỏi vai quản trị hệ thống."" — không ghi thay đổi.","Mục đích và ngữ cảnh: đổi vai trò của tài khoản — chuyển tiếp quyền thứ tư; ba chuyển tiếp còn lại là cấp; tạm ngừng; mở lại
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một select bảy giá trị đang chọn vai trò hiện tại; và một dòng chú thích nêu rõ đây là thay đổi quyền
+Chức năng và logic: đổi vai trò sang một vai thuộc diện bắt buộc MFA làm phiên đang dùng của người đó không còn đủ mức — lần điều hướng kế tiếp của họ quay về SC-02 (NFR-SEC-01; RFP:809)","on_click",,"app_user","role","Cột vai trò của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật với ràng buộc đúng 7 giá trị. Kèm một dòng ở bảng lịch sử quyền — bảng đó CHƯA tồn tại.","- Một tài khoản có được giữ nhiều hơn một vai trò không? Select đơn ở đây vẽ quan hệ một-một; đa vai làm cặp trước/sau của lịch sử quyền phức tạp hơn nhiều.
+- Đổi vai trò có cần bước xác nhận hai lớp không? Thiết kế chỉ chặn ca tự hạ quyền của chính mình.
+- Đổi vai trò xong; dữ liệu nghiệp vụ tài khoản đó đã tạo ở vai cũ xử lý ra sao? Thiết kế không đòi gì; nhưng người kiểm cần biết vai nào đang giữ tại thời điểm thao tác."
+"3.5","img-011","Trường Quyền tài khoản","アカウント権限","Account permission radio","radio_button","radio_group",,"boolean","true","Đang hoạt động | Đã tạm ngừng",,,"Đang hoạt động","Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: đúng hai giá trị Đang hoạt động và Đã tạm ngừng — khớp vòng đời ở khối 1 của SC-03.
+Điều kiện: KHÔNG cho tạm ngừng tài khoản quản trị đang hoạt động cuối cùng.
+Điều kiện: mỗi lần đổi giá trị sinh một dòng lịch sử mang cặp trước và sau — FR-IAM-02 (RFP:628).
+Lỗi: ""Không thể tạm ngừng tài khoản quản trị đang hoạt động cuối cùng."" — không ghi thay đổi.","Mục đích và ngữ cảnh: đặt trạng thái quyền của tài khoản — hai chuyển tiếp tạm ngừng và mở lại của FR-IAM-02 (RFP:628) nằm ở trường này
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một nhóm hai lựa chọn loại trừ nhau đang chọn Đang hoạt động; và một dòng chú thích
+Chức năng và logic: cùng một dấu vết như đổi vai trò: một dòng lịch sử mang cặp trước và sau; trục này độc lập với trục khoá tạm ở cột phải","on_click",,"app_user","is_active","Cột trạng thái quyền của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật. Kèm một dòng ở bảng lịch sử quyền — bảng đó CHƯA tồn tại.","- Tạm ngừng ở màn này và tạm ngừng ở SC-03 có phải cùng một đường ghi không? Hai màn cùng thoả FE-003 nên hai đường ghi khác nhau là hai chỗ phải sửa mỗi lần đổi quy tắc.
+- Đổi vai trò và đổi trạng thái quyền trong cùng một lần lưu thì sinh một dòng lịch sử hay hai? Ảnh cho thấy một nút lưu chung nên mặc định là một dòng mang cả hai nửa."
+"3.6","img-012","Trường Lý do thay đổi","変更理由","Change reason textarea","textarea","reason_input",,"string","true",,,,,"Điều kiện: bắt buộc — nhãn có dấu sao đỏ.
+Điều kiện: không rỗng sau khi bỏ khoảng trắng; rỗng thì KHÔNG ghi thay đổi nào.
+Điều kiện: yêu cầu bắt buộc này suy từ FR-AUDIT-01 (RFP:710) — điều khoản đó đòi vết thao tác có lý do. FR-IAM-02 (RFP:628) chỉ đòi before/after; chủ thể và timestamp; KHÔNG đòi lý do.
+Điều kiện: độ dài tối đa là giả định cần chốt — RFP không khai; và bảng lịch sử chỉ ghi thêm nên không sửa lại được về sau.
+Lỗi: ""Phải nhập lý do thay đổi quyền."" — chặn trước khi ghi; không ghi nửa vời rồi bù.","Mục đích và ngữ cảnh: ghi vì sao quyền của tài khoản này đổi — phần ""vì sao"" mà audit hay bắt thiếu nhất
+Thành phần hiển thị: nhãn kèm dấu sao bắt buộc; một ô nhập nhiều dòng với câu gợi ý; và một dòng chú thích nêu rõ giá trị đi vào đâu và mã yêu cầu nào đòi
+Chức năng và logic: giá trị vào dòng lịch sử quyền chứ không vào bản ghi tài khoản; bảng lịch sử chỉ ghi thêm nên lý do sai không sửa lại được từ trong ứng dụng",,,,,"Cột lý do của bảng lịch sử quyền — bảng đó CHƯA tồn tại; đề xuất theo tiền lệ bảng lịch sử trạng thái người tham gia của cùng miền D-PARTY (RFP:602).","- Lý do có bắt buộc thật không? FR-IAM-02 (RFP:628) KHÔNG đòi lý do — mức bắt buộc ở đây suy từ FR-AUDIT-01 (RFP:710); nếu chủ đầu tư không đòi thì đây là mức chặt hơn RFP.
+- Có cần danh mục lý do chọn sẵn thay vì ô nhập tự do không? Ô tự do khó tổng hợp về sau; danh mục thì bó hẹp ca ngoại lệ.
+- Độ dài tối đa là bao nhiêu? Bảng chỉ ghi thêm nên một dòng lý do dài vô hạn không sửa được về sau.
+- Mở khoá tạm có bắt buộc lý do không? Thao tác đó không phải thay đổi quyền nhưng vẫn ghi vào cùng bảng lịch sử."
+"3.7","img-013","Trường Ngày cấp quyền (chỉ đọc)","権限付与日","Granted date (read-only)","label","readonly_field",,,,"YYYY-MM-DD",,,"2026-02-11",,"Mục đích và ngữ cảnh: mốc đầu của dòng thời gian quyền — dòng lịch sử đầu tiên ở khối 2 phải khớp mốc này
+Thành phần hiển thị: nhãn; một vùng chỉ đọc mang một ngày; và một dòng chú thích nối sang khối 2
+Chức năng và logic: chỉ đọc; là mốc tham chiếu để người kiểm phát hiện lịch sử bị thiếu đoạn đầu",,,"app_user","created_at","Cột thời điểm tạo của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật.","- Ngày cấp quyền lấy từ thời điểm tạo bản ghi tài khoản; nhưng nếu tài khoản từng bị tạm ngừng rồi mở lại thì ""ngày cấp quyền"" còn là mốc đúng không? Thiết kế không khai."
+"3.8","img-014","Trường Khoá tạm (chỉ đọc)","一時ロック","Temporary lock state (read-only)","label","readonly_field",,,,,,,"Đang khoá · hết khoá lúc 09:29",,"Mục đích và ngữ cảnh: cho quản trị thấy tài khoản có đang bị khoá tạm và khi nào hết — trục do NFR-SEC-03 (RFP:811) sinh ra
+Thành phần hiển thị: nhãn; một vùng chỉ đọc mang trạng thái khoá kèm mốc hết khoá; và một dòng chú thích tách hai trục
+Chức năng và logic: chỉ đọc và độc lập với trục quyền tài khoản; giá trị suy theo thời điểm đọc nên đổi theo thời gian mà dữ liệu không đổi",,,"app_user","failed_login_count; locked_until","Hai cột đếm số lần sai và mốc hết khoá của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); cả hai đã tồn tại thật.","- Trường này có hiện số lần sai liên tiếp không; hay chỉ hiện mốc hết khoá? Ảnh chỉ cho thấy mốc hết khoá.
+- Ngưỡng số lần sai và thời lượng khoá tạm là bao nhiêu? NFR-SEC-03 (RFP:811) đòi phải có nhưng KHÔNG định lượng."
+"3.9","img-015","Trường Yếu tố xác thực (chỉ đọc)","認証要素","Authentication factor state (read-only)","label","readonly_field",,,,,,,"Không thuộc diện bắt buộc",,"Mục đích và ngữ cảnh: cho quản trị biết tài khoản này có thuộc diện bắt buộc yếu tố xác thực thứ hai và đã đăng ký chưa
+Thành phần hiển thị: nhãn; một vùng chỉ đọc với ba giá trị có thể; và một dòng chú thích nêu ba giá trị và nguồn
+Chức năng và logic: chỉ đọc; giá trị ""bắt buộc mà chưa đăng ký"" là cảnh báo tuân thủ NFR-SEC-01 (RFP:809) và phải phân biệt được với ""không thuộc diện""",,,,,"Suy từ diện bắt buộc MFA cộng dữ liệu của nhà cung cấp xác thực; thực thể tài khoản nội bộ của D-PARTY (RFP:602) CHƯA có nguồn cho cả hai nửa — phụ thuộc SC-02.","- Diện bắt buộc MFA chưa chốt vì RFP không liệt vai nào có quyền phê duyệt — trước khi chốt thì trường này hiện gì?
+- Quản trị có được huỷ hoặc đặt lại yếu tố xác thực của tài khoản khác từ màn này không? Thiết kế chỉ vẽ trường chỉ đọc; SC-02 chỉ phủ chính chủ nên đường xử lý ca mất thiết bị chưa có màn nào."
+"3.10","img-016","Nút Lưu thay đổi quyền",,"Save permission change button","button","primary_action","text_only",,,,,,,"Điều kiện: lý do thay đổi phải không rỗng.
+Điều kiện: vai trò phải thuộc 7 vai trò nội bộ của TBL-ROLE-01 (RFP:245).
+Điều kiện: bản ghi phải chưa bị người khác đổi từ lúc màn đọc — so theo giá trị cũ chứ không ghi đè mù.
+Điều kiện: KHÔNG cho tự đổi vai trò của chính mình ra khỏi ROLE-SYS-ADMIN; KHÔNG cho tạm ngừng tài khoản quản trị đang hoạt động cuối cùng.
+Lỗi: ""Bản ghi đã bị thay đổi bởi người khác; vui lòng xem giá trị mới và xác nhận lại."" — không ghi đè im lặng.
+Lỗi: ""Phải nhập lý do thay đổi quyền."" — không ghi gì.","Mục đích và ngữ cảnh: ghi thay đổi quyền và sinh dòng lịch sử tương ứng — đây là chỗ FR-IAM-02 (RFP:628) được thoả hay không được thoả
+Thành phần hiển thị: một nút chính nhãn chữ đặt ở cột phải của khối; cạnh hai nút còn lại
+Chức năng và logic: thứ tự ghi phải bảo đảm không có ca ""quyền đã đổi mà không có dòng before/after"": đọc giá trị cũ; ghi dòng lịch sử; rồi đổi bản ghi tài khoản có so giá trị cũ — thất bại thì ghi bù chứ không xoá dòng đã ghi","on_click","Lưu thành công thì màn nạp lại khối 1 với giá trị mới và thêm một dòng vào đầu bảng lịch sử ở khối 2.","app_user","role; is_active; display_name","Đổi ba cột trên thực thể tài khoản nội bộ của D-PARTY (RFP:602) — bảng đã tồn tại thật. Kèm một dòng ở bảng lịch sử quyền; bảng đó CHƯA tồn tại. Hai nơi ghi phải cùng thành công hoặc cùng không — nếu không thì sinh đúng ca FR-IAM-02 (RFP:628) cấm.","- Hai nơi ghi (bản ghi tài khoản và dòng lịch sử) có chạy trong cùng một biên giao dịch không? Không cùng biên thì tồn tại ca quyền đã đổi mà không có dòng before/after — đúng thứ nghiệm thu FR-IAM-02 (RFP:628) cấm.
+- Bản ghi tài khoản không có cột phiên bản nên so theo giá trị cũ — so trên những cột nào? Thiết kế chỉ nói ""từ chối; hiện giá trị mới; bắt xác nhận lại"".
+- Đổi vai trò và đổi trạng thái quyền cùng lúc sinh một dòng hay hai dòng lịch sử? Cột loại thay đổi ở khối 2 chỉ có một giá trị mỗi dòng."
+"3.11","img-017","Nút Mở khoá tạm",,"Unlock button","button","secondary_action","text_only",,,,,,,"Điều kiện: tài khoản phải đang trong thời gian khoá tạm.
+Lỗi: ""Tài khoản không đang bị khoá tạm."" — không ghi thay đổi.","Mục đích và ngữ cảnh: gỡ khoá tạm cho tài khoản đang xem — thuộc NFR-SEC-03 (RFP:811) chứ không phải một chuyển tiếp quyền
+Thành phần hiển thị: một nút phụ nhãn chữ đặt cạnh nút Lưu thay đổi quyền
+Chức năng và logic: không đổi trạng thái quyền; nhưng vẫn sinh một dòng ở cùng bảng lịch sử để người kiểm chỉ phải đọc một dòng thời gian — RFP §02-08 (RFP:310) liệt lock/unlock tài khoản là thao tác độ nhạy cao bắt buộc truy vết","on_click",,"app_user","failed_login_count; locked_until","Đặt lại hai cột đếm số lần sai và mốc hết khoá của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); cả hai đã tồn tại thật. Kèm một dòng loại ""mở khoá tạm"" ở bảng lịch sử quyền — bảng đó CHƯA tồn tại.","- Dòng ""mở khoá tạm"" ghi cặp trước và sau như thế nào? Trạng thái quyền không đổi nên hai ô Trước và Sau mang giá trị giống nhau; thiết kế không khai cách trình bày ca này."
+"3.12","img-018","Nút Tạm ngừng",,"Suspend button","button","danger_action","text_only",,,,,,,"Điều kiện: tài khoản phải đang hoạt động.
+Điều kiện: lý do thay đổi phải không rỗng.
+Điều kiện: KHÔNG cho tạm ngừng tài khoản quản trị đang hoạt động cuối cùng.
+Lỗi: ""Không thể tạm ngừng tài khoản quản trị đang hoạt động cuối cùng."" — không ghi thay đổi.
+Lỗi: ""Phải nhập lý do tạm ngừng quyền."" — không ghi thay đổi.","Mục đích và ngữ cảnh: đường tắt cho chuyển tiếp tạm ngừng — cùng dấu vết như đổi giá trị ở trường quyền tài khoản
+Thành phần hiển thị: một nút mang sắc thái cảnh báo nhãn chữ đặt cuối hàng nút của khối
+Chức năng và logic: sinh một dòng lịch sử loại ""tạm ngừng"" mang cặp trước và sau; hai cửa chặn cứng nằm ở tầng ghi chứ không chỉ ẩn nút","on_click",,"app_user","is_active","Đổi cột trạng thái quyền của thực thể tài khoản nội bộ trong D-PARTY (RFP:602); đã tồn tại thật. Kèm một dòng ở bảng lịch sử quyền — bảng đó CHƯA tồn tại.","- Nút Tạm ngừng và trường Quyền tài khoản làm cùng một việc — hai đường vào cùng một thay đổi có sinh cùng một loại dòng lịch sử không? Thiết kế không khai."
+"3.13","img-019","Ghi chú đổi vai trò làm phiên chưa đủ mức",,"Role change downgrades session note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt hệ quả xuyên màn của việc đổi vai trò — thao tác ở màn này làm phiên đang sống của người khác đổi mức bảo mật
+Thành phần hiển thị: một dòng chú thích một câu nối SC-04 sang SC-02
+Chức năng và logic: hệ quả xảy ra ở lần điều hướng kế tiếp của người bị đổi chứ không tức thời — nên vẫn còn một khoảng người đó giữ mức cũ",,,,,,"- Khoảng thời gian giữa lúc đổi vai trò và lúc phiên người đó bị hạ mức là bao lâu; và có cần chấm dứt phiên ngay không? Thiết kế chỉ nói ""lần điều hướng kế tiếp""."
+"4","img-020","Khối lịch sử quyền before/after","権限履歴ブロック","Permission history block","others","history_section",,,,,,,,,"Mục đích và ngữ cảnh: chỗ duy nhất trong toàn bộ 32 màn nhìn thấy được cả before/after; chủ thể và timestamp cho quyền tài khoản nội bộ
+Thành phần hiển thị: một nhãn khối; một bảng sáu cột; và một dòng ghi chú về năm loại thay đổi và tính chỉ-ghi-thêm
+Chức năng và logic: khối này là phần không được cắt của màn; nghiệm thu FR-IAM-02 (RFP:628) đòi HIỂN THỊ được ba thứ đó chứ không chỉ lưu được",,,,,"Bảng lịch sử quyền của miền D-PARTY (RFP:602) — CHƯA TỒN TẠI. Tiền lệ cấu trúc để bắt chước là bảng lịch sử trạng thái người tham gia của cùng miền: một dòng cho mỗi lần chuyển; có giá trị từ và giá trị đến; lý do; chủ thể; thời điểm; và chỉ ghi thêm.","- Lịch sử quyền là bảng riêng hay gộp vào vết thao tác chung? Gộp thì không truy vấn được ""ai từng giữ vai trò nào""; tách thì có hai vết ghi phải giữ đồng bộ.
+- Thời hạn lưu lịch sử quyền là bao lâu? DR-RET-01 (RFP:813) nêu 7 năm cho dữ liệu nghiệp vụ tra cứu online nhưng không nói rõ vết phân quyền có thuộc diện đó.
+- Tài khoản bị xoá khỏi danh bạ xác thực thì lịch sử quyền của tài khoản đó còn giữ không? Mất lịch sử là mất dấu vết kiểm toán; giữ lại thì đi ngược yêu cầu xoá dữ liệu cá nhân ở RFP §09-06 (RFP:887)."
+"4.1","img-021","Tiêu đề khối lịch sử quyền",,"History block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối kèm lời nhắc đây là yêu cầu hiển thị bắt buộc
+Thành phần hiển thị: một dòng chữ in hoa nhỏ gồm số thứ tự khối; tên khối; cụm before/after và mã FR-IAM-02
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"4.2","img-022","Bảng lịch sử quyền","権限履歴表","Permission history table","table","history_table",,,,,,,,,"Mục đích và ngữ cảnh: sáu cột phủ đúng ba thứ nghiệm thu FR-IAM-02 (RFP:628) đòi — cặp trước và sau; chủ thể thực hiện; và thời điểm — cộng lý do và loại thay đổi
+Thành phần hiển thị: một bảng sáu cột với hàng tiêu đề và ba hàng dữ liệu mẫu; ô loại thay đổi mang thẻ nhãn
+Chức năng và logic: cả hai cột Trước và Sau mang CẶP giá trị vai trò cộng quyền tài khoản; kể cả khi chỉ một nửa đổi — đọc một dòng là biết đủ trạng thái chứ không phải suy từ dòng trước",,,,,"Bảng lịch sử quyền của miền D-PARTY (RFP:602) — CHƯA TỒN TẠI. Đề xuất tách cặp trước và sau thành hai cặp cột (vai trò từ/đến; quyền từ/đến) để truy vấn được theo vai trò; khác cách vết thao tác chung gói cả bản ghi vào một cột.","- Bảng này có phân trang không; và sắp theo thứ tự nào? Ảnh cho thấy thứ tự tăng theo thời gian nhưng tài khoản lâu năm sẽ có nhiều dòng.
+- Có cần lọc lịch sử theo loại thay đổi không? Không lọc thì dòng ""mở khoá tạm"" thường ngày lấn hết các dòng thay đổi quyền thật.
+- Vai nào được ĐỌC bảng này? Đây là quyết định của bên dự thầu theo RFP §02-08 (RFP:311); nếu dùng lại khuôn đọc rộng đang áp cho các bảng khác thì mọi vai trò đọc được toàn bộ lịch sử phân quyền của mọi người — đá với RFP §09-06 (RFP:886). Phải quyết TRƯỚC khi tạo bảng."
+"4.2.1","img-023","Dòng lịch sử quyền (đại diện)",,"Permission history row (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một dòng lịch sử — lấy dòng đầu tiên loại ""cấp quyền"" làm đại diện cho cả ba dòng mẫu có cùng kết cấu
+Thành phần hiển thị: sáu ô theo đúng thứ tự cột; ô loại thay đổi mang thẻ nhãn; ô Trước của dòng cấp quyền để gạch ngang vì chưa có trạng thái trước
+Chức năng và logic: lặp theo số lần thay đổi của tài khoản; kết cấu giống nhau nên gộp về một dòng đại diện — dòng đầu tiên là ca đặc biệt duy nhất vì không có giá trị trước",,,,,"Một dòng ứng với một lần chuyển của bảng lịch sử quyền thuộc miền D-PARTY (RFP:602); bảng CHƯA tồn tại.","- Dòng cấp quyền đầu tiên để ô Trước là gạch ngang — có phải thời điểm của dòng này luôn khớp trường Ngày cấp quyền ở khối 1 không? Lệch nhau là dấu hiệu lịch sử thiếu đoạn đầu."
+"4.2.2","img-024","Thẻ loại thay đổi trong dòng (đại diện)","変更種別バッジ","Change type badge (representative)","label","status_tag",,,,,,,,,"Mục đích và ngữ cảnh: phân loại từng dòng lịch sử để người kiểm đọc nhanh cột thời gian
+Thành phần hiển thị: một thẻ chữ nhỏ viền bo với năm giá trị: cấp quyền; đổi vai trò; tạm ngừng; mở lại; mở khoá tạm — lấy thẻ của dòng đầu làm đại diện
+Chức năng và logic: bốn giá trị đầu là thay đổi quyền theo FR-IAM-02 (RFP:628); giá trị thứ năm thuộc NFR-SEC-03 (RFP:811) nhưng ghi cùng chỗ để chỉ có một dòng thời gian",,,,,"Cột loại thay đổi của bảng lịch sử quyền thuộc miền D-PARTY (RFP:602); bảng CHƯA tồn tại. Tập giá trị nên là ràng buộc dữ liệu chứ không phải quy ước ở tầng ứng dụng.","- Tập năm giá trị này đóng hay còn mở? Đóng thì thêm loại thay đổi mới phải đổi ràng buộc dữ liệu; mở thì mỗi nơi ghi tự đặt tên và bảng mất khả năng lọc."
+"4.3","img-025","Ghi chú năm loại thay đổi và tính chỉ ghi thêm",,"Change types and append-only note","label","design_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt ba quy tắc đọc của bảng: năm loại thay đổi và nguồn yêu cầu của từng nhóm; cặp giá trị ở hai cột trước và sau; và tính chỉ ghi thêm
+Thành phần hiển thị: một đoạn chú thích ba câu bao trọn cả ba quy tắc
+Chức năng và logic: chỉ ghi thêm nghĩa là không có đường sửa và không có đường xoá từ trong ứng dụng — sửa được lịch sử quyền thì lịch sử vô nghĩa với kiểm toán",,,,,,"- ""Chỉ ghi thêm"" áp ở tầng nào — ràng buộc dữ liệu; hay chỉ là kỷ luật ở tầng ứng dụng? Nếu chỉ ở tầng ứng dụng thì ai có quyền ghi vẫn sửa được.
+- Ghi sai một dòng lịch sử thì sửa bằng cách nào? Chỉ ghi thêm nên phải ghi một dòng bù; thiết kế không khai loại thay đổi nào dùng cho dòng bù đó."
+"5","img-026","Khối trạng thái màn","画面状態ブロック","Screen states block","others","states_section",,,,,,,,,"Mục đích và ngữ cảnh: liệt đủ các trạng thái màn phải xử lý — phần dễ bị cắt nhất khi thi công
+Thành phần hiển thị: một nhãn khối và một lưới 8 thẻ trạng thái
+Chức năng và logic: chỉ mô tả yêu cầu; không có tương tác",,,,,,
+"5.1","img-027","Tiêu đề khối trạng thái màn",,"States block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối trạng thái
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""Trạng thái""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"5.2","img-028","Lưới thẻ trạng thái màn",,"State card grid","others","state_card_grid",,,,,,,,,"Mục đích và ngữ cảnh: 8 trạng thái màn xếp thành lưới 4 cột 2 hàng — mỗi thẻ là một trạng thái phải xử lý được
+Thành phần hiển thị: 8 thẻ có cùng kết cấu: Chưa có thay đổi nào; Đang tải; Lỗi tải; Không có quyền; Không tìm thấy tài khoản; Thiếu lý do; Bị chặn theo quy tắc; Xung đột
+Chức năng và logic: hai trạng thái Không có quyền và Không tìm thấy tài khoản trả CÙNG một mã 404 — có chủ đích để người xem không phân biệt được hai ca; trạng thái Lỗi tải phải chặn cả đường sửa quyền vì không được sửa khi chưa đọc được lịch sử",,,,,,"- Trạng thái ""Chưa có thay đổi nào"" đòi nói rõ là thiếu dấu vết chứ không hiện bảng rỗng lặng lẽ — câu thông báo nói gì? Một tài khoản tồn tại mà không có dòng cấp quyền là dấu hiệu dữ liệu thiếu; không phải trạng thái bình thường.
+- Trạng thái ""Xung đột"" hiện giá trị mới của người khác — hiện cả lý do người đó nhập không? Lý do là dữ liệu của dòng lịch sử nên có thể chứa thông tin không nên phơi."
+"5.2.1","img-029","Thẻ trạng thái màn (đại diện)",,"Screen state card (representative)","others","state_card",,,,,,,,,"Mục đích và ngữ cảnh: một thẻ trạng thái — lấy thẻ đầu tiên ""Chưa có thay đổi nào"" làm đại diện cho cả 8 thẻ có cùng kết cấu
+Thành phần hiển thị: một thẻ viền nét đứt gồm tiêu đề trạng thái và một đoạn mô tả; thẻ đại diện phân biệt hai ca là chỉ có dòng cấp quyền và trống hẳn
+Chức năng và logic: lặp 8 lần trong lưới với nội dung khác nhau; kết cấu và cách đọc giống nhau nên gộp về một thẻ đại diện",,,,,,
+"6","img-030","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype divergence block","others","divergence_section",,,,,,,,,"Mục đích và ngữ cảnh: chỗ duy nhất trên màn nói về bản thi công — và là chỗ đặt lý do hoãn màn này
+Thành phần hiển thị: một nhãn khối và một bảng ba cột: thiết kế đòi; prototype làm; và mức lệch
+Chức năng và logic: hai hàng ở mức ""cần khách chốt"" là hai chỗ tài liệu khách không phủ: lý do bắt buộc; và vai nào được đọc lịch sử phân quyền",,,,,,
+"6.1","img-031","Tiêu đề khối đối chiếu prototype",,"Divergence block title","label","section_title",,,,,,,,,"Mục đích và ngữ cảnh: nhãn khối đối chiếu
+Thành phần hiển thị: một dòng chữ in hoa nhỏ ""ĐỐI CHIẾU PROTOTYPE""
+Chức năng và logic: văn bản tĩnh — không tương tác",,,,,,
+"6.2","img-032","Bảng đối chiếu thiết kế và prototype","設計とプロトタイプの差分表","Design vs prototype divergence table","table","divergence_table",,,,,,,,,"Mục đích và ngữ cảnh: 5 điểm bản thi công làm khác thiết kế; kèm mức lệch của từng điểm
+Thành phần hiển thị: một bảng ba cột với hàng tiêu đề ""Thiết kế đòi""; ""Prototype làm""; ""Mức""; và 5 hàng dữ liệu; ô mức mang một thẻ nhãn kèm câu giải thích
+Chức năng và logic: hàng đầu chỉ ra tiền lệ cấu trúc đã chạy thật để bắt chước: bảng lịch sử trạng thái người tham gia đã mang đúng khuôn giá trị từ và đến; lý do; chủ thể; thời điểm",,,,,,"- Hàng thứ ba nói ""lý do thay đổi bắt buộc"" là mức chặt hơn RFP — FR-IAM-02 (RFP:628) không nói lý do; chỉ FR-AUDIT-01 (RFP:710) nói. Chủ đầu tư giữ mức chặt này không?
+- Hàng thứ tư phải quyết TRƯỚC khi tạo bảng lịch sử quyền: dùng lại khuôn đọc rộng đang áp cho các bảng khác thì mọi vai trò đọc được toàn bộ lịch sử phân quyền. Đây là đề xuất thiết kế của bên dự thầu theo RFP §02-08 (RFP:311); và RFP §09-06 (RFP:886) đòi kiểm soát truy cập theo vai trò cho thông tin cá nhân bằng chữ."
+"6.2.1","img-033","Dòng đối chiếu kèm thẻ mức lệch (đại diện)",,"Divergence row with level tag (representative)","others","table_row",,,,,,,,,"Mục đích và ngữ cảnh: một hàng đối chiếu — lấy hàng đầu tiên làm đại diện cho cả 5 hàng có cùng kết cấu
+Thành phần hiển thị: ba ô: điều thiết kế đòi; điều bản thi công làm; và một thẻ nhãn mức lệch kèm câu giải thích dài nhất bảng
+Chức năng và logic: hàng đại diện là hàng quan trọng nhất của cả màn: bảng lịch sử quyền chưa tồn tại; nhưng khuôn cấu trúc để dựng đã có tiền lệ chạy thật trong cùng miền dữ liệu",,,,,,
+"7","img-034","Khối ghi chú phân quyền và yêu cầu khách","権限と顧客要件の注記","Permission and requirement footnote","label","footer_note",,,,,,,,,"Mục đích và ngữ cảnh: chốt phân quyền của màn; nêu giới hạn của lớp chặn 404; và nối khối 2 về phần nghiệm thu của FR-IAM-02 (RFP:628)
+Thành phần hiển thị: ba đoạn chú thích: phân quyền và giới hạn của nó; yêu cầu khách màn này thoả cùng các yêu cầu liên quan; và liên kết tới bản as-built
+Chức năng và logic: màn này lo nửa ""ghi nhận lịch sử thay đổi"" của FR-IAM-02 trong khi SC-03 lo ba hành động; khối 2 là chỗ duy nhất trong 32 màn thấy được cả before/after; chủ thể và timestamp cho quyền tài khoản nội bộ",,,,,"Phạm vi đọc bảng lịch sử quyền của miền D-PARTY (RFP:602) là một ĐỀ XUẤT thiết kế chưa quyết — RFP §02-08 (RFP:311) giao cho bên dự thầu đề xuất cơ chế phân tách quyền và truy vết. Bảng chưa tồn tại nên đây là chỗ quyết được trước khi dựng.","- Vai nào được ĐỌC lịch sử phân quyền? Bảng chưa tồn tại nên chưa có gì phải sửa — nhưng dựng theo khuôn đọc rộng đang áp cho các bảng khác thì mọi vai trò đọc được toàn bộ lịch sử phân quyền của mọi người; đá với RFP §09-06 (RFP:886). Phải quyết trước khi tạo bảng.
+- Bộ phận kiểm toán nội bộ có phải đọc được lịch sử quyền không? FR-AUDIT-02 (RFP:711) nêu người đọc vết là ""bộ phận hành chính / kiểm toán nội bộ"" — không khớp vai trò nào trong TBL-ROLE-01 (RFP:245).
+- Người bị từ chối khi gọi API ghi nhận mã nào — cùng 404 như vào trang; hay một mã khác? Hai mã khác nhau là để người ngoài suy ra sự tồn tại của tài nguyên."

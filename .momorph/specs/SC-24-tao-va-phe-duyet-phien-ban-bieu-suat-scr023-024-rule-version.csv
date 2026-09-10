@@ -1,0 +1,165 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn tạo và phê duyệt phiên bản biểu suất","画面ヘッダー","Screen header block","others","khối đầu trang",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn SC-24 — nơi quản trị rule tạo bản nháp biểu suất; rồi một người khác phê duyệt hoặc rollback.
+Thành phần hiển thị: Tiêu đề màn ở dòng trên; dưới là dòng metadata gồm mã FE; mã FN; mức ưu tiên; danh sách yêu cầu khách; actor và thẻ trạng thái dựng.
+Chức năng và logic: Thuần hiển thị; không có tương tác. Một mã SC ứng hai khung con: khung tạo phiên bản và khung phê duyệt kèm rollback.",,,,,,
+"1.1","img-002","Tiêu đề màn","画面タイトル","Screen title","label","tiêu đề trang",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết đây là màn có thao tác ghi; khác với SC-23 chỉ đọc danh sách.
+Thành phần hiển thị: Một dòng chữ gồm mã màn SC-24 và tên màn Tạo và phê duyệt phiên bản biểu suất.
+Chức năng và logic: Tĩnh; không đổi theo phiên bản đang mở hay theo vai người xem.",,,,,,
+"1.2","img-003","Dòng metadata màn","画面メタ情報","Screen metadata line","label","dòng metadata",,,,,,,,,"Mục đích và ngữ cảnh: Truy được từ màn về đúng tính năng và đúng yêu cầu khách mà màn phải thoả.
+Thành phần hiển thị: Chuỗi phân tách bằng dấu · gồm mã FE-031; mã FN-09; mức ưu tiên P0; bốn mã yêu cầu khách kèm baseline TBL-RATE-01; actor; hai mã thi công SCR023_RuleVersionNew và SCR024_RuleVersionDetail kèm route của từng khung và thẻ trạng thái.
+Chức năng và logic: Tĩnh. Dòng này khai thẳng ràng buộc quan trọng nhất của màn: người lập và người duyệt là hai người khác nhau — điều kiện này không suy ra được từ vai trò.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn","実装状況タグ","Build status tag","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn đã có bản thi công để đối chiếu; không phải cam kết rằng thiết kế đã đạt.
+Thành phần hiển thị: Một thẻ chữ nhỏ nằm cuối dòng metadata; sau route của hai khung con.
+Chức năng và logic: Tĩnh. Mức đạt hay chưa đạt của từng yêu cầu nằm ở khối đối chiếu prototype cuối màn.",,,,,,
+"2","img-005","Khối yêu cầu khách phải thấy trên màn","受入条件ブロック","Acceptance criteria block","others","khối tài liệu yêu cầu",,,,,,,,,"Mục đích và ngữ cảnh: Ghi lại đúng phần Nghiệm thu của bốn yêu cầu khách mà màn này phải chứng minh.
+Thành phần hiển thị: Tiêu đề khối và một bảng hai cột: mã yêu cầu và điều phải thấy được trên màn.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là chuẩn nghiệm thu cho cả hai khung con của màn.",,,,,,
+"2.1","img-006","Bảng yêu cầu và điểm nghiệm thu","要求・受入条件テーブル","Requirement and acceptance table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Bốn dòng yêu cầu mà màn phải thoả; mỗi dòng nói rõ điều gì phải nhìn thấy được.
+Thành phần hiển thị: Bốn dòng: FR-INC-02 (tạo được phiên bản có ngày hiệu lực trong tương lai; bản nháp chưa có hiệu lực cho tới khi được phê duyệt; rollback theo từng version); GOV-RULE-01 (người duyệt khác người lập; tối đa 4 lần mỗi năm; có ngày hiệu lực; có rollback; thay đổi không làm biến dạng dữ liệu đã chốt trước ngày hiệu lực); FR-RULE-01 (lưu và hiện đủ người tạo; người phê duyệt; ngày hiệu lực; trạng thái); NFR-OPS-02 (đổi biểu suất bằng phiên bản mới; không sửa mã nguồn và không sửa dữ liệu lịch sử).
+Chức năng và logic: Bảng tĩnh; không lọc; không sắp xếp. Bốn dòng là cố định theo Feature List của màn.",,,,,,
+"3","img-007","Khung tạo phiên bản — vai người lập","バージョン作成フォーム","Create version form block","others","khối biểu mẫu tạo",,,,,,,,,"Mục đích và ngữ cảnh: Nơi người lập soạn một bản nháp phiên bản biểu suất có ngày hiệu lực trong tương lai.
+Thành phần hiển thị: Tiêu đề khung; hàng đầu gồm ô chọn Ngày hiệu lực và ô hiển thị Hạn mức năm nay; rồi ô nhập Nội dung biểu suất; ô nhập Lý do thay đổi; hai biến thể của nút Tạo bản nháp và một ghi chú về các field server tự đặt.
+Chức năng và logic: Gửi bằng phương thức ghi; tạo một dòng phiên bản ở trạng thái chờ duyệt. Bản nháp không chi phối cách tính ở SC-22 cho tới khi được phê duyệt và tới ngày hiệu lực.",,,,,,
+"3.1","img-008","Ô chọn Ngày hiệu lực","発効日","Effective date input","date_picker","ô chọn ngày bắt buộc",,"date","true","YYYY-MM-DD",,,,"Điều kiện: giá trị phải đúng dạng YYYY-MM-DD và là một ngày lịch thật.
+Lỗi: báo lỗi tại field và không gửi biểu mẫu.
+Điều kiện: ngày hiệu lực phải ở tương lai; nghĩa là sau ngày nghiệp vụ JST hôm nay.
+Lỗi: ô chọn ngày không cho chọn quá khứ ngay từ đầu; và server vẫn từ chối nếu bị gửi qua đường khác.","Mục đích và ngữ cảnh: Chọn mốc từ ngày nào phiên bản mới bắt đầu chi phối cách tính thưởng.
+Thành phần hiển thị: Nhãn Ngày hiệu lực kèm dấu bắt buộc; ô ngày mang giá trị mẫu 2026-10-01; dòng gợi ý nói phải là ngày trong tương lai và ô chọn ngày không cho chọn quá khứ.
+Chức năng và logic: Chặn hai tầng: ô chọn ngày không cho chọn quá khứ; và server vẫn kiểm lại. Chỉ dựa vào server báo lỗi sau khi gửi là chưa đủ theo thiết kế.",,,"incentive_rule_version","effective_from","Ngày phiên bản bắt đầu chi phối cách tính. Prototype có đúng cột này với ràng buộc không rỗng; nhưng ô chọn ngày phía trình duyệt không đặt giới hạn nhỏ nhất.","- Ngày hiệu lực có được đúng bằng ngày mai; hay phải cách hôm nay một số ngày tối thiểu để kịp thông báo?
+- Hai phiên bản chờ duyệt cùng một ngày hiệu lực có được phép cùng tồn tại không?"
+"3.2","img-009","Ô hiển thị Hạn mức năm nay","本年度の変更上限","Annual quota display","label","ô hiển thị chỉ đọc",,"integer",,"<đã dùng> / 4 lần đã dùng",,,"3 / 4 lần đã dùng",,"Mục đích và ngữ cảnh: Cho người lập biết còn được tạo phiên bản mấy lần trong năm trước khi bấm gửi.
+Thành phần hiển thị: Nhãn Hạn mức năm nay; một ô chữ chỉ đọc mang giá trị 3 / 4 lần đã dùng; dòng gợi ý nói hết 4 trên 4 thì form không cho gửi kèm lý do GOV-RULE-01.
+Chức năng và logic: Chỉ đọc; không nhận nhập. Hết hạn mức thì cả biểu mẫu tắt tại màn; không để người lập gửi rồi mới nhận lỗi.",,,,,"Thiết kế đòi một chỉ số đếm số lần đổi rule trong năm; hiện chưa có thực thể hay cột nào giữ mốc năm và số đếm này nên phần mapping để trống. Prototype không đếm và không chặn lần thứ 5.","- Mốc năm của hạn mức là năm dương lịch hay năm tài chính Nhật?
+- Rollback có bị tính là một lần đổi trong hạn mức không?"
+"3.3","img-010","Ô nhập Nội dung biểu suất","料率内容","Rate table input","text_form","ô nhập bắt buộc",,"string","true","none",,,,"Điều kiện: nội dung biểu suất không được để trống.
+Lỗi: nút Tạo bản nháp giữ trạng thái vô hiệu cho tới khi có giá trị.","Mục đích và ngữ cảnh: Đây là chỗ NFR-OPS-02 đòi đổi biểu suất bằng cấu hình: tham số nào được phiên bản hoá thì phải nhập được ở đây chứ không nằm trong mã nguồn.
+Thành phần hiển thị: Nhãn Nội dung biểu suất kèm dấu bắt buộc; ô nhập ghi hệ số 110/100 cố định theo BR-INC-01 và một chỗ trống cho tỷ lệ chi trả kèm chú thích xem [CHƯA CHỐT].
+Chức năng và logic: Hệ số 110/100 do khách cố định nên không phải tham số người dùng đổi. Phần tham số thật sự được phiên bản hoá còn chờ khách chốt nên hình dạng ô nhập chưa khoá được.",,,"incentive_rule_version","rate_table","Nội dung biểu suất của phiên bản. Prototype có cột này nhưng biểu mẫu không có ô nào cho nó; giá trị được server ghi cứng và engine tính thưởng không đọc lại.","- Tham số nào của công thức được phiên bản hoá; và hệ số 110/100 có nằm trong đó không?
+- Sau khi khách chốt; ô này là một chuỗi tự do; một số duy nhất; hay một bảng nhiều dòng theo bậc?
+- Nội dung biểu suất có cần kiểm hợp lệ theo miền giá trị trước khi cho gửi không?"
+"3.4","img-011","Ô nhập Lý do thay đổi","変更理由","Change reason textarea","textarea","ô nhập nhiều dòng bắt buộc",,"string","true","none",,"1000",,"Điều kiện: lý do thay đổi không được để trống.
+Lỗi: nút Tạo bản nháp giữ trạng thái vô hiệu cho tới khi có giá trị.","Mục đích và ngữ cảnh: Ghi lý do đổi biểu suất; FR-AUDIT-01 đòi dấu vết kiểm toán của thao tác tạo phải có lý do.
+Thành phần hiển thị: Nhãn Lý do thay đổi kèm dấu bắt buộc; ô nhập nhiều dòng mang câu mẫu Điều chỉnh theo thoả thuận quý IV với Chủ đầu tư.
+Chức năng và logic: Là dữ liệu bắt buộc chứ không phải ghi chú tuỳ chọn. Lý do đi kèm dòng dấu vết kiểm toán của thao tác tạo phiên bản.",,,,,"Thiết kế coi lý do là dữ liệu bắt buộc của dấu vết kiểm toán cho thao tác tạo. Prototype lưu chuỗi này vào phần mô tả của nội dung biểu suất và coi là ghi chú tuỳ chọn; chưa có chỗ lưu riêng cho lý do nên phần mapping để trống.","- Độ dài tối thiểu của lý do là bao nhiêu để tránh người dùng nhập một ký tự cho qua?
+- Lý do có hiện lại cho người duyệt đọc ở khung phê duyệt không?"
+"3.5","img-012","Nút Tạo bản nháp","下書き作成ボタン","Create draft button","button","nút chính","text_only",,,,,,,,"Mục đích và ngữ cảnh: Gửi bản nháp phiên bản biểu suất để người khác phê duyệt.
+Thành phần hiển thị: Một nút chữ nhấn mạnh đặt dưới ô nhập lý do.
+Chức năng và logic: Chỉ bật khi đã đủ ngày hiệu lực; nội dung biểu suất và lý do. Hệ thống tự đặt số phiên bản; trạng thái khởi tạo chờ duyệt và người lập; người lập không nhập được ba giá trị đó.","on_click","Tạo xong thì về SC-23 danh sách phiên bản; dòng mới ở trạng thái chờ duyệt.","incentive_rule_version",,"Ghi một dòng phiên bản mới ở trạng thái chờ duyệt. Prototype có bảng này và ghi đúng trạng thái khởi tạo; nhưng không ghi dòng dấu vết kiểm toán cho thao tác tạo.","- Sau khi tạo xong thì về danh sách SC-23; hay mở luôn chi tiết phiên bản vừa tạo?
+- Hai người lập tạo cùng lúc dẫn tới trùng số phiên bản thì thông báo cho người thứ hai như thế nào?"
+"3.6","img-013","Nút Tạo bản nháp ở trạng thái vô hiệu","下書き作成ボタン(無効)","Create draft button disabled","button","nút ở trạng thái vô hiệu","text_only",,,,,,,,"Mục đích và ngữ cảnh: Biến thể vô hiệu của nút tạo; vẽ để nói rõ điều kiện bật nút chứ không phải một nút thứ hai trên màn thật.
+Thành phần hiển thị: Một nút chữ mờ kèm chú thích trong nhãn về ba điều kiện còn thiếu.
+Chức năng và logic: Nút tắt khi thiếu bất kỳ một trong ba field bắt buộc; hoặc khi đã dùng hết hạn mức 4 lần trong năm.",,,,,,
+"3.7","img-014","Ghi chú field server tự đặt","サーバー自動設定の注記","Server-assigned fields note","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Vạch rõ đâu là giá trị client gửi và đâu là giá trị server tự quyết; để không ai mở ba giá trị đó ra cho client.
+Thành phần hiển thị: Một đoạn ghi chú dưới hàng nút: hệ thống tự đặt số phiên bản; trạng thái khởi tạo chờ duyệt và người lập; bản nháp không chi phối cách tính ở SC-22 cho tới khi được phê duyệt và tới ngày hiệu lực.
+Chức năng và logic: Thuần hiển thị. Ba giá trị server tự đặt là chốt an toàn: nhận số phiên bản hay người lập từ client là mở đường lách cổng maker-checker.",,,,,,
+"4","img-015","Khung phê duyệt và rollback — vai người duyệt","承認・ロールバックブロック","Approve and rollback block","others","khối chi tiết và thao tác",,,,,,,,,"Mục đích và ngữ cảnh: Nơi người duyệt đọc nội dung phiên bản rồi phê duyệt; hoặc rollback phiên bản đang hiệu lực về một phiên bản trước.
+Thành phần hiển thị: Tiêu đề khung; hai hàng field chỉ đọc gồm sáu ô; nút Phê duyệt; ô chọn phiên bản đích để rollback; nút Rollback và một ghi chú về điều kiện hiện nút.
+Chức năng và logic: Hai thao tác ghi khác nhau; mỗi thao tác chỉ hiện ở đúng một trạng thái. Cả hai đều ghi dấu vết kiểm toán kèm lý do và cả hai đều chịu ràng buộc người duyệt khác người lập.",,,,,,
+"4.1","img-016","Ô hiển thị Phiên bản","バージョン","Version field","label","ô hiển thị chỉ đọc",,"integer",,"v<số nguyên>",,,,,"Mục đích và ngữ cảnh: Cho người duyệt biết đang xử lý phiên bản nào.
+Thành phần hiển thị: Nhãn Phiên bản và một ô chữ chỉ đọc mang giá trị v4.
+Chức năng và logic: Chỉ đọc; do hệ thống đặt lúc tạo bản nháp. Số phiên bản không bị dùng lại kể cả sau rollback.",,,"incentive_rule_version","version_no","Số phiên bản đang mở; duy nhất trên toàn bảng. Prototype có đúng cột này kèm chỉ mục duy nhất.",
+"4.2","img-017","Ô hiển thị Ngày hiệu lực","発効日","Effective date field","label","ô hiển thị chỉ đọc",,"date",,"YYYY-MM-DD",,,,,"Mục đích và ngữ cảnh: Cho người duyệt biết phiên bản này sẽ chi phối cách tính từ ngày nào.
+Thành phần hiển thị: Nhãn Ngày hiệu lực và một ô chữ chỉ đọc mang giá trị 2026-10-01.
+Chức năng và logic: Chỉ đọc; không sửa được ở khung này. Muốn đổi ngày hiệu lực thì phải tạo một phiên bản khác.",,,"incentive_rule_version","effective_from","Ngày phiên bản bắt đầu chi phối cách tính. Prototype có đúng cột này với ràng buộc không rỗng.",
+"4.3","img-018","Ô hiển thị Trạng thái","状態","Status field","label","ô hiển thị chỉ đọc",,"string",,"Chờ duyệt | Đã duyệt; chờ tới ngày hiệu lực | Đang hiệu lực | Đã bị thay thế | Đã rollback",,,,,"Mục đích và ngữ cảnh: Trạng thái quyết định khung này cho làm gì: phê duyệt; rollback; hay không còn gì để làm.
+Thành phần hiển thị: Nhãn Trạng thái và một ô chữ chỉ đọc mang giá trị Chờ duyệt.
+Chức năng và logic: Nút Phê duyệt chỉ hiện khi đang chờ duyệt; nút Rollback chỉ hiện khi đang hiệu lực. Phiên bản đã rollback hoặc đã bị thay thế thì không hiện khối thao tác.",,,"incentive_rule_version","status","Trạng thái vòng đời của phiên bản; quyết định nút nào hiện. Prototype chỉ lưu ba giá trị; hai trạng thái còn lại tính lúc đọc.",
+"4.4","img-019","Ô hiển thị Người lập","作成者","Maker field","label","ô hiển thị chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Người lập là căn cứ của cổng maker-checker; không phải thông tin trang trí.
+Thành phần hiển thị: Nhãn Người lập và một ô chữ chỉ đọc mang tên hiển thị Người dùng D.
+Chức năng và logic: Server so giá trị này với người đang thao tác; trùng nhau thì từ chối cả phê duyệt và rollback. Hiển thị chỉ dùng tên hiển thị hoặc mã người dùng; không bao giờ thư điện tử nội bộ.",,,"incentive_rule_version","created_by","Người tạo phiên bản; là cột được so với người đang thao tác để chặn tự duyệt. Prototype có đúng cột này; hiển thị rơi về thư điện tử nội bộ khi tên hiển thị rỗng.",
+"4.5","img-020","Ô hiển thị Người duyệt","承認者","Checker field","label","ô hiển thị chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Chứng minh phiên bản đã qua cổng phê duyệt và ai là người chịu trách nhiệm.
+Thành phần hiển thị: Nhãn Người duyệt và một ô chữ chỉ đọc hiện dấu gạch kèm chú thích điền khi phê duyệt.
+Chức năng và logic: Rỗng là hợp lệ khi còn chờ duyệt. Giá trị được ghi trong chính lần phê duyệt; không nhận từ client.",,,"incentive_rule_version","approved_by","Người phê duyệt; rỗng khi phiên bản còn chờ duyệt và được ghi ngay trong lần phê duyệt. Prototype có đúng cột này.",
+"4.6","img-021","Ô hiển thị Nội dung biểu suất","料率内容","Rate table field","label","ô hiển thị chỉ đọc",,"string",,,,,,,"Mục đích và ngữ cảnh: Người duyệt phải đọc được đúng cái mình đang duyệt; duyệt mà không thấy nội dung thì cổng maker-checker chỉ còn là hình thức.
+Thành phần hiển thị: Nhãn Nội dung biểu suất; một ô chữ chỉ đọc mang giá trị Hệ số 110/100 · tỷ lệ chi trả; dòng gợi ý nói phải kèm phần khác so với phiên bản đang hiệu lực.
+Chức năng và logic: Thiết kế đòi hiện cả phần khác biệt so với phiên bản đang hiệu lực; không chỉ hiện giá trị mới.",,,"incentive_rule_version","rate_table","Nội dung biểu suất của phiên bản đang mở. Prototype có cột này nhưng không hiện nội dung lên màn và engine tính thưởng không đọc nó.","- Phần khác biệt so với phiên bản đang hiệu lực trình bày thế nào: hai cột cạnh nhau; hay đánh dấu ngay trong nội dung?"
+"4.7","img-022","Nút Phê duyệt","承認ボタン","Approve button","button","nút chính","text_only",,,,,,,"Điều kiện: người thao tác phải khác người lập của phiên bản.
+Lỗi: từ chối kèm câu ""Bạn không thể phê duyệt phiên bản do chính mình tạo.""
+Điều kiện: phiên bản phải còn ở trạng thái chờ duyệt.
+Lỗi: từ chối kèm câu ""Phiên bản này đã được xử lý trước đó.""","Mục đích và ngữ cảnh: Đưa bản nháp qua cổng maker-checker để nó đủ điều kiện chi phối cách tính từ ngày hiệu lực.
+Thành phần hiển thị: Một nút chữ nhấn mạnh đặt dưới hai hàng field chỉ đọc.
+Chức năng và logic: Chỉ hiện khi phiên bản đang chờ duyệt và người xem khác người lập. Ẩn nút chỉ là gợi ý trình bày; chặn thật phải ở server và phải chặn cả khi gọi API trực tiếp.","on_click","Ở lại màn; phiên bản chuyển sang đã duyệt và điền người duyệt. Không đổi số thưởng ngay — phiên bản chỉ chi phối các kỳ từ ngày hiệu lực trở đi.","incentive_rule_version","status","Chuyển trạng thái từ chờ duyệt sang đã duyệt và ghi người duyệt trong cùng một lệnh có điều kiện. Prototype làm đúng khuôn này nên hai người duyệt cùng lúc thì người thứ hai bị từ chối chứ không ghi đè.",
+"4.8","img-023","Ô chọn Rollback về phiên bản","復元先バージョン","Rollback target select","dropdown","ô chọn bắt buộc khi rollback",,"string","true","v<số phiên bản> (YYYY-MM-DD)",,,,"Điều kiện: phải chọn một phiên bản đích trước khi bấm Rollback.
+Lỗi: từ chối yêu cầu vì thiếu phiên bản đích.
+Điều kiện: phiên bản đích phải đã từng qua cổng maker-checker; nghĩa là không được là bản còn chờ duyệt.
+Lỗi: từ chối kèm câu ""Phiên bản đích không hợp lệ để rollback.""
+Điều kiện: phiên bản đích không được là phiên bản đang hiệu lực.
+Lỗi: từ chối kèm câu ""Phiên bản đích không hợp lệ để rollback.""","Mục đích và ngữ cảnh: Chọn phiên bản sẽ được nâng lên đang hiệu lực khi rollback phiên bản hiện tại.
+Thành phần hiển thị: Nhãn Rollback về phiên bản kèm dấu bắt buộc; ô chọn mang giá trị mẫu v2 (2026-08-01); dòng gợi ý nói đích chỉ được là phiên bản đã từng qua cổng maker-checker.
+Chức năng và logic: Ràng buộc quan trọng: cho chọn một bản còn chờ duyệt thì một bản chưa ai duyệt sẽ thành đang hiệu lực và bỏ qua hẳn cổng phê duyệt.",,,"incentive_rule_version","id","Phiên bản đích của rollback. Prototype lọc ứng viên ở phía server theo trạng thái nên bản chờ duyệt không vào được danh sách.",
+"4.9","img-024","Nút Rollback","ロールバックボタン","Rollback button","button","nút nguy hiểm","text_only",,,,,,,"Điều kiện: người thao tác phải khác người lập theo quy tắc maker-checker của rollback.
+Lỗi: từ chối kèm câu ""Bạn không thể rollback phiên bản do chính mình tạo.""
+Điều kiện: phiên bản phải đang ở trạng thái đang hiệu lực.
+Lỗi: từ chối kèm câu ""Phiên bản này hiện không ở trạng thái đang hiệu lực.""","Mục đích và ngữ cảnh: Quay về một phiên bản trước đó khi phiên bản đang hiệu lực có vấn đề; và giữ nguyên dòng lịch sử.
+Thành phần hiển thị: Một nút chữ kiểu cảnh báo đặt dưới ô chọn phiên bản đích.
+Chức năng và logic: Rollback là một phiên bản mới trong dòng lịch sử; không phải xoá phiên bản đang hiệu lực. Bản bị hạ cấp vẫn còn nguyên trong danh sách SC-23.","on_click","Ở lại màn; phiên bản hiện tại chuyển sang đã rollback và phiên bản đích lên đang hiệu lực. Các kỳ đã chốt giữ nguyên phiên bản đã dùng.","incentive_rule_version","status","Hạ cấp phiên bản hiện tại và nâng cấp phiên bản đích; thiết kế coi đây là một thao tác trọn vẹn. Prototype làm bằng hai lệnh ghi rời và bù ngược khi lệnh thứ hai lỗi.","- Rollback có cần ô nhập lý do riêng như thao tác tạo không?
+- Khi rollback; quy tắc maker-checker kiểm người lập của phiên bản đang bị hạ cấp; hay của phiên bản đích?"
+"4.10","img-025","Ghi chú điều kiện hiện hai nút thao tác","操作ボタン表示条件の注記","Action visibility note","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Chốt lại quy tắc hiện nút theo trạng thái; và nghĩa vụ ghi dấu vết của cả hai thao tác.
+Thành phần hiển thị: Một đoạn ghi chú dưới nút Rollback.
+Chức năng và logic: Thuần hiển thị. Hai thao tác không bao giờ cùng hiện vì hai trạng thái tiền đề loại trừ nhau.",,,,,,
+"5","img-026","Khối maker-checker khi bạn là người lập","メーカー・チェッカー阻止ブロック","Maker-checker block for self","others","khối biểu mẫu ở trạng thái chặn",,,,,,,,,"Mục đích và ngữ cảnh: Vẽ đúng những gì người lập nhìn thấy khi mở phiên bản của chính mình; để không ai dựng nhầm thành ẩn cả khối.
+Thành phần hiển thị: Tiêu đề khối; hai câu thông báo cho hai trạng thái; hai nút Phê duyệt và Rollback ở dạng vô hiệu và một ghi chú về chỗ chặn thật.
+Chức năng và logic: Khối thao tác vẫn hiện nhưng chỉ chứa ghi chú; không có nút nào bấm được. Đây là ràng buộc riêng của GOV-RULE-01 và không suy ra được từ vai trò vì người lập và người duyệt cùng là quản trị rule.",,,,,,
+"5.1","img-027","Nút Phê duyệt ở trạng thái vô hiệu","承認ボタン(無効)","Approve button disabled","button","nút ở trạng thái vô hiệu","text_only",,,,,,,,"Mục đích và ngữ cảnh: Biến thể vô hiệu của nút Phê duyệt khi người xem chính là người lập phiên bản.
+Thành phần hiển thị: Một nút chữ mờ đặt cạnh nút Rollback mờ; dưới hai câu thông báo của khối.
+Chức năng và logic: Vô hiệu vì người duyệt phải khác người lập. Nút mờ chỉ là gợi ý trình bày; gọi API trực tiếp vẫn bị từ chối.",,,,,,
+"5.2","img-028","Nút Rollback ở trạng thái vô hiệu","ロールバックボタン(無効)","Rollback button disabled","button","nút ở trạng thái vô hiệu","text_only",,,,,,,,"Mục đích và ngữ cảnh: Biến thể vô hiệu của nút Rollback khi người xem chính là người lập phiên bản.
+Thành phần hiển thị: Một nút chữ mờ đặt sau nút Phê duyệt mờ.
+Chức năng và logic: Vô hiệu vì cùng một ràng buộc maker-checker áp cho rollback. Nút mờ chỉ là gợi ý trình bày; gọi API trực tiếp vẫn bị từ chối.",,,,,,
+"5.3","img-029","Ghi chú chặn thật nằm ở server","サーバー側強制の注記","Server-side enforcement note","label","ghi chú khối",,,,,,,,,"Mục đích và ngữ cảnh: Chốt rằng ràng buộc maker-checker là ràng buộc kiến trúc; không phải quy tắc trình bày.
+Thành phần hiển thị: Một đoạn ghi chú dưới hai nút vô hiệu: chặn thật ở server; ràng buộc riêng của GOV-RULE-01 và không suy ra được từ vai trò; cùng một luật với SC-21.
+Chức năng và logic: Thuần hiển thị. Hai tài khoản demo tách đôi một người lập và một người duyệt là cố ý để chứng minh cổng này chạy.",,,,,,
+"6","img-030","Khối bất biến thiết kế — thay đổi không làm biến dạng dữ liệu đã chốt","設計不変条件ブロック","Design invariant block","others","khối tài liệu bất biến",,,,,,,,,"Mục đích và ngữ cảnh: Khai một bất biến không nhìn thấy được qua ảnh chụp: phê duyệt không đổi số thưởng ngay và rollback không xoá lịch sử.
+Thành phần hiển thị: Tiêu đề khối và hai đoạn văn: phiên bản mới chỉ chi phối các kỳ từ ngày hiệu lực trở đi; rollback là một phiên bản mới trong dòng lịch sử.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là hệ quả trực tiếp của GOV-RULE-01: các kỳ đã chốt giữ nguyên phiên bản đã dùng nên SC-22 vẫn giải thích được số cũ.",,,,,,
+"7","img-031","Khối liệt kê trạng thái của cả hai khung","画面状態一覧ブロック","Screen state list block","others","khối tài liệu trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê đủ mười hai trạng thái mà hai khung con phải xử lý để không bỏ sót đường rẽ nào lúc dựng.
+Thành phần hiển thị: Tiêu đề khối và mười hai thẻ trạng thái xếp thành ba hàng bốn cột; mỗi thẻ có tiêu đề và một đoạn mô tả hành vi.
+Chức năng và logic: Thuần hiển thị tài liệu. Bốn trạng thái phụ thuộc vai người xem là chỗ dễ mất nhất: chờ duyệt được duyệt; chờ duyệt tự lập; đang hiệu lực; và đang hiệu lực tự lập.",,,,,,
+"7.1","img-032","Thẻ trạng thái Rỗng khi tạo","空状態カード(作成)","Empty create state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả khung tạo lúc vừa mở; chưa nhập gì.
+Thành phần hiển thị: Thẻ tiêu đề Rỗng (tạo) kèm mô tả form trống và nút tạo tắt cho tới khi đủ ngày hiệu lực; nội dung và lý do.
+Chức năng và logic: Thuần hiển thị tài liệu. Nút tắt là mặc định; không phải trạng thái lỗi.",,,,,,
+"7.2","img-033","Thẻ trạng thái Hết hạn mức năm","年間上限到達カード","Annual quota exhausted card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả khung tạo khi đã dùng hết 4 lần đổi rule trong năm.
+Thành phần hiển thị: Thẻ tiêu đề Hết hạn mức năm kèm mô tả đã 4 trên 4 lần; form tạo tắt kèm lý do và không cho gửi rồi mới báo lỗi.
+Chức năng và logic: Thuần hiển thị tài liệu. Chặn ở màn trước khi gửi là yêu cầu thiết kế; không chỉ chặn ở server.",,,,,,
+"7.3","img-034","Thẻ trạng thái Đang tải và lỗi tải","読み込み・読み込み失敗カード","Loading and load error card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hai trạng thái nạp dữ liệu của cả hai khung.
+Thành phần hiển thị: Thẻ tiêu đề Đang tải / lỗi tải kèm mô tả khung trang hiện trước và lỗi truy vấn thì báo kèm nút tải lại.
+Chức năng và logic: Thuần hiển thị tài liệu. Lỗi truy vấn phải cho người dùng thử lại; không được để màn trắng.",,,,,,
+"7.4","img-035","Thẻ trạng thái Không tìm thấy","未検出カード","Not found card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi khi mở một phiên bản không tồn tại.
+Thành phần hiển thị: Thẻ tiêu đề Không tìm thấy kèm mô tả phiên bản không tồn tại thì ra trang không tìm thấy.
+Chức năng và logic: Thuần hiển thị tài liệu. Trả trang không tìm thấy là có chủ đích để không lộ sự tồn tại của tài nguyên.",,,,,,
+"7.5","img-036","Thẻ trạng thái Không có quyền","権限なしカード","No permission card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi khi người dùng không thuộc quản trị rule.
+Thành phần hiển thị: Thẻ tiêu đề Không có quyền kèm mô tả ngoài quản trị rule thì không vào được và cả ba đường ghi tạo; duyệt; rollback đều không gọi được.
+Chức năng và logic: Thuần hiển thị tài liệu. Chặn phải áp cho cả trang và cả ba đường ghi; chặn ở một phía là hở.",,,,,,
+"7.6","img-037","Thẻ trạng thái Chờ duyệt và được duyệt","承認待ち・承認可カード","Pending and approvable card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả trường hợp người xem khác người lập nên được phép phê duyệt.
+Thành phần hiển thị: Thẻ tiêu đề Chờ duyệt; được duyệt kèm mô tả có nút Phê duyệt và kèm nội dung biểu suất để đọc.
+Chức năng và logic: Thuần hiển thị tài liệu. Nội dung biểu suất phải đọc được ở trạng thái này; duyệt mù là mất ý nghĩa của cổng.",,,,,,
+"7.7","img-038","Thẻ trạng thái Chờ duyệt và tự lập","承認待ち・自作カード","Pending and self-created card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả trường hợp người xem chính là người lập nên bị chặn phê duyệt.
+Thành phần hiển thị: Thẻ tiêu đề Chờ duyệt; tự lập kèm mô tả chỉ ghi chú; không nút và gọi API trực tiếp vẫn bị từ chối.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là nửa quan trọng của cổng maker-checker; chặn phải ở server.",,,,,,
+"7.8","img-039","Thẻ trạng thái Đang hiệu lực","有効中カード","Active state card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả khung thao tác khi phiên bản đang chi phối cách tính.
+Thành phần hiển thị: Thẻ tiêu đề Đang hiệu lực kèm mô tả có nút Rollback kèm ô chọn phiên bản đích hợp lệ.
+Chức năng và logic: Thuần hiển thị tài liệu. Ở trạng thái này không có nút Phê duyệt vì phiên bản đã qua cổng.",,,,,,
+"7.9","img-040","Thẻ trạng thái Đã duyệt và chờ tới ngày hiệu lực","承認済み・発効日待ちカード","Approved and scheduled card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả khoảng giữa: đã qua cổng duyệt nhưng chưa tới ngày hiệu lực.
+Thành phần hiển thị: Thẻ tiêu đề Đã duyệt; chờ tới ngày hiệu lực kèm mô tả nói rõ chưa chi phối cách tính và số thưởng chưa đổi tới ngày hiệu lực.
+Chức năng và logic: Thuần hiển thị tài liệu. Đây là chỗ dễ đọc sai nhất: bấm Phê duyệt xong mà số thưởng không đổi là đúng thiết kế.",,,,,,
+"7.10","img-041","Thẻ trạng thái Không còn gì để làm","操作不可カード","No action available card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả trường hợp phiên bản đã ra khỏi vòng thao tác.
+Thành phần hiển thị: Thẻ tiêu đề Không còn gì để làm kèm mô tả đã rollback hoặc đã bị thay thế thì không hiện khối thao tác.
+Chức năng và logic: Thuần hiển thị tài liệu. Ẩn cả khối thao tác ở trạng thái này khác với việc hiện khối rỗng của trường hợp tự lập.",,,,,,
+"7.11","img-042","Thẻ trạng thái Đang gửi","送信中カード","Submitting card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Mô tả hành vi trong lúc một thao tác ghi đang chạy.
+Thành phần hiển thị: Thẻ tiêu đề Đang gửi kèm mô tả nút vô hiệu và không cho bấm trùng.
+Chức năng và logic: Thuần hiển thị tài liệu. Chặn bấm trùng là bắt buộc vì cả ba thao tác đều không tự chống gửi lặp.",,,,,,
+"7.12","img-043","Thẻ trạng thái Gửi lỗi","送信失敗カード","Submit error card","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê đủ các nguyên nhân lỗi mà thông báo phải nói rõ; không gộp thành lỗi chung.
+Thành phần hiển thị: Thẻ tiêu đề Gửi lỗi kèm năm nguyên nhân: ngày không ở tương lai; tự duyệt hoặc tự rollback; phiên bản đích không hợp lệ; người khác đã xử lý trước; trùng số phiên bản do tạo cùng lúc.
+Chức năng và logic: Thuần hiển thị tài liệu. Mỗi nguyên nhân phải có thông báo riêng để người dùng biết nên sửa gì hay nên thử lại.",,,,,,
+"8","img-044","Ghi chú CHƯA CHỐT về hạn mức năm và maker-checker của rollback","未確定事項の注記","Open question note","label","ghi chú chưa chốt",,,,,,,,,"Mục đích và ngữ cảnh: Khai bốn chỗ tài liệu khách chưa nói rõ; để không ai tự quyết hộ khách ở tầng thiết kế.
+Thành phần hiển thị: Một khối ghi chú viền nét gồm bốn câu hỏi: mốc năm là năm dương lịch hay năm tài chính Nhật; rollback có tính vào hạn mức không; maker-checker của rollback kiểm người lập của phiên bản đang bị hạ cấp hay của phiên bản đích; và câu chung với SC-22 và SC-23 về tham số nào được phiên bản hoá.
+Chức năng và logic: Thuần hiển thị tài liệu. Câu hỏi thứ nhất ảnh hưởng trực tiếp tới lúc nào biểu mẫu tạo bị tắt.",,,,,,
+"9","img-045","Khối đối chiếu prototype","プロトタイプ差分ブロック","Prototype comparison block","others","khối tài liệu đối chiếu",,,,,,,,,"Mục đích và ngữ cảnh: Đặt cách cài đặt hiện tại của prototype tách khỏi phần thiết kế; để đọc spec không lẫn hiện trạng vào yêu cầu.
+Thành phần hiển thị: Tiêu đề khối và một bảng ba cột: thiết kế đòi; prototype làm và mức lệch.
+Chức năng và logic: Thuần hiển thị tài liệu. Khối này là hiện trạng để đối chiếu; không phải nguồn của thiết kế.",,,,,,
+"9.1","img-046","Bảng đối chiếu thiết kế và prototype","設計・実装差分テーブル","Design versus prototype table","table","bảng tài liệu",,,,,,,,,"Mục đích và ngữ cảnh: Bảy chỗ prototype khác thiết kế; kèm mức lệch của từng chỗ.
+Thành phần hiển thị: Bảy dòng gồm bốn mức: Chưa đạt cho biểu mẫu không có ô biểu suất; hạn mức 4 lần mỗi năm không được đếm và việc tạo phiên bản không ghi dấu vết kiểm toán. Khớp cho maker-checker chặn ở server cho cả duyệt và rollback. Hở cho ô ngày không đặt giới hạn nhỏ nhất và rollback không có giao dịch trọn vẹn. Chưa chốt cho việc rollback kiểm người lập của phiên bản đang bị hạ cấp.
+Chức năng và logic: Bảng tĩnh; không lọc. Chỉ liệt những chỗ khác nhau; chỗ khớp chỉ nêu khi cần chặn cách đọc sai.",,,,,,
+"10","img-047","Chân ghi chú phân quyền và nguồn as-built","権限・出典フッター","Permission and source footer","label","chân ghi chú màn",,,,,,,,,"Mục đích và ngữ cảnh: Chốt lại phân quyền của màn và trỏ về tài liệu hiện trạng của prototype.
+Thành phần hiển thị: Hai dòng: dòng phân quyền nói chỉ quản trị rule vào được cả hai khung và điều kiện quyết định không phải vai trò nào mà là người duyệt phải khác người lập; dòng thứ hai là liên kết sang tài liệu bản as-built của màn.
+Chức năng và logic: Thuần hiển thị. Hai tài khoản demo tách đôi một người lập và một người duyệt là cố ý.",,,,,,

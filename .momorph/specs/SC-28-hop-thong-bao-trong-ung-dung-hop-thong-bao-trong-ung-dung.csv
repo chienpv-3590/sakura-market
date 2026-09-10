@@ -1,0 +1,152 @@
+No,itemId,itemName,nameJP,nameTrans,itemType,itemSubtype,buttonType,dataType,required,format,minLength,maxLength,defaultValue,validationNote,description,userAction,transitionNote,databaseTable,databaseColumn,databaseNote,qa
+"1","img-001","Khối đầu màn hộp thông báo",,"Screen header block","others","khối tiêu đề màn",,,,,,,,,"Mục đích và ngữ cảnh: Định danh màn và chuỗi truy vết; cho biết đây là điểm vào của nhóm thông báo và cảnh báo vận hành.
+Thành phần hiển thị: Tiêu đề cấp hai kèm mã màn; dòng metadata liệt kê FE-038 · FE-039 · FN-12 · ưu tiên P1 · ba mã yêu cầu · loại màn · route đề xuất · actor là toàn bộ bảy vai trò · một thẻ trạng thái.
+Chức năng và logic: Chỉ trình bày; không nhận thao tác nào.",,,,,,
+"1.1","img-002","Tiêu đề màn","アプリ内通知ボックス","Screen title","label","tiêu đề cấp hai",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết đang ở hộp thông báo trong ứng dụng của chính mình.
+Thành phần hiển thị: Một dòng chữ đậm cỡ lớn nhất trên màn: mã màn SC-28 và tên màn.
+Chức năng và logic: Tĩnh.",,,,,,
+"1.2","img-003","Dòng metadata truy vết",,"Traceability metadata line","label","đoạn văn nhiều dòng",,,,,,,,,"Mục đích và ngữ cảnh: Nối màn về hai tính năng FE-038 và FE-039 cùng ba mã yêu cầu khách; nêu rõ đây là màn không giới hạn vai trò.
+Thành phần hiển thị: Hai dòng chữ nhỏ liệt tính năng · nhóm chức năng · ưu tiên · yêu cầu FR-NOTIFY-01 và FR-NOTIFY-02 và BR-NOTIFY-01 · loại màn · route đề xuất kèm badge đếm chưa đọc · actor · thẻ trạng thái.
+Chức năng và logic: Tĩnh; không có liên kết điều hướng.",,,,,,
+"1.2.1","img-004","Thẻ trạng thái dựng màn",,"Build status tag","label","thẻ nhỏ trong dòng",,,,,,,,,"Mục đích và ngữ cảnh: Cho biết màn chưa có bản thi công nào để đối chiếu.
+Thành phần hiển thị: Thẻ chữ nhỏ viền tròn trong dòng metadata với nội dung Chưa thi công.
+Chức năng và logic: Tĩnh; giá trị đến từ trạng thái quản lý tài liệu chứ không từ dữ liệu nghiệp vụ.",,,,,,
+"2","img-005","Dải chú thích yêu cầu và điều kiện nghiệm thu",,"Requirement and acceptance notice","label","dải chú thích đầu màn",,,,,,,,,"Mục đích và ngữ cảnh: Ghim đúng ba điều khoản mà màn phải thoả; kèm điều kiện nghiệm thu để phần dựng không hiểu chệch.
+Thành phần hiển thị: Một dải chú thích nền vàng nhạt ba đoạn: đoạn khai màn chưa thi công; đoạn FR-NOTIFY-01 nêu hai kênh in-app và email cùng bốn nhóm event và ranh giới SMS FAX ngoài phạm vi; đoạn BR-NOTIFY-01 và FR-NOTIFY-02 nêu trần retry ba lần; mốc năm phút cho Critical và queue cảnh báo vận hành.
+Chức năng và logic: Tĩnh. Điều kiện nghiệm thu của FR-NOTIFY-01 là bốn thứ kênh · người nhận · kết quả · số lần thử phải xem được từ màn này; queue cảnh báo vận hành là một trạng thái thấy được chứ không gộp vào gửi lỗi chung.",,,,,,
+"3","img-006","Khối danh sách thông báo",,"Notification list block","others","khối bảng chín cột kèm ghi chú và một nút",,,,,,,,,"Mục đích và ngữ cảnh: Hộp thư của người dùng: nơi các việc cần xử lý tự tìm đến người phụ trách thay vì phải gọi điện.
+Thành phần hiển thị: Tiêu đề khối nêu phạm vi field số 1 tới số 8; bảng chín cột với ba hàng dữ liệu mẫu ở ba trạng thái gửi khác nhau; đoạn ghi chú bốn field; một nút hành động dưới bảng.
+Chức năng và logic: Mỗi người chỉ thấy thông báo gửi cho chính mình hoặc cho vai trò mình giữ. Hộp rỗng là trạng thái hợp lệ.",,,,,,
+"3.1","img-007","Bảng danh sách thông báo","通知一覧","Notification list table","table","bảng chín cột",,,,,,,,,"Mục đích và ngữ cảnh: Trình bày từng thông báo trên một hàng; đủ để người dùng quyết định mở đối tượng nào trước.
+Thành phần hiển thị: Chín cột: mức độ · loại event · tiêu đề · nội dung · liên kết đối tượng · thời điểm · đã đọc · kết quả gửi · ô hành động; ba hàng dữ liệu mẫu.
+Chức năng và logic: Sắp xếp mặc định theo thời điểm giảm dần và thông báo Critical chưa đọc lên trước. Cột kết quả gửi là bản thu gọn của khối log gửi bên dưới.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Danh sách phân trang bao nhiêu dòng một trang; hay cuộn vô hạn?
+Thông báo Critical chưa đọc có được ghim lên đầu bất kể thời điểm không?
+Một thông báo gửi cho cả một vai trò thì mọi người trong vai đó thấy cùng một dòng hay mỗi người một dòng riêng?"
+"3.1.1","img-008","Hàng tiêu đề bảng thông báo",,"Notification table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên chín cột của bảng thông báo.
+Thành phần hiển thị: Một hàng nền xám nhạt với tám nhãn cột và một ô cuối để trống dành cho nút hành động.
+Chức năng và logic: Tĩnh; không sắp xếp được từ hàng tiêu đề.",,,,,,
+"3.1.2","img-009","Hàng thông báo Critical đang trong hạn",,"Critical notification row in-window","others","hàng dữ liệu bảng",,,,"YYYY-MM-DD hh:mm",,,,,"Mục đích và ngữ cảnh: Ca bình thường của một thông báo Critical: cả hai kênh đã gửi được ngay lần thử đầu.
+Thành phần hiển thị: Thẻ mức độ critical; thẻ loại event lỗi xuất dữ liệu; tiêu đề và nội dung ngắn bị cắt bớt; liên kết Mở đối tượng; thời điểm dạng YYYY-MM-DD hh:mm; thẻ chưa đọc; ô kết quả gửi ghi in_app thành công và email thành công một trên ba; nút Đánh dấu đã đọc.
+Chức năng và logic: Số lần thử hiện dạng phân số trên trần ba lần theo BR-NOTIFY-01. Mức độ critical kéo theo mốc năm phút của FR-NOTIFY-02 nên hàng này phải hiện được là trong hạn hay quá hạn.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo. Riêng nguồn event lỗi xuất dữ liệu: bảng batch kế toán đã tồn tại nhưng chỉ ghi lần xuất thành công nên hiện không có dòng nào cho ca lỗi.","Nội dung ngắn bị cắt ở bao nhiêu ký tự; và cắt rồi có mở xem đầy đủ được không?
+Mức độ critical hiện thêm dấu hiệu gì để phân biệt trong một danh sách dài?"
+"3.1.3","img-010","Hàng thông báo đã vào queue cảnh báo vận hành",,"Notification row escalated to ops queue","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Ca nghiệm thu của FR-NOTIFY-02: gửi vẫn thất bại sau khi hết trần retry nên phải thấy được là đã chuyển sang cảnh báo vận hành.
+Thành phần hiển thị: Thẻ mức độ critical; thẻ loại event tranh chấp đang mở; ô kết quả gửi mang một thẻ riêng đã vào queue cảnh báo vận hành kèm chữ email thất bại ba trên ba; nút Xem log gửi thay cho nút đánh dấu đã đọc.
+Chức năng và logic: Đây là một trạng thái riêng; không gộp vào gửi lỗi chung. Hết ba lần thử là chốt trạng thái cuối cùng và không retry tiếp.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo. CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó.","Trạng thái đã vào queue cảnh báo vận hành có tự chuyển về trạng thái khác khi vận hành xử lý xong không; ai được đóng nó?
+Người nhận thường có thấy thẻ này hay chỉ vai trò quản trị hệ thống thấy?
+Định dạng hiển thị số lần thử là phân số trên trần hay chỉ số lần đã thử?"
+"3.1.4","img-011","Hàng thông báo mức thường đã đọc",,"Normal notification row read","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Ca một thông báo không phải Critical: đã đọc trong ứng dụng nhưng kênh ngoài chưa gửi.
+Thành phần hiển thị: Thẻ mức độ thường; thẻ loại event profile sắp hết hiệu lực; thẻ đã đọc; ô kết quả gửi ghi in_app thành công và email chưa gửi in đậm; nút Đã đọc ở trạng thái vô hiệu.
+Chức năng và logic: Mức thường không chịu mốc năm phút. Hai kênh có kết quả độc lập nên một kênh thành công không làm kênh kia coi là xong.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Mức thường có hạn gửi nào không; hay chỉ Critical mới có hạn?
+Kênh email ở trạng thái chưa gửi thì có tự gửi theo lô định kỳ hay chờ điều kiện gì?"
+"3.1.5","img-012","Nút Đánh dấu đã đọc trong hàng","既読にする","Mark as read button","button","nút phụ trong hàng","text_only",,,,,,,"Điều kiện: chỉ chủ sở hữu thông báo đặt được trạng thái đã đọc.
+Lỗi: mở hoặc ghi thông báo của người khác thì trả trang không tìm thấy chứ không phải lỗi từ chối quyền.","Mục đích và ngữ cảnh: Cho người dùng dọn hộp thư mà không phải mở từng đối tượng liên quan.
+Thành phần hiển thị: Nút chữ Đánh dấu đã đọc ở ô hành động cuối hàng; kiểu nút phụ.
+Chức năng và logic: Trong lúc ghi thì đúng dòng đó bị vô hiệu. Ghi thất bại thì hiện thông báo lỗi và giữ nguyên trạng thái chưa đọc chứ không đổi trước rồi sửa sau.","on_click","Ghi trạng thái đã đọc cho đúng dòng đó; ở lại cùng màn và không điều hướng.",,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Đã đọc là trạng thái theo từng người nhận; nếu thông báo gửi cho cả một vai trò thì có cần biết ai trong vai đó đã đọc không?
+Đánh dấu đã đọc có bỏ đánh dấu lại được không?"
+"3.1.6","img-013","Nút Xem log gửi trong hàng","送信ログを見る","View delivery log button","button","nút phụ trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Đường đi từ một dòng thông báo tới bằng chứng gửi của nó; đây là chỗ thoả điều kiện nghiệm thu của FR-NOTIFY-01.
+Thành phần hiển thị: Nút chữ Xem log gửi ở ô hành động của hàng đã vào queue cảnh báo vận hành.
+Chức năng và logic: Chỉ đọc. Nút này thay chỗ nút đánh dấu đã đọc trên những hàng có kết quả gửi cần xem xét.","on_click","Mở khối log gửi của đúng thông báo đó với bốn thứ mà FR-NOTIFY-01 đòi nghiệm thu.",,,"CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó.","Xem log gửi mở lớp phủ trong màn hay điều hướng sang một màn riêng?
+Mọi vai trò xem được log gửi của thông báo của chính mình; hay chỉ vai trò quản trị hệ thống?"
+"3.1.7","img-014","Nút Đã đọc ở trạng thái vô hiệu","既読（無効）","Read button disabled","button","nút phụ vô hiệu trong hàng","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng thấy dòng này không còn hành động nào cần làm.
+Thành phần hiển thị: Nút chữ Đã đọc với chữ và viền nhạt hơn; trên hàng thông báo đã đọc.
+Chức năng và logic: Không nhận thao tác. Trạng thái vô hiệu suy ra từ trạng thái đã đọc của dòng.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Dòng đã đọc có cho bỏ đánh dấu để đọc lại sau không; nếu có thì nút này đổi thành gì?"
+"3.2","img-015","Ghi chú bốn field của bảng thông báo",,"Field note for list block","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Chốt ràng buộc của bốn field khó nhất; trong đó có một ràng buộc an toàn.
+Thành phần hiển thị: Một đoạn chữ nhỏ: field số 1 mức độ gồm critical và thường và chọn critical là kéo theo mốc năm phút; field số 2 loại event theo bốn nhóm mà yêu cầu khách liệt kèm lưu ý đó là ví dụ chứ không phải danh sách đóng; field số 5 dựng đường dẫn ở phía máy chủ từ loại đối tượng và mã đối tượng; chỉ điều hướng nội bộ và không nhận đường dẫn thô từ dữ liệu; field số 8 là bản thu gọn của log gửi.
+Chức năng và logic: Tĩnh; ràng buộc field số 5 là ràng buộc an toàn nên không được để dữ liệu quyết định đích điều hướng.",,,,,,
+"3.3","img-016","Nút Đánh dấu tất cả đã đọc","すべて既読にする","Mark all as read button","button","nút hành động chính dưới khối","text_only",,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng dọn cả hộp thư sau một đợt vắng mặt.
+Thành phần hiển thị: Nút chữ Đánh dấu tất cả đã đọc đặt dưới bảng; kiểu nút hành động chính.
+Chức năng và logic: Chỉ ghi trạng thái đã đọc; không xoá thông báo và không đổi kết quả gửi. Không tác động tới thông báo của người khác.","on_click","Ghi trạng thái đã đọc cho mọi thông báo đang thuộc người dùng; danh sách nạp lại sau khi ghi xong.",,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Đánh dấu tất cả đã đọc áp cho toàn bộ hộp thư hay chỉ cho các dòng đang khớp bộ lọc?
+Có cần bước xác nhận trước khi áp cho toàn bộ không?"
+"4","img-017","Khối log gửi một thông báo",,"Delivery log block","others","khối bảng sáu cột kèm ghi chú và hai ô chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Nơi thoả điều kiện nghiệm thu của FR-NOTIFY-01 và FE-039: bốn thứ về lượt gửi cộng mốc năm phút phải xem được từ màn.
+Thành phần hiển thị: Tiêu đề khối; bảng sáu cột với hai hàng cho hai kênh; đoạn ghi chú về ranh giới kênh và trần retry; một hàng hai ô chỉ đọc là hạn gửi và queue cảnh báo vận hành.
+Chức năng và logic: Toàn khối chỉ đọc; không có ô nào cho người dùng đặt lại kết quả gửi.",,,,,,
+"4.1","img-018","Bảng log gửi","送信ログ","Delivery log table","table","bảng sáu cột chỉ đọc",,,,,,,,,"Mục đích và ngữ cảnh: Trình bày từng lượt gửi theo kênh; đủ để trả lời câu hỏi thông báo này đã tới ai và kết quả ra sao.
+Thành phần hiển thị: Sáu cột: kênh · người nhận · kết quả · số lần thử · lần thử cuối · trạng thái cuối cùng; hai hàng cho hai kênh của cùng một thông báo.
+Chức năng và logic: Bốn cột đầu là nguyên văn điều kiện nghiệm thu của FR-NOTIFY-01. Chỉ hai giá trị kênh nên bảng không được để chỗ cho kênh thứ ba.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó.","Mỗi lần thử là một hàng riêng hay một hàng cho mỗi kênh kèm bộ đếm?
+Thông báo gửi cho nhiều người nhận thì bảng này liệt từng người hay gộp?"
+"4.1.1","img-019","Hàng tiêu đề bảng log gửi",,"Delivery log header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên sáu cột của bảng log gửi.
+Thành phần hiển thị: Một hàng nền xám nhạt với sáu nhãn: Kênh · Người nhận · Kết quả · Số lần thử · Lần thử cuối · Trạng thái cuối cùng.
+Chức năng và logic: Tĩnh.",,,,,,
+"4.1.2","img-020","Hàng log gửi kênh trong ứng dụng",,"In-app delivery row","others","hàng dữ liệu bảng",,,,"YYYY-MM-DD hh:mm",,,,,"Mục đích và ngữ cảnh: Ca kênh trong ứng dụng: gửi được ngay lần thử đầu nên trạng thái cuối cùng là đã gửi.
+Thành phần hiển thị: Sáu ô: kênh in_app · người nhận Người tham gia A · thẻ kết quả thành công · số lần thử một trên ba · lần thử cuối dạng YYYY-MM-DD hh:mm · trạng thái cuối cùng đã gửi.
+Chức năng và logic: Kênh trong ứng dụng coi là gửi xong khi dòng thông báo đã tồn tại và người nhận đọc được nó.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó.","Kênh trong ứng dụng có bao giờ thất bại không; nếu có thì điều kiện nào tính là thất bại?
+Người nhận hiện tên hiển thị hay mã; và có bao giờ hiện thư điện tử không?"
+"4.1.3","img-021","Hàng log gửi kênh email thất bại hết trần retry",,"Email delivery row exhausted","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Ca xấu nhất mà yêu cầu khách gọi tên: hết trần ba lần thử vẫn thất bại nên phải chốt trạng thái cuối cùng.
+Thành phần hiển thị: Sáu ô: kênh email · người nhận Người tham gia A · thẻ kết quả thất bại · số lần thử ba trên ba · lần thử cuối · trạng thái cuối cùng là thẻ đã vào queue cảnh báo vận hành.
+Chức năng và logic: Hết ba lần thử là chốt và không retry tiếp. Trạng thái cuối cùng ở đây là một giá trị riêng; khác với kết quả thất bại của một lượt thử.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó.","Khoảng cách giữa các lần thử là bao nhiêu; yêu cầu khách chỉ cho trần ba lần chứ không cho khoảng cách?
+Trạng thái cuối cùng có tập giá trị nào; đã gửi và đã vào queue cảnh báo vận hành có phải là hai giá trị duy nhất?"
+"4.2","img-022","Ghi chú ranh giới kênh và trần retry",,"Channel boundary note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Khai ranh giới phạm vi của nhóm chức năng thông báo; để giao diện không mở cửa cho kênh ngoài phạm vi.
+Thành phần hiển thị: Một đoạn chữ nhỏ: bốn cột đầu là nguyên văn nghiệm thu FR-NOTIFY-01; chỉ hai giá trị kênh in_app và email; không có SMS và không có FAX vì FN-12 khai ngoài phạm vi nên giao diện không được để chỗ cho chúng; trần ba lần thử theo BR-NOTIFY-01 và hết ba lần là chốt trạng thái cuối cùng rồi chuyển sang queue cảnh báo vận hành.
+Chức năng và logic: Tĩnh; đây là ràng buộc phạm vi; không phải gợi ý.",,,,,,
+"4.3","img-023","Ô Hạn gửi chỉ cho thông báo Critical","送信期限（Critical のみ）","Critical delivery deadline","label","ô chỉ đọc kèm nhãn và dòng nhắc",,,,,,,,,"Mục đích và ngữ cảnh: Chỗ duy nhất trên màn cho thấy mốc năm phút của FR-NOTIFY-02 đã đạt hay chưa; là dữ liệu nghiệm thu của FE-039.
+Thành phần hiển thị: Nhãn Hạn gửi chỉ thông báo Critical; ô chỉ đọc nền xám ghi thời điểm sinh event; hạn bằng thời điểm đó cộng năm phút; và một thẻ trong hạn; dòng nhắc nói rõ mốc năm phút tính từ thời điểm sinh event chứ không từ lần thử đầu.
+Chức năng và logic: Chỉ hiện cho thông báo mức critical. Là giá trị suy ra từ thời điểm sinh event và thời điểm gửi xong; không có ô nhập.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó. Mốc năm phút suy ra từ thời điểm sinh event và thời điểm gửi xong nên cần cả hai cột thời gian đó.","Quá hạn năm phút có tính vào cảnh báo vận hành ngay dù retry còn dở không?
+Thông báo mức thường có hạn gửi nào không; nếu không thì ô này ẩn hay hiện dấu gạch?
+Định dạng hiển thị hạn là giờ phút hay đếm ngược; ảnh chỉ cho thấy dạng hh:mm."
+"4.4","img-024","Ô Queue cảnh báo vận hành","運用アラートキュー","Ops alert queue","label","ô chỉ đọc kèm nhãn và dòng nhắc",,,,,,,,,"Mục đích và ngữ cảnh: Cho vai trò quản trị hệ thống thấy tồn đọng của các thông báo đã hết trần retry mà vẫn chưa tới người nhận.
+Thành phần hiển thị: Nhãn Queue cảnh báo vận hành; ô chỉ đọc nền xám ghi số thông báo thất bại sau retry; dòng nhắc nói rõ chỉ ROLE-SYS-ADMIN thấy và đây là đầu vào của NFR-OPS-01 cùng FE-046.
+Chức năng và logic: Chỉ đọc; là bộ đếm suy ra từ log gửi. Vai trò khác ROLE-SYS-ADMIN không thấy ô này.",,,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng log gửi (kênh · người nhận · kết quả · số lần thử) nhưng hệ hiện chưa có bảng nào giữ nó.","Bộ đếm này đếm trong khoảng thời gian nào; toàn bộ lịch sử hay chỉ chưa xử lý?
+Bấm vào ô có mở danh sách chi tiết không; hay chỉ là con số?
+Ai được đóng một mục trong queue và thao tác đó có cần ghi lý do?"
+"5","img-025","Khối bộ lọc hộp thư",,"Inbox filter block","others","khối hai điều kiện lọc",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng thu hẹp hộp thư khi số thông báo lớn.
+Thành phần hiển thị: Tiêu đề khối nêu phạm vi field số 9 tới số 10; một hàng hai điều kiện là hộp kiểm chỉ chưa đọc và ô chọn lọc theo mức độ.
+Chức năng và logic: Hai điều kiện chỉ tác động phía giao diện; không đổi dữ liệu.",,,,,,
+"5.1","img-026","Hộp kiểm Chỉ chưa đọc","未読のみ","Unread only checkbox","checkbox","hộp kiểm kèm nhãn và dòng nhắc",,"boolean","false",,,,"false",,"Mục đích và ngữ cảnh: Đường nhanh nhất để người dùng chỉ nhìn việc còn phải làm.
+Thành phần hiển thị: Nhãn Chỉ chưa đọc; hộp kiểm chưa chọn kèm chữ Chỉ hiện thông báo chưa đọc; dòng nhắc ghi field số 9 và chỉ tác động giao diện.
+Chức năng và logic: Không chọn là mặc định nên hộp thư mở ra hiện cả đã đọc và chưa đọc.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Bật hộp kiểm này có được nhớ lại cho lần vào màn sau không?
+Định dạng giá trị gửi lên khi bật là gì; ảnh không cho thấy nên cần chốt cùng hợp đồng đọc danh sách."
+"5.2","img-027","Ô chọn Lọc theo mức độ","重要度フィルタ","Severity filter","dropdown","ô chọn một giá trị kèm nhãn và dòng nhắc",,"string","false",,,,"Tất cả",,"Mục đích và ngữ cảnh: Cho người dùng tách riêng nhóm Critical khi cần xử lý gấp.
+Thành phần hiển thị: Nhãn Lọc theo mức độ; ô chọn hiện Tất cả kèm mũi chỉ xuống; dòng nhắc ghi field số 10 với ba giá trị tất cả và critical và thường; và nói rõ giá trị lạ thì bỏ qua bộ lọc.
+Chức năng và logic: Giá trị lạ không làm lỗi mà bị bỏ qua; đây là quyết định có chủ đích để bộ lọc không chặn người dùng.","on_click",,,,"CHƯA TỒN TẠI: thiết kế đòi một bảng thông báo nhưng hệ hiện chưa có bảng nào giữ thông báo.","Định dạng giá trị gửi lên là chuỗi hiển thị hay mã cố định; ảnh chỉ cho thấy nhãn tiếng Việt.
+Bỏ qua giá trị lạ thì có hiện lời nhắc cho người dùng biết bộ lọc không được áp không?"
+"6","img-028","Khối trạng thái màn",,"Screen state block","others","khối mười thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Liệt kê mọi trạng thái màn phải xử lý; trong đó có bốn trạng thái riêng của việc gửi kênh ngoài.
+Thành phần hiển thị: Tiêu đề khối; mười thẻ xếp thành ba hàng; mỗi thẻ có một tiêu đề nhỏ và một đoạn mô tả.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"6.1","img-029","Thẻ trạng thái Rỗng",,"State card empty","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Hộp rỗng là trạng thái hợp lệ; không phải lỗi cấu hình.
+Thành phần hiển thị: Thẻ có tiêu đề Rỗng và câu hiển thị Không có thông báo.
+Chức năng và logic: Người dùng mới hoặc người dùng đã dọn hết hộp thư đều gặp trạng thái này.",,,,,,
+"6.2","img-030","Thẻ trạng thái Đang tải",,"State card loading","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Cho người dùng biết hộp thư đang được nạp.
+Thành phần hiển thị: Thẻ có tiêu đề Đang tải và mô tả skeleton danh sách.
+Chức năng và logic: Bộ lọc và các nút hành động bị vô hiệu trong lúc nạp.",,,,,,
+"6.3","img-031","Thẻ trạng thái Lỗi tải",,"State card load error","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt lỗi kỹ thuật với hộp thư rỗng.
+Thành phần hiển thị: Thẻ có tiêu đề Lỗi tải và mô tả thông báo lỗi kèm nút thử lại.
+Chức năng và logic: Không rơi về trạng thái rỗng khi truy vấn thất bại.",,,,,,
+"6.4","img-032","Thẻ trạng thái Không có quyền",,"State card forbidden","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Khai mức chặn khi người dùng mở thẳng một thông báo không thuộc mình.
+Thành phần hiển thị: Thẻ có tiêu đề Không có quyền và mô tả mở thẳng thông báo của người khác trả trang không tìm thấy chứ không phải lỗi từ chối quyền.
+Chức năng và logic: Trả trang không tìm thấy là có chủ đích; không lộ sự tồn tại của thông báo người khác.",,,,,,
+"6.5","img-033","Thẻ trạng thái Đang gửi",,"State card writing","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chặn bấm đánh dấu đã đọc hai lần trên cùng một dòng.
+Thành phần hiển thị: Thẻ có tiêu đề Đang gửi và mô tả đang ghi trạng thái đã đọc nên dòng đó bị vô hiệu.
+Chức năng và logic: Là trạng thái của một dòng chứ không của cả danh sách.",,,,,,
+"6.6","img-034","Thẻ trạng thái Gửi lỗi",,"State card write failed","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Giữ đúng sự thật khi ghi trạng thái đã đọc thất bại.
+Thành phần hiển thị: Thẻ có tiêu đề Gửi lỗi và mô tả ghi đã đọc thất bại thì hiện thông báo lỗi và giữ nguyên trạng thái chưa đọc.
+Chức năng và logic: Không đổi giao diện trước rồi sửa sau; trạng thái hiển thị luôn khớp dữ liệu đã ghi.",,,,,,
+"6.7","img-035","Thẻ trạng thái Đang retry kênh ngoài",,"State card retrying","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Phân biệt còn đang thử với đã thất bại — hai cái này không được hiện giống nhau.
+Thành phần hiển thị: Thẻ có tiêu đề Đang retry kênh ngoài và mô tả còn trong ba lần thử thì hiện nhãn đang gửi email hai trên ba và chưa phải thất bại.
+Chức năng và logic: Chỉ khi hết trần ba lần thì mới chuyển sang trạng thái thất bại chốt.",,,,,,
+"6.8","img-036","Thẻ trạng thái Vào queue cảnh báo vận hành",,"State card ops queue","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Chính điều kiện nghiệm thu của FR-NOTIFY-02; là một trạng thái riêng chứ không phải gửi lỗi chung.
+Thành phần hiển thị: Thẻ có tiêu đề Vào queue cảnh báo vận hành và mô tả hết ba lần thử mà vẫn thất bại; có nhãn riêng trên dòng và mở được log gửi; không gộp với gửi lỗi.
+Chức năng và logic: Trạng thái này là đầu vào của phần giám sát vận hành; nên phải phát được cảnh báo ra ngoài màn.",,,,,,
+"6.9","img-037","Thẻ trạng thái Quá hạn 5 phút",,"State card deadline missed","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Ràng buộc thời gian riêng của thông báo Critical theo FR-NOTIFY-02.
+Thành phần hiển thị: Thẻ có tiêu đề Quá hạn 5 phút và mô tả thông báo Critical chưa gửi xong sau năm phút thì hiện nhãn quá hạn và tính vào cảnh báo vận hành dù retry còn dở.
+Chức năng và logic: Quá hạn và hết trần retry là hai điều kiện độc lập; chỉ cần một trong hai là phải cảnh báo.",,,,,,
+"6.10","img-038","Thẻ trạng thái Không có read-only vì lock",,"State card no lock read-only","label","thẻ trạng thái",,,,,,,,,"Mục đích và ngữ cảnh: Đóng lại một giả định dễ sai: màn này không liên quan tới khoá ngày nghiệp vụ.
+Thành phần hiển thị: Thẻ có tiêu đề Không có read-only vì lock và mô tả màn không chạm bảng bị lock ngày nên không bao giờ trả mã lỗi khoá ngày.
+Chức năng và logic: Vì vậy không có trạng thái chỉ đọc theo ngày trên màn này.",,,,,,
+"7","img-039","Khối đối chiếu thiết kế và prototype",,"Design vs prototype block","others","khối bảng ba cột kèm ghi chú",,,,,,,,,"Mục đích và ngữ cảnh: Tách rõ phần thiết kế đòi khỏi hiện trạng code; và nói thẳng thứ tự dựng đúng.
+Thành phần hiển thị: Tiêu đề khối viết hoa; bảng ba cột mười hàng dữ liệu; một đoạn ghi chú về thứ tự phụ thuộc.
+Chức năng và logic: Chỉ đọc; là tài liệu thiết kế chứ không phải thành phần chạy trên màn.",,,,,,
+"7.1","img-040","Bảng đối chiếu thiết kế và prototype","設計と実装の差分","Design gap table","table","bảng ba cột mười dòng dữ liệu",,,,,,,,,"Mục đích và ngữ cảnh: Liệt từng hạng mục lệch kèm mức; trong đó bốn hàng là bốn nhóm nguồn event.
+Thành phần hiển thị: Ba cột: thiết kế đòi · prototype làm · mức; mười hàng gồm hộp thông báo · kênh email và trần retry · log gửi · mốc năm phút · queue cảnh báo · bốn nhóm nguồn event · phạm vi đọc theo người nhận.
+Chức năng và logic: Cột mức có ba nhãn: chưa có · một phần · xung đột. Ba trong bốn nhóm nguồn event chưa có dữ liệu; nhóm thứ tư chỉ ghi ca thành công.",,,,,,
+"7.1.1","img-041","Hàng tiêu đề bảng đối chiếu",,"Gap table header row","label","hàng tiêu đề bảng",,,,,,,,,"Mục đích và ngữ cảnh: Đặt tên ba cột của bảng đối chiếu.
+Thành phần hiển thị: Một hàng nền xám nhạt với ba nhãn: Thiết kế đòi · Prototype làm · Mức.
+Chức năng và logic: Tĩnh.",,,,,,
+"7.1.2","img-042","Hàng một hạng mục đối chiếu — đại diện",,"Gap row (representative)","others","hàng dữ liệu bảng",,,,,,,,,"Mục đích và ngữ cảnh: Một hàng là một hạng mục lệch; mười hàng có cùng cấu trúc nên gộp thành một đại diện.
+Thành phần hiển thị: Ba ô: mô tả điều thiết kế đòi · mô tả hiện trạng code · thẻ mức; hàng đại diện đang hiện hạng mục hộp thông báo in-app với mức chưa có.
+Chức năng và logic: Chỉ đọc. Thẻ mức ở ô cuối lấy một trong ba giá trị chưa có · một phần · xung đột.",,,,,,
+"7.2","img-043","Ghi chú thứ tự phụ thuộc",,"Dependency order note","label","đoạn nhắc dưới khối",,,,,,,,,"Mục đích và ngữ cảnh: Cảnh báo hệ quả nếu dựng màn này trước các màn sinh event; đây là kết luận quan trọng nhất của khối đối chiếu.
+Thành phần hiển thị: Một đoạn chữ nhỏ: ba trong bốn nhóm event chưa có nguồn dữ liệu và nhóm thứ tư chỉ ghi ca thành công; dựng SC-28 trước SC-07 và SC-17 và SC-19 là dựng một hộp gần như rỗng; thứ tự đúng là dữ liệu tranh chấp và đường ghi ngoại lệ giao hàng trước rồi mới tới SC-28.
+Chức năng và logic: Tĩnh; là điều kiện tiền đề về thứ tự; không phải gợi ý ưu tiên.",,,,,,
+"8","img-044","Chân ghi chú phân quyền; hạ tầng và giả định",,"Permission infra and assumption footer","label","chân trang chú thích",,,,,,,,,"Mục đích và ngữ cảnh: Gom ba thứ phải đọc trước khi dựng: phạm vi đọc theo người nhận; hai phương án hạ tầng; và các giả định chưa chốt.
+Thành phần hiển thị: Năm đoạn chữ nhỏ: đoạn phân quyền nêu cả bảy vai trò vào được và mỗi người chỉ thấy thông báo của mình hoặc của vai trò mình giữ; đoạn nói đây là dữ liệu đầu tiên trong hệ không nên theo khuôn đọc rộng; đoạn hai phương án hạ tầng thuộc quyết định kiến trúc; đoạn năm giả định cần chốt; đoạn ghi chú chống trùng và đối tượng bị xoá.
+Chức năng và logic: Tĩnh. Năm giả định gồm: tập loại event; mốc năm phút tính từ đâu; thời hạn lưu thông báo và số dòng mỗi trang; gửi theo vai trò có đủ hay cần đích danh; đã đọc theo từng người nhận.",,,,,,
